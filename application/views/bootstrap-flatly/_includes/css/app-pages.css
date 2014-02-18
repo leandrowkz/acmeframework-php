@@ -1,0 +1,56 @@
+
+/* acme_access/login */
+.login-panel {
+    margin-top: 25%;
+    border: 0;
+    -webkit-box-shadow: 0 0px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0px 50px rgba(0, 0, 0, 0.4);
+}
+
+@media(min-width:768px) {
+    .login-panel {
+        margin-top: 30%;
+    }
+}
+
+.fullscreen_bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+
+/* acme_user/profile */
+#user-profile-badges {
+    line-height:30px;
+}
+
+.user-profile-actions {
+    margin-top: 20px;
+}
+
+.user-profile-actions a {
+    margin-bottom: 10px !important;
+}
+
+.user-profile-img {
+    width: 140px;
+    height: 140px;
+    background-size: cover;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+}
+
+.user-profile-sidebar {
+    width:150px;
+    position:absolute;
+}
+
+.user-profile-main-content {
+    margin-left:180px;
+}

@@ -1,0 +1,148 @@
+/*
+* style.css
+*
+* Arquivo de estilos específicos utilizados pelo ACME Engine, como instalador e documentação.
+*		
+* @since 		15/08/2012
+* @location		_includes.css.styles
+*		
+*/
+	/******************************************************/
+	/* Sessão de Estilos GEAIS | LAYOUTS                  */
+	/******************************************************/
+	* { margin:0; padding:0; }
+	
+	body, html { height:100%; }
+	
+	body {
+		font: 13px tahoma, 'Open Sans', 'Open Sans Condensed', Tahoma, Verdana, sans-serif !important;
+		color:#000;
+		background-color:#fff;
+		background-image: url(../img/bg_body.png);
+		background-repeat: repeat-x;
+	}
+	
+	#site-body-background {
+		height:99%;
+	}
+	
+	#site-body {
+		width:1000px;
+		min-height:300px; 
+		background-color:#fff;
+		margin:10px auto;
+		position:relative;
+		border-top:2px solid #111;
+	}	
+	
+	#site-body div#site-body-content {
+		margin:20px 40px;
+	}
+	
+	#site-header {
+		width:1000px;
+		height:100px;
+		margin:10px auto 0px auto;
+		padding-top:15px;
+	}
+	
+	#site-footer-background {
+		background-image:url(../img/bg_footer.png);
+		background-repeat:repeat-x;
+		background-position:top;
+	}
+	
+	#site-footer {
+		padding-top:20px;
+		color:#e9e9e9;
+		height:200px;
+		width:1000px;
+		position:relative;
+		bottom:0%;
+		margin:0 auto;
+	}
+	
+	#site-footer a {
+		text-decoration:none;
+	}
+	
+	#site-footer button {
+		background-color: #DD4B39;
+		-moz-box-shadow:0 0 0px 0px #999;
+		-webkit-box-shadow: 0 0 0px #999;
+		box-shadow: 0px 0px 0px rgb(150,150,150);
+	}
+	
+	#site-footer button:hover {
+		background-color: #FF6D5B;
+		border:1px solid #222;
+	}
+	
+	#site-menu {
+		width:710px;
+		height:70px;
+		padding-top:0px;
+	}
+	
+	#site-shadow-left {
+		margin-top:150px;
+		width:18px;
+		position:absolute;
+		margin-left:-18px !important;
+		height:600px;
+		background-image:url(../img/border_left.png);
+	}
+	
+	#site-shadow-right { 
+		margin-top:150px;
+		right:0%;
+		width:18px;
+		margin-right:-18px;
+		position:absolute;
+		height:600px;
+		background-image:url(../img/border_right.png);
+	}
+	
+	#label {
+		font-size:11px;
+		font-weight:bold;
+		padding-top:5px;
+		width:150px;
+	}
+	
+	#field {
+		word-break: break-all !important;
+		width:750px;
+	}
+	
+	p {
+		line-height:20px;
+		margin-bottom:15px;
+		font-size:13px;
+	}
+	
+	hr {
+		height:1px;
+		background-color:#f5f5f5;
+		color:#f5f5f5;
+		border-top: none;
+		border-right: none;
+		border-bottom: 1px solid #f5f5f5;
+		border-left: none;
+	}
+	
+	
+	/******************************************************/
+	/* Sessão de estilos - LINKS                          */
+	/******************************************************/
+	a img { border:none; }
+	a { color:#DD4B39; text-decoration:underline; }
+	a:link, a:visited, a:active { color:#DD4B39;text-decoration:underline; }
+	a:hover { color:#FF6D5B; text-decoration:underline; }
+	a.black { color:#000; text-decoration:none;border-bottom:1px solid #999 !important; }
+	a:link.black, a:visited.black, a:active.black { text-decoration:none;border-bottom:1px solid #999 !important }
+	a:hover.black { color:#555; text-decoration:none;border-bottom:1px solid #999 !important }
+	/* Link steelblue: example
+	a:link, a:visited, a:active { color:steelblue; text-decoration:underline; }
+	a:hover { color:#6CA6CD; text-decoration:underline; }
+	*/

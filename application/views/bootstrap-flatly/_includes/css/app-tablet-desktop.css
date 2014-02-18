@@ -1,0 +1,28 @@
+/* Tablet (portrait to landscape) and desktop */
+@media(min-width: 768px) and (max-width: 991px) {
+	.user-profile-sidebar {
+		width:100%;
+		position:relative;
+	}
+
+	.user-profile-main-content {
+		margin-left:0;
+	}
+
+	.user-profile-actions {
+		margin-top:0;
+	}
+
+	.user-profile-sidebar img {
+		height: 120px;
+		width: 120px;
+	}
+
+	#user-profile-name h1  {
+		margin: 30px 0 0 0 !important;
+	}
+
+	#user-profile-name button {
+		margin: 35px 0 0 0 !important;
+	}
+}
