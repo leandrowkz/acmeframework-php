@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<!-- 
+	DADOS DO MÓDULO:
+	Define as propriedades gerais do módulo. Caso a propriedade table não seja informada (opcional), 
+	a criação de formulários, algumas permissões, ações e menus serão ignoradas. 
+	Para utilizar uma tag como valor de um nodo, utilize &lt; para '<' e &gt; para '>'. Exemplo:
+	&lt;acme eval="URL_IMG"/&gt;/icon_example.png => <acme eval="URL_IMG"/>/icon_example.png
+	-->
+	<table></table>
+	<controller></controller>
+	<rotule></rotule>
+	<sql_list></sql_list>
+	<items_per_page></items_per_page>
+	<url_img>&lt;acme eval="URL_IMG"/&gt;/icon_example.png</url_img>
+	<description></description>
+	
+	<!--
+	MENU DE ACESSO:
+	Define se o módulo terá um menu de acesso e para quais grupos este menu será inserido. Por 
+	padrão o menu recebe como nome o rótulo informado para o módulo. O nodo <group></group> deverá
+	se repetir para cada grupo o qual este menu de acesso deverá aparecer.
+	-->
+	<menu_access>
+		<create_menu>true</create_menu>
+		<apply_to_groups>
+			<group>root</group>
+		</apply_to_groups>
+	</menu_access>
+	
+	<!--
+	FORMULÁRIOS DO MÓDULO:
+	Define se o módulo terá os formulários indicados abaixo. Para cada formulário marcado para uso
+	também será criado uma ação de registro que apontará para este formulário, ou um menu de módulo.
+	(para formulários de inserção).
+	-->
+	<forms>
+		<insert>true</insert>
+		<update>true</update>
+		<delete>true</delete>
+		<view>true</view>
+	</forms>
+	
+	<!--
+	PERMISSÕES DO MÓDULO:
+	Define as permissões que o módulo possuirá, em sua criação. Caso o módulo possua uma tabela
+	informada, uma permissão automática para cada formulário definido como 'true' será criada (uma
+	para cada operação). Neste caso estas permissões não precisarão ser definidas. A estrutura de 
+	definição de permissão deverá se repetir para cada permissão desejada, dentro do nodo 
+	<permissions></permissions>:
+	<permission>
+		<name></name>
+		<rotule></rotule>
+		<description></description>
+	</permission>
+	-->
+	<permissions></permissions>
+	
+	<!--
+	AÇÕES DE REGISTROS DE MÓDULO:
+	Define as ações de registros que a listagem do módulo possuirá, em sua criação. Caso o módulo 
+	possua uma tabela informada, uma ação automática que fará o link para os formulários de edição,
+	visualização e deleção (uma para cada um definido como 'true') será criada. Neste caso você não
+	precisa	definir a estrutura para estas ações automáticas. A estrutura de definição da ação de 
+	registro deverá se repetir para cada ação desejada, dentro do nodo <actions></actions>:
+	<action>
+		<rotule></rotule>
+		<link></link> 
+		<target></target>
+		<url_img>&lt;acme eval="URL_IMG"/&gt;/icon_example.png</url_img>
+		<javascript></javascript>
+		<description></description>
+	</action>
+	-->
+	<actions></actions>
+	
+	<!--
+	MENUS DO MÓDULO:
+	Define menus que o módulo possuirá em sua criação. Caso o módulo possua uma tabela informada, 
+	um menu que fará o link para o formulário de inserção (caso este esteja definido como 'true') 
+	será criado. Neste caso você não precisa definir a estrutura para este menu automático. A 
+	estrutura de definição para um menu de módulo deverá se repetir para cada menu desejado, dentro 
+	do nodo <menus></menus>:
+	<menu>
+		<rotule></rotule>
+		<link></link> 
+		<target></target>
+		<url_img>&lt;acme eval="URL_IMG"/&gt;/icon_example.png</url_img>
+		<javascript></javascript>
+		<description></description>
+	</menu>
+	-->
+	<menus></menus>
+</module>
