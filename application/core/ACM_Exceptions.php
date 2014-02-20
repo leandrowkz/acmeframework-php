@@ -2,7 +2,7 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* ACM_Exceptions	// extended from CI_Exceptions
+* ACM_Exceptions (extended from CI_Exceptions)
 *
 * Responsável pela manipulação de erros da aplicação. Toda vez que um erro (php, database, 404) é 
 * disparado, passam por aqui.

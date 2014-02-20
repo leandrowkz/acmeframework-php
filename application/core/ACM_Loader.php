@@ -2,7 +2,7 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* ACM_Loader // extended from CI_Loader
+* ACM_Loader (extended from CI_Loader)
 * 
 * Classe responsável pelo carregamento de libraries, models e views.
 *
@@ -11,8 +11,8 @@
 * --------------------------------------------------------------------------------------------------
 */
 class ACM_Loader extends CI_Loader {
-	// Definição de atributos
-	var $CI = null;
+	
+	public $CI = null;
 
 	/**
 	* List of paths to load models from
@@ -28,9 +28,9 @@ class ACM_Loader extends CI_Loader {
 	* @return object
 	*/
 	function __construct()
-    {
+	{
 		parent::__construct();
-    }
+	}
 	
 	/**
 	* Model Loader
