@@ -21,9 +21,9 @@ class ACM_Exceptions extends CI_Exceptions {
 	* @return object
 	*/
 	function __construct()
-    {
+	{
 		parent::__construct();
-    }
+	}
 	
 	/**
 	* show_error()
@@ -35,13 +35,13 @@ class ACM_Exceptions extends CI_Exceptions {
 	* @param string status_code
 	* @return void
 	*/
-    public function show_error($header = '', $message = '', $template = '', $status_code = 500)
-    {
+	public function show_error($header = '', $message = '', $template = '', $status_code = 500)
+	{
 		print_r( $header ) . '<br /><br />';
 		print_r( $message ) . '<br /><br />';
 		// $this->CI =& get_instance();
 		// $this->CI->error->show_error($header, $message, $template, $status_code);
-    }
+	}
 	
 	/**
 	* show_php_error()
