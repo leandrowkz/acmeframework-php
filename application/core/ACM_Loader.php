@@ -1,14 +1,14 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe ACM_Loader
+* ACM_Loader // extended from CI_Loader
 * 
-* Override da classe CI_Loader do CodeIgniter, responsável pelo carregamento de libraries,
-* models e views.
+* Classe responsável pelo carregamento de libraries, models e views.
 *
-* @since		16/01/2013
-* @location		acme.core.ACM_Loader
+* @since 	16/01/2013
 *
+* --------------------------------------------------------------------------------------------------
 */
 class ACM_Loader extends CI_Loader {
 	// Definição de atributos

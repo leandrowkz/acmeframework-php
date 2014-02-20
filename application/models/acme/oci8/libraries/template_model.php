@@ -1,12 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Template_Model
+* Template_Model
 *
-* Camada model para biblioteca template.
+* Camada model para a biblioteca Template.
 * 
-* @since	22/10/2012
+* @since 	24/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Template_Model extends CI_Model {
 	
@@ -18,7 +20,6 @@ class Template_Model extends CI_Model {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 	}
 	
 	/**

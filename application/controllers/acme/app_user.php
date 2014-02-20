@@ -1,16 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* App_User
+* Controller App_User
 * 
 * Módulo de usuários da aplicação.
 *
 * @since	13/08/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class App_User extends ACME_Module_Controller {
 	
-	var $photos_dir = 'user_photos';
+	public $photos_dir = 'user_photos';
 	
 	/**
 	* __construct()

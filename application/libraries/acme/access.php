@@ -1,18 +1,19 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Access
+* Library Access
 *
-* Esta biblioteca gerencia funções relacionadas ao acesso ao sistema, como validação de sessão ou
+* Biblioteca de funções relacionadas ao acesso ao sistema, como validação de sessão ou
 * permissões de módulo.
 * 
-* @since		01/10/2012
-* @location		acme.libraries.access
+* @since 	01/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Access {
-	// Definição de Atributos
-	var $CI = null;
+	
+	public $CI = null;
 	
 	/**
 	* __construct()
@@ -26,21 +27,18 @@ class Access {
 	
 	/**
 	* validate_login()
-	* Valida um login (usuário e senha) para acesso ao sistema. Verifica se usuário e senha
-	* encaminhados são válidos. Caso válido, retorna array de dados do usuario, senão false.
+	* Valida um login da aplicação. Espera usuário e senha, retorna false caso login nao exista,
+	* array de dados do usuário caso exista.
 	* @param string user
 	* @param string pass
 	* @return mixed data/false
 	*/
 	public function validate_login($user = '', $pass = '')
 	{
-		// Carrega model
 		$this->CI->load->model('libraries/access_model');
-		
-		// Valida o usuário encaminhado no banco de dados
+
 		$arr_validate = $this->CI->access_model->validate_login($user, $pass);
 		
-		// Se count array > 0, usuario valido
 		return (count($arr_validate) > 0) ? $arr_validate : false;
 	}
 	
@@ -74,7 +72,6 @@ class Access {
 	/**
 	* browser_rank()
 	* Retorna lista de browsers que acessaram o sistema e a porcentagem de acesso de cada um.
-	* Utilizado no dashboard do sistema.
 	* @return array browsers
 	*/
 	public function browser_rank()

@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Installer
+* Controller App_Installer
 * 
-* Módulo de instalação do ACME Engine e preparação para a construção da nova aplicação.
+* Instalador do ACME Engine.
 *
-* @since		30/03/2013
-* @location		acme.controllers.acme_installer
+* @since 	30/03/2013
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Installer extends Acme_Engine {
-	// Definição de atributos
+class App_Installer extends ACME_Engine_Controller {
 	
 	/**
 	* __construct()

@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Log
+* Controller App_Log
 * 
-* Classe abstração para o módulo de logs do sistema.
+* Módulo de logs do sistema. Gerencia logs e logs de erros.
 *
-* @since		13/08/2012
-* @location		acme.controllers.acme_log
+* @since 	13/08/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Log  extends Acme_Base_Module {
-	// Definição de atributos
+class App_Log extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
@@ -24,13 +24,10 @@ class Acme_Log  extends Acme_Base_Module {
 	
 	/**
 	* index()
-	* Método 'padrão' do controlador. É invocado automaticamente quando 
-	* o action deste controlador não é informado na URL. Por padrão seu efeito
-	* é exibir a tela de listagem de entrada do módulo.
-	* @param int actual_page
+	* Entrada do módulo.
 	* @return void
 	*/
-	public function index($actual_page = 0)
+	public function index()
 	{
 		parent::index($actual_page);
 	}

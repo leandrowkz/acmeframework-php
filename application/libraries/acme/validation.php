@@ -1,17 +1,18 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Validation
+* Library Validation
 *
-* Esta biblioteca gerencia funções relacionadas à validações em geral, da aplicação.
+* Biblioteca de funções relacionadas a validações de formatos e tipos de dados em geral.
 * 
-* @since		10/09/2012
-* @location		acme.libraries.validation
+* @since 	10/09/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Validation {
-	// Definição de Atributos
-	var $CI = null;
+	
+	public $CI = null;
 	
 	/**
 	* __construct()

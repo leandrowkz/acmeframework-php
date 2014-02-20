@@ -1,17 +1,18 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Log
+* Library Log
 *
-* Esta biblioteca gerencia funções relacionadas ao registro de logs no sistema.
+* Biblioteca de funções relacionadas à manipulação de logs da aplicação.
 * 
-* @since		01/10/2012
-* @location		acme.libraries.log
+* @since 	01/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Log {
 	
-	var $CI = null;
+	public $CI = null;
 	
 	/**
 	* __construct()

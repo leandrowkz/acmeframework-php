@@ -1,27 +1,25 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Access_Model
+* Model Access_Model
 *
-* Abstração da camada modelo (banco de dados) para acesso ao sistema.
+* Camada model para a biblioteca Access.
 * 
-* @since		04/10/2012
-* @location		acme.models.access_model
+* @since 	24/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Access_Model extends CI_Model {
-	// Definição de Atributos
 	
 	/**
 	* __construct()
-	* Construtor de classe. Chama o construtor pai, que abre uma conexão com
-	* o banco de dados, automaticamente.
+	* Construtor de classe.
 	* @return object
 	*/
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 	}
 	
 	/**
@@ -57,52 +55,4 @@ class Access_Model extends CI_Model {
 		}
 		return $data;
 	}
-	
-	/**
-	* browser_rank()
-	* Retorna o ranking de acessos por browser no sistema.
-	* @return array data
-	*/
-	public function browser_rank()
-	{
-		$sql = "SELECT x.browser_name,
-					   x.acessos,
-					   ((x.acessos * 100) / x.total_acessos) as prcnt
-				 FROM (
-						SELECT DISTINCT 
-							  browser_name, 
-							  NVL(COUNT(*), 0) AS acessos,
-							  (SELECT COUNT(*) FROM acm_log WHERE action = 'login') AS total_acessos
-						 FROM acm_log 
-						WHERE action = 'login'
-					 GROUP BY browser_name
-					   ) x ORDER BY prcnt DESC";
-		// Run query
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data)) ? $data : array();
-	}
-	
-	/**
-	* get_user_permission()
-	* Retorna contador de permissoes de usuario conforme parametros encaminhados.
-	* @param string module
-	* @param string permission
-	* @param integer id_user
-	* @return integer count(data)
-	*/
-	public function get_user_permission($module = '', $permission = '', $id_user = 0)
-	{
-		$sql = "SELECT COUNT(*) AS permission 
-  				  FROM acm_user_permission up
-			INNER JOIN acm_module_permission mp on (mp.id_module_permission = up.id_module_permission)
-			INNER JOIN acm_module m on (m.id_module = mp.id_module)
-				 WHERE up.id_user = $id_user
-				   AND m.controller = '$module'
-				   AND mp.permission = '$permission'";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? get_value($data[0], 'permission') : array();
-	}
-	
 }

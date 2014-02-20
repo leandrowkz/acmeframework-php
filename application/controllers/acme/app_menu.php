@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Menu
+* Controller App_Menu
 * 
-* Módulo abstração para gerenciamento de menus presentes na aplicação.
+* Módulo de gerenciamento de menus da aplicação.
 *
-* @since		13/08/2012
-* @location		acme.controllers.acme_menu
+* @since 	13/08/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Menu extends Acme_Base_Module {
-	// Definição de atributos
+class App_Menu extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
@@ -25,7 +25,7 @@ class Acme_Menu extends Acme_Base_Module {
 	/**
 	* @override
 	* index()
-	* Entrada do módulo. Exibe menus do sistema em formato de árvore vertical
+	* Entrada do módulo. Exibe menus do sistema em formato de árvore drag and drop.
 	* @return void
 	*/
 	public function index()

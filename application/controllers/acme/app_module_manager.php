@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 * 
-* Acme_Module_Manager
+* Controller App_Module_Manager
 * 
-* Classe abstração de módulo gerenciador de módulos da aplicação.
+* Gerenciador dos módulos da aplicação.
 *
-* @since		12/02/2013 (atualizado em 17/07/2013)
-* @location		acme.controllers.acme_module_manager
+* @since 	12/02/2013
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Module_Manager  extends Acme_Base_Module {
-	// Definição de Atributos
+class App_Module_Manager  extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
@@ -24,7 +24,7 @@ class Acme_Module_Manager  extends Acme_Base_Module {
 	
 	/**
 	* index()
-	* Método 'padrão' do controlador. Dashboard do sistema.
+	* Entrada do módulo.
 	* @return void
 	*/
 	public function index()

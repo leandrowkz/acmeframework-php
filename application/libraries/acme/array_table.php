@@ -1,17 +1,19 @@
-<?php 
+<?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Array_Table
+* Library Array_Table
 *
-* Monta uma tabela de dados através de um array de dados. Suporta adição de colunas
-* antes ou depois do processamento do html.
+* Biblioteca de funções de montagem de tabela (html, table) a partir de um array de dados.
+*
+* OBS: Esta biblioteca opera com o padrão singleton.
 * 
-* @since		27/08/2012
-* @location		acme.libraries.array_table
+* @since 	27/08/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Array_Table {
-	// Definição de Atributos
+	
 	public $CI = null;
 	public $data = array();
 	public $html = '';

@@ -1,15 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe App_Access
+* Controller App_Access
 * 
-* Gerencia acesso a aplicação, em forma de controlador. Ações de login, logout e verificação de
-* tempo de sessão e acesso (sessão expirou) estão aqui.
+* Módulo de acesso a aplicação. Gerencia entrada e saída (login/logout) e páginas externas.
 *
 * @since	01/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class App_Access extends ACME_Core {
+class App_Access extends ACME_Core_Controller {
 	
 	public $view_dir = '';
 	public $controller_name = '';

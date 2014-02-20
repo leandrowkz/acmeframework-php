@@ -1,19 +1,19 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe ACM_Exceptions
-* 
-* Classe "core" do Codeigniter extendida, para manipulação de erros e exceções em geral. Toda vez
-* que um erro (php, database) é disparado, passam por aqui. Erros 404 não são mapeados por esta
-* classe (veja classe controllers/acme/acme_access).
+* ACM_Exceptions	// extended from CI_Exceptions
 *
-* @since		13/08/2012
-* @location		Codeignter.core.ACM_Exceptions
+* Responsável pela manipulação de erros da aplicação. Toda vez que um erro (php, database, 404) é 
+* disparado, passam por aqui.
 *
+* @since 	13/08/2012
+*
+* --------------------------------------------------------------------------------------------------
 */
 class ACM_Exceptions extends CI_Exceptions {
-	// Definição de atributos
-	var $CI = null;
+	
+	public $CI = null;
 	
 	/**
 	* __construct()

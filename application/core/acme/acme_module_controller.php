@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Module_Controller
+* ACME_Module_Controller
 * 
 * Controlador base da aplicação. Contém o conjunto de regras e métodos referentes aos módulos da
 * aplicação. Todos os controladores devem extender desta classe.
@@ -17,17 +18,17 @@
 *
 * @since	25/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class ACME_Module_Controller extends ACME_Core {
+class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	public $id_module;
-	public $controller; 	// controlador do módulo
-	public $table_name;		// nome da tabela (caso possua uma tabela-alvo)
-	public $label;			// label, rótulo do módulo
-	public $url_img;		// URL da imagem do módulo
-	public $description;	// descrição
-	public $sql_list;		// SQL de listagem (exibido na entrada do módulo)
-	
+	public $controller; 		// controlador do módulo
+	public $table_name;			// nome da tabela (caso possua uma tabela-alvo)
+	public $label;				// label, rótulo do módulo
+	public $url_img;			// URL da imagem do módulo
+	public $description;		// descrição
+	public $sql_list;			// SQL de listagem (exibido na entrada do módulo)
 	public $menus = array();	// menus do módulo
 	public $actions = array();	// ações de registro (para cada registro da listagem)
 	

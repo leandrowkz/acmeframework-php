@@ -1,16 +1,18 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Template
+* Library Template
 *
-* Biblioteca de funções relacionadas ao template selecionado para a aplicação.
+* Biblioteca de funções relacionadas ao uso do template da aplicação.
 * 
-* @since	10/09/2012
+* @since 	10/09/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Template {
 	
-	var $CI = null;
+	public $CI = null;
 	
 	/**
 	* __construct()

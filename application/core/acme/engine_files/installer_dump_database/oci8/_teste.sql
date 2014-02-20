@@ -1015,21 +1015,21 @@ INSERT INTO acm_user VALUES (1,1,'acmeengine','7c58c7b6630b6c2377b41a0c56cea568'
 --------------------------------------------------------
 --  INSERTS for Table acm_user_config
 --------------------------------------------------------
-INSERT INTO acm_user_config VALUES (1,1,'pt_BR',NULL,NULL,'<app eval="URL_ROOT"/>/app_dashboard');
+INSERT INTO acm_user_config VALUES (1,1,'pt_BR',NULL,NULL,'{URL_ROOT}/app_dashboard');
 
 
 <<|SEPARATOR|>>
 --------------------------------------------------------
 --  INSERTS for Table acm_menu
 --------------------------------------------------------
-INSERT INTO acm_menu VALUES (12,NULL,1,'Dashboard','<app eval="URL_ROOT"/>/app_dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',10,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (25,NULL,1,'Configurações e sessão','<app eval="URL_ROOT" />/app_config/',NULL,'<i class="fa fa-cogs fa-fw"></i>',20,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (10,NULL,1,'Menus','<app eval="URL_ROOT" />/app_menu/',NULL,'<i class="fa fa-tasks fa-fw"></i>',30,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (11,NULL,1,'Logs','<app eval="URL_ROOT" />/app_log/',NULL,'<i class="fa fa-tags fa-fw"></i>',40,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (13,NULL,1,'Usuários','<app eval="URL_ROOT" />/app_user/',NULL,'<i class="fa fa-users fa-fw"></i>',50,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (12,NULL,1,'Dashboard','{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',10,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (25,NULL,1,'Configurações e sessão','{URL_ROOT}/app_config/',NULL,'<i class="fa fa-cogs fa-fw"></i>',20,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (10,NULL,1,'Menus','{URL_ROOT}/app_menu/',NULL,'<i class="fa fa-tasks fa-fw"></i>',30,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (11,NULL,1,'Logs','{URL_ROOT}/app_log/',NULL,'<i class="fa fa-tags fa-fw"></i>',40,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (13,NULL,1,'Usuários','{URL_ROOT}/app_user/',NULL,'<i class="fa fa-users fa-fw"></i>',50,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (20,NULL,1,'Módulos',NULL,NULL,'<i class="fa fa-archive fa-fw"></i>',60,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (21,20,1,'Administração','<app eval="URL_ROOT" />/app_module_manager/',NULL,'<i class="fa fa-wrench fa-fw"></i>',70,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (22,20,1,'Construtor','<app eval="URL_ROOT" />/app_module_maker/',NULL,'<i class="fa fa-flask fa-fw"></i>',80,NULL);
+INSERT INTO acm_menu VALUES (21,20,1,'Administração','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-wrench fa-fw"></i>',70,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (22,20,1,'Construtor','{URL_ROOT}/app_module_maker/',NULL,'<i class="fa fa-flask fa-fw"></i>',80,NULL);
 
 
 <<|SEPARATOR|>>
