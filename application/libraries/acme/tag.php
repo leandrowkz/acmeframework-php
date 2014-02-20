@@ -40,14 +40,20 @@ class Tag {
 		
 		if(!is_null($string) && $string != '')
 		{
-			if(preg_match_all("#{[0-9a-zA-Z_-]+}#i", $string, $match))
+			if(preg_match_all('/{([\s]*)[0-9a-zA-Z_-]+([\s]*)}/i', $string, $match))
 			{
-				if(isset($match[1]))
+				
+				// DEBUG;
+				// print_r($match);
+				
+				if(isset($match[0]))
 				{
-					// print_r($match[1]);
 					// Executa um a um os comandos localizados na string
-					foreach($match[1] as $index => $command)
+					foreach($match[0] as $index => $command)
 					{
+						// Remove caracteres de tag '{' e '}'
+						$command = str_replace(array('{', '}'), '', $command);
+
 						// Verifica se o comando possui ponto e vírgula no final, 
 						// caso não possua, então adiciona
 						$command = (preg_match("/;$/", $command)) ? $command : $command . ';';
@@ -70,9 +76,9 @@ class Tag {
 	/**
 	* tag_array_replace()
 	* Faz a substituição em uma string do valor {NUMERO_COLUNA} pelo valor de um 
-	* índice de array $array['NUMERO_COLUNA'].
+	* índice de array $arr_data['NUMERO_COLUNA'].
 	* @param string value
-	* @param array data 
+	* @param array arr_data 
 	* @return string new_string
 	*/
 	public function tag_array_replace($value = null, $arr_data = array())

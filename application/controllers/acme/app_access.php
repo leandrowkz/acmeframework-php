@@ -67,6 +67,7 @@ class App_Access extends ACME_Core_Controller {
 		// die;
 		//oci_close($conn);
 		
+		// echo tag_replace('{URL_ROOT}/acme_dashboard asdhgfhasdfha hh ds {URL_IMG} and echo {URL_CSS}');
 
 		// Coleta nome de usuário
 		$args['login_user'] = $this->session->userdata('login_user');
@@ -125,14 +126,14 @@ class App_Access extends ACME_Core_Controller {
 			// Verifica se url_Default do usuario está preenchida
 			// e o redireciona para lá, caso contrário joga para pagina
 			// padrao de listagem de modulos e atalhos do codeigniter
-			$url_default = (get_value($user, 'url_default') != '') ? $this->tag->eval_replace(get_value($user, 'url_default')) : URL_ROOT . '/app_dashboard/';
+			$url_default = (get_value($user, 'url_default') != '') ? $this->tag->tag_replace(get_value($user, 'url_default')) : URL_ROOT . '/app_dashboard/';
 			
 			// Variaveis de informacao de usuario e sessao que vao para sessao
 			$arr_session['id_user'] = get_value($user, 'id_user');
 			$arr_session['user_group'] = get_value($user, 'user_group');
 			$arr_session['user_name'] = get_value($user, 'user_name');
 			$arr_session['login'] = get_value($user, 'login');
-			$arr_session['user_img'] = eval_replace(get_value($user, 'url_img'));
+			$arr_session['user_img'] = tag_replace(get_value($user, 'url_img'));
 			$arr_session['language'] = get_value($user, 'lang_default');
 			$arr_session['url_default'] = $url_default;
 			$arr_session['login_access'] = true;

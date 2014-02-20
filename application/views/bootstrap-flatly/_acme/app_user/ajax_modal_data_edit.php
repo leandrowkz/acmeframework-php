@@ -62,7 +62,7 @@
 			</div>
 			<div id="form_line">
 				<div class="form_label font_11 bold" style="width:150px"><?php echo lang('Pagina Inicial')?></div>
-				<div class="font_11 form_field" style="width:auto;padding-top:6px"><?php echo eval_replace($url_default);?></div>
+				<div class="font_11 form_field" style="width:auto;padding-top:6px"><?php echo tag_replace($url_default);?></div>
 			</div>
 			
 			<div style="margin-top:35px">

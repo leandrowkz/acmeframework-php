@@ -55,4 +55,27 @@ class Access_Model extends CI_Model {
 		}
 		return $data;
 	}
+
+	/**
+	* get_user_permission()
+	* Retorna contador de permissoes de usuario conforme parametros encaminhados. 
+	* Caso COUNT(*) > 0 então usuário possui a permissão testada.
+	* @param string module
+	* @param string permission
+	* @param integer id_user
+	* @return integer count(data)
+	*/
+	public function get_user_permission($module = '', $permission = '', $id_user = 0)
+	{
+		$sql = "SELECT COUNT(*) AS permission 
+  				  FROM acm_user_permission up
+			INNER JOIN acm_module_permission mp on (mp.id_module_permission = up.id_module_permission)
+			INNER JOIN acm_module m on (m.id_module = mp.id_module)
+				 WHERE up.id_user = $id_user
+				   AND m.controller = '$module'
+				   AND mp.permission = '$permission'";
+		$data = $this->db->query($sql);
+		$data = $data->result_array();
+		return (isset($data[0])) ? get_value($data[0], 'permission') : array();
+	}
 }

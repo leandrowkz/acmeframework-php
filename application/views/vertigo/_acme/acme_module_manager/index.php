@@ -83,7 +83,7 @@ $(document).ready(function(){
 			<tr>
 			<td id="box_permission_left" style="width:30px !important; padding: 20px 0 0 20px;" > 
 				<?php if(get_value($module, 'URL_IMG') != '') { ?>
-				<img class="inline top" style="float:right;" src="<?php echo eval_replace(get_value($module, 'URL_IMG')) ?>"> 
+				<img class="inline top" style="float:right;" src="<?php echo tag_replace(get_value($module, 'URL_IMG')) ?>"> 
 				<?php } ?>
 			</td>
 			<td id="box_permission_center" style="width:120px !important; padding: 22px 10px; border-right: 1px solid #CCC;" > 

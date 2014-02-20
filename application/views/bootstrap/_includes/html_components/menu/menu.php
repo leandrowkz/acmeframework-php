@@ -28,11 +28,11 @@ function menu($menus = array())
 			$count_menu_children = count(get_value($menu, 'children'));
 			
 			// Monta link
-			$link = eval_replace(get_value($menu, 'link'));
-			$target = (get_value($menu, 'target') != '') ? ' target="' . eval_replace(get_value($menu, 'target')) . '" ' : '';
-			$img = (get_value($menu, 'url_img') != '') ? '<img src="' . eval_replace(get_value($menu, 'url_img')) . '" style="width:12px !important;margin:-2px 5px 0 0;" />' : '';
-			$title = eval_replace(get_value($menu, 'description'));
-			$javascript = " " . eval_replace(get_value($menu, 'javascript')) . " ";
+			$link = tag_replace(get_value($menu, 'link'));
+			$target = (get_value($menu, 'target') != '') ? ' target="' . tag_replace(get_value($menu, 'target')) . '" ' : '';
+			$img = (get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="width:12px !important;margin:-2px 5px 0 0;" />' : '';
+			$title = tag_replace(get_value($menu, 'description'));
+			$javascript = " " . tag_replace(get_value($menu, 'javascript')) . " ";
 			$label = lang(get_value($menu, 'lang_key_rotule'));
 			
 			// Monta o label conforme possui filho ou nao

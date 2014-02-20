@@ -2397,7 +2397,7 @@ abstract class ACME_Engine_Controller extends ACME_Core {
 				case 'rmdir':
 					try {
 						// Deleta o diretorio propriamente dito (com tudo dentro)
-						if(!@delete_dir(eval_replace(htmlentities($action['rmdir']))))
+						if(!@delete_dir(tag_replace(htmlentities($action['rmdir']))))
 							$return[$instruction_number] = lang('Não foi possível deletar o diretório ') . $action['rmdir'] . '. ';
 					} catch(Exception $e) {
 						$return[$instruction_number] = lang('Não foi possível deletar o diretório ') . $action['rmdir'] . '. ' . lang('Detalhes do erro: ') . $e->getMessage();

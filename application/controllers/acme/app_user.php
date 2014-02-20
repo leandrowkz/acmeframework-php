@@ -191,7 +191,7 @@ class App_User extends ACME_Module_Controller {
 			$args['log_dtt_ins'] = get_value($user, 'log_dtt_ins');
 			$args['group'] = get_value($user, 'grup');
 			$args['url_img'] = get_value($user, 'url_img'); 
-			$args['url_img_large'] = eval_replace(get_value($user, 'url_img_large'));
+			$args['url_img_large'] = tag_replace(get_value($user, 'url_img_large'));
 			$args['url_default'] = get_value($user, 'url_default'); 
 
 			// Carrega view
@@ -293,7 +293,7 @@ class App_User extends ACME_Module_Controller {
 					$this->db->update('acm_user_config', array('url_img' => $new_user_img), array('id_user' => $id_user));
 					
 					// Atualiza imagem da sessão
-					$this->session->set_userdata('user_img', eval_replace($new_user_img));
+					$this->session->set_userdata('user_img', tag_replace($new_user_img));
 				}
 			}
 		}

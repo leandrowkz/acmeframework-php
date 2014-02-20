@@ -71,7 +71,7 @@
 		<table>
 		<tr>
 		<td style="width:80px;">
-			<?php $img_user = (get_value($user, 'url_img') == '') ? URL_IMG . '/avatar_user_unknown.png' : eval_replace(get_value($user, 'url_img')); ?>
+			<?php $img_user = (get_value($user, 'url_img') == '') ? URL_IMG . '/avatar_user_unknown.png' : tag_replace(get_value($user, 'url_img')); ?>
 			<img src="<?php echo $img_user; ?>" style="width:50px;margin-top:5px" />
 		</td>
 		<td style="width:99%;padding:0 20px 0 40px;">

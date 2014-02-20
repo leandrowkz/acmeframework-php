@@ -82,19 +82,17 @@ class Access {
 		// Verifica se variáveis da sessão estão preenchidas
 		return $this->CI->access_model->browser_rank();
 	}
-	
+
 	/**
-	* validate_permission()
-	* Valida uma permissão com base na permissao e modulo encaminhados (permissao do usuario logado
-	* para o modulo encaminhado). Exibe página de erro de permissão ou booleano quando parametro
-	* de teste de permissao é encaminhado.
-	* @param string module
+	* check_permission()
+	* Checa uma permissão de módulo encaminhada para determinado usuário. Retorna true
+	* caso o usuário possua a permissão, ou false caso não possua.
+	* @param string module 		// controller name
 	* @param string permission
-	* @param boolean exib_page
 	* @param integer id_user
-	* @return mixed has_permission
+	* @return boolean
 	*/
-	public function validate_permission($module = '', $permission = '', $exib_page = true, $id_user = 0)
+	public function check_permission($module = '', $permission = '', $id_user = 0)
 	{
 		// Carrega model
 		$this->CI->load->model('libraries/access_model');
@@ -102,20 +100,27 @@ class Access {
 		// Resolve iduser
 		$id_user = ($id_user != 0) ? $id_user : $this->CI->session->userdata('id_user');
 		
-		// Verifica se variáveis da sessão estão preenchidas
+		// Checa permissão no banco de dados
 		$count_permission = $this->CI->access_model->get_user_permission($module, $permission, $id_user);
 		
-		// Carrega ou nao pagina de erro
-		if($exib_page) 
-		{
-			if($count_permission <= 0)
-			{
-				$this->CI->error->show_error(lang('Usuário sem Permissão'), lang('Usuário sem permissão para esta ação') . ' (' . $permission . ')', 'error_permission', 500, false);
-			}
-		} else {
-			return ($count_permission > 0) ? true : false;
-		}
-		
-		return;
+		// Ajusta retorno
+		return ($count_permission > 0) ? true : false;
+	}
+	
+	/**
+	* validate_permission()
+	* Checa uma permissão de módulo encaminhada para determinado usuário. Retorna true
+	* caso possua a permissão, ou redireciona para página de exceção caso não possua.
+	* @param string module 		// controller name
+	* @param string permission
+	* @param integer id_user
+	* @return mixed boolean/redirect
+	*/
+	public function validate_permission($module = '', $permission = '', $id_user = 0)
+	{
+		if( ! $this->check_permission($module, $permission, $id_user))
+			$this->CI->error->show_error(lang('Usuário sem Permissão'), lang('Usuário sem permissão para esta ação') . ' (' . $permission . ')', 'error_permission', 500, false);
+		else
+			return false;
 	}
 }

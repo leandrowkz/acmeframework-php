@@ -74,7 +74,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 		$this->id_module = get_value($module, 'id_module');
 		$this->label = lang(get_value($module, 'lang_key_rotule'));
 		$this->sql_list = get_value($module, 'sql_list');
-		$this->url_img = eval_replace(get_value($module, 'url_img'));
+		$this->url_img = tag_replace(get_value($module, 'url_img'));
 		$this->description = get_value($module, 'description');
 		$this->table_name = get_value($module, 'table_name');
 		$this->menus = $this->db->get_where('acm_module_menu', array('id_module' => $this->id_module))->result_array();

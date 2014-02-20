@@ -13,9 +13,9 @@
 			<?php foreach($this->menus as $menu) { ?>
 			<div class="inline top module_menu_item" title="<?php echo get_value($menu, 'description')?>">
 				<?php if(get_value($menu, 'url_img') != '') { ?>
-				<img class="inline top" src="<?php echo $this->tag->eval_replace(get_value($menu, 'url_img'))?>" />
+				<img class="inline top" src="<?php echo $this->tag->tag_replace(get_value($menu, 'url_img'))?>" />
 				<?php } ?>
-				<h6 class="inline top"><a href="<?php echo $this->tag->eval_replace(get_value($menu, 'link'))?>" <?php echo(get_value($menu, 'target') != '' ? 'target="' . get_value($menu, 'target') . '"' : '')?> <?php echo(get_value($menu, 'javascript') != '' ? get_value($menu, 'javascript') : '')?>><?php echo lang(get_value($menu, 'lang_key_rotule'))?></a></h6>
+				<h6 class="inline top"><a href="<?php echo $this->tag->tag_replace(get_value($menu, 'link'))?>" <?php echo(get_value($menu, 'target') != '' ? 'target="' . get_value($menu, 'target') . '"' : '')?> <?php echo(get_value($menu, 'javascript') != '' ? get_value($menu, 'javascript') : '')?>><?php echo lang(get_value($menu, 'lang_key_rotule'))?></a></h6>
 			</div>
 			<?php } ?>
 		</div>

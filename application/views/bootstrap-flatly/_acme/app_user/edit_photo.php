@@ -8,7 +8,7 @@
             <?php 
             // Ajusta thumb
             if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
-                $url_img = eval_replace($url_img);
+                $url_img = tag_replace($url_img);
             else
                 $url_img = URL_IMG . '/user-unknown.png';
             ?>

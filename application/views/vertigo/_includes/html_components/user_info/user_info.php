@@ -63,7 +63,7 @@ function user_info($id_user = 0, $login = '', $email = '', $username = '', $user
 			$html .= '</div>';
 			
 			$html .= '<div class="inline top"><img src="' . URL_IMG . '/icon_bullet_external_link.gif" /></div>';
-			$html .= '<div class="inline top" style="max-width:150px;margin:-2px 0 0 3px"><a href="' . eval_replace(get_value($link, 'link')) . '" target="_blank">' . get_value($link, 'name') . '</a></div>';
+			$html .= '<div class="inline top" style="max-width:150px;margin:-2px 0 0 3px"><a href="' . tag_replace(get_value($link, 'link')) . '" target="_blank">' . get_value($link, 'name') . '</a></div>';
 			$html .= '</div>';
 			$i++;
 		}

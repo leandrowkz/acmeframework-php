@@ -86,7 +86,7 @@ $(document).ready(function(){
 		<tr>
 		<td style="width: 120px; background-color: #e9e9e9;">
 			<div style="width: 80px; height: 80px; margin: 28px 20px 15px 20px;">
-				<img style="width:80px;height:80px;" src="<?php echo eval_replace($user_img); ?>" />
+				<img style="width:80px;height:80px;" src="<?php echo tag_replace($user_img); ?>" />
 			</div>
 			<div style="margin: 0 20px 20px 20px;">								
 				<?php if($editable){  ?>
@@ -142,7 +142,7 @@ $(document).ready(function(){
 					</div>  
 					<div class="odd">                                                               
 						<div id="label_view" class="inline"><?php echo lang('Pagina Inicial'); ?></div>       
-						<div id="field_view" class="inline"><?php echo eval_replace($url_default); ?></div>
+						<div id="field_view" class="inline"><?php echo tag_replace($url_default); ?></div>
 					</div>                                                                          
 				</div>
 				<h5 style="margin-top:45px;"><?php echo lang('Estatísticas de Acesso')?></h5>

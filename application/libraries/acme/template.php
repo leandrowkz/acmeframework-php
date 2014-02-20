@@ -145,7 +145,7 @@ class Template {
 		// Retorno só cria variáveis fora do escape
 		foreach($this->CI->config->config['app_settings'] as $attribute => $value)
 			if(!is_object($value))
-				$return .= (!in_array($attribute, $escape) || !$protected_mode) ? "<input type=\"hidden\" name=\"$attribute\" id=\"$attribute\" value=\"" . eval_replace($value) . "\" />\n" : '';
+				$return .= (!in_array($attribute, $escape) || !$protected_mode) ? "<input type=\"hidden\" name=\"$attribute\" id=\"$attribute\" value=\"" . tag_replace($value) . "\" />\n" : '';
 		
 		// Retorno
 		return $return;
