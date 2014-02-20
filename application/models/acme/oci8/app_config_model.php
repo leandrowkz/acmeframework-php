@@ -1,21 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Acme_Config_Model
+* Model App_Config_Model
 *
-* Gerencia camada de dados do módulo configurações e variáveis do sistema.
+* Camada model do modulo app_config.
 * 
-* @since		28/06/2013
-* @location		acme.models.acme_config_model
+* @since 	28/06/2013
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Config_Model extends Base_Module_Model {
-	// Definição de Atributos
+class App_Config_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe. Chama o construtor pai, que abre uma conexão com
-	* o banco de dados, automaticamente.
+	* Construtor de classe.
 	* @return object
 	*/
 	public function __construct()

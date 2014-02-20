@@ -1,21 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Acme_Menu_Model
+* Model App_Menu_Model
 *
-* Gerencia camada de dados do módulo de menus do sistema.
+* Camada model do modulo app_menu.
 * 
-* @since		26/06/2013
-* @location		acme.models.acme_menu_model
+* @since 	26/06/2013
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Menu_Model extends Base_Module_Model {
-	// Definição de Atributos
+class App_Menu_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe. Chama o construtor pai, que abre uma conexão com
-	* o banco de dados, automaticamente.
+	* Construtor de classe.
 	* @return object
 	*/
 	public function __construct()

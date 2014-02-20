@@ -1,21 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Acme_Log_Model
+* Model App_Log_Model
 *
-* Gerencia camada de dados do módulo de logs do sistema.
+* Camada model do modulo app_log.
 * 
-* @since		03/11/2012
-* @location		acme.models.acme_log_model
+* @since 	03/11/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Log_Model extends Base_Module_Model {
-	// Definição de Atributos
+class App_Log_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe. Chama o construtor pai, que abre uma conexão com
-	* o banco de dados, automaticamente.
+	* Construtor de classe.
 	* @return object
 	*/
 	public function __construct()

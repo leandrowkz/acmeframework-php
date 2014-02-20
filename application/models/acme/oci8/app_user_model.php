@@ -1,12 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe App_User_Model
+* Model App_User_Model
 *
 * Camada model do modulo app_user.
 * 
-* @since	03/11/2012
+* @since 	03/11/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class App_User_Model extends CI_Model {
 		
@@ -155,7 +157,7 @@ class App_User_Model extends CI_Model {
 	* @param int id_user
 	* @return array data
 	*/
-	public function browser_rank_user($id_user)
+	public function browser_rank_user($id_user = 0)
 	{
 		$sql = "SELECT distinct browser_name, EXTRACT(MONTH FROM SYSDATE) as mes_atual,					   			 
 						 (SELECT COUNT(*) FROM acm_log l2 WHERE action = 'login' and l2.browser_name = l.browser_name) AS TOTAL_ACESSOS,
