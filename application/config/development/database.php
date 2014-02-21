@@ -52,8 +52,8 @@ $tnsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 
 			(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XE)))';
 
 $db['default']['hostname'] = $tnsname;
-$db['default']['username'] = 'tapmanager';
-$db['default']['password'] = 'tapmanager';
+$db['default']['username'] = 'acmeengine';
+$db['default']['password'] = 'acmeengine';
 $db['default']['database'] = '';
 $db['default']['dbdriver'] = 'oci8';
 $db['default']['dbprefix'] = '';

@@ -86,15 +86,27 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	/**
 	* validate_permission()
-	* Valida uma permissão do módulo corrente para o usuário de id informado.
+	* Valida uma permissão do módulo corrente para o usuário de id informado. Retorna true
+	* caso possua permissão, ou redireciona para página de erro de permissão caso false.
 	* @param string permission
-	* @param boolean exib_page
 	* @param integer id_user
 	* @return mixed has_permission
 	*/
-	public function validate_permission($permission = '', $exib_page = true, $id_user = 0)
+	public function validate_permission($permission = '', $id_user = 0)
 	{
-		return $this->access->validate_permission($this->controller, $permission, $exib_page, $id_user);
+		return $this->access->validate_permission($this->controller, $permission, $id_user);
+	}
+
+	/**
+	* check_permission()
+	* Valida uma permissão do módulo corrente para o usuário de id informado. Retorna true/false.
+	* @param string permission
+	* @param integer id_user
+	* @return boolean
+	*/
+	public function check_permission($permission = '', $id_user = 0)
+	{
+		return $this->access->check_permission($this->controller, $permission, $id_user);
 	}
 	
 	/**

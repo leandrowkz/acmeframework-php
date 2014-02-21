@@ -30,24 +30,13 @@ class Error {
 	* @param string message
 	* @param string template
 	* @param string status_code
+	* @param boolean log_error
 	* @return void
 	*/
     public function show_error($header = '', $message = '', $template = 'error_general', $status_code = 500, $log_error = true)
     {
 		$this->CI =& get_instance();
 
-		// Processa message (muda conforme o tipo de erro)
-		switch($template)
-		{
-			case 'error_db':
-				$message = get_value($message, 1) . '<BR /><BR /><strong>SQL: </strong>' . get_value($message, 2);
-			break;
-			
-			default:
-				$message = $message;
-			break;
-		}
-		
 		// Loga erro no banco de dados
 		if($log_error)
 			$this->CI->log->log_error($template, $header, $message, $status_code);
@@ -64,25 +53,19 @@ class Error {
 	* @param string message
 	* @param string filepath
 	* @param string line
+	* @param boolean log_error
 	* @return void
 	*/
-	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0)
+	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0, $log_error = true)
 	{
 		$this->CI =& get_instance();
 		
 		// Processa gravidade
 		$severity = ( ! isset($this->levels[$severity])) ? $severity : $this->levels[$severity];
 		
-		// Por razões de segurança, o path completo não é exibido
-		$filepath = str_replace("\\", "/", $filepath);
-		if (FALSE !== strpos($filepath, '/'))
-		{
-			$x = explode('/', $filepath);
-			$filepath = $x[count($x)-2].'/'.end($x);
-		}
-		
 		// Loga erro no banco de dados
-		$this->CI->log->log_error('error_php', lang('PHP Error'), $message . " (filepath: " . $filepath . ", line: " . $line . ")", 500);
+		if($log_error && is_object($this->CI->db))
+			$this->CI->log->log_error('error_php', lang('PHP Error'), $message . " (filepath: " . $filepath . ", line: " . $line . ")", 500);
 		
 		// Carrega view do erro (box, processamento não é interrompido)
 		echo $this->CI->template->load_page('_errors/error_php', array('severity' => $severity, 'message' => $message, 'filepath' => $filepath, 'line' => $line), true, false);

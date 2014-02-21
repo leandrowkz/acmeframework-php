@@ -66,20 +66,28 @@ class Log {
 	public function log_error($error_type = '', $header = '', $message = '', $status_code = '')
 	{
 		$this->CI =& get_instance();
+		$this->CI->load->library('user_agent');
 		
 		// dados do log de erro
-		$log['id_user'] = $this->CI->session->userdata('id_user');
 		$log['error_type'] = $error_type;
 		$log['header'] = $header;
-		$log['message'] = $message;
 		$log['status_code'] = $status_code;
-		$log['additional_data'] = is_array($message) ? var_export($message, true) : array();
 		$log['user_agent'] = $this->CI->agent->agent_string();
 		$log['browser_name'] = $this->CI->agent->browser();
 		$log['browser_version'] = $this->CI->agent->version();
 		$log['device_name'] = $this->CI->agent->is_mobile()	? $this->CI->agent->mobile() : 'PC';
 		$log['platform'] = $this->CI->agent->platform();
 		$log['ip_address'] = $this->CI->input->ip_address();
+
+		// Ajusta colunas
+		if($this->CI->session->userdata('id_user') != '' && $this->CI->session->userdata('id_user') != 0)
+			$log['id_user'] = $this->CI->session->userdata('id_user');
+		
+		if(is_array($message)) {
+			$vars = var_export($message, true);
+			$log['message'] = $vars;
+			$log['additional_data'] = $vars;
+		}
 
 		// Insere registro
 		$this->CI->db->insert('acm_log_error', $log);

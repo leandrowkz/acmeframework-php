@@ -31,16 +31,23 @@ class ACM_Exceptions extends CI_Exceptions {
 	* que definem o nivel do erro.
 	* @param string header
 	* @param string message
-	* @param string template
+	* @param string error_type
 	* @param string status_code
 	* @return void
 	*/
-	public function show_error($header = '', $message = '', $template = '', $status_code = 500)
+	public function show_error($header = '', $message = '', $error_type = '', $status_code = 500)
 	{
-		print_r( $header ) . '<br /><br />';
-		print_r( $message ) . '<br /><br />';
-		// $this->CI =& get_instance();
-		// $this->CI->error->show_error($header, $message, $template, $status_code);
+		$this->CI =& get_instance();
+
+		// verifica situação da instalação do ACME
+		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
+
+		// Template fora da app é diferente
+		if( ! $this->CI->access->check_session())
+			$error_type .= '_outside_app';
+
+		// Exibe msg de erro
+		$this->CI->error->show_error($header, $message, $error_type, $status_code, $log_db);
 	}
 	
 	/**
@@ -55,9 +62,14 @@ class ACM_Exceptions extends CI_Exceptions {
 	*/
 	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0)
 	{
-		print_r( $message ) . '<br /><br />';
-		print_r( $filepath ) . '<br /><br />';
-		print_r( $line ) . '<br /><br />';
+		$this->CI =& get_instance();
+
+		// verifica situação da instalação do ACME
+		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
+
+		// Exibe msg de erro
+		$this->CI->error->show_php_error($severity, $message, $filepath, $line, $log_db);
+		
 	}
 	
 	/**

@@ -29,6 +29,25 @@ class App_Log extends ACME_Module_Controller {
 	*/
 	public function index()
 	{
-		parent::index($actual_page);
+		parent::index();
+	}
+
+	/**
+	* ajax_remove_log_error()
+	* Remove registro de log de erro via ajax.
+	* @param string id_log_error
+	* @return void
+	*/
+	public function ajax_remove_log_error($id_log_error = 0)
+	{
+		if($this->check_permission('DELETE')) {
+			$this->db->delete('acm_log_error', array('id_log_error' => $id_log_error));
+			$return = array('return' => true);
+		} else {
+			$return = array('return' => false);
+		}
+
+		// Adorable return!
+		echo json_encode($return);
 	}
 }

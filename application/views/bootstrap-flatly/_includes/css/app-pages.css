@@ -1,10 +1,10 @@
-
-/* acme_access/login */
-.login-panel {
-    margin-top: 25%;
-    border: 0;
-    -webkit-box-shadow: 0 0px 50px rgba(0, 0, 0, 0.4);
-            box-shadow: 0 0px 50px rgba(0, 0, 0, 0.4);
+/* 
+* --------------------------------------------------------------------------------------------------
+* app_access/login
+* --------------------------------------------------------------------------------------------------
+*/
+img#logo {
+    max-width: 200px;
 }
 
 @media(min-width:768px) {
@@ -76,4 +76,9 @@
 
 .custom-panels h3 {
     margin: 0;
+}
+
+#list-errors div.list-group-item div {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

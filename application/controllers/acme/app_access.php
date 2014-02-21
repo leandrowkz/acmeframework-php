@@ -44,6 +44,7 @@ class App_Access extends ACME_Core_Controller {
 	*/
 	public function login()
 	{
+		echo $note;
 		//echo md5('123456');
 
 		// $conn = oci_connect('tapmanager', 'tapmanager', 'localhost/XE');

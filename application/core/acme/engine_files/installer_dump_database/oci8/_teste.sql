@@ -206,7 +206,7 @@ ALTER TRIGGER tgr_acm_log ENABLE;
 CREATE TABLE acm_log_error 
 (	
 	id_log_error NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0) NOT NULL, 
+	id_user NUMBER(10,0) NULL, 
 	error_type VARCHAR2(50 CHAR), 
 	header VARCHAR2(2000 CHAR), 
 	message VARCHAR2(2000 CHAR), 

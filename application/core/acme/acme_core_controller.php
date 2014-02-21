@@ -13,9 +13,9 @@
 */
 class ACME_Core_Controller extends CI_Controller {
 	
-	private $_installed = true;	// define se ACME está instalado
-	private $version = '2.0.0';	// versão atual do ACME Engine
-	private $app_config_file = 'app_settings';	// arquivo de configurações da app
+	public $acme_installed = true;	// define se ACME está instalado
+	protected $acme_version = '2.0.0';	// versão atual do ACME Engine
+	protected $app_config_file = 'app_settings';	// arquivo de configurações da app
 	
 	/**
 	* __construct()
@@ -28,7 +28,7 @@ class ACME_Core_Controller extends CI_Controller {
 
 		// define versão do ACME
 		if( ! defined('ACME_VERSION'))
-			define('ACME_VERSION', $this->version);
+			define('ACME_VERSION', $this->acme_version);
 
 		// Carrega helpers
 		$this->load->helper('url_helper');
@@ -61,7 +61,7 @@ class ACME_Core_Controller extends CI_Controller {
 		$this->lang->load('app', $language);
 		
 		// Carrega uma instancia com banco de dados caso ACME esteja instalado
-		if($this->_installed) 
+		if($this->acme_installed) 
 		{
 			$this->load->database();
 			
