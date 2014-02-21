@@ -32,7 +32,10 @@ class App_Dashboard extends ACME_Module_Controller {
 		// Valida permissão de visualização de dashboard
 		$this->validate_permission('VIEW_DASHBOARD');
 		
+		// Módulos da app
+		$args['modules'] = $this->db->from('acm_module')->order_by('label')->get()->result_array();
+
 		// Carrega view
-		$this->template->load_page('_acme/app_dashboard/index');
+		$this->template->load_page('_acme/app_dashboard/index', $args);
 	}
 }
