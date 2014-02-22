@@ -1,24 +1,70 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
+<!DOCTYPE html>
+<html>
+
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title><?php echo APP_TITLE; ?></title>
-	<?php echo $this->template->load_array_config_js_files(); ?>
-	<?php echo $this->template->load_array_config_css_files(); ?>
-	<link rel="shortcut icon" type="image/x-icon" href="<?php echo URL_IMG ?>/_favicon.ico">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><?php echo APP_NAME ?></title>
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
+    <script src="<?php echo URL_JS ?>/bootstrap.min.js"></script>
+    <script src="<?php echo URL_JS ?>/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- App Scripts - Include with every page -->
+    <script src="<?php echo URL_JS ?>/app-functions.js"></script>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- App CSS - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/app-core.css" rel="stylesheet">
+	<link href="<?php echo URL_CSS ?>/app-pages.css" rel="stylesheet">
+	<link href="<?php echo URL_CSS ?>/app-mobile-portrait.css" rel="stylesheet">
+	<link href="<?php echo URL_CSS ?>/app-mobile-landscape.css" rel="stylesheet">
+	<link href="<?php echo URL_CSS ?>/app-tablet-desktop.css" rel="stylesheet">
+
+	<style>
+		html, body { background-color:#f8f8f8; height:auto; }
+		h1, h3, h4 { margin: 0 0 20px; }
+		h5 { margin: 0 0 5px; }
+		.panel-body { 
+			padding:25px;
+
+       	}
+	</style>
+
 </head>
-<body style="background-color:#f5f5f5">
-	<div style="width:700px;margin:0 auto;top:15%;position:relative;">
-		<div class="center inline top" style="width:200px;margin-right:15px;">
-			<a href="<?php echo URL_ROOT ?>"><img src="<?php echo URL_IMG ?>/logo.png" class="inline top" style="width:170px" /></a>
+
+<body style="margin:30px">
+
+	<div class="row">
+
+		<div class="col-md-8 col-md-offset-2 text-center">
+
+			<div class="panel panel-default panel-body" style="border: 1px solid #eee">
+				
+				<h1 style="font-size:90px"><?php echo lang('404')?></h1>
+				
+				<h3 class="hidden-lg hidden-md"><?php echo lang('Esta página não existe')?></h3>
+				
+				<h1 class="hidden-xs hidden-sm"><?php echo lang('Esta página não existe :(')?></h1>
+				
+				<h4><?php echo lang('Verifique o endereço digitado e tente novamente.')?></h4>
+						
+				<?php $url = $this->session->userdata('url_default') ? $this->session->userdata('url_default') : URL_ROOT; ?>
+				<a href="<?php echo $url ?>" class="btn btn-success btn-lg"><?php echo lang('Página inicial')?> <i class="fa fa-arrow-circle-right fa-fw"></i></a>
+			
+			</div>
+		
 		</div>
-		<div class="inline top" style="width:400px;border-left:2px solid #ccc;padding:2px 0px 5px 15px;">
-			<h1 class="font_shadow_gray" style="padding:0;margin:-22px 0 20px 0"><?php echo lang('Ops!')?></h1>
-			<h3 class="font_shadow_gray" style="margin-bottom:25px"><?php echo lang('Página não encontrada.')?></h3>
-			<div style="margin:20px 0"><?php echo lang('A página que você está tentando acessar não está mais disponível ou não existe. Verifique o endereço digitado e tente novamente.') ?></div>
-			<div style="margin:20px 0"><?php echo lang('Página solicitada: ') . '<h6>' . $this->input->get_post('page') . '</h6>' ?></div>
-			<a href="<?php echo $url_default ?>"><?php echo lang('Ir para página inicial')?></a>
-		</div>
+
 	</div>
+
 </body>
+
 </html>

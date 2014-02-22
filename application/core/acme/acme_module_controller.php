@@ -72,7 +72,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 
 		// Seta atributos do objeto atual
 		$this->id_module = get_value($module, 'id_module');
-		$this->label = lang(get_value($module, 'lang_key_rotule'));
+		$this->label = lang(get_value($module, 'label'));
 		$this->sql_list = get_value($module, 'sql_list');
 		$this->url_img = tag_replace(get_value($module, 'url_img'));
 		$this->description = get_value($module, 'description');

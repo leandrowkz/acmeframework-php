@@ -42,10 +42,6 @@ class ACM_Exceptions extends CI_Exceptions {
 		// verifica situação da instalação do ACME
 		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
 
-		// Template fora da app é diferente
-		if( ! $this->CI->access->check_session())
-			$error_type .= '_outside_app';
-
 		// Exibe msg de erro
 		$this->CI->error->show_error($header, $message, $error_type, $status_code, $log_db);
 	}
@@ -68,7 +64,7 @@ class ACM_Exceptions extends CI_Exceptions {
 		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
 
 		// Exibe msg de erro
-		$this->CI->error->show_php_error($severity, $message, $filepath, $line, $log_db);
+		$this->CI->error->show_php_error($this->levels[$severity], $message, $filepath, $line, $log_db);
 		
 	}
 	
@@ -79,13 +75,11 @@ class ACM_Exceptions extends CI_Exceptions {
 	*/
 	function show_404($page = '', $log_error = TRUE)
 	{
-		// Calcula a URL raiz do projeto
-		$htdocs = str_replace('/', '\\', rtrim($_SERVER['DOCUMENT_ROOT'], '/'));
-		$app_folder = str_replace($htdocs, '', dirname(__FILE__));
-		$app_folder = rtrim(str_replace('\\', '/', str_replace(basename($app_folder), '', $app_folder)), '/');
-		$URL_ROOT = 'http://' . $_SERVER['SERVER_ADDR'] . str_replace('application', '', $app_folder);
-		
-		header('location: ' . $URL_ROOT . 'acme_access/page_not_found/?page=' . $page);
-		exit;
-	}
+		// Load Router and Core classes.
+    	$RTR =& load_class('Router', 'core');
+
+    	// Redirect to not found
+    	header("Location: " . $RTR->config->config['base_url'] . 'app_access/not_found');
+    	exit;
+    }
 }

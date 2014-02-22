@@ -1,31 +1,41 @@
 <div class="row module-header">
 
-	<div class="col-xs-12"><h1><?php echo lang('Dashboard') ?> <small>// <?php echo lang('Estatísticas gerais')?></small></h1></div>
+	<div class="col-xs-12">
+		<h1><?php echo lang($this->label) ?> 
+		<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+		</h1>
+	</div>
 
 </div>
 
 <div class="row">
 	
 	<div class="col-md-5 col-lg-5">
-	
-		<div class="row">
-			<div class="col-xs-8 col-sm-8 col-md-12 col-lg-7" id="title-modules-override">
-				<h3 style="margin:0 0 15px 0"><?php echo lang('Módulos da aplicação')?></h3>
+		
+		<div class="panel panel-default panel-list">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-12 col-lg-7" id="title-modules-override">
+						<h4 style="margin:10px 0"><?php echo lang('Módulos da aplicação')?></h4>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-12 col-lg-5" id="add-module-override">
+						<a href="<?php echo URL_ROOT ?>/app_module_maker" class="btn btn-success btn-block btn-default btn-md" style="white-space:normal"><?php echo lang('Criar novo módulo')?> <i class="fa fa-plus-circle fa-fw"></i></a>
+					</div>
+				</div>
 			</div>
-			<div class="col-xs-4 col-sm-4 col-md-12 col-lg-5" id="add-module-override">
-				<a href="<?php echo URL_ROOT ?>/app_module_maker" class="btn btn-success btn-block btn-default btn-sm" style="white-space:normal;margin-bottom:15px"><?php echo lang('Criar novo módulo')?> <i class="fa fa-plus-circle fa-fw"></i></a>
-			</div>
-		</div>
 
-		<div class="list-group">
-			<?php foreach($modules as $module) { ?>
-        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Clique para ir') ?>">
-        		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
-            	<h4 class="list-group-item-heading"><?php echo get_value($module, 'label') ?></h4>
-            	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
-            </a>
-            <?php } ?>
-        </div>
+			<div class="panel-body">
+				<div class="list-group">
+					<?php foreach($modules as $module) { ?>
+		        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Clique para ir') ?>">
+		        		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
+		            	<h5 class="list-group-item-heading"><?php echo get_value($module, 'label') ?></h5>
+		            	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
+		            </a>
+		            <?php } ?>
+		        </div>
+		    </div>
+		</div>
 
 	</div>
 	
@@ -64,31 +74,35 @@
 		            
 		            <div class="panel-heading">
 		                <i class="fa fa-fire-extinguisher fa-fw"></i>
-		                <h1 class="pull-right"><?php echo count($errors) ?></h1>
-		                <div class="text-right" style="margin-top:5px"><?php echo lang('Erros encontrados')?></div>
+		                <h1 class="pull-right" id="count-errors"><?php echo count($errors) ?></h1>
+		                <div class="text-right"style="margin-top:5px"><?php echo lang('Erros encontrados')?></div>
 		            </div>
 		            <div class="panel-body">
 		            	<span class="pull-right"><i id="show-errors-arrow" class="fa fa-arrow-circle-right fa-fw"></i></span>
 		                <a href="javascript:void(0)" id="show-errors"><?php echo lang('Resolver problemas') ?></a>
 		                
-		                <div class="list-group" id="list-errors" style="margin:10px 0 0;display:none">
-			                <?php 
-							$i = 1;
-			                foreach($errors as $error) {?>
-			                	<?php if($i <= 3) { ?>
-				                <div class="list-group-item" id="error-<?php echo get_value($error, 'id_log_error') ?>">
-				                	<small class="pull-right"><a href="javascript:void(0)" onclick="ajax_remove_error(<?php echo get_value($error, 'id_log_error') ?>)"><?php echo lang('Remover'); ?></a></small>
-				                	<div><?php echo get_value($error, 'header'); ?></div>
-				                	<div><small><?php echo get_value($error, 'message'); ?></small></div>
-				                </div>
-				                <?php } ?>
-			                <?php $i++; } ?>
-			                
-			                <?php if($i > 3) { ?>
-			                <a class="text-center" href="<?php echo URL_ROOT ?>/app_log" title="<?php echo lang('Ver todos')?>"><h2 style="margin: 0 !important">. . .</h2></a>
+		                <div id="list-errors">
+		                	<h5 class="text-muted"><?php echo lang('Exibindo últimos 50')?></h5>
+			                <div class="list-group">
+				                <?php 
+				                $i = 1;
+				                foreach($errors as $error) {?>
+				                	<?php if($i <= 50) {?>
+					                <div class="list-group-item" id="error-<?php echo get_value($error, 'id_log_error') ?>">
+					                	<small class="pull-right"><a href="javascript:void(0)" onclick="ajax_remove_error(<?php echo get_value($error, 'id_log_error') ?>)"><?php echo lang('Remover'); ?></a></small>
+					                	<div><?php echo get_value($error, 'header'); ?></div>
+					                	<div><small><?php echo get_value($error, 'additional_data'); ?></small></div>
+					                	<div><small><?php echo get_value($error, 'message'); ?></small></div>
+					                	<div><?php echo lang('Em') ?> <?php echo get_value($error, 'log_dtt_ins'); ?></div>
+					                </div>
+					            	<?php } ?>
+					            <?php $i++; } ?>
+				            </div>
+				            
+				            <?php if($i >= 50) {?>
+				            <a href="<?php echo URL_ROOT ?>/app_log" title="<?php echo lang('Ver todos') ?>" class="text-center"><h2 style="margin-top:0">. . .</h2></a>
 				            <?php } ?>
-		            	</div>
-
+				        </div>
 		            </div>
 		        </div>
 			</div>
@@ -97,7 +111,7 @@
 		<div class="row" style="margin-top:10px">
 			<div class="col-md-12 custom-panels">
 				<div class="well" STYLE="height:400px">
-		            <h3 class="text-center"><?php echo lang('Navegadores e acessos')?></h3>
+		            <h4 class="text-center"><?php echo lang('Navegadores e acessos')?></h4>
 					<div id="browser-chart"></div>
 		        </div>
 			</div>
@@ -129,10 +143,12 @@
             type: 'POST',
             complete : function (data) {
             	json = $.parseJSON(data.responseText);
-            	if(json.return)
+            	if(json.return) { 
                 	$('#error-' + id_log_error).remove();
-                else
+                	$('#count-errors').html($('#count-errors').html() - 1);
+                } else {
                 	alert("<?php echo lang('Ops! Você não possui permissão para fazer isto.')?>");
+                }
             }
         });
 
@@ -161,17 +177,10 @@
 
 	Morris.Bar({
     	element: 'browser-chart',
-    	data: [
-      		{device: 'iPhone', geekbench: 136},
-      		{device: 'iPhone 3G', geekbench: 137},
-      		{device: 'iPhone 3GS', geekbench: 275},
-      		{device: 'iPhone 4', geekbench: 380},
-      		{device: 'iPhone 4S', geekbench: 655},
-      		{device: 'iPhone 5', geekbench: 1571}
-    	],
-    	xkey: 'device',
-    	ykeys: ['geekbench'],
-    	labels: ['Geekbench'],
+    	data: <?php echo json_encode(array_change_key_case_recursive($browsers, CASE_LOWER)) ?>,
+    	xkey: 'browser_name',
+    	ykeys: ['count_access'],
+    	labels: ['Acessos'],
     	barRatio: 0.4,
     	xLabelAngle: 35,
     	hideHover: 'auto',

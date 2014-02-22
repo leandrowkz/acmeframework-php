@@ -23,58 +23,7 @@ class App_User extends ACME_Module_Controller {
 	{
 		parent::__construct(__CLASS__);
 	}
-	
-	/**
-	* permission_manager()
-	* Tela de gerenciamento de permissões de usuário.
-	* @param integer id_user
-	* @return void
-	*/
-	public function permission_manager($id_user = 0)
-	{
-		$this->validate_permission('PERMISSION_MANAGER');
-		
-		// Coleta filtros
-		$filters = $this->input->post();
-		
-		// Calcula filtros para modulos (exibir somente modulos do acme ou app)
-		$args['show_acme_modules'] = (get_value($filters, 'show_acme_modules') == 'Y') ? true : false;
-		
-		// Permission do usuario
-		$args['lista'] =  $this->app_user_model->get_list_permissions($id_user, $args['show_acme_modules']);
-		$args['user_data'] = $this->app_user_model->get_user_data($id_user);
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/permission_manager', $args);
-	}
-	
-	/**
-	* ajax_set_user_permission()
-	* Habilita ou desabilita uma permissão de um módulo para determinado usuário
-	* incluindo um novo registro ou deletando da tabela de permissões.
-	* @param integer id_user
-	* @param integer id_module_permission
-	* @param string action
-	* @return void
-	*/
-	public function ajax_set_user_permission($id_user = 0, $id_module_permission = 0, $action = '')
-	{
-		if($this->validate_permission('PERMISSION_MANAGER', false))
-		{
-			$permission_ins['id_user'] = $id_user;
-			$permission_ins['id_module_permission'] = $id_module_permission;	
-			
-			// Dados para inserção
-			if( strtolower($action) == 'enable')
-			{				
-				// Insere um novo registro de acao para este formulario
-				$this->db->insert('acm_user_permission', $permission_ins);
-			}else{					
-				$this->db->delete('acm_user_permission', $permission_ins);
-			}			
-		}	
-	}
-	
+
 	/**
 	* profile()
 	* Tela de perfil de usuário.
@@ -132,6 +81,7 @@ class App_User extends ACME_Module_Controller {
 			$args['group'] = get_value($user, 'grup');
 			$args['url_img'] = get_value($user, 'url_img');
 			$args['url_default'] = get_value($user, 'url_default'); 
+			$args['lang_default'] = get_value($user, 'lang_default'); 
 						
 			// Carrega view
 			$this->template->load_page('_acme/app_user/edit_profile', $args);
@@ -243,7 +193,7 @@ class App_User extends ACME_Module_Controller {
 				@unlink(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename(get_value($user, 'url_img_large')));
 
 				// Atualiza imagem atual
-				$this->db->update('acm_user_config', array('url_img_large' => '<app eval="URL_UPLOAD" />/' . $this->photos_dir . '/' . $new_file), array('id_user' => $id_user));
+				$this->db->update('acm_user_config', array('url_img_large' => '{URL_UPLOAD}/' . $this->photos_dir . '/' . $new_file), array('id_user' => $id_user));
 
 				// Informa nova img para retorno
 				$return = $new_file;
@@ -289,7 +239,7 @@ class App_User extends ACME_Module_Controller {
 					@unlink(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename(get_value($user, 'url_img')));
 
 					// Atualiza info do thumb do usuário
-					$new_user_img = '<app eval="URL_UPLOAD" />/' . $this->photos_dir . '/' . $file_thumb_name;
+					$new_user_img = '{URL_UPLOAD}/' . $this->photos_dir . '/' . $file_thumb_name;
 					$this->db->update('acm_user_config', array('url_img' => $new_user_img), array('id_user' => $id_user));
 					
 					// Atualiza imagem da sessão
@@ -368,6 +318,59 @@ class App_User extends ACME_Module_Controller {
 		else
 			return false;
 	}
+	
+	/**
+	* permission_manager()
+	* Tela de gerenciamento de permissões de usuário.
+	* @param integer id_user
+	* @return void
+	*/
+	public function permission_manager($id_user = 0)
+	{
+		$this->validate_permission('PERMISSION_MANAGER');
+		
+		// Coleta filtros
+		$filters = $this->input->post();
+		
+		// Calcula filtros para modulos (exibir somente modulos do acme ou app)
+		$args['show_acme_modules'] = (get_value($filters, 'show_acme_modules') == 'Y') ? true : false;
+		
+		// Permission do usuario
+		$args['lista'] =  $this->app_user_model->get_list_permissions($id_user, $args['show_acme_modules']);
+		$args['user_data'] = $this->app_user_model->get_user_data($id_user);
+		
+		// Carrega view
+		$this->template->load_page('_acme/app_user/permission_manager', $args);
+	}
+	
+	/**
+	* ajax_set_user_permission()
+	* Habilita ou desabilita uma permissão de um módulo para determinado usuário
+	* incluindo um novo registro ou deletando da tabela de permissões.
+	* @param integer id_user
+	* @param integer id_module_permission
+	* @param string action
+	* @return void
+	*/
+	public function ajax_set_user_permission($id_user = 0, $id_module_permission = 0, $action = '')
+	{
+		if($this->validate_permission('PERMISSION_MANAGER', false))
+		{
+			$permission_ins['id_user'] = $id_user;
+			$permission_ins['id_module_permission'] = $id_module_permission;	
+			
+			// Dados para inserção
+			if( strtolower($action) == 'enable')
+			{				
+				// Insere um novo registro de acao para este formulario
+				$this->db->insert('acm_user_permission', $permission_ins);
+			}else{					
+				$this->db->delete('acm_user_permission', $permission_ins);
+			}			
+		}	
+	}
+	
+	
 	
 	/**
 	* insert()

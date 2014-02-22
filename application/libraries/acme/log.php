@@ -78,6 +78,7 @@ class Log {
 		$log['device_name'] = $this->CI->agent->is_mobile()	? $this->CI->agent->mobile() : 'PC';
 		$log['platform'] = $this->CI->agent->platform();
 		$log['ip_address'] = $this->CI->input->ip_address();
+		$log['message'] = $message;
 
 		// Ajusta colunas
 		if($this->CI->session->userdata('id_user') != '' && $this->CI->session->userdata('id_user') != 0)

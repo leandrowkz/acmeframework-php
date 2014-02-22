@@ -92,7 +92,7 @@ class Error {
 	public function show_404()
 	{
 		$this->CI =& get_instance();
-		$args['url_default'] = ($this->CI->session->userdata('url_default') == '') ? URL_ROOT : $this->CI->session->userdata('url_default');
-		echo $this->CI->template->load_page('_errors/error_404', $args, true, false);
+		echo $this->CI->template->load_page('_errors/error_404', array(), true, false);
+		exit;
 	}
 }

@@ -44,7 +44,7 @@ class App_Access extends ACME_Core_Controller {
 	*/
 	public function login()
 	{
-		echo $note;
+		// echo $note;
 		//echo md5('123456');
 
 		// $conn = oci_connect('tapmanager', 'tapmanager', 'localhost/XE');
@@ -163,11 +163,11 @@ class App_Access extends ACME_Core_Controller {
 	}
 	
 	/**
-	* page_not_found()
+	* not_found()
 	* 404, página não encontrada.
 	* @return void
 	*/
-	public function page_not_found()
+	public function not_found()
 	{
 		$this->error->show_404();
 	}

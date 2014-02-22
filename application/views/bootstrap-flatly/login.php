@@ -31,7 +31,7 @@
             
             <div class="col-md-4 col-md-offset-4">
 
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-default" style="border: 1px solid #eee">
                     
                     <div class="panel-body" style="padding:25px;">
                         

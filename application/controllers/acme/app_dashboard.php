@@ -50,6 +50,15 @@ class App_Dashboard extends ACME_Module_Controller {
 								   ->get()
 								   ->result_array();
 
+		// browser ranking
+		$args['browsers'] = $this->db->select('distinct browser_name, count(*) as count_access')
+									 ->from('acm_log')
+									 ->where(array('action' => 'login'))
+									 ->group_by('browser_name')
+									 ->order_by('browser_name')
+									 ->get()
+									 ->result_array();
+
 		// Carrega view
 		$this->template->load_page('_acme/app_dashboard/index', $args);
 	}
