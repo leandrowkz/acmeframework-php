@@ -31,31 +31,11 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	{
 		$this->validate_permission('ENTER');
 		
-		// Filtros encaminhados - dá preferencia por POST, se não tenta localizar o array
-		// de filtros do modulo que fica perambulando na sessao. Para este segundo caso,
-		// tenta localizar conforme o nome do modulo, entao apaga todos os outros filtros.
-		if($this->input->post() != '')
-		{
-			$filters = $this->input->post();
-		} else if (get_value($this->session->userdata('module_array_filters'), $this->controller . '_filters') != '') {
-			$filters = get_value($this->session->userdata('module_array_filters'), $this->controller . '_filters');
-			$this->session->unset_userdata('module_array_filters');
-		} else {
-			$filters = array();
-		}
-		
-		// Seta o array de filtros em sessão para que quando alterar a pagina ainda dentro do modulo
-		// e voltar para a pagina de listagem os filtros permaneçam como estavam anteriormente.
-		$this->session->set_userdata('module_array_filters', array($this->controller . '_filters' => $filters));
-		
-		// Calcula filtros para modulos (exibir somente modulos do acme ou app)
-		$args['show_acme_modules'] = (get_value($filters, 'show_acme_modules') == 'Y') ? true : false;
-		
-		// Para listagem de modulos
-		$args['modules'] = $this->acme_module_manager_model->get_list_modules($args['show_acme_modules']);
+		// Módulos da app
+		$args['modules'] = $this->db->from('acm_module')->order_by('label')->get()->result_array();
 		
 		// Carrega camada de visualização
-		$this->template->load_page('_acme/acme_module_manager/index', $args);
+		$this->template->load_page('_acme/app_module_manager/index', $args);
 	}
 	
 	/**

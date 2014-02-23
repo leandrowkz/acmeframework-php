@@ -19,7 +19,7 @@
 						<h4 style="margin:10px 0"><?php echo lang('Módulos da aplicação')?></h4>
 					</div>
 					<div class="col-xs-4 col-sm-4 col-md-12 col-lg-5" id="add-module-override">
-						<a href="<?php echo URL_ROOT ?>/app_module_maker" class="btn btn-success btn-block btn-default btn-md" style="white-space:normal"><?php echo lang('Criar novo módulo')?> <i class="fa fa-plus-circle fa-fw"></i></a>
+						<a href="<?php echo URL_ROOT ?>/app_module_maker" class="btn btn-success btn-block btn-default btn-md" style="white-space:normal"><?php echo lang('Novo módulo')?> <i class="fa fa-plus-circle fa-fw"></i></a>
 					</div>
 				</div>
 			</div>
@@ -73,7 +73,7 @@
 				<div class="panel panel-danger">
 		            
 		            <div class="panel-heading">
-		                <i class="fa fa-fire-extinguisher fa-fw"></i>
+		                <i class="fa fa-bug fa-fw"></i>
 		                <h1 class="pull-right" id="count-errors"><?php echo count($errors) ?></h1>
 		                <div class="text-right"style="margin-top:5px"><?php echo lang('Erros encontrados')?></div>
 		            </div>
