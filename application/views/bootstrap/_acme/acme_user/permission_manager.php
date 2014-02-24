@@ -113,7 +113,7 @@ $(document).ready(function(){
 	<table width="100%" >
 	<tr>
 	<td id="box_permission_left" style="width:30px !important; padding: 20px 0 0 20px;" > 	
-		<img class="inline top" style="float:right;" src="<?php echo eval_replace(get_value($module, 'URL_IMG')) ?>"> 
+		<img class="inline top" style="float:right;" src="<?php echo tag_replace(get_value($module, 'URL_IMG')) ?>"> 
 	</td>
 	<td id="box_permission_center" style="width:170px !important; padding: 20px; border-right: 1px solid #CCC;" > 
 		<h5 id="module_<?php echo $i;?>" class="inline top"><?php echo lang(get_value($module, 'mod_lang_key_rotule')) ?></h5>	

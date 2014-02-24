@@ -95,8 +95,8 @@
 			
 			<br style="clear:both;"/>
 			
-			<input type="hidden" name="file_name" value="<?php echo basename(eval_replace($file_name)); ?>" id="file_name" />				
-			<input type="hidden" name="thumb_name" value="<?php echo basename(eval_replace($thumb_name)); ?>" id="thumb_name" />				
+			<input type="hidden" name="file_name" value="<?php echo basename(tag_replace($file_name)); ?>" id="file_name" />				
+			<input type="hidden" name="thumb_name" value="<?php echo basename(tag_replace($thumb_name)); ?>" id="thumb_name" />				
 			<input type="hidden" name="id_user" value="<?php echo $id_user; ?>" id="id_user" />				
 			<input type="hidden" name="edit" value="<?php echo (!isset($edit)) ? '0' : $edit; ?>" id="edit" />				
 			

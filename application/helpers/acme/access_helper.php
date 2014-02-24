@@ -9,11 +9,12 @@
 * A chamada das funções contidas neste arquivo ajudante são alias para os métodos de mesmo nome
 * localizados na respectiva biblioteca (Access). Sendo assim, as instruções abaixo retornam o mesmo
 * resultado esperado:
-*	example_function(); // função localizada neste arquivo
-* 	$this->access->example_function();
+*
+* @example	
+*		example_function(); // função localizada neste arquivo
+* 		$this->access->example_function();
 * 
-* @since		15/07/2013
-* @location		acme.helpers.access
+* @since 	15/07/2013
 *
 * -------------------------------------------------------------------------------------------------
 */

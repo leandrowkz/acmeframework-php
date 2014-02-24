@@ -37,3 +37,21 @@ function get_value($data = null, $index = null)
 	}
 	return $value;
 }
+
+/**
+* array_change_key_case_recursive()
+* array_change_key_case() recursivo. Ideal para uso em resultsets.
+* @param array array
+* @param const case 	// Like CASE_UPPER or CASE_LOWER
+* @return array nee
+*/
+function array_change_key_case_recursive($array, $case) 
+{
+  $array = array_change_key_case($array, $case);
+  foreach ($array as $key => $value) {
+    if ( is_array($value) ) {
+      $array[$key] = array_change_key_case_recursive($value, $case);
+    }
+  }
+  return $array;
+}

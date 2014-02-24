@@ -1,5 +1,3 @@
-@import url("//fonts.googleapis.com/css?family=Lato:400,700,900,400italic");
-
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 
 article,
@@ -302,7 +300,6 @@ body {
   font-family: Arial, "Helvetica Neue", Helvetica, "Lato", sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #2C3E50;
   background-color: #ffffff;
 }
 

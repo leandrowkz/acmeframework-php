@@ -1,18 +1,23 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Tag
+* Library Tag
 *
-* Esta biblioteca gerencia funções de utilização de tags internas para a aplicação.
+* Biblioteca de funções relacionadas à manipulação de tags internas da aplicação. Uma tag interna
+* é uma tag que contém o valor de uma constante, por exemplo:
+*
+*		A tag {URL_ROOT}, quando substituída conterá o valor da constante URL_ROOT.
+*
+* Isto é útil no caso de salvar o valor de URLs no banco de dados.
 * 
-* @since		24/10/2012
-* @location		acme.libraries.tag
+* @since 	24/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Tag {
-	// Definição de Atributos
-	var $tag_name = 'app'; // Valor default: acme
-	var $CI = null;
+	
+	public $CI = null;
 	
 	/**
 	* __construct()
@@ -24,31 +29,31 @@ class Tag {
 	}
 	
 	/**
-	* eval_replace()
-	* Este método faz replace de n instruções localizadas dentro de uma tag pelo resultado destas 
-	* instruções. Caso a na string encaminhada como parametro não exista uma tag válida para fazer 
-	* replace, retorna a string sem modificações.
-	* Veja o exemplo:
-	* String contendo a tag: <acme eval=" URL_IMG " />
-	* Resultado: URL_IMG
-	* @param string tag
-	* @param array variables
+	* tag_replace()
+	* Este método faz replace de todas as tags encontradas em uma string pelo seu respectivo valor.
+	* @param string string
 	* @return mixed result
 	*/
-	public function eval_replace($string = '')
+	public function tag_replace($string = '')
 	{
 		$return = $string;
 		
 		if(!is_null($string) && $string != '')
 		{
-			if(preg_match_all("#<" . $this->tag_name . "[\s]+eval=[\"'](.*?)[\"'][\s]*?/>#i", $string, $match))
+			if(preg_match_all('/{([\s]*)[0-9a-zA-Z_-]+([\s]*)}/i', $string, $match))
 			{
-				if(isset($match[1]))
+				
+				// DEBUG;
+				// print_r($match);
+				
+				if(isset($match[0]))
 				{
-					// print_r($match[1]);
 					// Executa um a um os comandos localizados na string
-					foreach($match[1] as $index => $command)
+					foreach($match[0] as $index => $command)
 					{
+						// Remove caracteres de tag '{' e '}'
+						$command = str_replace(array('{', '}'), '', $command);
+
 						// Verifica se o comando possui ponto e vírgula no final, 
 						// caso não possua, então adiciona
 						$command = (preg_match("/;$/", $command)) ? $command : $command . ';';
@@ -69,14 +74,14 @@ class Tag {
 	}
 	
 	/**
-	* replace_tag()
-	* Faz a substituição do valor {NUMERO_COLUNA} em uma string por um valor de 
-	* um íncide de array.
+	* tag_array_replace()
+	* Faz a substituição em uma string do valor {NUMERO_COLUNA} pelo valor de um 
+	* índice de array $arr_data['NUMERO_COLUNA'].
 	* @param string value
-	* @param array data 
+	* @param array arr_data 
 	* @return string new_string
 	*/
-	public function replace_tag($value = null, $arr_data = array())
+	public function tag_array_replace($value = null, $arr_data = array())
 	{
 		// Casa todas as ocorrencias de {A-Z0-9a-z_-}
 		preg_match_all('/{[0-9a-zA-Z_-]+}/', $value, $matches);	
@@ -95,36 +100,6 @@ class Tag {
 				
 				// Faz replace da tag por valor
 				$value = str_replace($match[$i], get_value($data, $index), $value);
-			}
-		}
-		return $value;
-	}
-	
-	/**
-	* replace_define_constant()
-	* Faz a substituição do valor {DEFINE_CONSTANT} pelo valor correspondente da constante.
-	* @param string value 
-	* @return mixed constant
-	*/
-	public function replace_define_constant($value = '')
-	{
-		// Casa todas as ocorrencias de {A-Z0-9a-z_-}
-		preg_match_all('/{[0-9a-zA-Z_-]+}/', $value, $matches);	
-		
-		// Varre todas as ocorrencias, substituindo valor da tag por constante
-		foreach($matches as $match)
-		{
-			$counter = count($match);
-			for($i = 0; $i < $counter; $i++)
-			{
-				// Coleta o indice do array
-				$constant = str_replace('}', '', str_replace('{','', $match[$i]));
-				
-				// Faz replace da tag por valor do define
-				$constant = constant($constant);
-				
-				// Faz replace do valor casado por valor da constante
-				$value = str_replace($match[$i], $constant, $value);
 			}
 		}
 		return $value;

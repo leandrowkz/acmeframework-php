@@ -18,7 +18,7 @@
 */
 
 /**
-* eval_replace()
+* tag_replace()
 * Este método faz replace de n instruções localizadas dentro de uma tag pelo resultado destas 
 * instruções. Caso a na string encaminhada como parametro não exista uma tag válida para fazer 
 * replace, retorna a string sem modificações.
@@ -29,7 +29,7 @@
 * @param array variables
 * @return mixed result
 */
-function eval_replace($string = '')
+function tag_replace($string = '')
 {
 	// Objeto CI
 	$codeigniter =& get_instance();
@@ -38,7 +38,7 @@ function eval_replace($string = '')
 	$codeigniter->load->library('acme/tag');
 	
 	// Retorna valor padrão utilizando função da biblioteca tag
-	return $codeigniter->tag->eval_replace($string);
+	return $codeigniter->tag->tag_replace($string);
 }
 
 /**

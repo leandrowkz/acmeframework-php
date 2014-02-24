@@ -30,7 +30,7 @@
 		<h5><?php echo lang('Formulário de Inserção')?></h5>
 		<hr style="margin-bottom:10px;" />
 		<?php
-		$action = (get_value($form, 'action') != '') ? eval_replace(get_value($form, 'action')) : URL_ROOT . '/' . $this->controller . '/form_process';
+		$action = (get_value($form, 'action') != '') ? tag_replace(get_value($form, 'action')) : URL_ROOT . '/' . $this->controller . '/form_process';
 		$enctype = (get_value($form, 'enctype') != '') ? 'enctype="' . get_value($form, 'enctype') . '"' : '';
 		$method = (get_value($form, 'method') != '') ? get_value($form, 'method') : 'post';
 		?>

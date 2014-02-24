@@ -8,7 +8,7 @@
 </head>
 <body style="padding:20px">
 	<div id="modal_content">
-		<img src="<?php echo eval_replace($this->app_config->app_logo); ?>" style="max-width:130px" />
+		<img src="<?php echo tag_replace($this->app_config->app_logo); ?>" style="max-width:130px" />
 		<br />
 		<hr style="margin:5px 0 10px 0" />
 		<div class="font_11" style="line-height:18px;">

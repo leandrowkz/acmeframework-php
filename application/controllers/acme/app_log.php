@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Log
+* Controller App_Log
 * 
-* Classe abstração para o módulo de logs do sistema.
+* Módulo de logs do sistema. Gerencia logs e logs de erros.
 *
-* @since		13/08/2012
-* @location		acme.controllers.acme_log
+* @since 	13/08/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Log  extends Acme_Base_Module {
-	// Definição de atributos
+class App_Log extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
@@ -24,14 +24,30 @@ class Acme_Log  extends Acme_Base_Module {
 	
 	/**
 	* index()
-	* Método 'padrão' do controlador. É invocado automaticamente quando 
-	* o action deste controlador não é informado na URL. Por padrão seu efeito
-	* é exibir a tela de listagem de entrada do módulo.
-	* @param int actual_page
+	* Entrada do módulo.
 	* @return void
 	*/
-	public function index($actual_page = 0)
+	public function index()
 	{
-		parent::index($actual_page);
+		parent::index();
+	}
+
+	/**
+	* ajax_remove_log_error()
+	* Remove registro de log de erro via ajax.
+	* @param string id_log_error
+	* @return void
+	*/
+	public function ajax_remove_log_error($id_log_error = 0)
+	{
+		if($this->check_permission('DELETE')) {
+			$this->db->delete('acm_log_error', array('id_log_error' => $id_log_error));
+			$return = array('return' => true);
+		} else {
+			$return = array('return' => false);
+		}
+
+		// Adorable return!
+		echo json_encode($return);
 	}
 }

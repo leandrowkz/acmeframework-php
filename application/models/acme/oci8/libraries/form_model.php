@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Form_Model
+* Model Form_Model
 *
-* Gerencia camada de dados da biblioteca form.
+* Camada model para a biblioteca Form.
 * 
-* @since		16/03/2013
-* @location		acme.models.form_model
+* @since 	24/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Form_Model extends CI_Model {
-	// Definição de Atributos
 	
 	/**
 	* __construct()
@@ -21,7 +21,6 @@ class Form_Model extends CI_Model {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 	}
 	
 	/**

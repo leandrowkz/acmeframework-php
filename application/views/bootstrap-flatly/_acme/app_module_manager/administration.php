@@ -52,7 +52,7 @@
 			<div id="label_view"><?php echo lang('Imagem do Módulo') ?></div>
 			<div id="field_view">
 			<?php if(get_value($module, 'url_img') != ''){ ?>
-			<img src="<?php echo eval_replace(get_value($module, 'url_img'));?>" style="max-width:48px;" />
+			<img src="<?php echo tag_replace(get_value($module, 'url_img'));?>" style="max-width:48px;" />
 			<?php } ?>			
 			</div>
 		</div>

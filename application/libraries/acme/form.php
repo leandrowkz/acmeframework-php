@@ -1,17 +1,18 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Form
+* Library Form
 *
-* Esta biblioteca gerencia funções relacionadas à formulários e misc de formulários em geral.
+* Biblioteca de funções relacionadas a formulários html da aplicação.
 * 
-* @since		27/10/2012
-* @location		acme.libraries.form
+* @since 	27/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Form {
-	// Definição de Atributos
-	var $CI = null;
+	
+	public $CI = null;
 	
 	/**
 	* __construct()
@@ -23,25 +24,25 @@ class Form {
 	}
 	
 	/**
-	* build_array_html_form_fields()
-	* Recebe um array de inputs de formulario do modulo (tabela acm_module_form_field) e os transforma 
-	* em um array de string de elementos de formularios html, como input, select e afins. O retorno
-	* contém um label indicando um elemento de form, como:
+	* build_form_fields()
+	* Recebe resultset de inputs de formulario de modulo (tabela acm_module_form_field) e transforma 
+	* em array de elementos de formularios html, como input, select, textarea, etc. 
 	*
-	* array 
-	* (
-	* 	'ID Usuário' => '<input type="text" name="acm_user[id_user]" id="id_user" />',
-	*	'Login' => '<input type="text" name="acm_user[login]" id="login" />'
-	* )
-	* Terceiro parametro diz se os campos são de filtros ou não (boolean).
+	* 		O array de retorno é algo como:
+	*		Array 
+	* 		(
+	*			'Login' => '<input type="text" name="acm_user[login]" id="login" />'
+	* 			'Senha' => '<input type="text" name="acm_user[password]" id="password" />',
+	* 		)
+	*
 	* @param array fields
 	* @param array values
-	* @param boolean is_filter
-	* @return array string_form_elements
+	* @return array string
 	*/
-	public function build_array_html_form_fields($fields = array(), $values = array(), $is_filter = false)
+	public function build_form_fields($fields = array(), $values = array())
 	{
 		$return = array();
+
 		if(count($fields) > 0)
 		{
 			// DEBUG:
@@ -50,7 +51,8 @@ class Form {
 			foreach($fields as $field)
 			{
 				// Monta atributos comuns a todos os elementos
-				$key = (stristr(get_value($field, 'validations'), 'required') && !$is_filter) ? get_value($field, 'lang_key_label') . '<span class="fnt_error">&nbsp;*</span>' : get_value($field, 'lang_key_label');
+				$key  = get_value($field, 'label');
+				$key .= stristr(get_value($field, 'validations'), 'required') ? '*' : '';
 				
 				// Monta o name e id
 				// monta diferenciado, caso montagem seja de filtros
@@ -170,42 +172,41 @@ class Form {
 	}
 	
 	/** 
-	* build_array_html_options()
-	* Monta um conjunto de tags html <option> com base em um array encaminhado como parametro. O array
-	* encaminhado deverá possuir dois indices em uma mesma linha, ao menos, sendo eles:
-	* Array [0] ( 
-	*			 [0] => VALUE
-	* 			 [1] => ROTULE
-	*			)
-	* Array [1] (
-	*			 [0] => VALUE
-	* 			 [1] => ROTULE
-	*			)
+	* build_select_options()
+	* Monta um conjunto de tags html <option> com base em um array encaminhado como parametro. 
+	* O array encaminhado deverá possuir dois indices em uma mesma linha, ao menos, 
+	* por exemplo:
+	*
+	* 		Array 
+	* 		(
+	* 			[0] => Array ( [0] => VALUE, [1] => ROTULE )
+	* 			[1] => Array ( [0] => VALUE, [1] => ROTULE )
+	*		)
+	*
 	* @param array data
-	* @param value_to_select
-	* @param boolean blank_option
+	* @param option_selected 		// valor que deve ser marcado como selected="selected"
+	* @param boolean blank_option 	// true para inserir <option> inicial em branco
 	* @return string html
 	*/
-	public function build_array_html_options($data = null, $value_to_selected = null, $blank_option = true)
+	public function build_select_options($data = null, $option_selected = '', $blank_option = true)
 	{
 		$html = '';
 		if(!is_null($data) && is_array($data))
 		{
 			// DEBUG:
-			// echo($value_to_selected);
-			// $data = array_values($data);
 			// print_r($data);
-			$val_selected = (!is_null($value_to_selected)) ? $value_to_selected : '';
+
 			if($blank_option)
 			{
 				$html .= '<option value=""';
-				$html .= ($val_selected == '') ? ' selected="selected"></option>' : '></option>';
+				$html .= ($option_selected == '') ? ' selected="selected"></option>' : '></option>';
 			}
+
 			foreach($data as $row)
 			{
 				$row = array_values($row);
 				$html .= '<option value="' . $row[0] . '"';
-				$html .= ($val_selected == $row[0]) ? ' selected="selected">' : '>';
+				$html .= ($option_selected == $row[0]) ? ' selected="selected">' : '>';
 				$html .= array_key_exists(1, $row) ? $row[1] : $row[0];
 				$html .= '</option>';
 			}
@@ -214,23 +215,29 @@ class Form {
 	}
 	
 	/** 
-	* build_array_options_by_separator()
-	* Monta um array de dados de opcoes explodindo string com base no separador ponto-e-virgula. 
-	* A primeira string será os indices que o array possuira e a segunda, seus values. Sendo assim
-	* as strings:
-	* => '1;2;3;4'
-	* => 'A;B;C;D'
-	* retornarao o array:
-	* [0] => 1
-	* [1] => A
-	* @param string indexs
+	* build_array_comma()
+	* Recebe 2 strings de dados separados por ponto-e-virgula e retorna um único array de 
+	* índice => valor com base nestas strings. Por exemplo:
+	* 		
+	*		As strings:
+	* 		String 1: "1;2;3;4"
+	* 		String 2: "A;B;C;D"
+	*
+	* 		Retornarao o array:
+	*		Array 
+	*		(
+	*			[1] => A,
+	*			[2] => B ...
+	*		)
+	*
+	* @param string indexes
 	* @param string values
 	* @return array options
 	*/
-	public function build_array_options_by_separator($indexs = '', $values = '')
+	public function build_array_comma($indexes = '', $values = '')
 	{
 		$return = array();
-		$arr_index = explode(';', $indexs);
+		$arr_index = explode(';', $indexes);
 		$arr_value = explode(';', $values);
 		$count_index = count($arr_index);
 		$count_value = count($arr_value);
@@ -247,41 +254,27 @@ class Form {
 	}
 	
 	/**
-	* get_string_validation()
-	* Retorna a string de validação que deve ser utilizada junto à classe, para validação de
-	* formulários no estilo jquery validation engine. As informações de validação devem ser 
-	* encaminhadas separadas por ';', por exemplo, se você quer que um campo seja obrigatório 
-	* e valide emails, então deve encaminhar a string 'required;email'. Abaixo, as validações 
-	* disponíveis:
-	* -> required: Campo obrigatório
-	*
-	* custom[]
-	* -> email: validador de email
-	* -> phone: valida telefone
-	* -> url: Campo URL válida
-	* -> number: Valida floats com informação de negação ou não
-	* -> integer: Valida números inteiros
-	* -> ipv4: Valida endereços de ip válidos
-	* -> dateEn: valida datas no formato AAAA-MM-DD
-	* -> datePtb: valida datas no formato DD/MM/AAAA
-	* -> onlyLetterSp: Permite apenas letras e espaços
-	* -> onlyNumberSp: Permite apenas numeros e espaços
-	* -> onlyLetterNumber: Permite apenas letras e números, sem espaços
+	* build_string_validation()
+	* Monta a string de validação de formulários utilizada pelo plugin jquery.validationEngine.
+	* As validações deverão ser encaminhadas todas em uma string separadas por ponto-e-vírgula.
 	* 
-	* Após custom[]
-	* -> equals[fieldID]: Compara com o valor de outro campo (passwords, ex)
-	* -> minCheckbox[7]: mínimo de checkboxes a serem marcados
-	* -> maxCheckbox[7]: Um máximo de checkboxes permitidos em um grupo
-	* -> min[7]: Valida quando o valor do campo é menor do que o parametro informado [7]
-	* -> max[7]: Valida quando o valor do campo é maior do que o parametro informado [7]
-	* -> past[NOW or date YYYY-MM-DD]: Verifica se o valor do elemento é uma data anterior à data informada como parametro.
-	* -> future[NOW or date YYYY-MM-DD]: Verifica se o valor do elemento é uma data posterior à data informada como parametro.
-	* -> minSize[7]: Verifica se o tamanho em caracteres do campo é maior do que o informado [7].
-	* -> maxSize[7]: Verifica se o tamanho em caracteres do campo é menor do que o informado [7].
+	*		Exemplos de validação:
+	* 		- required
+	*		- email
+	*		- phone
+	* 		- url
+	* 		- number
+	*		- integer
+	*
+	*		A string deverá ser encaminhada como:
+	*		required;email;phone
+	*		
+	* OBS: Para mais informações, consulte https://github.com/posabsolute/jQuery-Validation-Engine
+	*
 	* @param string validate
 	* @return string new_validate
 	*/
-	public function get_string_validation($validate = '')
+	public function build_string_validation($validate = '')
 	{
 		$return = 'validate[';
 		$part_one = '';
@@ -320,41 +313,31 @@ class Form {
 				// Anothers
 				default:
 					if(stristr($arr_validations[$i], 'equals'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'minCheckbox'))
-					{
 						$part_two .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'maxCheckbox'))
-					{
 						$part_two .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'min'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'max'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'past'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'future'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'minSize'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
+					
 					if(stristr($arr_validations[$i], 'maxSize'))
-					{
 						$part_one .= $arr_validations[$i] . ',';
-					}
 				break;
 			}
 			
@@ -379,21 +362,21 @@ class Form {
 	}
 	
 	/** 
-	* build_array_field_db_from_object()
-	* Monta um array para manipulação do banco de dados (tabela acm_module_form_field) de um objeto
-	* de field criado pelo codeigniter ($this->db->field_data(table)).
+	* build_field()
+	* Prepara e retorna um array de campo pronto para ser inserido na tabela acm_form_field.
+	* Este field/array é montado a partir de um objeto do codeigniter // $this->db->field_data(table).
 	* @param object obj_field
 	* @param string table
 	* @return array field
 	*/
-	public function build_array_field_db_from_object($obj_field = null, $table = '')
+	public function build_field($obj_field = null, $table = '')
 	{
 		// Monta array com colunas do banco de dados
 		$field = array();
 		$field['id_module_form'] = 'NULL';
 		$field['table_column'] = 'NULL';
 		$field['type'] = 'NULL';
-		$field['lang_key_label'] = 'NULL';
+		$field['label'] = 'NULL';
 		$field['description'] = 'NULL';
 		$field['id_html'] = 'NULL';
 		$field['class_html'] = 'NULL';
@@ -418,7 +401,7 @@ class Form {
 			
 			// Preenche dados básicos do campo
 			$field['table_column'] = $obj_field->name;
-			$field['lang_key_label'] = $obj_field->name;
+			$field['label'] = $obj_field->name;
 			$field['id_html'] = $obj_field->name;
 			$field['maxlength'] = $obj_field->max_length;
 			$field['order_'] = get_value($field_data, 'ordinal_position') * 10;
@@ -428,13 +411,11 @@ class Form {
 			{
 				case 'varchar':
 					$field['type'] = 'text';
-					$field['style'] = 'width:' . ($obj_field->max_length) . 'px';
 				break;
 				
 				case 'text':
 				case 'varchar2':
 					$field['type'] = 'textarea';
-					$field['style'] = 'width:300px;height:100px';
 				break;
 				
 				case 'date':
@@ -443,14 +424,12 @@ class Form {
 					$field['type'] = 'text';
 					$field['masks'] = 'date';
 					$field['validations'] .= 'date';
-					$field['style'] = 'width:130px';
 					$field['description'] = lang('Formato DD/MM/AAAA');
 				break;
 
 				case 'time':
 					$field['type'] = 'text';
 					$field['masks'] = 'time';
-					$field['style'] = 'width:100px';
 					$field['description'] = lang('Formato HH:MM');
 				break;
 				
@@ -459,7 +438,6 @@ class Form {
 					$field['type'] = 'text';
 					$field['masks'] = 'integer';
 					$field['validations'] .= 'integer';
-					$style['style'] = 'width:150px;';
 					$field['description'] = lang('Somente números');
 				break;
 				
@@ -468,7 +446,6 @@ class Form {
 					$field['masks'] = 'decimal';
 					$field['maxlength'] = (get_value($field_data, 'numeric_precision') + get_value($field_data, 'numeric_scale')) - 1;
 					$field['validations'] .= 'number';
-					$style['style'] = 'width:150px;';
 				break;
 				
 				case 'float':
@@ -487,29 +464,11 @@ class Form {
 			if(get_value($field_data, 'constraint_type') == 'FOREIGN KEY')
 			{
 				$field['type'] = 'select';
-				$field['style'] = 'width:150px';
 				$field['description'] = '';
 				$field['options_sql'] = 'SELECT ' . $obj_field->name . ', ' . $obj_field->name . ' AS LABEL FROM ' . get_value($field_data, 'referenced_table_name');
 			}
 		}
 		
 		return $field;
-	}
-	
-	/** 
-	* input_file()
-	* Monta um input tipo file que seja cross browser, ou seja, que funcione e possua as mesmas 
-	* características em todos os browsers.
-	* @param string id
-	* @param string name
-	* @param string class
-	* @param string value
-	* @param string javascript
-	* @return string html_input
-	*/
-	public function input_file($id = '', $name = '', $class = '', $value = '', $javascript = '')
-	{
-		$this->CI =& get_instance();
-		return $this->CI->template->load_html_component('_input_file', array($id, $name, $class, $value, $javascript));
 	}
 }

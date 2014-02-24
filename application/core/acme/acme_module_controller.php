@@ -1,7 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Module_Controller
+* ACME_Module_Controller
 * 
 * Controlador base da aplicação. Contém o conjunto de regras e métodos referentes aos módulos da
 * aplicação. Todos os controladores devem extender desta classe.
@@ -17,17 +18,17 @@
 *
 * @since	25/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class ACME_Module_Controller extends ACME_Core {
+class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	public $id_module;
-	public $controller; 	// controlador do módulo
-	public $table_name;		// nome da tabela (caso possua uma tabela-alvo)
-	public $label;			// label, rótulo do módulo
-	public $url_img;		// URL da imagem do módulo
-	public $description;	// descrição
-	public $sql_list;		// SQL de listagem (exibido na entrada do módulo)
-	
+	public $controller; 		// controlador do módulo
+	public $table_name;			// nome da tabela (caso possua uma tabela-alvo)
+	public $label;				// label, rótulo do módulo
+	public $url_img;			// URL da imagem do módulo
+	public $description;		// descrição
+	public $sql_list;			// SQL de listagem (exibido na entrada do módulo)
 	public $menus = array();	// menus do módulo
 	public $actions = array();	// ações de registro (para cada registro da listagem)
 	
@@ -71,9 +72,9 @@ class ACME_Module_Controller extends ACME_Core {
 
 		// Seta atributos do objeto atual
 		$this->id_module = get_value($module, 'id_module');
-		$this->label = lang(get_value($module, 'lang_key_rotule'));
+		$this->label = lang(get_value($module, 'label'));
 		$this->sql_list = get_value($module, 'sql_list');
-		$this->url_img = eval_replace(get_value($module, 'url_img'));
+		$this->url_img = tag_replace(get_value($module, 'url_img'));
 		$this->description = get_value($module, 'description');
 		$this->table_name = get_value($module, 'table_name');
 		$this->menus = $this->db->get_where('acm_module_menu', array('id_module' => $this->id_module))->result_array();
@@ -85,15 +86,27 @@ class ACME_Module_Controller extends ACME_Core {
 	
 	/**
 	* validate_permission()
-	* Valida uma permissão do módulo corrente para o usuário de id informado.
+	* Valida uma permissão do módulo corrente para o usuário de id informado. Retorna true
+	* caso possua permissão, ou redireciona para página de erro de permissão caso false.
 	* @param string permission
-	* @param boolean exib_page
 	* @param integer id_user
 	* @return mixed has_permission
 	*/
-	public function validate_permission($permission = '', $exib_page = true, $id_user = 0)
+	public function validate_permission($permission = '', $id_user = 0)
 	{
-		return $this->access->validate_permission($this->controller, $permission, $exib_page, $id_user);
+		return $this->access->validate_permission($this->controller, $permission, $id_user);
+	}
+
+	/**
+	* check_permission()
+	* Valida uma permissão do módulo corrente para o usuário de id informado. Retorna true/false.
+	* @param string permission
+	* @param integer id_user
+	* @return boolean
+	*/
+	public function check_permission($permission = '', $id_user = 0)
+	{
+		return $this->access->check_permission($this->controller, $permission, $id_user);
 	}
 	
 	/**

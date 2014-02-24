@@ -50,15 +50,15 @@ function menu ($menus = array())
 			$count_menu_children = count(get_value($menu, 'children'));
 			
 			// Monta link
-			$link = eval_replace(get_value($menu, 'link'));
-			$target = (get_value($menu, 'target') != '') ? ' target="' . eval_replace(get_value($menu, 'target')) . '" ' : '';
+			$link = tag_replace(get_value($menu, 'link'));
+			$target = (get_value($menu, 'target') != '') ? ' target="' . tag_replace(get_value($menu, 'target')) . '" ' : '';
 			$label = lang(get_value($menu, 'label'));
 			
 			// Img pode ser font-awesome saiba mais em http://fortawesome.github.io/Font-Awesome/
 			if(stristr(get_value($menu, 'url_img'), '<i class="')) {
 				$img = get_value($menu, 'url_img');
 			} else {
-				$img = (file_exists() && get_value($menu, 'url_img') != '') ? '<img src="' . eval_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
+				$img = (file_exists() && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
 			}
 			
 			// Monta o label conforme possui filho ou nao

@@ -1,19 +1,19 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe ACM_Exceptions
-* 
-* Classe "core" do Codeigniter extendida, para manipulação de erros e exceções em geral. Toda vez
-* que um erro (php, database) é disparado, passam por aqui. Erros 404 não são mapeados por esta
-* classe (veja classe controllers/acme/acme_access).
+* ACM_Exceptions (extended from CI_Exceptions)
 *
-* @since		13/08/2012
-* @location		Codeignter.core.ACM_Exceptions
+* Responsável pela manipulação de erros da aplicação. Toda vez que um erro (php, database, 404) é 
+* disparado, passam por aqui.
 *
+* @since 	13/08/2012
+*
+* --------------------------------------------------------------------------------------------------
 */
 class ACM_Exceptions extends CI_Exceptions {
-	// Definição de atributos
-	var $CI = null;
+	
+	public $CI = null;
 	
 	/**
 	* __construct()
@@ -21,9 +21,9 @@ class ACM_Exceptions extends CI_Exceptions {
 	* @return object
 	*/
 	function __construct()
-    {
+	{
 		parent::__construct();
-    }
+	}
 	
 	/**
 	* show_error()
@@ -31,17 +31,20 @@ class ACM_Exceptions extends CI_Exceptions {
 	* que definem o nivel do erro.
 	* @param string header
 	* @param string message
-	* @param string template
+	* @param string error_type
 	* @param string status_code
 	* @return void
 	*/
-    public function show_error($header = '', $message = '', $template = '', $status_code = 500)
-    {
-		print_r( $header ) . '<br /><br />';
-		print_r( $message ) . '<br /><br />';
-		// $this->CI =& get_instance();
-		// $this->CI->error->show_error($header, $message, $template, $status_code);
-    }
+	public function show_error($header = '', $message = '', $error_type = '', $status_code = 500)
+	{
+		$this->CI =& get_instance();
+
+		// verifica situação da instalação do ACME
+		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
+
+		// Exibe msg de erro
+		$this->CI->error->show_error($header, $message, $error_type, $status_code, $log_db);
+	}
 	
 	/**
 	* show_php_error()
@@ -55,9 +58,14 @@ class ACM_Exceptions extends CI_Exceptions {
 	*/
 	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0)
 	{
-		print_r( $message ) . '<br /><br />';
-		print_r( $filepath ) . '<br /><br />';
-		print_r( $line ) . '<br /><br />';
+		$this->CI =& get_instance();
+
+		// verifica situação da instalação do ACME
+		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
+
+		// Exibe msg de erro
+		$this->CI->error->show_php_error($this->levels[$severity], $message, $filepath, $line, $log_db);
+		
 	}
 	
 	/**
@@ -67,13 +75,11 @@ class ACM_Exceptions extends CI_Exceptions {
 	*/
 	function show_404($page = '', $log_error = TRUE)
 	{
-		// Calcula a URL raiz do projeto
-		$htdocs = str_replace('/', '\\', rtrim($_SERVER['DOCUMENT_ROOT'], '/'));
-		$app_folder = str_replace($htdocs, '', dirname(__FILE__));
-		$app_folder = rtrim(str_replace('\\', '/', str_replace(basename($app_folder), '', $app_folder)), '/');
-		$URL_ROOT = 'http://' . $_SERVER['SERVER_ADDR'] . str_replace('application', '', $app_folder);
-		
-		header('location: ' . $URL_ROOT . 'acme_access/page_not_found/?page=' . $page);
-		exit;
-	}
+		// Load Router and Core classes.
+    	$RTR =& load_class('Router', 'core');
+
+    	// Redirect to not found
+    	header("Location: " . $RTR->config->config['base_url'] . 'app_access/not_found');
+    	exit;
+    }
 }

@@ -206,7 +206,7 @@ ALTER TRIGGER tgr_acm_log ENABLE;
 CREATE TABLE acm_log_error 
 (	
 	id_log_error NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0) NOT NULL, 
+	id_user NUMBER(10,0) NULL, 
 	error_type VARCHAR2(50 CHAR), 
 	header VARCHAR2(2000 CHAR), 
 	message VARCHAR2(2000 CHAR), 
@@ -930,75 +930,6 @@ ALTER TRIGGER tgr_acm_user_permission ENABLE;
 
 <<|SEPARATOR|>>
 --------------------------------------------------------
---  DDL for Table acm_user_reset_password
---------------------------------------------------------
-CREATE TABLE acm_user_reset_password 
-(	
-	id_user_reset_password NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0) NOT NULL, 
-	email VARCHAR2(250 CHAR), 
-	key_access VARCHAR2(2000 CHAR) NOT NULL, 
-	dtt_updated DATE, 
-	log_dtt_ins DATE DEFAULT SYSDATE
-);
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
---  DDL for Index pk_acm_user_reset_password
---------------------------------------------------------
-CREATE UNIQUE INDEX pk_acm_user_reset_password ON acm_user_reset_password (id_user_reset_password);
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
---  DDL for Index fk_aurp_id_user
---------------------------------------------------------
-CREATE INDEX fk_aurp_id_user ON acm_user_reset_password (id_user);
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
---  Constraints for Table acm_user_reset_password
---------------------------------------------------------
-ALTER TABLE acm_user_reset_password ADD CONSTRAINT pk_acm_user_reset_password PRIMARY KEY (id_user_reset_password) ENABLE;
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
---  Ref Constraints for Table acm_user_reset_password
---------------------------------------------------------
-ALTER TABLE acm_user_reset_password ADD CONSTRAINT fk_aurp_id_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) ENABLE;
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
---  Sequence for AUTO_INCREMENT
---------------------------------------------------------
-CREATE SEQUENCE sq_acm_user_reset_password MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 300 CACHE 20 NOORDER NOCYCLE;
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
---  DDL for Trigger for AUTO_INCREMENT
---------------------------------------------------------
-CREATE OR REPLACE TRIGGER tgr_acm_user_reset_password BEFORE INSERT ON acm_user_reset_password
-FOR EACH ROW
-BEGIN
-	IF :new.id_user_reset_password IS NULL OR :new.id_user_reset_password = 0 THEN
-  		SELECT sq_acm_user_reset_password.NEXTVAL
-    		INTO :new.id_user_reset_password
-    	FROM DUAL;
-    END IF;
-END;
-
-
-<<|SEPARATOR|>>
-ALTER TRIGGER tgr_acm_user_reset_password ENABLE;
-
-
-<<|SEPARATOR|>>
---------------------------------------------------------
 --  INSERTS for Table acm_user_group
 --------------------------------------------------------
 INSERT INTO acm_user_group VALUES (1,'ROOT','Usuários com super privilégios na aplicação.',NULL);
@@ -1015,34 +946,34 @@ INSERT INTO acm_user VALUES (1,1,'acmeengine','7c58c7b6630b6c2377b41a0c56cea568'
 --------------------------------------------------------
 --  INSERTS for Table acm_user_config
 --------------------------------------------------------
-INSERT INTO acm_user_config VALUES (1,1,'pt_BR',NULL,NULL,'<app eval="URL_ROOT"/>/app_dashboard');
+INSERT INTO acm_user_config VALUES (1,1,'pt_BR',NULL,NULL,'{URL_ROOT}/app_dashboard');
 
 
 <<|SEPARATOR|>>
 --------------------------------------------------------
 --  INSERTS for Table acm_menu
 --------------------------------------------------------
-INSERT INTO acm_menu VALUES (12,NULL,1,'Dashboard','<app eval="URL_ROOT"/>/app_dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',10,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (25,NULL,1,'Configurações e sessão','<app eval="URL_ROOT" />/app_config/',NULL,'<i class="fa fa-cogs fa-fw"></i>',20,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (10,NULL,1,'Menus','<app eval="URL_ROOT" />/app_menu/',NULL,'<i class="fa fa-tasks fa-fw"></i>',30,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (11,NULL,1,'Logs','<app eval="URL_ROOT" />/app_log/',NULL,'<i class="fa fa-tags fa-fw"></i>',40,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (13,NULL,1,'Usuários','<app eval="URL_ROOT" />/app_user/',NULL,'<i class="fa fa-users fa-fw"></i>',50,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (20,NULL,1,'Módulos',NULL,NULL,'<i class="fa fa-archive fa-fw"></i>',60,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (21,20,1,'Administração','<app eval="URL_ROOT" />/app_module_manager/',NULL,'<i class="fa fa-wrench fa-fw"></i>',70,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (22,20,1,'Construtor','<app eval="URL_ROOT" />/app_module_maker/',NULL,'<i class="fa fa-flask fa-fw"></i>',80,NULL);
+INSERT INTO acm_menu VALUES (12,NULL,1,'Dashboard','{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',10,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (25,NULL,1,'Configurações','{URL_ROOT}/app_config/',NULL,'<i class="fa fa-cogs fa-fw"></i>',50,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (10,NULL,1,'Menus','{URL_ROOT}/app_menu/',NULL,'<i class="fa fa-tasks fa-fw"></i>',60,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (11,NULL,1,'Logs','{URL_ROOT}/app_log/',NULL,'<i class="fa fa-tags fa-fw"></i>',70,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (13,NULL,1,'Usuários','{URL_ROOT}/app_user/',NULL,'<i class="fa fa-users fa-fw"></i>',80,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (20,NULL,1,'Módulos',NULL,NULL,'<i class="fa fa-archive fa-fw"></i>',20,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (21,20,1,'Administração','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-wrench fa-fw"></i>',30,NULL);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (22,20,1,'Construtor de módulos','{URL_ROOT}/app_module_maker/',NULL,'<i class="fa fa-flask fa-fw"></i>',40,NULL);
 
 
 <<|SEPARATOR|>>
 --------------------------------------------------------
 --  INSERTS for Table acm_module
 --------------------------------------------------------
-INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administração de módulos',NULL,'<i class="fa fa-wrench fa-fw"></i>',NULL,NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (2,NULL,NULL,'app_maker','Construtor de módulos',NULL,'<i class="fa fa-flask fa-fw"></i>',NULL,NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Usuários',NULL,'<i class="fa fa-users fa-fw"></i>',NULL,NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',NULL,NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Logs da aplicação',NULL,'<i class="fa fa-tags fa-fw"></i>',NULL,NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus da aplicação',NULL,'<i class="fa fa-tasks fa-fw"></i>',NULL,NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Configurações e sessão',NULL,'<i class="fa fa-cogs fa-fw"></i>',NULL,NULL,SYSDATE);
+INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administração',NULL,'<i class="fa fa-wrench fa-fw"></i>','Módulos da aplicação',NULL,SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Construtor de módulos',NULL,'<i class="fa fa-flask fa-fw"></i>','Crie novos módulos',NULL,SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Usuários',NULL,'<i class="fa fa-users fa-fw"></i>','Gerencie grupos e usuários',NULL,SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>','Estatísticas gerais',NULL,SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Logs da aplicação',NULL,'<i class="fa fa-tags fa-fw"></i>','Registros e erros',NULL,SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus',NULL,'<i class="fa fa-tasks fa-fw"></i>','Gerencie menus da aplicação',NULL,SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Configurações',NULL,'<i class="fa fa-cogs fa-fw"></i>','Consulte configurações e sessão',NULL,SYSDATE);
 
 
 <<|SEPARATOR|>>
@@ -1052,15 +983,15 @@ INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Configurações e sess
 INSERT INTO acm_module_permission VALUES (1,1,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (2,1,'Configurar formulários','CONFIG_FORMS',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (10,1,'Administrar módulo','ADMINISTRATION',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (21,1,'Alterar dados de módulos internos (ACME)','MANAGE_ACME_MODULES','Esta permissão é testada toda vez que o usuário tentar alterar alguma propriedade ou inserir alguma permissão, ação ou menu para um módulo interno, ou seja, do próprio ACME.',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (21,1,'Ediitar módulos internos (ACME)','MANAGE_ACME_MODULES','Permissão verificada na edição de módulos internos',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (3,2,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (4,2,'Criar novo módulo','CREATE_MODULE',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (5,3,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (28,3,'Gerenciar permissões','PERMISSION_MANAGER','Esta permissão é testada quando há a tentativa de acesso à tela de edição de permissões de um determinado usuário.',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (28,3,'Gerenciar permissões','PERMISSION_MANAGER','Permissão verificada na gerência de permissões de usuário',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (61,3,'Inserir','INSERT',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (62,3,'Editar','UPDATE',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (63,3,'Editar perfil','EDIT_PROFILE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (64,3,'Solicitar reset de senha','RESET_PASSWORD','Esta permissão é testada quando há tentativa de acesso à funcionalidade de solicitação de alteração de senha (enviada por email).',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (64,3,'Solicitar reset de senha','RESET_PASSWORD','Permissão verificada na solicitação de reset de senha de usuário',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (66,3,'Copiar permissões','COPY_PERMISSIONS',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (7,5,'Visualizar dashboard','VIEW_DASHBOARD',NULL,NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (8,6,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>

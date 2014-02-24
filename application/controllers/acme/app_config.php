@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Acme_Config
+* Controller App_Config
 * 
-* Controller de gerenciamento de variáveis e constantes do sistema.
+* Módulo de configurações da aplicação. Lista constantes e variáveis de sessão.
 *
-* @since		28/06/2013
-* @location		acme.controllers.acme_config
+* @since 	28/06/2013
 *
+* --------------------------------------------------------------------------------------------------
 */
-class Acme_Config extends Acme_Base_Module {
-	// Definição de atributos
+class App_Config extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
@@ -23,7 +23,6 @@ class Acme_Config extends Acme_Base_Module {
 	}
 	
 	/**
-	* @override
 	* index()
 	* Entrada do módulo. Exibe listagem de variáveis de sessão em um box de visualização.
 	* @return void
@@ -33,10 +32,7 @@ class Acme_Config extends Acme_Base_Module {
 		// Valida permissão de entrada do módulo
 		$this->validate_permission('ENTER');
 		
-		// Coleta variáveis de sessão
-		$args['configs'] = get_object_vars($this->app_config);
-		
 		// Carrega view
-		$this->template->load_page('_acme/acme_config/index', $args);
+		$this->template->load_page('_acme/app_config/index', $args);
 	}
 }

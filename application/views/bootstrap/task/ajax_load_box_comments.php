@@ -22,7 +22,7 @@
 if(count($course) > 0) {
 	$i = 0;
 	foreach($course as $history) {
-	$user_img = (get_value($history, 'url_img') != '') ? eval_replace(get_value($history, 'url_img')) : URL_IMG . '/avatar_user_unknown.png';
+	$user_img = (get_value($history, 'url_img') != '') ? tag_replace(get_value($history, 'url_img')) : URL_IMG . '/avatar_user_unknown.png';
 	$is_left = ($i % 2 == 0 ) ? true : false;
 	?>
 		<?php if($is_left) { ?>

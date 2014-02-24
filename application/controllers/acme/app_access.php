@@ -1,15 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe App_Access
+* Controller App_Access
 * 
-* Gerencia acesso a aplicação, em forma de controlador. Ações de login, logout e verificação de
-* tempo de sessão e acesso (sessão expirou) estão aqui.
+* Módulo de acesso a aplicação. Gerencia entrada e saída (login/logout) e páginas externas.
 *
 * @since	01/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
-class App_Access extends ACME_Core {
+class App_Access extends ACME_Core_Controller {
 	
 	public $view_dir = '';
 	public $controller_name = '';
@@ -43,6 +44,7 @@ class App_Access extends ACME_Core {
 	*/
 	public function login()
 	{
+		// echo $note;
 		//echo md5('123456');
 
 		// $conn = oci_connect('tapmanager', 'tapmanager', 'localhost/XE');
@@ -66,6 +68,7 @@ class App_Access extends ACME_Core {
 		// die;
 		//oci_close($conn);
 		
+		// echo tag_replace('{URL_ROOT}/acme_dashboard asdhgfhasdfha hh ds {URL_IMG} and echo {URL_CSS}');
 
 		// Coleta nome de usuário
 		$args['login_user'] = $this->session->userdata('login_user');
@@ -124,14 +127,14 @@ class App_Access extends ACME_Core {
 			// Verifica se url_Default do usuario está preenchida
 			// e o redireciona para lá, caso contrário joga para pagina
 			// padrao de listagem de modulos e atalhos do codeigniter
-			$url_default = (get_value($user, 'url_default') != '') ? $this->tag->eval_replace(get_value($user, 'url_default')) : URL_ROOT . '/app_dashboard/';
+			$url_default = (get_value($user, 'url_default') != '') ? $this->tag->tag_replace(get_value($user, 'url_default')) : URL_ROOT . '/app_dashboard/';
 			
 			// Variaveis de informacao de usuario e sessao que vao para sessao
 			$arr_session['id_user'] = get_value($user, 'id_user');
 			$arr_session['user_group'] = get_value($user, 'user_group');
 			$arr_session['user_name'] = get_value($user, 'user_name');
 			$arr_session['login'] = get_value($user, 'login');
-			$arr_session['user_img'] = eval_replace(get_value($user, 'url_img'));
+			$arr_session['user_img'] = tag_replace(get_value($user, 'url_img'));
 			$arr_session['language'] = get_value($user, 'lang_default');
 			$arr_session['url_default'] = $url_default;
 			$arr_session['login_access'] = true;
@@ -160,11 +163,11 @@ class App_Access extends ACME_Core {
 	}
 	
 	/**
-	* page_not_found()
+	* not_found()
 	* 404, página não encontrada.
 	* @return void
 	*/
-	public function page_not_found()
+	public function not_found()
 	{
 		$this->error->show_404();
 	}

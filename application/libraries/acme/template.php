@@ -1,16 +1,18 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Template
+* Library Template
 *
-* Biblioteca de funções relacionadas ao template selecionado para a aplicação.
+* Biblioteca de funções relacionadas ao uso do template da aplicação.
 * 
-* @since	10/09/2012
+* @since 	10/09/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Template {
 	
-	var $CI = null;
+	public $CI = null;
 	
 	/**
 	* __construct()
@@ -143,7 +145,7 @@ class Template {
 		// Retorno só cria variáveis fora do escape
 		foreach($this->CI->config->config['app_settings'] as $attribute => $value)
 			if(!is_object($value))
-				$return .= (!in_array($attribute, $escape) || !$protected_mode) ? "<input type=\"hidden\" name=\"$attribute\" id=\"$attribute\" value=\"" . eval_replace($value) . "\" />\n" : '';
+				$return .= (!in_array($attribute, $escape) || !$protected_mode) ? "<input type=\"hidden\" name=\"$attribute\" id=\"$attribute\" value=\"" . tag_replace($value) . "\" />\n" : '';
 		
 		// Retorno
 		return $return;
