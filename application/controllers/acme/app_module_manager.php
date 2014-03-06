@@ -37,6 +37,138 @@ class App_Module_Manager  extends ACME_Module_Controller {
 		// Carrega camada de visualização
 		$this->template->load_page('_acme/app_module_manager/index', $args);
 	}
+
+	/**
+	* config()
+	* Configurações de módulo.
+	* @param int id_module
+	* @return void
+	*/
+	public function config($id_module = 0)
+	{
+		$this->validate_permission('CONFIG');
+		
+		// Dados do modulo
+		$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->result_array();
+		$args['module'] = isset($module[0]) ? $module[0] : array();
+		
+		// Carrega camada de visualização
+		$this->template->load_page('_acme/app_module_manager/config', $args);
+	}
+
+	/**
+	* edit()
+	* Tela de edição de dados de módulo. Processa tela de edição também.
+	* @param int id_module
+	* @return void
+	*/
+	public function edit($id_module = 0, $process = false)
+	{
+		$this->validate_permission('CONFIG');
+		
+		// Tela de edição
+		if( ! $process) {
+			
+			// Dados do modulo
+			$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->result_array();
+			$args['module'] = isset($module[0]) ? $module[0] : array();
+
+			// Carrega camada de visualização
+			$this->template->load_page('_acme/app_module_manager/edit', $args);
+		} else {
+
+			// Proccess update form
+			$data['label'] = $this->input->post('label');
+			$data['description'] = $this->input->post('description');
+			$data['table_name'] = $this->input->post('table_name');
+			$data['sql_list'] = $this->input->post('sql_list');
+
+			// Update it!
+			$this->db->update('acm_module', $data, array('id_module' => $id_module ));
+
+			// redirect to config page
+			redirect('app_module_manager/config/' . $id_module);
+		}
+	}
+
+	/**
+	* load_area()
+	* Carrega especifica na tela de configuração de modulo.
+	* @param string area
+	* @param int id_module
+	* @return void
+	*/
+	public function load_area($area = '', $id_module = 0)
+	{
+		$this->validate_permission('CONFIG');
+
+		// Carrega tabela conforme parametro
+		switch(strtolower($area)) {
+
+			default:
+			case 'permissions':
+				$args['permissions'] = $this->db->from('acm_module_permission')
+												->where(array('id_module' => $id_module))
+												->order_by('id_module_permission desc')
+												->get()
+												->result_array();
+			break;
+
+			case 'forms':
+			break;
+
+			case 'menus':
+			break;
+
+			case 'actions':
+			break;
+		}
+
+		$args['id_module'] = $id_module;
+
+		// Carrega camada de visualização
+		$this->template->load_page('_acme/app_module_manager/area_' . strtolower($area), $args, false, false);
+	}
+
+	/**
+	* save_permission()
+	* Salva permissão encaminhada pelo form de permissoes na tela de config de modulo, via ajax.
+	* @param int id_permission
+	* @param boolean remove
+	* @return void
+	*/
+	public function save_permission($id_permission = 0, $remove = false)
+	{
+		if($this->check_permission('CONFIG')) {
+			
+			// values
+			$data['label'] = $this->input->post('label');
+			$data['permission'] = $this->input->post('permission');
+
+			// insert values
+			if($this->input->post('id_module') != '')
+				$data['id_module'] = $this->input->post('id_module');
+
+			if($this->input->post('description') != '')
+				$data['description'] = $this->input->post('description');
+
+			// update, remove or insert
+			if($id_permission == '' || $id_permission == 0)
+				$this->db->insert('acm_module_permission', $data);
+			elseif ($remove)
+				$this->db->delete('acm_module_permission', array('id_module_permission' => $id_permission));
+			else
+				$this->db->update('acm_module_permission', $data, array('id_module_permission' => $id_permission));
+			
+			// Return
+			$return = array('return' => true);
+		} else {
+			$return = array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso'));
+		}
+
+		// Adorable return!
+		echo json_encode($return);
+	}
 	
 	/**
 	* config_forms()

@@ -726,8 +726,7 @@ CREATE TABLE acm_module_permission
 	id_module NUMBER(10,0) NOT NULL, 
 	label VARCHAR2(250 CHAR), 
 	permission VARCHAR2(50 CHAR) NOT NULL, 
-	description VARCHAR2(2000 CHAR), 
-	dtt_inative DATE
+	description VARCHAR2(2000 CHAR)
 );
 
 
@@ -980,28 +979,26 @@ INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Configurações',NULL,
 --------------------------------------------------------
 --  INSERTS for Table acm_module_permission
 --------------------------------------------------------
-INSERT INTO acm_module_permission VALUES (1,1,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (2,1,'Configurar formulários','CONFIG_FORMS',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (10,1,'Administrar módulo','ADMINISTRATION',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (21,1,'Ediitar módulos internos (ACME)','MANAGE_ACME_MODULES','Permissão verificada na edição de módulos internos',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (3,2,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (4,2,'Criar novo módulo','CREATE_MODULE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (5,3,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (28,3,'Gerenciar permissões','PERMISSION_MANAGER','Permissão verificada na gerência de permissões de usuário',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (61,3,'Inserir','INSERT',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (62,3,'Editar','UPDATE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (63,3,'Editar perfil','EDIT_PROFILE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (64,3,'Solicitar reset de senha','RESET_PASSWORD','Permissão verificada na solicitação de reset de senha de usuário',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (66,3,'Copiar permissões','COPY_PERMISSIONS',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (7,5,'Visualizar dashboard','VIEW_DASHBOARD',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (8,6,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (15,6,'Visualizar','VIEW',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (67,6,'Deletar','DELETE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (9,7,'Entrar no módulo','ENTER',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (52,7,'Editar','UPDATE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (53,7,'Deletar','DELETE',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (54,7,'Inserir','INSERT',NULL,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (56,15,'Entrar no módulo','ENTER',NULL,NULL);
+INSERT INTO acm_module_permission VALUES (1,1,'Entrar no módulo','ENTER',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (10,1,'Editar configurações de módulo','CONFIG',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (3,2,'Entrar no módulo','ENTER',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (4,2,'Criar novo módulo','CREATE_MODULE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (5,3,'Entrar no módulo','ENTER',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (28,3,'Gerenciar permissões','PERMISSION_MANAGER','Permissão verificada na gerência de permissões de usuário');<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (61,3,'Inserir','INSERT',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (62,3,'Editar','UPDATE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (63,3,'Editar perfil','EDIT_PROFILE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (64,3,'Solicitar reset de senha','RESET_PASSWORD','Permissão verificada na solicitação de reset de senha de usuário');<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (66,3,'Copiar permissões','COPY_PERMISSIONS',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (7,5,'Visualizar dashboard','VIEW_DASHBOARD',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (8,6,'Entrar no módulo','ENTER',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (15,6,'Visualizar','VIEW',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (67,6,'Deletar','DELETE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (9,7,'Entrar no módulo','ENTER',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (52,7,'Editar','UPDATE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (53,7,'Deletar','DELETE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (54,7,'Inserir','INSERT',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (56,15,'Entrar no módulo','ENTER',NULL);
 
 
 <<|SEPARATOR|>>
