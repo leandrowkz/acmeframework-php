@@ -6,8 +6,7 @@ CREATE TABLE acm_user_group
 (	
 	id_user_group NUMBER(10,0) NOT NULL, 
 	name VARCHAR2(100 CHAR) NOT NULL, 
-	description VARCHAR2(2000 CHAR), 
-	dtt_inative DATE
+	description VARCHAR2(2000 CHAR)
 );
 
 
@@ -290,8 +289,7 @@ CREATE TABLE acm_menu
 	link VARCHAR2(2000 CHAR), 
 	target VARCHAR2(50 CHAR),  
 	url_img VARCHAR2(2000 CHAR), 
-	order_ NUMBER(10,0), 
-	dtt_inative DATE
+	order_ NUMBER(10,0)
 );
 
 
@@ -370,8 +368,7 @@ CREATE TABLE acm_module
 	label VARCHAR2(250 CHAR) NOT NULL,  
 	sql_list VARCHAR2(2000 CHAR), 
 	url_img VARCHAR2(2000 CHAR), 
-	description VARCHAR2(2000 CHAR), 
-	dtt_inative DATE, 
+	description VARCHAR2(2000 CHAR),
 	log_dtt_ins DATE DEFAULT SYSDATE
 );
 
@@ -428,8 +425,7 @@ CREATE TABLE acm_module_action
 	link VARCHAR2(2000 CHAR), 
 	target VARCHAR2(50 CHAR),  
 	url_img VARCHAR2(2000 CHAR), 
-	order_ NUMBER(10,0), 
-	dtt_inative DATE
+	order_ NUMBER(10,0)
 );
 
 
@@ -657,8 +653,7 @@ CREATE TABLE acm_module_menu
 	link VARCHAR2(2000 CHAR), 
 	target VARCHAR2(50 CHAR),  
 	url_img VARCHAR2(2000 CHAR), 
-	order_ NUMBER(10,0), 
-	dtt_inative DATE
+	order_ NUMBER(10,0)
 );
 
 

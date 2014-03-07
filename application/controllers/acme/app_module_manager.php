@@ -118,9 +118,19 @@ class App_Module_Manager  extends ACME_Module_Controller {
 			break;
 
 			case 'menus':
+				$args['menus'] = $this->db->from('acm_module_menu')
+										  ->where(array('id_module' => $id_module))
+										  ->order_by('id_module_menu desc')
+										  ->get()
+										  ->result_array();
 			break;
 
 			case 'actions':
+				$args['actions'] = $this->db->from('acm_module_action')
+										 	->where(array('id_module' => $id_module))
+											->order_by('id_module_action desc')
+											->get()
+											->result_array();
 			break;
 		}
 
@@ -159,6 +169,86 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				$this->db->delete('acm_module_permission', array('id_module_permission' => $id_permission));
 			else
 				$this->db->update('acm_module_permission', $data, array('id_module_permission' => $id_permission));
+			
+			// Return
+			$return = array('return' => true);
+		} else {
+			$return = array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso'));
+		}
+
+		// Adorable return!
+		echo json_encode($return);
+	}
+
+	/**
+	* save_action()
+	* Salva ação encaminhada pelo form de ações na tela de config de modulo, via ajax.
+	* @param int id_action
+	* @param boolean remove
+	* @return void
+	*/
+	public function save_action($id_action = 0, $remove = false)
+	{
+		if($this->check_permission('CONFIG')) {
+			
+			// values
+			$data['label'] = $this->input->post('label');
+			$data['link'] = $this->input->post('link');
+			$data['target'] = $this->input->post('target');
+			$data['url_img'] = $this->input->post('url_img');
+			$data['order_'] = $this->input->post('order_');
+
+			// insert values
+			if($this->input->post('id_module') != '')
+				$data['id_module'] = $this->input->post('id_module');
+
+			// update, remove or insert
+			if($id_action == '' || $id_action == 0)
+				$this->db->insert('acm_module_action', $data);
+			elseif ($remove)
+				$this->db->delete('acm_module_action', array('id_module_action' => $id_action));
+			else
+				$this->db->update('acm_module_action', $data, array('id_module_action' => $id_action));
+			
+			// Return
+			$return = array('return' => true);
+		} else {
+			$return = array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso'));
+		}
+
+		// Adorable return!
+		echo json_encode($return);
+	}
+
+	/**
+	* save_menu()
+	* Salva menu encaminhado pelo form de menus na tela de config de modulo, via ajax.
+	* @param int id_menu
+	* @param boolean remove
+	* @return void
+	*/
+	public function save_menu($id_menu = 0, $remove = false)
+	{
+		if($this->check_permission('CONFIG')) {
+			
+			// values
+			$data['label'] = $this->input->post('label');
+			$data['link'] = $this->input->post('link');
+			$data['target'] = $this->input->post('target');
+			$data['url_img'] = $this->input->post('url_img');
+			$data['order_'] = $this->input->post('order_');
+
+			// insert values
+			if($this->input->post('id_module') != '')
+				$data['id_module'] = $this->input->post('id_module');
+
+			// update, remove or insert
+			if($id_menu == '' || $id_menu == 0)
+				$this->db->insert('acm_module_menu', $data);
+			elseif ($remove)
+				$this->db->delete('acm_module_menu', array('id_module_menu' => $id_menu));
+			else
+				$this->db->update('acm_module_menu', $data, array('id_module_menu' => $id_menu));
 			
 			// Return
 			$return = array('return' => true);

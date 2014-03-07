@@ -169,6 +169,6 @@
 	});
 
 	// First load, yeah, its permissions!
-	$.load_area('permissions');	
+	$.load_area('permissions');
 	
 </script>
