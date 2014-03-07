@@ -12,6 +12,7 @@
     <!-- Core Scripts - Include with every page -->
     <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
     <script src="<?php echo URL_JS ?>/bootstrap.min.js"></script>
+    <script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
     <script src="<?php echo URL_JS ?>/plugins/metisMenu/jquery.metisMenu.js"></script>
 
     <!-- App Scripts - Include with every page -->
