@@ -114,9 +114,6 @@ class App_Module_Manager  extends ACME_Module_Controller {
 												->result_array();
 			break;
 
-			case 'forms':
-			break;
-
 			case 'menus':
 				$args['menus'] = $this->db->from('acm_module_menu')
 										  ->where(array('id_module' => $id_module))
@@ -131,6 +128,17 @@ class App_Module_Manager  extends ACME_Module_Controller {
 											->order_by('id_module_action desc')
 											->get()
 											->result_array();
+			break;
+
+			case 'form-insert':
+			case 'form-edit':
+			case 'form-delete':
+			case 'form-view':
+				$args['forms'] = $this->db->from('acm_module_form')
+										  ->where(array('id_module' => $id_module))
+										  ->order_by('id_module_form desc')
+										  ->get()
+										  ->result_array();
 			break;
 		}
 
