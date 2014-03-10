@@ -134,17 +134,39 @@ class App_Module_Manager  extends ACME_Module_Controller {
 			case 'form-edit':
 			case 'form-delete':
 			case 'form-view':
-				$args['forms'] = $this->db->from('acm_module_form')
+				// get correct operation
+				$operation = str_replace('form-', '', $area);
+
+				// module data
+				$args['module'] = $this->db->from('acm_module')
 										  ->where(array('id_module' => $id_module))
-										  ->order_by('id_module_form desc')
 										  ->get()
-										  ->result_array();
+										  ->row_array(0);
+
+				// get form data
+				$args['form'] = $this->db->from('acm_module_form')
+										  ->where(array('id_module' => $id_module, 'operation' => $operation))
+										  ->get()
+										  ->row_array(0);
+
+				// get fields
+				$id_form = count($args['form']) > 0 ? get_value($args['form'], 'id_module_form') : 0;
+				$table = get_value($args['module'], 'table_name');
+				$args['fields'] = $this->app_module_manager_model->get_form_fields($id_form, $table);
+
+				// menu/action that points to form
+				if ($operation == 'insert')
+					$args['menu'] = $this->db->from('acm_module_menu')
+										  ->where("link LIKE '%/form/insert%' AND id_module = $id_module")
+										  ->get()
+										  ->row_array(0);
+
 			break;
 		}
 
 		$args['id_module'] = $id_module;
 
-		// Carrega camada de visualização
+		// Load view layer
 		$this->template->load_page('_acme/app_module_manager/area_' . strtolower($area), $args, false, false);
 	}
 
@@ -266,6 +288,95 @@ class App_Module_Manager  extends ACME_Module_Controller {
 
 		// Adorable return!
 		echo json_encode($return);
+	}
+
+	/**
+	* save_form_field()
+	* Habilita um campo de formulario. Disparado da tela de config de form.
+	* @param string operation 	// update, enable, disable
+	* @return void
+	*/
+	public function save_form_field($operation = '')
+	{
+		if( ! $this->check_permission('CONFIG')) {
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			return;
+		}
+
+		switch(strtolower($operation)) {
+			
+			case 'enable':
+
+				// field already exists
+				if($id_field != 0 && $id_field != '') {
+					
+					$this->db->update('acm_module_form_field', array('dtt_inative' => 'NULL'), array('id_module_form_field' => $id_field));
+
+				} else {
+
+					// check if form exists first
+
+				}
+
+				
+			break;
+
+			case 'disable':
+			
+			break;
+
+			case 'update':
+			
+			break;
+
+		}
+
+		// try to get field row
+		$field = $this->db->from('acm_module_form_field')
+						  ->where(array('id_module_form' => $id_form, 'table_column' => $column_name))
+						  ->get()
+						  ->result_array();
+
+		// if exists, just enable it
+		/*
+		if(count($field) > 0){
+			$this->db->update('acm_module_form_field', array('')'NULL', false);
+			$this->db->where(array('id_module_form' => $id_form, 'table_column' => $column_name));
+			$this->db->update('acm_module_form_field');
+		} 
+			
+			// Campo não existe no banco de dados
+			else {
+				// Dados do formulario
+				$form = $this->acme_module_manager_model->get_form_data($id_form);
+				
+				// Dados do módulo e qual tabela este módulo possui
+				$module = $this->acme_module_manager_model->get_module_data(get_value($form, 'id_module'));
+				$table = get_value($module, 'table_name');
+				
+				// Busca meta-dados da tabela
+				$fields = $this->db->field_data($table);
+				
+				// Varre campos até localizar o campo da coluna correto
+				foreach ($fields as $field)
+				{
+					if($field->name == $column_name)
+					{
+						$field_insert = $this->form->build_array_field_db_from_object($field, $table);
+						$field_insert['id_module_form'] = $id_form;
+						foreach($field_insert as $index => $value)
+						{
+							$escape = ($value != 'NULL') ? true : false;
+							$this->db->set($index, $value, $escape);
+						}
+						
+						// Insere um novo registro de campo para este formulario
+						$this->db->insert('acm_module_form_field');
+					}
+				}
+			}
+		}
+		*/
 	}
 	
 	/**

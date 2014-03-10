@@ -80,6 +80,10 @@ form h3 {
     margin: 0 0 30px;
 }
 
+.inline {
+    display: inline-block !important;
+}
+
 /* Wrappers */
 
 /* ------------------------------- */
