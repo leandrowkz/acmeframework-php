@@ -38,10 +38,10 @@
 	
 <!-- now, modal menus -->
 <?php 
-	foreach($menus as $menu) { 
+foreach($menus as $menu) { 
 $id_menu = get_value($menu, 'id_module_menu');
 ?>
-<form menu="<?php echo URL_ROOT ?>/app_module_manager/save_menu/<?php echo $id_menu ?>" id="<?php echo $id_menu ?>" method="post">
+<form menu="<?php echo URL_ROOT ?>/app_module_manager/save_menu/update" method="post">
 	<div class="modal fade" id="modal-<?php echo $id_menu ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -50,6 +50,10 @@ $id_menu = get_value($menu, 'id_module_menu');
                     <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar menu')?></h4>
                 </div>
                 <div class="modal-body">
+
+                    <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
+                    <input type="hidden" class="id_module_menu" value="<?php echo $id_menu ?>" />
+
                 	<div class="form-group">
                 		<label><?php echo lang('Rótulo do menu') ?>*</label>
                 		<input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($menu, 'label') ?>" />
@@ -111,7 +115,7 @@ $id_menu = get_value($menu, 'id_module_menu');
 <?php } ?>
 
 <!-- modal to new menu -->
-<form menu="<?php echo URL_ROOT ?>/app_module_manager/save_menu" method="post" id="new-menu">
+<form menu="<?php echo URL_ROOT ?>/app_module_manager/save_menu/insert" method="post" id="new-menu">
     <div class="modal fade" id="modal-new-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -188,26 +192,29 @@ $id_menu = get_value($menu, 'id_module_menu');
 
 <script>
 	
+    // =====
     // masks
+    // =====
     $('input[type=text]').setMask();
 
-	// tooltips
+	// ========
+    // tooltips
+    // ========
     $('table').tooltip({
         selector: "[data-toggle=tooltip]"
     });
 
+    // ========
     // popovers
+    // ========
     $('.modal').popover({
         selector: "[data-toggle=popover]"
     });
 
-    // cancel original submit
-    $('form').submit(function () {
-        return false;
-    });
-
-    // submit callback (update or insert)
-    var submit_callback = function (form, status) {
+    // ==========================
+    // insert, edit menu callback
+    // ==========================
+    $.submit_callback = function (form, status) {
     	
     	// Validation is not right
     	if( ! status)
@@ -223,12 +230,13 @@ $id_menu = get_value($menu, 'id_module_menu');
             url: form.attr('menu'),
             context: document.body,
             data : {
-                'label' : form.find('input.lbl').val(),
-                'link' : form.find('input.link').val(),
-                'target' : form.find('input.target').val(),
-                'url_img' : form.find('input.url_img').val(),
-                'order_' : form.find('input.order_').val(),
-                'id_module' : form.find('input.id_module').val(),
+                'id_module_menu' : form.find('.id_module_menu').val(),
+                'id_module' : form.find('.id_module').val(),
+                'label' : form.find('.lbl').val(),
+                'link' : form.find('.link').val(),
+                'target' : form.find('.target').val(),
+                'url_img' : form.find('.url_img').val(),
+                'order_' : form.find('.order_').val()
             },
             cache: false,
             async: false,
@@ -251,7 +259,7 @@ $id_menu = get_value($menu, 'id_module_menu');
 	            form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load area again)
-                $('#modal-' + id).on('hidden.bs.modal', function () {
+                form.find('.modal').on('hidden.bs.modal', function () {
 
                     // reload area, this function comes from config.php
                     $.load_area('menus');
@@ -266,7 +274,9 @@ $id_menu = get_value($menu, 'id_module_menu');
     	return false;
     };
 
-    // remove callback
+    // ====================
+    // remove menu callback
+    // ====================
     $('td.text-right a').click( function () {
 
         // get id
@@ -283,8 +293,9 @@ $id_menu = get_value($menu, 'id_module_menu');
             enable_loading();
             
             $.ajax({
-                url: $('#URL_ROOT').val() + '/app_module_manager/save_menu/' + id + '/remove',
+                url: $('#URL_ROOT').val() + '/app_module_manager/save_menu/delete',
                 context: document.body,
+                data: { 'id_module_menu' : id },
                 cache: false,
                 async: false,
                 type: 'POST',
@@ -313,13 +324,22 @@ $id_menu = get_value($menu, 'id_module_menu');
         });
 
     });
+    
+    // ======================
+    // cancel original submit
+    // ======================
+    $('form').submit(function () {
+        return false;
+    });
 
+    // ============================
     // Set validations to all forms
+    // ============================
     $('form').validationEngine('attach', {
         
         promptPosition : "bottomRight",
         scroll: false,
-        onValidationComplete: function (form, status) { submit_callback(form, status); }
+        onValidationComplete: function (form, status) { $.submit_callback(form, status); }
 
     });
 

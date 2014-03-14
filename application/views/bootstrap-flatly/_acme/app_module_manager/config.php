@@ -119,7 +119,7 @@
 			                  	</a>
 			                  	<ul class="dropdown-menu">
 			                    	<li><a href="#form-insert-pills" id="form-insert" data-toggle="tab"><?php echo lang('Inserção') ?></a></li>
-			                    	<li><a href="#form-edit-pills" id="form-edit" data-toggle="tab"><?php echo lang('Edição') ?></a></li>
+			                    	<li><a href="#form-update-pills" id="form-update" data-toggle="tab"><?php echo lang('Edição') ?></a></li>
 			                    	<li><a href="#form-delete-pills" id="form-delete" data-toggle="tab"><?php echo lang('Remoção') ?></a></li>
 			                    	<li><a href="#form-view-pills" id="form-view" data-toggle="tab"><?php echo lang('Visualização') ?></a></li>
 			                  	</ul>
@@ -136,7 +136,7 @@
                             </div>
                             <div class="tab-pane fade" id="form-insert-pills">
                             </div>
-                            <div class="tab-pane fade" id="form-edit-pills">
+                            <div class="tab-pane fade" id="form-update-pills">
                             </div>
                             <div class="tab-pane fade" id="form-delete-pills">
                             </div>

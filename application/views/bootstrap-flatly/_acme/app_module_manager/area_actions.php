@@ -8,7 +8,7 @@
         
         <thead>
             <tr>
-                <th><?php echo lang('Ação') ?></th>
+                <th><?php echo lang('action') ?></th>
                 <th><?php echo lang('Link') ?></th>
                 <th><?php echo lang('Ordenação') ?></th>
                 <th></th>
@@ -16,12 +16,12 @@
         </thead>
         
         <tbody>
-           	
-           	<?php 
-           	foreach($actions as $action) { 
-           	$id_action = get_value($action, 'id_module_action');
-           	?>
-          	<tr id="tr-<?php echo $id_action ?>">
+            
+            <?php 
+            foreach($actions as $action) { 
+            $id_action = get_value($action, 'id_module_action');
+            ?>
+            <tr id="tr-<?php echo $id_action ?>">
                 <td><a data-toggle="modal" data-target="#modal-<?php echo $id_action ?>" href="#"><?php echo get_value($action, 'label')?></a></td>
                 <td class="link"><?php echo get_value($action, 'link')?></td>
                 <td style="width: 01%"><?php echo get_value($action, 'order_')?></td>
@@ -29,20 +29,20 @@
             </tr>
             <?php } ?>
 
-	    </tbody>
+        </tbody>
 
-	</table>
+    </table>
 
 </div>
-<?php } else { echo message('info', '', lang('Nenhuma ação de registro para este módulo')); } ?>
-	
+<?php } else { echo message('info', '', lang('Nenhum action para este módulo')); } ?>
+    
 <!-- now, modal actions -->
 <?php 
-	foreach($actions as $action) { 
+foreach($actions as $action) { 
 $id_action = get_value($action, 'id_module_action');
 ?>
-<form action="<?php echo URL_ROOT ?>/app_module_manager/save_action/<?php echo $id_action ?>" id="<?php echo $id_action ?>" method="post">
-	<div class="modal fade" id="modal-<?php echo $id_action ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form action="<?php echo URL_ROOT ?>/app_module_manager/save_action/update" method="post">
+    <div class="modal fade" id="modal-<?php echo $id_action ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -50,17 +50,21 @@ $id_action = get_value($action, 'id_module_action');
                     <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar ação')?></h4>
                 </div>
                 <div class="modal-body">
-                	<div class="form-group">
-                		<label><?php echo lang('Ação') ?>*</label>
-                		<input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($action, 'label') ?>" />
-                	</div>
+
+                    <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
+                    <input type="hidden" class="id_module_action" value="<?php echo $id_action ?>" />
+
+                    <div class="form-group">
+                        <label><?php echo lang('Nome da ação') ?>*</label>
+                        <input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($action, 'label') ?>" />
+                    </div>
 
                     <div class="row">
                         <div class="col-sm-8">
 
-                        	<div class="form-group">
-                        		<label><?php echo lang('Link') ?>* </label>
-                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Utilize {URL_ROOT} por exemplo, para gravar o valor da constante PHP URL_ROOT. Caso esta ação esteja em uma estrutura repetitiva, use {NUMERO OU NOME_DA_COLUNA} para substituir pelo valor da coluna em cada linha.')?>"></i>
+                            <div class="form-group">
+                                <label><?php echo lang('Link') ?>* </label>
+                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Se a ação for utilizada em estrutura de repetição, utilize {NUMERO OU NOME_COLUNA} para substituir pelo valor da coluna por linha.')?>"></i>
                                 <input type="text" class="form-control validate[required] link" value="<?php echo get_value($action, 'link') ?>" />
                             </div>
 
@@ -100,7 +104,7 @@ $id_action = get_value($action, 'id_module_action');
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
                     <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
-        			</form>
+                    </form>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -111,7 +115,7 @@ $id_action = get_value($action, 'id_module_action');
 <?php } ?>
 
 <!-- modal to new action -->
-<form action="<?php echo URL_ROOT ?>/app_module_manager/save_action" method="post" id="new-action">
+<form action="<?php echo URL_ROOT ?>/app_module_manager/save_action/insert" method="post" id="new-action">
     <div class="modal fade" id="modal-new-action" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -133,6 +137,7 @@ $id_action = get_value($action, 'id_module_action');
                             
                             <div class="form-group">
                                 <label><?php echo lang('Link') ?>*</label>
+                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Se a ação for utilizada em estrutura de repetição, utilize {NUMERO OU NOME_COLUNA} para substituir pelo valor da coluna por linha.')?>"></i>
                                 <input type="text" class="form-control validate[required] link" value="" />
                             </div>
                             
@@ -187,48 +192,52 @@ $id_action = get_value($action, 'id_module_action');
 <script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
 
 <script>
-	
+    
+    // =====
     // masks
+    // =====
     $('input[type=text]').setMask();
 
-	// tooltips
+    // ========
+    // tooltips
+    // ========
     $('table').tooltip({
         selector: "[data-toggle=tooltip]"
     });
 
+    // ========
     // popovers
+    // ========
     $('.modal').popover({
         selector: "[data-toggle=popover]"
     });
 
-    // cancel original submit
-    $('form').submit(function () {
-        return false;
-    });
-
-    // submit callback (update or insert)
-    var submit_callback = function (form, status) {
-    	
-    	// Validation is not right
-    	if( ! status)
-    		return false;
+    // ==========================
+    // insert, edit action callback
+    // ==========================
+    $.submit_callback = function (form, status) {
+        
+        // Validation is not right
+        if( ! status)
+            return false;
 
         // get id
         var id = form.attr('id');
 
-		// ajax to save this fucking shit
-		enable_loading();
-    	
-    	$.ajax({
+        // ajax to save this fucking shit
+        enable_loading();
+        
+        $.ajax({
             url: form.attr('action'),
             context: document.body,
             data : {
-                'label' : form.find('input.lbl').val(),
-                'link' : form.find('input.link').val(),
-                'target' : form.find('input.target').val(),
-                'url_img' : form.find('input.url_img').val(),
-                'order_' : form.find('input.order_').val(),
-                'id_module' : form.find('input.id_module').val(),
+                'id_module_action' : form.find('.id_module_action').val(),
+                'id_module' : form.find('.id_module').val(),
+                'label' : form.find('.lbl').val(),
+                'link' : form.find('.link').val(),
+                'target' : form.find('.target').val(),
+                'url_img' : form.find('.url_img').val(),
+                'order_' : form.find('.order_').val()
             },
             cache: false,
             async: false,
@@ -237,21 +246,21 @@ $id_action = get_value($action, 'id_module_action');
             complete : function (response) {
                 
                 // Parse json to check errors
-            	json = $.parseJSON(response.responseText);
-            	
-            	// Check return
-            	if( ! json.return) { 
-            		// close modal and alert
-            		form.find('.modal-footer button').click();
-            		bootbox.alert(json.error);
-            		return false;
-            	}
+                json = $.parseJSON(response.responseText);
+                
+                // Check return
+                if( ! json.return) { 
+                    // close modal and alert
+                    form.find('.modal-footer button').click();
+                    bootbox.alert(json.error);
+                    return false;
+                }
 
-	            // close modal
-	            form.find('.modal-footer button').click();
+                // close modal
+                form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load area again)
-                $('#modal-' + id).on('hidden.bs.modal', function () {
+                form.find('.modal').on('hidden.bs.modal', function () {
 
                     // reload area, this function comes from config.php
                     $.load_area('actions');
@@ -263,10 +272,12 @@ $id_action = get_value($action, 'id_module_action');
         disable_loading();
 
         // Prevent submit
-    	return false;
+        return false;
     };
 
-    // remove callback
+    // ======================
+    // remove action callback
+    // ======================
     $('td.text-right a').click( function () {
 
         // get id
@@ -283,8 +294,9 @@ $id_action = get_value($action, 'id_module_action');
             enable_loading();
             
             $.ajax({
-                url: $('#URL_ROOT').val() + '/app_module_manager/save_action/' + id + '/remove',
+                url: $('#URL_ROOT').val() + '/app_module_manager/save_action/delete',
                 context: document.body,
+                data: { 'id_module_action' : id },
                 cache: false,
                 async: false,
                 type: 'POST',
@@ -313,13 +325,22 @@ $id_action = get_value($action, 'id_module_action');
         });
 
     });
+    
+    // ======================
+    // cancel original submit
+    // ======================
+    $('form').submit(function () {
+        return false;
+    });
 
+    // ============================
     // Set validations to all forms
+    // ============================
     $('form').validationEngine('attach', {
         
         promptPosition : "bottomRight",
         scroll: false,
-        onValidationComplete: function (form, status) { submit_callback(form, status); }
+        onValidationComplete: function (form, status) { $.submit_callback(form, status); }
 
     });
 

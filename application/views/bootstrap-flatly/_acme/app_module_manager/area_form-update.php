@@ -1,5 +1,5 @@
 
-<h4 style="margin-top: 20px"><?php echo lang('Formulário de remoção') ?></h4>
+<h4 style="margin-top: 20px"><?php echo lang('Formulário de edição') ?></h4>
 
 <div style="margin: 20px 0">
 
@@ -38,7 +38,7 @@
 
     <div class="inline" style="width: 150px"><label><?php echo lang('URL do form') ?></label></div>
     <div class="inline">
-        <span>{URL_ROOT}/<?php echo get_value($module, 'controller') ?>/form/delete </span>
+        <span>{URL_ROOT}/<?php echo get_value($module, 'controller') ?>/form/update </span>
         <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-edit-form"><?php echo lang('Dados do form') ?></button>
     </div>
 
@@ -482,7 +482,7 @@ foreach($fields as $field) {
         }
 
         // reload area, this function comes from config.php
-        $.load_area('form-delete');
+        $.load_area('form-update');
     };
 
     // ====================================================
@@ -508,7 +508,7 @@ foreach($fields as $field) {
         form.find('.modal').on('hidden.bs.modal', function () {
 
             // reload area, this function comes from config.php
-            $.load_area('form-delete');
+            $.load_area('form-update');
 
         });
     };
@@ -519,7 +519,7 @@ foreach($fields as $field) {
     $('.activate-action button').click( function () {
 
         // get operation
-        var oper = $(this).hasClass('btn-success') ? 'enable-action-form-delete' : 'disable-action-form-delete';
+        var oper = $(this).hasClass('btn-success') ? 'enable-action-form-update' : 'disable-action-form-update';
 
         // ajax to save this fucking shit
         enable_loading();

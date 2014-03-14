@@ -41,10 +41,10 @@
 
 <!-- now, modal permissions -->
 <?php 
-	foreach($permissions as $permission) { 
+foreach($permissions as $permission) { 
 $id_permission = get_value($permission, 'id_module_permission');
 ?>
-<form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission/<?php echo $id_permission ?>" id="<?php echo $id_permission ?>" method="post">
+<form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission/update" id="<?php echo $id_permission ?>" method="post">
 	<div class="modal fade" id="modal-<?php echo $id_permission ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -53,6 +53,10 @@ $id_permission = get_value($permission, 'id_module_permission');
                     <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar permissão')?></h4>
                 </div>
                 <div class="modal-body">
+
+                    <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
+                    <input type="hidden" class="id_module_permission" value="<?php echo $id_permission ?>" />
+
                 	<div class="form-group">
                 		<label><?php echo lang('Permissão') ?>*</label>
                 		<input type="text" class="form-control validate[required] permission" value="<?php echo get_value($permission, 'permission') ?>" />
@@ -62,6 +66,12 @@ $id_permission = get_value($permission, 'id_module_permission');
                 		<label><?php echo lang('Descrição') ?>*</label>
                 		<input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($permission, 'label') ?>" />
                 	</div>
+
+                    <div class="form-group">
+                        <label><?php echo lang('Observações') ?></label>
+                        <input type="text" class="form-control description" value="<?php echo get_value($permission, 'description') ?>" />
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
@@ -77,7 +87,7 @@ $id_permission = get_value($permission, 'id_module_permission');
 <?php } ?>
 
 <!-- modal to new permission -->
-<form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission" method="post" id="new-permission">
+<form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission/insert" method="post" id="new-permission">
     <div class="modal fade" id="modal-new-permission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -123,19 +133,25 @@ $id_permission = get_value($permission, 'id_module_permission');
 
 <script>
 	
-	// tooltips
+	// ========
+    // tooltips
+    // ========
     $('table').tooltip({
         selector: "[data-toggle=tooltip]",
         container: "body"
     });
 
+    // ======================
     // cancel original submit
+    // ======================
     $('form').submit(function () {
         return false;
     });
 
-    // submit callback (update or insert)
-    var submit_callback = function (form, status) {
+    // =======================
+    // insert, update callback
+    // =======================
+    $.submit_callback = function (form, status) {
     	
     	// Validation is not right
     	if( ! status)
@@ -151,10 +167,11 @@ $id_permission = get_value($permission, 'id_module_permission');
             url: form.attr('action'),
             context: document.body,
             data : {
-                'permission' : form.find('input.permission').val(),
-                'label' : form.find('input.lbl').val(),
-                'id_module' : form.find('input.id_module').val(),
-                'description' : form.find('input.description').val()
+                'id_module_permission' : form.find('.id_module_permission').val(),
+                'id_module' : form.find('.id_module').val(),
+                'permission' : form.find('.permission').val(),
+                'label' : form.find('.lbl').val(),
+                'description' : form.find('.description').val()
             },
             cache: false,
             async: false,
@@ -177,7 +194,7 @@ $id_permission = get_value($permission, 'id_module_permission');
                 form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load area again)
-                $('#modal-' + id).on('hidden.bs.modal', function () {
+                form.find('.modal').on('hidden.bs.modal', function () {
 
                     // reload area, this function comes from config.php
                     $.load_area('permissions');
@@ -192,7 +209,9 @@ $id_permission = get_value($permission, 'id_module_permission');
     	return false;
     };
 
+    // ===============
     // remove callback
+    // ===============
     $('td.text-right a').click( function () {
 
         // get id
@@ -209,8 +228,9 @@ $id_permission = get_value($permission, 'id_module_permission');
             enable_loading();
             
             $.ajax({
-                url: $('#URL_ROOT').val() + '/app_module_manager/save_permission/' + id + '/remove',
+                url: $('#URL_ROOT').val() + '/app_module_manager/save_permission/delete',
                 context: document.body,
+                data : { 'id_module_permission' : id },
                 cache: false,
                 async: false,
                 type: 'POST',
@@ -240,12 +260,14 @@ $id_permission = get_value($permission, 'id_module_permission');
 
     });
 
+    // ============================
     // Set validations to all forms
+    // ============================
     $('form').validationEngine('attach', {
         
         promptPosition : "bottomRight",
         scroll: false,
-        onValidationComplete: function (form, status) { submit_callback(form, status); }
+        onValidationComplete: function (form, status) { $.submit_callback(form, status); }
 
     });
 

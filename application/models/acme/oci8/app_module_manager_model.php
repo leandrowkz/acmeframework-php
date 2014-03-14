@@ -40,7 +40,7 @@ class App_Module_Manager_Model extends CI_Model {
 				           AND cols.column_name = c.column_name 
 				           AND cons.constraint_type = 'P'
 				       ) > 0 THEN 'PRI' END AS column_key,
-					   rownum AS ordinal_position,
+					   c.column_id AS ordinal_position,
 					   'Y' AS column_exists,
 					   f.*
 				  FROM user_tab_cols c
@@ -60,7 +60,7 @@ class App_Module_Manager_Model extends CI_Model {
 				 WHERE UPPER(f.table_column) NOT IN (SELECT UPPER(c.column_name) FROM user_tab_cols c WHERE c.table_name = '" . strtoupper($table) . "')
 				   AND f.id_module_form = $id_form
 				   
-			  ORDER BY ordinal_position";
+			  ORDER BY ordinal_position ASC";
 
 		// Return this motherfucker fields!
 		return $this->db->query($sql)->result_array();
