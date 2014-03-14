@@ -84,8 +84,7 @@ class Form {
 				
 				// Separa options e descricao, que aparece abaixo do campo
 				$options_sql = get_value($field, 'options_sql');
-				$options_rotules = get_value($field, 'options_rotules');
-				$options_values = get_value($field, 'options_values');
+				$options_json = get_value($field, 'options_json');
 				$description = (get_value($field, 'description') != '') ? '<div style="margin:4px 0 0 0" class="font_11 comment">' . get_value($field, 'description') . '</div>' : '';
 				
 				// Coleta o valor do campo (quando valor encaminhado)
@@ -381,8 +380,7 @@ class Form {
 		$field['id_html'] = 'NULL';
 		$field['class_html'] = 'NULL';
 		$field['maxlength'] = 'NULL';
-		$field['options_rotules'] = 'NULL';
-		$field['options_values'] = 'NULL';
+		$field['options_json'] = 'NULL';
 		$field['options_sql'] = 'NULL';
 		$field['style'] = 'NULL';
 		$field['javascript'] = 'NULL';

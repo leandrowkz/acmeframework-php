@@ -1,7 +1,8 @@
 
-<button class="btn btn-sm btn-success" style="margin: 20px 0 10px 0" data-toggle="modal" data-target="#modal-new-permission"><?php echo lang('Nova permissão') ?> <i class="fa fa-plus-circle"></i></button>
+<button class="btn btn-sm btn-success" style="margin: 20px 0" data-toggle="modal" data-target="#modal-new-permission"><?php echo lang('Nova permissão') ?> <i class="fa fa-plus-circle"></i></button>
 
-<div class="table-responsive">
+<?php if( count($permissions) > 0 ) { ?>
+<div class="table-responsive" style="margin-top: -10px">
     
     <table class="table">
         
@@ -34,86 +35,97 @@
 	    </tbody>
 
 	</table>
-	
-	<!-- now, modal permissions -->
-	<?php 
-   	foreach($permissions as $permission) { 
-	$id_permission = get_value($permission, 'id_module_permission');
-	?>
-    <form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission/<?php echo $id_permission ?>" id="<?php echo $id_permission ?>" method="post">
-    	<div class="modal fade" id="modal-<?php echo $id_permission ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar permissão')?></h4>
-                    </div>
-                    <div class="modal-body">
-                    	<div class="form-group">
-                    		<label><?php echo lang('Permissão') ?>*</label>
-                    		<input type="text" class="form-control validate[required] permission" value="<?php echo get_value($permission, 'permission') ?>" />
-                    	</div>
 
-                    	<div class="form-group">
-                    		<label><?php echo lang('Descrição') ?>*</label>
-                    		<input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($permission, 'label') ?>" />
-                    	</div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                        <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
-            			</form>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-	</form>
-	<?php } ?>
-
-    <!-- modal to new permission -->
-    <form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission" method="post" id="new-permission">
-        <div class="modal fade" id="modal-new-permission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="myModalLabel"><?php echo lang('Nova permissão')?></h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
-
-                        <div class="form-group">
-                            <label><?php echo lang('Permissão') ?>*</label>
-                            <input type="text" class="form-control validate[required] permission" value="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label><?php echo lang('Descrição') ?>*</label>
-                            <input type="text" class="form-control validate[required] lbl" value="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label><?php echo lang('Observações') ?></label>
-                            <input type="text" class="form-control description" value="" />
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                        <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
-                        </form>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    </form>
-	          
 </div>
+<?php } else { echo message('info', '', lang('Nenhuma permissão para este módulo')); } ?>
+
+<!-- now, modal permissions -->
+<?php 
+foreach($permissions as $permission) { 
+$id_permission = get_value($permission, 'id_module_permission');
+?>
+<form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission/update" id="<?php echo $id_permission ?>" method="post">
+	<div class="modal fade" id="modal-<?php echo $id_permission ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar permissão')?></h4>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
+                    <input type="hidden" class="id_module_permission" value="<?php echo $id_permission ?>" />
+
+                	<div class="form-group">
+                		<label><?php echo lang('Permissão') ?>*</label>
+                		<input type="text" class="form-control validate[required] permission" value="<?php echo get_value($permission, 'permission') ?>" />
+                	</div>
+
+                	<div class="form-group">
+                		<label><?php echo lang('Descrição') ?>*</label>
+                		<input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($permission, 'label') ?>" />
+                	</div>
+
+                    <div class="form-group">
+                        <label><?php echo lang('Observações') ?></label>
+                        <input type="text" class="form-control description" value="<?php echo get_value($permission, 'description') ?>" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+        			</form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
+<?php } ?>
+
+<!-- modal to new permission -->
+<form action="<?php echo URL_ROOT ?>/app_module_manager/save_permission/insert" method="post" id="new-permission">
+    <div class="modal fade" id="modal-new-permission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Nova permissão')?></h4>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
+
+                    <div class="form-group">
+                        <label><?php echo lang('Permissão') ?>*</label>
+                        <input type="text" class="form-control validate[required] permission" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <label><?php echo lang('Descrição') ?>*</label>
+                        <input type="text" class="form-control validate[required] lbl" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <label><?php echo lang('Observações') ?></label>
+                        <input type="text" class="form-control description" value="" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</form>
 
 <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
 <script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
@@ -121,19 +133,25 @@
 
 <script>
 	
-	// tooltips
+	// ========
+    // tooltips
+    // ========
     $('table').tooltip({
         selector: "[data-toggle=tooltip]",
         container: "body"
     });
 
+    // ======================
     // cancel original submit
+    // ======================
     $('form').submit(function () {
         return false;
     });
 
-    // submit callback (update or insert)
-    var submit_callback = function (form, status) {
+    // =======================
+    // insert, update callback
+    // =======================
+    $.submit_callback = function (form, status) {
     	
     	// Validation is not right
     	if( ! status)
@@ -142,35 +160,19 @@
         // get id
         var id = form.attr('id');
 
-    	// DEfine values
-        var permission = form.find('input.permission').val();
-        var label = form.find('input.lbl').val();
-        
-        // define ajax data to update or insert
-        if(id == 'new-permission') {
-            // insert data
-            ajax_data = {
-                'permission' : permission,
-                'label' : label,
-                'id_module' : form.find('input.id_module').val(),
-                'description' : form.find('input.description').val()
-            }
-
-        } else {
-            // update data
-            ajax_data = {
-                'permission' : permission,
-                'label' : label
-            }
-        }
-
 		// ajax to save this fucking shit
 		enable_loading();
     	
     	$.ajax({
             url: form.attr('action'),
             context: document.body,
-            data : ajax_data,
+            data : {
+                'id_module_permission' : form.find('.id_module_permission').val(),
+                'id_module' : form.find('.id_module').val(),
+                'permission' : form.find('.permission').val(),
+                'label' : form.find('.lbl').val(),
+                'description' : form.find('.description').val()
+            },
             cache: false,
             async: false,
             type: 'POST',
@@ -188,18 +190,16 @@
             		return false;
             	}
 
-                // if is an insert, reload page
-                if(id == 'new-permission') {
-                    window.location.reload();
-                    return false;
-                }
+                // close modal
+                form.find('.modal-footer button').click();
 
-            	// Procced with no errors!
-				$('#tr-' + id + ' a[data-toggle="modal"]').html(permission);
-	            $('#tr-' + id + ' .lbl').html(label);
+                // Trigger event to close modal (load area again)
+                form.find('.modal').on('hidden.bs.modal', function () {
 
-	            // close modal
-	            form.find('.modal-footer button').click();
+                    // reload area, this function comes from config.php
+                    $.load_area('permissions');
+
+                });
             }
         });
 
@@ -209,7 +209,9 @@
     	return false;
     };
 
+    // ===============
     // remove callback
+    // ===============
     $('td.text-right a').click( function () {
 
         // get id
@@ -226,8 +228,9 @@
             enable_loading();
             
             $.ajax({
-                url: $('#URL_ROOT').val() + '/app_module_manager/save_permission/' + id + '/remove',
+                url: $('#URL_ROOT').val() + '/app_module_manager/save_permission/delete',
                 context: document.body,
+                data : { 'id_module_permission' : id },
                 cache: false,
                 async: false,
                 type: 'POST',
@@ -245,8 +248,9 @@
                         return false;
                     }
 
-                    // Procced with no errors!
-                    $('#tr-' + id).hide();
+                    // Reload area 
+                    // this function comes from config.php
+                    $.load_area('permissions');
                 }
             });
 
@@ -256,12 +260,14 @@
 
     });
 
+    // ============================
     // Set validations to all forms
+    // ============================
     $('form').validationEngine('attach', {
         
         promptPosition : "bottomRight",
         scroll: false,
-        onValidationComplete: function (form, status) { submit_callback(form, status); }
+        onValidationComplete: function (form, status) { $.submit_callback(form, status); }
 
     });
 

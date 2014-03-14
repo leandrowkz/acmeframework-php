@@ -4,7 +4,7 @@
 *
 * Controller App_Log
 * 
-* M�dulo de logs do sistema. Gerencia logs e logs de erros.
+* Módulo de logs do sistema. Gerencia logs e logs de erros.
 *
 * @since 	13/08/2012
 *
@@ -24,7 +24,7 @@ class App_Log extends ACME_Module_Controller {
 	
 	/**
 	* index()
-	* Entrada do m�dulo.
+	* Entrada do módulo.
 	* @return void
 	*/
 	public function index()
@@ -33,21 +33,23 @@ class App_Log extends ACME_Module_Controller {
 	}
 
 	/**
-	* ajax_remove_log_error()
-	* Remove registro de log de erro via ajax.
-	* @param string id_log_error
+	* save_error()
+	* Atualiza ou remove log de erro via ajax.
+	* @param string id_error
 	* @return void
 	*/
-	public function ajax_remove_log_error($id_log_error = 0)
+	public function save_error($id_error = 0, $remove = false)
 	{
-		if($this->check_permission('DELETE')) {
-			$this->db->delete('acm_log_error', array('id_log_error' => $id_log_error));
-			$return = array('return' => true);
-		} else {
-			$return = array('return' => false);
+		if( ! $this->check_permission('DELETE')) {
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			return;
 		}
+		
+		// update or remove
+		if ($remove)
+			$this->db->delete('acm_log_error', array('id_log_error' => $id_error));
 
 		// Adorable return!
-		echo json_encode($return);
+		echo json_encode(array('return' => true));
 	}
 }

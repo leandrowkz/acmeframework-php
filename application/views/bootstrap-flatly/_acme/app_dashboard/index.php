@@ -89,7 +89,7 @@
 				                foreach($errors as $error) {?>
 				                	<?php if($i <= 50) {?>
 					                <div class="list-group-item" id="error-<?php echo get_value($error, 'id_log_error') ?>">
-					                	<small class="pull-right"><a href="javascript:void(0)" onclick="ajax_remove_error(<?php echo get_value($error, 'id_log_error') ?>)"><?php echo lang('Remover'); ?></a></small>
+					                	<small class="pull-right"><a href="javascript:void(0)" id="<?php echo get_value($error, 'id_log_error') ?>"><?php echo lang('Remover'); ?></a></small>
 					                	<div><?php echo get_value($error, 'header'); ?></div>
 					                	<div><small><?php echo get_value($error, 'additional_data'); ?></small></div>
 					                	<div><small><?php echo get_value($error, 'message'); ?></small></div>
@@ -126,35 +126,54 @@
 
 <script>
 	
-	// Remove um registro de log de erro
-	function ajax_remove_error(id_log_error) {
+	// trigger to remove log error
+	$('small.pull-right a').click(function () {
 		
-		if( ! window.confirm("<?php echo lang('Deseja realmente remover o erro selecionado?')?>"))
-			return;
+		// get id
+        var id = $(this).attr('id');
+        
+        // Confirm this shit
+        bootbox.confirm("<?php echo lang('Deseja realmente remover o erro selecionado?') ?>", function (result) {
 
-		enable_loading();
+            // Cancel
+            if( ! result)
+                return;
 
-		$.ajax({
-            url: $('#URL_ROOT').val() + '/app_log/ajax_remove_log_error/' + id_log_error,
-            context: document.body,
-            dataType: 'json',
-            cache: false,
-            async: false,
-            type: 'POST',
-            complete : function (data) {
-            	json = $.parseJSON(data.responseText);
-            	if(json.return) { 
-                	$('#error-' + id_log_error).remove();
+            // ajax to remove that shit
+			enable_loading();
+
+			$.ajax({
+	            url: $('#URL_ROOT').val() + '/app_log/save_error/' + id + '/true',
+	            context: document.body,
+	            cache: false,
+	            async: false,
+	            type: 'POST',
+
+	            complete : function (response) {
+	            	
+	            	// Parse json to check errors
+	            	json = $.parseJSON(response.responseText);
+	            	
+	            	// Check return
+	            	if( ! json.return) { 
+
+	            		// nice alert error
+	            		bootbox.alert(json.error);
+	            		return false;
+	            	}
+
+	            	// procced with no errors, remove error from div
+                	$('#error-' + id).remove();
                 	$('#count-errors').html($('#count-errors').html() - 1);
-                } else {
-                	alert("<?php echo lang('Ops! Você não possui permissão para fazer isto.')?>");
-                }
-            }
+	            }
+	        });
+
+	    	disable_loading();
+            
         });
+	});
 
-    	disable_loading();
-	}
-
+	// slide devices
 	$('#show-devices, #show-devices-arrow').click(function () {
 		if( $('#list-devices').is(':visible') ) {
 			$('#show-devices-arrow').removeClass('fa-arrow-circle-down').addClass('fa-arrow-circle-right');
@@ -165,6 +184,7 @@
 		}
 	});
 
+	// slide for errors
 	$('#show-errors, #show-errors-arrow').click(function () {
 		if( $('#list-errors').is(':visible') ) {
 			$('#show-errors-arrow').removeClass('fa-arrow-circle-down').addClass('fa-arrow-circle-right');
@@ -175,6 +195,7 @@
 		}
 	});
 
+	// graph browsers
 	Morris.Bar({
     	element: 'browser-chart',
     	data: <?php echo json_encode(array_change_key_case_recursive($browsers, CASE_LOWER)) ?>,
