@@ -1,6 +1,8 @@
 
 <h4 style="margin-top: 20px"><?php echo lang('Formulário de visualização') ?></h4>
 
+<?php if(get_value($module, 'table_name') != '') { ?>
+
 <div style="margin: 20px 0">
 
     <div class="inline" style="width: 150px"><label><?php echo lang('Situação') ?></label></div>
@@ -363,6 +365,10 @@ foreach($fields as $field) {
 
 </form>
 <?php $i++; } ?>
+
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Módulo sem tabela-alvo') ?></em></p>
+<?php } ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
 <script src="<?php echo URL_JS ?>/plugins/meiomask/meiomask.js"></script>

@@ -21,6 +21,22 @@ class App_User_Model extends CI_Model {
 	{
 		parent::__construct();
 	}
+
+	/**
+	* get_users()
+	* Retorna lista de usuários.
+	* @return array user
+	*/
+	public function get_users()
+	{	
+		$sql = "SELECT u.*,
+					   uc.*,
+					   ug.name AS user_group
+				  FROM acm_user u
+			 LEFT JOIN acm_user_group  ug ON (u.id_user_group = ug.id_user_group)
+			 LEFT JOIN acm_user_config uc ON (u.id_user = uc.id_user)";
+		return $this->db->query($sql)->result_array();
+	}
 	
 	/**
 	* get_list_permissions()

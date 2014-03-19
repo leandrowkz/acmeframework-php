@@ -34,7 +34,9 @@
 	</table>
 
 </div>
-<?php } else { echo message('info', '', lang('Nenhum menu para este módulo')); } ?>
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Nenhum menu para este módulo') ?></em></p>
+<?php } ?>
 	
 <!-- now, modal menus -->
 <?php 

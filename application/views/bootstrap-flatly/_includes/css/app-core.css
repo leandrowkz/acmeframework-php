@@ -84,6 +84,10 @@ form h3 {
     display: inline-block !important;
 }
 
+.top {
+    vertical-align: top !important;
+}
+
 /* Wrappers */
 
 /* ------------------------------- */

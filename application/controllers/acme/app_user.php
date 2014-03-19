@@ -25,6 +25,34 @@ class App_User extends ACME_Module_Controller {
 	}
 
 	/**
+	* index()
+	* Entrada do módulo.
+	* @return void
+	*/
+	public function index()
+	{		
+		$this->validate_permission('ENTER');
+		
+		$args['users'] = $this->app_user_model->get_users();
+		
+		$this->template->load_page('_acme/app_user/index', $args);
+	}
+
+	/**
+	* groups()
+	* Grupos de usuários.
+	* @return void
+	*/
+	public function groups()
+	{		
+		$this->validate_permission('ENTER');
+		
+		$args['groups'] = $this->db->get('acm_user_group')->result_array();
+		
+		$this->template->load_page('_acme/app_user/groups', $args);
+	}
+
+	/**
 	* profile()
 	* Tela de perfil de usuário.
 	* @param integer id_user
@@ -65,27 +93,27 @@ class App_User extends ACME_Module_Controller {
 	*/
 	public function edit_profile($id_user = 0)
 	{		
-		if(($this->validate_permission('EDIT_PROFILE', false) || $id_user == $this->session->userdata('id_user')) && $id_user != '' && $id_user != 0)
-		{
-			// Carrega dados do usuário
-			$user = $this->app_user_model->get_user_data($id_user);	
-			
-			$args['id_user'] = get_value($user, 'id_user');
-			$args['login'] = get_value($user, 'login');
-			$args['password'] = get_value($user, 'password');
-			$args['name'] = get_value($user, 'name');
-			$args['email'] = get_value($user, 'email');
-			$args['description'] = get_value($user, 'description');
-			$args['active'] = get_value($user, 'active');
-			$args['log_dtt_ins'] = get_value($user, 'log_dtt_ins');
-			$args['group'] = get_value($user, 'grup');
-			$args['url_img'] = get_value($user, 'url_img');
-			$args['url_default'] = get_value($user, 'url_default'); 
-			$args['lang_default'] = get_value($user, 'lang_default'); 
-						
-			// Carrega view
-			$this->template->load_page('_acme/app_user/edit_profile', $args);
-		}
+		if( ! $this->check_permission('EDIT_PROFILE') || $id_user == '' || $id_user == 0 || $this->session->userdata('id_user') != $id_user)
+			return false;
+		
+		// Carrega dados do usuário
+		$user = $this->app_user_model->get_user_data($id_user);	
+		
+		$args['id_user'] = get_value($user, 'id_user');
+		$args['login'] = get_value($user, 'login');
+		$args['password'] = get_value($user, 'password');
+		$args['name'] = get_value($user, 'name');
+		$args['email'] = get_value($user, 'email');
+		$args['description'] = get_value($user, 'description');
+		$args['active'] = get_value($user, 'active');
+		$args['log_dtt_ins'] = get_value($user, 'log_dtt_ins');
+		$args['group'] = get_value($user, 'grup');
+		$args['url_img'] = get_value($user, 'url_img');
+		$args['url_default'] = get_value($user, 'url_default'); 
+		$args['lang_default'] = get_value($user, 'lang_default'); 
+					
+		// Carrega view
+		$this->template->load_page('_acme/app_user/edit_profile', $args);
 	}
 
 	/**

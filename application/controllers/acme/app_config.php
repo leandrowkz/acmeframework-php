@@ -33,6 +33,6 @@ class App_Config extends ACME_Module_Controller {
 		$this->validate_permission('ENTER');
 		
 		// Carrega view
-		$this->template->load_page('_acme/app_config/index', $args);
+		$this->template->load_page('_acme/app_config/index');
 	}
 }
