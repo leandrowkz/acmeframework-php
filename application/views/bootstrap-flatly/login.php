@@ -45,17 +45,22 @@
 
                         <form role="form" action="<?php echo URL_ROOT ?>/app_access/login_process" method="post">
                             <fieldset>
-                                <div class="form-group<?php echo ($bool_user_error === true) ? ' has-error' : ''; ?>">
-                                    <input class="form-control" placeholder="<?php echo lang('E-mail ou usuário')?>" value="<?php echo $login_user; ?>" name="user" id="user" autofocus>
-                                    <?php if ($login_msg_error != '') { echo '<div class="text-danger" style="margin-top:3px">' . $login_msg_error . '</div>'; } ?>
+                                
+                                <div class="form-group<?php echo ($bool_email_error === true) ? ' has-error' : ''; ?>">
+                                    <input class="form-control" placeholder="<?php echo lang('E-mail')?>" value="<?php echo $email_user; ?>" name="email" id="email" autofocus>
+                                    <?php if ($email_msg_error != '') { echo '<div class="text-danger" style="margin-top:3px">' . $email_msg_error . '</div>'; } ?>
                                 </div>
+                                
                                 <div class="form-group">
                                     <input class="form-control" placeholder="<?php echo lang('Senha') ?>" name="pass" id="pass" type="password" value="">
                                 </div>
+                                
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" />
                                 </div>
+                                
                                 <div class="text-center"><a href="<?php echo URL_ROOT ?>/app_access/forgot_password"><?php echo lang('Esqueceu sua senha?')?></a></div>
+                            
                             </fieldset>
                         </form>
 

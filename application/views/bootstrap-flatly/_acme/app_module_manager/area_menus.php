@@ -310,7 +310,6 @@ $id_menu = get_value($menu, 'id_module_menu');
                     // Check return
                     if( ! json.return) { 
                         // close modal and alert
-                        form.find('.modal-footer button').click();
                         bootbox.alert(json.error);
                         return false;
                     }

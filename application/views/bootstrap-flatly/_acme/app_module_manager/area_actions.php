@@ -311,7 +311,6 @@ $id_action = get_value($action, 'id_module_action');
                     // Check return
                     if( ! json.return) { 
                         // close modal and alert
-                        form.find('.modal-footer button').click();
                         bootbox.alert(json.error);
                         return false;
                     }

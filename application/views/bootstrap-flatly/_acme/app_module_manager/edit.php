@@ -24,20 +24,11 @@
 
 <div class="row">
 
-	<div class="col-lg-12">
-		
-		<h3><?php echo lang('Editar módulo') ?></h3>
-		<hr style="margin: 10px 0 20px 0" />
-
-	</div>
-
-</div>
-
-<div class="row">
-
 	<div class="col-sm-8 col-md-7">
 
 		<form action="<?php echo URL_ROOT ?>/app_module_manager/edit/<?php echo get_value($module, 'id_module') ?>/true" method="post">
+		
+			<h3 style="margin: 0 0 30px 0"><?php echo lang('Editar módulo') ?></h3>
 
 			<div class="form-group">
                 <label><?php echo lang('Label') ?>*</label>

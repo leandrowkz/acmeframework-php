@@ -53,238 +53,297 @@ class App_User extends ACME_Module_Controller {
 	}
 
 	/**
+	* save_group()
+	* Insert, update and delete for groups. Fowarded by groups page, through ajax. Operation must
+	* be sent as parameter and data by $_POST. Print json as result operation status.
+	* @param string operation		// insert, update, delete
+	* @return void
+	*/
+	public function save_group($operation = '')
+	{
+		if( ! $this->check_permission('ENTER')) {
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			return;
+		}
+
+		switch(strtolower($operation)) {
+			
+			case 'insert':
+			case 'update':
+			
+				$data['name'] = $this->input->post('name');
+				$data['description'] = $this->input->post('description');
+
+				if( strtolower($operation) == 'insert' )
+					$this->db->insert('acm_user_group', $data);
+				else 
+					$this->db->update('acm_user_group', $data, array('id_user_group' => $this->input->post('id_user_group')));
+
+			break;
+
+			case 'delete';
+				// there are users in this group!
+				if( $this->db->get_where('acm_user', array('id_user_group' => $this->input->post('id_user_group')))->num_rows() > 0 ) {
+					echo json_encode(array('return' => false, 'error' => lang('Ops! Existem usuários neste grupo')));
+					return;
+				} 
+
+				$this->db->delete('acm_user_group', array('id_user_group' => $this->input->post('id_user_group')));
+			break;
+		}
+
+		// Adorable return!
+		echo json_encode(array('return' => true));
+	}
+
+	/**
+	* new_user()
+	* Tela de novo usuário.
+	* @param boolean process
+	* @return void
+	*/
+	public function new_user($process = false)
+	{		
+		$this->validate_permission('INSERT');
+		
+		// New user form
+		if( ! $process) {
+			
+			$groups = $this->db->select('id_user_group, name')->from('acm_user_group')->order_by('name')->get()->result_array();
+			
+			$args['options'] = $this->form->build_select_options($groups);
+
+			$this->template->load_page('_acme/app_user/new_user', $args);
+
+		} else {
+
+			// Proccess form
+			$user_data['id_user_group'] = $this->input->post('id_user_group');
+			$user_data['name'] = $this->input->post('name');
+			$user_data['email'] = $this->input->post('email');
+			$user_data['description'] = $this->input->post('description');
+			$user_data['password'] = md5($this->input->post('password'));
+
+			// insert user
+			$this->db->insert('acm_user', $user_data);
+
+			// get user in order to insert configs
+			$user = $this->db->get_where('acm_user', array('email' => $user_data['email']))->row_array(0);
+
+			// insert configs to this user
+			$config['id_user'] = get_value($user, 'id_user');
+			$config['url_default'] = $this->input->post('url_default');
+			$config['lang_default'] = $this->input->post('lang_default');
+
+			$this->db->insert('acm_user_config', $config);
+
+			// redirect to config page
+			redirect('app_user');
+		}
+	}
+
+	/**
+	* check_email()
+	* Validate an email passed by POST, checking if already exist an user with this email.
+	* @return void
+	*/
+	public function check_email()
+	{
+		$email = $this->input->post('email');
+
+		if( $this->db->get_where('acm_user', array('email' => $email))->num_rows() > 0)
+			echo json_encode(array('return' => true));
+		else
+			echo json_encode(array('return' => false));
+	}
+
+	/**
 	* profile()
 	* Tela de perfil de usuário.
 	* @param integer id_user
 	* @return void
 	*/
 	public function profile($id_user = 0)
-	{		
-		// Carrega dados do usuário
-		$user = $this->app_user_model->get_user_data($id_user);	
+	{
+		// only the logged user can see your profile
+		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+			redirect($this->session->userdata('url_default'));
+
+		// load user data
+		$args['user'] = $this->app_user_model->get_user($id_user);
 		
-		$args['id_user'] = get_value($user, 'id_user');
-		$args['login'] = get_value($user, 'login');
-		$args['password'] = get_value($user, 'password');
-		$args['name'] = get_value($user, 'name');
-		$args['email'] = get_value($user, 'email');
-		$args['description'] = get_value($user, 'description');
-		$args['active'] = get_value($user, 'active');
-		$args['log_dtt_ins'] = get_value($user, 'log_dtt_ins');
-		$args['group'] = get_value($user, 'grup');
-		$args['url_img'] = get_value($user, 'url_img');
-		$args['url_default'] = get_value($user, 'url_default'); 
-		$args['lang_default'] = get_value($user, 'lang_default'); 
-		
-		// Ranking de acessos por browsers
+		// browser ranking access
 		$browser_rank = $this->app_user_model->browser_rank_user($id_user);
 		$args['browser_rank'] = isset($browser_rank[0]) ? $browser_rank : array(0 => array());
 		
-		// Se tem permissão para edição
-		$args['editable'] = ($this->validate_permission('EDIT_PROFILE', false) || $id_user == $this->session->userdata('id_user')) ? true : false;
+		// load view
 		$this->template->load_page('_acme/app_user/profile', $args);
 	}
 
 	/**
 	* edit_profile()
-	* Tela de edição de perfil de usuário.
+	* Form and process form of user profile.
 	* @param integer id_user
+	* @param boolean process
 	* @return void
 	*/
-	public function edit_profile($id_user = 0)
+	public function edit_profile($id_user = 0, $process = false)
 	{		
-		if( ! $this->check_permission('EDIT_PROFILE') || $id_user == '' || $id_user == 0 || $this->session->userdata('id_user') != $id_user)
-			return false;
-		
-		// Carrega dados do usuário
-		$user = $this->app_user_model->get_user_data($id_user);	
-		
-		$args['id_user'] = get_value($user, 'id_user');
-		$args['login'] = get_value($user, 'login');
-		$args['password'] = get_value($user, 'password');
-		$args['name'] = get_value($user, 'name');
-		$args['email'] = get_value($user, 'email');
-		$args['description'] = get_value($user, 'description');
-		$args['active'] = get_value($user, 'active');
-		$args['log_dtt_ins'] = get_value($user, 'log_dtt_ins');
-		$args['group'] = get_value($user, 'grup');
-		$args['url_img'] = get_value($user, 'url_img');
-		$args['url_default'] = get_value($user, 'url_default'); 
-		$args['lang_default'] = get_value($user, 'lang_default'); 
-					
-		// Carrega view
-		$this->template->load_page('_acme/app_user/edit_profile', $args);
-	}
+		// only the logged user can see your profile
+		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+			redirect($this->session->userdata('url_default'));
 
-	/**
-	* edit_profile_process()
-	* Processa tela de edição de perfil de usuário.
-	* @return void
-	*/
-	public function edit_profile_process()
-	{
-		$id_user = $this->input->post('id_user');
+		if( ! $process) {
+			
+			// load user data
+			$args['user'] = $this->app_user_model->get_user($id_user);
+						
+			// load view
+			$this->template->load_page('_acme/app_user/edit_profile', $args);
+		} else {
 
-		if(($this->validate_permission('EDIT_PROFILE', false) || $id_user == $this->session->userdata('id_user')) && $id_user != '' && $id_user != 0)
-		{
-			// Array de atualização de user
-			$arr_usr['name'] = $this->input->post('name');
-			$arr_usr['email'] = $this->input->post('email');
-			$arr_usr['description'] = $this->input->post('description');
-			$this->db->update('acm_user', $arr_usr, array('id_user' => $id_user ));
+			// update user
+			$user['name'] = $this->input->post('name');
+			$user['email'] = $this->input->post('email');
+			$user['description'] = $this->input->post('description');
+			$this->db->update('acm_user', $user, array('id_user' => $id_user ));
 
 			// Array de atualização de config de user
-			$arr_cnf['lang_default'] = $this->input->post('lang_default');
-			$this->db->update('acm_user_config', $arr_cnf, array('id_user' => $id_user ));
+			$config['lang_default'] = $this->input->post('lang_default');
+			$this->db->update('acm_user_config', $config, array('id_user' => $id_user ));
 			
-			// Redireciona para profile
-			redirect(URL_ROOT . '/app_user/profile/' . $id_user);
-			exit;
+			// redirect to profile
+			redirect('app_user/profile/' . $id_user);
 		}
-		
-		redirect($this->session->userdata('url_default'));
 	}
 
 	/**
 	* edit_photo()
-	* Tela de edição de imagem de usuário (upload, resize, etc.).
+	* Form to edit thumbnail image, upload, resize, etc.
 	* @param integer id_user
 	* @return void
 	*/
 	public function edit_photo($id_user = 0)
 	{
-		if(($this->validate_permission('EDIT_PROFILE', false) || $id_user == $this->session->userdata('id_user')) && $id_user != '' && $id_user != 0)
-		{
+		// only the logged user can see your profile
+		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+			redirect($this->session->userdata('url_default'));
 			
-			// Carrega dados do usuário
-			$user = $this->app_user_model->get_user_data($id_user);	
-			
-			$args['id_user'] = get_value($user, 'id_user');
-			$args['login'] = get_value($user, 'login');
-			$args['password'] = get_value($user, 'password');
-			$args['name'] = get_value($user, 'name');
-			$args['email'] = get_value($user, 'email');
-			$args['description'] = get_value($user, 'description');
-			$args['active'] = get_value($user, 'active');
-			$args['log_dtt_ins'] = get_value($user, 'log_dtt_ins');
-			$args['group'] = get_value($user, 'grup');
-			$args['url_img'] = get_value($user, 'url_img'); 
-			$args['url_img_large'] = tag_replace(get_value($user, 'url_img_large'));
-			$args['url_default'] = get_value($user, 'url_default'); 
-
-			// Carrega view
-			$this->template->load_page('_acme/app_user/edit_photo', $args);
-		}
+		// load user data
+		$args['user'] = $this->app_user_model->get_user($id_user);	
+		
+		// load view
+		$this->template->load_page('_acme/app_user/edit_photo', $args);
 	}
 
 	/**
 	* upload_photo()
-	* Envio de imagem de usuário. Apenas recebe a imagem e o id do usuário via POST
-	* faz o upload da imagem e atualiza a imagem para o usuário no banco de dados.
+	* Upload image and update on database, for current user.
+	* @param int id_user
 	* @return void
 	*/
-	public function upload_photo()
+	public function upload_photo($id_user = 0)
 	{
-		$id_user = $this->input->post('id_user');
+		// only the logged user can see your profile
+		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+			redirect($this->session->userdata('url_default'));
+
+		// upload configs
+		$config['upload_path'] = PATH_UPLOAD . '/' . $this->photos_dir;
+		$config['file_name'] = $id_user . '_' . uniqid();
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_width'] = '4500';
+		$config['max_height'] = '4500';
+
+		// load library to upload
+		$this->load->library('upload', $config);
 		
-		if(($this->validate_permission('EDIT_PROFILE', false) || $id_user == $this->session->userdata('id_user')) && $id_user != '' && $id_user != 0)
+		// try to upload 
+		if ( ! $this->upload->do_upload('file'))
 		{
-			// Configs de upload
-			$config['upload_path'] = PATH_UPLOAD . '/' . $this->photos_dir;
-			$config['file_name'] = $id_user . '_' . uniqid();
-			$config['allowed_types'] = 'gif|jpg|png|jpeg';
-			$config['max_width'] = '4500';
-			$config['max_height'] = '4500';
-
-			// Carrega lib de upload
-			$this->load->library('upload', $config);
-			
-			// Tenta fazer upload 
-			if ( ! $this->upload->do_upload('file'))
-			{
-				// Informa erro para retorno
-				$return = $this->upload->display_errors("<error>", "</error>");
- 				
-				// Força header 400 (erro)
- 				$this->output->set_status_header('400');
-			} 
-			
-			// Upload ok!!
-			else {
-				// Dados do usuário
-				$user = $this->app_user_model->get_user_data($id_user);
+			// yeah, we have errors
+			$return = $this->upload->display_errors("<error>", "</error>");
 				
-				// Nome da nova imagem 
-				$new_file = get_value($this->upload->data(), 'file_name');
-				
-				// Remove imagem large anterior
-				@unlink(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename(get_value($user, 'url_img_large')));
+			// force an header 400 (error)
+			$this->output->set_status_header('400');
+		} 
+		
+		// Upload ok!!
+		else {
+			// user data
+			$user = $this->app_user_model->get_user($id_user);
+			
+			// name of new image 
+			$new_file = get_value($this->upload->data(), 'file_name');
+			
+			// remove the previous user image
+			@unlink(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename(get_value($user, 'url_img_large')));
 
-				// Atualiza imagem atual
-				$this->db->update('acm_user_config', array('url_img_large' => '{URL_UPLOAD}/' . $this->photos_dir . '/' . $new_file), array('id_user' => $id_user));
+			// update currently image
+			$this->db->update('acm_user_config', array('url_img_large' => '{URL_UPLOAD}/' . $this->photos_dir . '/' . $new_file), array('id_user' => $id_user));
 
-				// Informa nova img para retorno
-				$return = $new_file;
-			}
-
-			echo $return;
+			// new image to return
+			$return = $new_file;
 		}
+
+		echo $return;
 	}
 
 	/**
 	* edit_thumbnail()
-	* Atualiza thumbnail da imagem atual de usuário.
+	* update user thumbnail according to the coordinates.
+	* @return int id_user
 	* @return void
 	*/
-	public function edit_thumbnail()
+	public function edit_thumbnail($id_user = 0)
 	{
-		if(($this->validate_permission('EDIT_PROFILE', false) || $this->input->post('id_user') == $this->session->userdata('id_user')) && $this->input->post('id_user') != '' && $this->input->post('id_user') != '0')
+		// only the logged user can see your profile
+		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+			redirect($this->session->userdata('url_default'));
+
+		// coordinates of image
+		$w = $this->input->post('w');
+		$h = $this->input->post('h');
+		$sw = $this->input->post('sw');
+		$sh = $this->input->post('sh');
+		$x1 = $this->input->post('x1');
+		$x2 = $this->input->post('x2');
+		$y1 = $this->input->post('y1');
+		$y2 = $this->input->post('y2');
+
+		// Make thumb only if coordinates are correct
+		if($w != '' && $h != '' && $x1 != '' && $x2 != '' && $y1 != '' && $y2 != '' && $sw != '' && $sh != '')
 		{
-			// Coleta id usuario e coordenadas
-			$id_user = $this->input->post('id_user');
-			$w = $this->input->post('w');
-			$h = $this->input->post('h');
-			$sw = $this->input->post('sw');
-			$sh = $this->input->post('sh');
-			$x1 = $this->input->post('x1');
-			$x2 = $this->input->post('x2');
-			$y1 = $this->input->post('y1');
-			$y2 = $this->input->post('y2');
-
-			// Faz o thumb apenas se todas as infomações estiverem devidamente adequadas
-			if($w != '' && $h != '' && $x1 != '' && $x2 != '' && $y1 != '' && $y2 != '' && $sw != '' && $sh != '')
+			// user data
+			$user = $this->app_user_model->get_user($id_user);
+			
+			// make thumb (return = thumb name)
+			if(($file_thumb_name = $this->_make_thumbnail($id_user, basename(get_value($user, 'url_img_large')), $w, $h, $sw, $sh, $x1, $x2, $y1, $y2)) === false)
 			{
-				// Coleta dados do usuário (para atualização posterior)
-				$user = $this->app_user_model->get_user_data($id_user);
-				
-				// Gera o thumb devidamente (retorno = thumb name)
-				if(($file_thumb_name = $this->_make_thumbnail($id_user, basename(get_value($user, 'url_img_large')), $w, $h, $sw, $sh, $x1, $x2, $y1, $y2)) === false)
-				{
-					// Força header 400 (erro)
- 					$this->output->set_status_header('400');
-				} else {
-					// Remove thumb anterior
-					@unlink(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename(get_value($user, 'url_img')));
+				// force header 400 (erro)
+				$this->output->set_status_header('400');
+			} else {
+				// Remove previous thumb
+				@unlink(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename(get_value($user, 'url_img')));
 
-					// Atualiza info do thumb do usuário
-					$new_user_img = '{URL_UPLOAD}/' . $this->photos_dir . '/' . $file_thumb_name;
-					$this->db->update('acm_user_config', array('url_img' => $new_user_img), array('id_user' => $id_user));
-					
-					// Atualiza imagem da sessão
-					$this->session->set_userdata('user_img', tag_replace($new_user_img));
-				}
+				// update info on database
+				$new_user_img = '{URL_UPLOAD}/' . $this->photos_dir . '/' . $file_thumb_name;
+				$this->db->update('acm_user_config', array('url_img' => $new_user_img), array('id_user' => $id_user));
+				
+				// update img on session
+				$this->session->set_userdata('user_img', tag_replace($new_user_img));
 			}
 		}
 	}
 
 	/**
 	* _make_thumbnail()
-	* Gera um thumbnail a partir da imagem atual do usuário e coordenadas encaminhadas.
+	* Make a thumbnail from de coordinates and user info.
 	* @param string img
-	* @param int rw Largura da imagem redimensionada (responsiva)
-	* @param int rh Altura da imagem redimensionada (responsiva)
-	* @param int sw Largura da seleção do thumb
-	* @param int sh Altura da seleção do thumb
+	* @param int rw width of image resized (responsive)
+	* @param int rh height of image resized (responsive)
+	* @param int sw width of thumb selection
+	* @param int sh height of thumb selection
 	* @param int x1
 	* @param int x2
 	* @param int y1
@@ -293,18 +352,18 @@ class App_User extends ACME_Module_Controller {
 	*/
 	private function _make_thumbnail($id_user = 0, $lrg_image = '', $rw = 0, $rh = 0, $sw = 0, $sh = 0, $x1 = 0, $x2 = 0, $y1 = 0, $y2 = 0)
 	{
-		// Configs. do thumb
+		// Configs. of thumb
 		$tw = 150;
 		$th = 150;
 		$tmb_ext = 'png';
 		$tmb_file_name = $id_user . '_tmb_' . uniqid() . '.' . $tmb_ext;
 		$tmb_path_file = PATH_UPLOAD . '/' . $this->photos_dir . '/' . $tmb_file_name;
 
-		// Informações da imagem encaminhada (original, large)
+		// original img info (original, large)
 		$lrg_path_file = PATH_UPLOAD . '/' . $this->photos_dir . '/' . $lrg_image;
 		list($ow, $oh, $img_type) = getimagesize($lrg_path_file);
 
-		// Recalcula pontos (escala, regra de 3)
+		// recalculates points (scale, 3 rule)
 		$nx1 = $ow * $x1 / $rw;
 		$nx2 = $ow * $x2 / $rw;
 		$ny1 = $oh * $y1 / $rh;
@@ -314,7 +373,7 @@ class App_User extends ACME_Module_Controller {
 
 		$img_type = image_type_to_mime_type($img_type);
 		
-		// Converte a imagem original (large) em source
+		// transforms original img into a source
 		switch($img_type) 
 		{
 			case 'image/gif':
@@ -334,13 +393,13 @@ class App_User extends ACME_Module_Controller {
 			break;
 		}
 		
-		// Cria o thumb com base na largura / altura 
+		// create the thumb according to height / width 
 		$tmb_source = imagecreatetruecolor($tw, $th);
 
-		// Copia a seleção informada para o source do thumb
+		// copy the selection info to thumbnail source
 		imagecopyresampled($tmb_source, $lrg_image_source, 0, 0, $nx1, $ny1, $tw, $th, $nsw, $nsh);
 		
-		// Cria o thumb devidamente no path informado
+		// makes thumb on refered filepath
 		if(imagepng($tmb_source, $tmb_path_file) === true)
 			return $tmb_file_name;
 		else
@@ -550,20 +609,7 @@ class App_User extends ACME_Module_Controller {
 		redirect('acme_user');
 	}
 	
-	/**
-	* verify_login()
-	* Verifica se um login de id encaminhado existe ou não e retorna um booleano em JSON.
-	* @param string login
-	* @return void
-	*/
-	public function verify_login($login = '')
-	{
-		$data = $this->db->get_where('acm_user', array('login' => $login));
-		$user = $data->result_array();
-		$user = isset($user[0]) ? $user[0] : array();
-		$ret['user_exists'] = (get_value($user, 'id_user') != '') ? true : false;
-		echo json_encode($ret);
-	}
+	
 	
 	/**
 	* reset_password()

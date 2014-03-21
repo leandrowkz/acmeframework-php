@@ -71,20 +71,16 @@ class App_Access extends ACME_Core_Controller {
 		// echo tag_replace('{URL_ROOT}/acme_dashboard asdhgfhasdfha hh ds {URL_IMG} and echo {URL_CSS}');
 
 		// Coleta nome de usuário
-		$args['login_user'] = $this->session->userdata('login_user');
-		$this->session->unset_userdata('login_user');
+		$args['email_user'] = $this->session->userdata('email_user');
+		$this->session->unset_userdata('email_user');
 	
 		// Coleta possivel mensagem de erro de login
-		$args['login_msg_error'] = $this->session->userdata('login_msg_error');
-		$this->session->unset_userdata('login_msg_error');
+		$args['email_msg_error'] = $this->session->userdata('email_msg_error');
+		$this->session->unset_userdata('email_msg_error');
 		
 		// Booleano se o erro de login está no campo usuário
-		$args['bool_user_error'] = $this->session->userdata('bool_user_error');
-		$this->session->unset_userdata('bool_user_error');
-		
-		// Booleano se o erro de login está no campo senha
-		$args['bool_pass_error'] = $this->session->userdata('bool_pass_error');
-		$this->session->unset_userdata('bool_pass_error');
+		$args['bool_email_error'] = $this->session->userdata('bool_email_error');
+		$this->session->unset_userdata('bool_email_error');
 		
 		// Carrega pagina view do form de login
 		$this->template->load_page('login', $args, false, false);
@@ -92,60 +88,54 @@ class App_Access extends ACME_Core_Controller {
 	
 	/**
 	* login_process()
-	* Processa o formulário de login/entrada do sistema. Após validado,
-	* joga o usuário para a página inicial configurada em seu cadastro.
+	* Process login page/form. After validate login, redirect user to his home.
 	* @return void
 	*/
 	public function login_process()
 	{
-		$login_user = $this->input->post('user');
-		$login_pass = $this->input->post('pass');
+		$email = $this->input->post('email');
+		$pass = $this->input->post('pass');
 		
-		// Coleta dados do usuário 'validado'
-		$user = $this->access->validate_login($login_user, $login_pass);
+		// Try to get the user by email and pass 
+		$user = $this->access->validate_login($email, $pass);
 
-		// Caso usuario nao exista, redireciona para pagina de login
-		if(!$user)
-		{
-			// Monta mensagem correta de erro
-			if($login_user == '')
-			{
-				$this->session->set_userdata('login_user', $login_user);
-				$this->session->set_userdata('bool_user_error', true);
-				$this->session->set_userdata('login_msg_error', lang('Insira seu nome de usuário.'));
-			}
+		// Case user doesnt exist, redirect to login page again
+		if( ! $user ) {
+
+			// Error message
+			$this->session->set_userdata('email_user', $email);
+			$this->session->set_userdata('bool_email_error', true);
 			
-			if($login_user != '')
-			{
-				$this->session->set_userdata('login_user', $login_user);
-				$this->session->set_userdata('bool_user_error', true);
-				$this->session->set_userdata('login_msg_error', lang('O usuário ou senha informados estão incorretos.'));
-			}
+
+			if ( $email == '' )
+				$this->session->set_userdata('email_msg_error', lang('Insira seu nome de usuário.'));
+			elseif ( $email != '' )
+				$this->session->set_userdata('email_msg_error', lang('O usuário ou senha informados estão incorretos.'));
+			
 			
 			redirect($this->controller_name);
+
 		} else {
-			// Verifica se url_Default do usuario está preenchida
-			// e o redireciona para lá, caso contrário joga para pagina
-			// padrao de listagem de modulos e atalhos do codeigniter
+			// Check url's default for user, if not exist try to redirect to default dashboard
 			$url_default = (get_value($user, 'url_default') != '') ? $this->tag->tag_replace(get_value($user, 'url_default')) : URL_ROOT . '/app_dashboard/';
 			
-			// Variaveis de informacao de usuario e sessao que vao para sessao
-			$arr_session['id_user'] = get_value($user, 'id_user');
-			$arr_session['user_group'] = get_value($user, 'user_group');
-			$arr_session['user_name'] = get_value($user, 'user_name');
-			$arr_session['login'] = get_value($user, 'login');
-			$arr_session['user_img'] = tag_replace(get_value($user, 'url_img'));
-			$arr_session['language'] = get_value($user, 'lang_default');
-			$arr_session['url_default'] = $url_default;
-			$arr_session['login_access'] = true;
+			// Put some user data to session
+			$session['id_user'] = get_value($user, 'id_user');
+			$session['user_group'] = get_value($user, 'user_group');
+			$session['user_name'] = get_value($user, 'user_name');
+			$session['email'] = get_value($user, 'email');
+			$session['user_img'] = tag_replace(get_value($user, 'url_img'));
+			$session['language'] = get_value($user, 'lang_default');
+			$session['url_default'] = $url_default;
+			$session['login_access'] = true;
 			
-			// Seta variáveis na sessão
-			$this->session->set_userdata($arr_session);
+			// Set the data above
+			$this->session->set_userdata($session);
 			
-			// Loga registro de login
+			// Log the login
 			$this->log->db_log('login', 'login');
 			
-			// Redireciona para url do usuario
+			// Redirect to user's home
 			redirect($url_default);
 		}
 	}
@@ -157,7 +147,6 @@ class App_Access extends ACME_Core_Controller {
 	*/
 	public function logout()
 	{
-		$this->load->library('session');
 		$this->session->sess_destroy();
 		redirect($this->controller_name);
 	}

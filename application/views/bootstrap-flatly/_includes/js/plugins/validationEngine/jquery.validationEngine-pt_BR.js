@@ -26,12 +26,12 @@
                 },
                 "minSize": {
                     "regex": "none",
-                    "alertText": "Permitido o mínimo de ",
+                    "alertText": "Mínimo ",
                     "alertText2": " caractere(s)"
                 },
                 "maxSize": {
                     "regex": "none",
-                    "alertText": "Permitido o máximo de ",
+                    "alertText": "Máximo ",
                     "alertText2": " caractere(s)"
                 },
 				"groupRequired": {
@@ -56,7 +56,7 @@
                 },	
                 "maxCheckbox": {
                     "regex": "none",
-                    "alertText": "Máximo de ",
+                    "alertText": "Máximo ",
                     "alertText2": " opções permitidas"
                 },
                 "minCheckbox": {
@@ -66,7 +66,7 @@
                 },
                 "equals": {
                     "regex": "none",
-                    "alertText": "Os campos não correspondem"
+                    "alertText": "Campos não correspondem"
                 },
                 "creditCard": {
                     "regex": "none",
@@ -149,3 +149,29 @@
     $.validationEngineLanguage.newLang();
     
 })(jQuery);
+
+// custom validation for email
+var validate_email = function(field, rules, i, options) {
+
+    var exist = false;
+    
+    $.ajax({
+        
+        url: $('#URL_ROOT').val() + '/app_user/check_email/',
+        context: document.body,
+        cache: false,
+        async: false,
+        data: { 'email' : field.val() },
+        type: 'POST',
+        success: function(data){
+
+            json = $.parseJSON(data);
+            
+            if(json.return == true)
+                exist = true;
+        }
+    });
+    
+    if( exist )
+        return "Endereço de email já existe";
+}

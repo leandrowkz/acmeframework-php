@@ -24,7 +24,7 @@ class App_User_Model extends CI_Model {
 
 	/**
 	* get_users()
-	* Retorna lista de usuários.
+	* Return an array list of users.
 	* @return array user
 	*/
 	public function get_users()
@@ -36,6 +36,29 @@ class App_User_Model extends CI_Model {
 			 LEFT JOIN acm_user_group  ug ON (u.id_user_group = ug.id_user_group)
 			 LEFT JOIN acm_user_config uc ON (u.id_user = uc.id_user)";
 		return $this->db->query($sql)->result_array();
+	}
+
+	/**
+	* get_user()
+	* Retorna an array data of user of id refered.
+	* @param int id_user
+	* @return array user
+	*/
+	public function get_user($id_user = 0)
+	{	
+		$sql = "SELECT u.*,
+					   ug.name as user_group,
+					   uc.lang_default,
+					   uc.url_default,
+					   uc.url_img,
+					   uc.url_img_large,
+					   CASE WHEN u.dtt_inative IS NULL THEN 'Y' ELSE 'N' END AS ACTIVE
+				  FROM acm_user u
+			 LEFT JOIN acm_user_group  ug ON (u.id_user_group = ug.id_user_group)
+			 LEFT JOIN acm_user_config uc ON (u.id_user = uc.id_user)
+			     WHERE u.id_user = $id_user";
+
+		return $this->db->query($sql)->row_array(0);
 	}
 	
 	/**
@@ -71,31 +94,6 @@ class App_User_Model extends CI_Model {
 		$data = $this->db->query($sql);
 		$data = $data->result_array();
 		return (isset($data)) ? $data : array();
-	}
-	
-	/**
-	* get_user_data()
-	* Retorna um array de dados do usuário de id encaminhado.
-	* @param int id_user
-	* @return array user
-	*/
-	public function get_user_data($id_user = 0)
-	{	
-		$sql = "SELECT u.*,
-					   ug.name as grup,
-					   ug.name as group_name,
-					   uc.lang_default,
-					   uc.url_default,
-					   uc.url_img,
-					   uc.url_img_large,
-					   CASE WHEN u.dtt_inative IS NULL THEN 'Y' ELSE 'N' END AS ACTIVE
-				  FROM acm_user u
-			 LEFT JOIN acm_user_group  ug ON (u.id_user_group = ug.id_user_group)
-			 LEFT JOIN acm_user_config uc ON (u.id_user = uc.id_user)
-			     WHERE u.id_user = $id_user";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? $data[0] : array();
 	}
 	
 	/**

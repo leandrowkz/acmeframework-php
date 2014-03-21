@@ -245,7 +245,6 @@ $id_permission = get_value($permission, 'id_module_permission');
                     // Check return
                     if( ! json.return) { 
                         // close modal and alert
-                        form.find('.modal-footer button').click();
                         bootbox.alert(json.error);
                         return false;
                     }
