@@ -70,5 +70,10 @@
 	
 	// Set form validations
     $('form').validationEngine('attach', { promptPosition : "bottomRight" });
+
+    // Reposition the alerts from form
+    $( window ).resize( function () {
+        $("form").validationEngine('updatePromptsPosition');
+    });
 	
 </script>

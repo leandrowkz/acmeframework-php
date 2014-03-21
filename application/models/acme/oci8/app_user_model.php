@@ -62,38 +62,30 @@ class App_User_Model extends CI_Model {
 	}
 	
 	/**
-	* get_list_permissions()
-	* Retorna um array de permissões de um determinado usuário de id encaminhado. Segundo parametro 
-	* diz se é para retornar modulos do acme ou não (chaveador entre modulos do acme e da aplicacao).
+	* get_permissions()
+	* Return an array of permissions to user of refered id.
 	* @param int id_user
-	* @param boolean show_acme_modules
 	* @return array permissions
 	*/
-	public function get_list_permissions($id_user = 0, $show_acme_modules = false)
+	public function get_permissions($id_user = 0)
 	{
 		$sql = "SELECT m.id_module,
-					   m.lang_key_rotule as mod_lang_key_rotule, 
-					   m.url_img,
-					   m.description as mod_description,
-                       mp.permission,
+					   m.label as module,
+					   m.description as module_description,
 					   mp.id_module_permission,
-					   mp.description as perm_description , 
-					   mp.lang_key_rotule as perm_lang_key_rotule, 
-                       CASE WHEN up.id_user_permission IS NOT NULL THEN 'S' ELSE 'N' END AS tem_permissao
+                       mp.permission,
+					   mp.description as permission_observation , 
+					   mp.label AS permission_description, 
+                       CASE WHEN up.id_user_permission IS NOT NULL THEN 'Y' ELSE 'N' END AS has_permission
 				  FROM acm_module_permission  mp 
 			 LEFT JOIN acm_module              m ON (mp.id_module = m.id_module)   
 			 LEFT JOIN acm_user_permission    up ON (up.id_module_permission = mp.id_module_permission AND up.id_user = $id_user)
-			 LEFT JOIN acm_user                u ON (u.id_user = up.id_user)";
-		
-		$sql .= ($show_acme_modules) ? " WHERE m.controller LIKE '%acme_%' " : " WHERE m.controller NOT LIKE '%acme_%' ";
-		
-		$sql .= "
+			 LEFT JOIN acm_user                u ON (u.id_user = up.id_user)
 			  ORDER BY m.controller, 
-					   m.lang_key_rotule, 
+					   m.label, 
 					   mp.permission";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data)) ? $data : array();
+
+		return $this->db->query($sql)->result_array();
 	}
 	
 	/**

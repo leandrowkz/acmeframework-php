@@ -185,5 +185,10 @@
 
 	// First load, yeah, its permissions!
 	$.load_area('permissions');
+
+	// Reposition the alerts from form
+    $( window ).resize( function () {
+        $("form").validationEngine('updatePromptsPosition');
+    });
 	
 </script>

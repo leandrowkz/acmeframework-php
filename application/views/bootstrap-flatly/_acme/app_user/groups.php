@@ -325,4 +325,9 @@ $id_group = get_value($group, 'id_user_group');
         onValidationComplete: function (form, status) { $.submit_callback(form, status); }
 
     });
+
+    // Reposition the alerts from form
+    $( window ).resize( function () {
+        $("form").validationEngine('updatePromptsPosition');
+    });
 </script>

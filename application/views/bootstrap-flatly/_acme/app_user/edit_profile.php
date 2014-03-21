@@ -126,28 +126,28 @@
     // custom validation for email
     var validate_email_custom = function(field, rules, i, options) {
 
-    var exist = false;
-    
-    if(field.val() != $('#email-callback').val())
-        $.ajax({
-            
-            url: $('#URL_ROOT').val() + '/app_user/check_email/',
-            context: document.body,
-            cache: false,
-            async: false,
-            data: { 'email' : field.val() },
-            type: 'POST',
-            success: function(data){
-
-                json = $.parseJSON(data);
+        var exist = false;
+        
+        if(field.val() != $('#email-callback').val())
+            $.ajax({
                 
-                if(json.return == true)
-                    exist = true;
-            }
-        });
-    
-    if( exist )
-        return "<?php echo lang('Endereço de email já existe') ?>";
+                url: $('#URL_ROOT').val() + '/app_user/check_email/',
+                context: document.body,
+                cache: false,
+                async: false,
+                data: { 'email' : field.val() },
+                type: 'POST',
+                success: function(data){
+
+                    json = $.parseJSON(data);
+                    
+                    if(json.return == true)
+                        exist = true;
+                }
+            });
+        
+        if( exist )
+            return "<?php echo lang('Endereço de email já existe') ?>";
     }
 
 

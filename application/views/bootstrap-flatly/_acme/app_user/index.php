@@ -72,10 +72,10 @@ $email = get_value($user, 'email');
 
         <div class="top list-user-info" style="margin: 2px 0 0 135px;">
 
-            <div class="hidden-xs"><h3 class="user-name" style="margin: 0 0 15px 0 "><?php echo $name ?></h3></div>
-            <div class="visible-xs"><h4 class="user-name" style="margin: 0 0 15px 0 "><?php echo $name ?></h4></div>
+            <div class="hidden-xs"><h3 class="user-name" style="margin: 0 0 10px 0 "><?php echo $name ?></h3></div>
+            <div class="visible-xs"><h4 class="user-name" style="margin: 0 0 10px 0 "><?php echo $name ?></h4></div>
 
-            <div style="margin: 15px 0">
+            <div style="margin: 10px 0 15px">
                 
                 <div class="inline user-email" style="word-break: break-all;"><?php echo $email ?></div>
 
@@ -91,9 +91,20 @@ $email = get_value($user, 'email');
 
             <div style="margin-top: 10px">
                 
-                <div class="inline top" style="margin-right: 5px"><i class="fa fa-edit fa-fw"></i> <a href="<?php echo URL_ROOT ?>/app_user/edit/<?php echo $id_user ?>"><?php echo lang('Editar') ?></a></div>
-                <div class="inline top" style="margin-right: 5px"><i class="fa fa-shield fa-fw"></i> <a href="<?php echo URL_ROOT ?>/app_user/permissions/<?php echo $id_user ?>"><?php echo lang('Permissões') ?></a></div>
-                <div class="inline top"><i class="fa fa-lock fa-fw"></i><a href="<?php echo URL_ROOT ?>/app_user/reset_password/<?php echo $id_user ?>"><?php echo lang('Reset de senha') ?></a></div>
+                <a href="<?php echo URL_ROOT ?>/app_user/edit/<?php echo $id_user ?>" class="btn btn-xs btn-primary" style="margin: 0 5px 5px 0">
+                    <i class="fa fa-edit fa-fw"></i> 
+                    <?php echo lang('Editar') ?>
+                </a>
+
+                <a href="<?php echo URL_ROOT ?>/app_user/permissions/<?php echo $id_user ?>" class="btn btn-xs btn-primary" style="margin: 0 5px 5px 0">
+                    <i class="fa fa-shield fa-fw"></i> 
+                    <?php echo lang('Permissões') ?>
+                </a>
+
+                <a href="javascript:void(0)" id="<?php echo $id_user ?>" class="btn btn-xs btn-primary reset-pass" style="margin: 0 5px 5px 0">
+                    <i class="fa fa-lock fa-fw"></i> 
+                    <?php echo lang('Resetar senha') ?>
+                </a>
 
             </div>
 
@@ -146,4 +157,52 @@ $email = get_value($user, 'email');
             });
         }
     });
+
+    // remove callback
+    $('a.reset-pass').click( function () {
+
+        // get id
+        var id = $(this).attr('id');
+        
+        // Confirm this shit
+        bootbox.confirm("<?php echo lang('Um email indicando os passos para alteração da senha será encaminhado para o usuário selecionado. Você confirma esta ação ?') ?>", function (result) {
+
+            // Cancel
+            if( ! result)
+                return;
+
+            // ajax to remove this fucking shit
+            enable_loading();
+            
+            $.ajax({
+                url: $('#URL_ROOT').val() + '/app_user/reset_password/' + id,
+                context: document.body,
+                cache: false,
+                async: false,
+                type: 'POST',
+
+                complete : function (response) {
+                    
+                    // Parse json to check errors
+                    json = $.parseJSON(response.responseText);
+                    
+                    // Check return
+                    if( ! json.return) { 
+                        // close modal and alert
+                        bootbox.alert(json.error);
+                        return false;
+                    }
+
+                    // Alert ok
+                    bootbox.alert('<?php echo lang('Feito! Email encaminhado para o usuário selecionado') ?>');
+                }
+            });
+
+            disable_loading();
+            
+        });
+
+    });
+
+
 </script>

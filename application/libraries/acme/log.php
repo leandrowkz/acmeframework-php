@@ -42,7 +42,7 @@ class Log {
 		$log['table_name'] = $table;
 		$log['action'] = $action;
 		$log['log_description'] = $text_log;
-		$log['additional_data'] = var_export($additional_data, true);
+		$log['additional_data'] = json_encode($additional_data);
 		$log['user_agent'] = $this->CI->agent->agent_string();
 		$log['browser_name'] = $this->CI->agent->browser();
 		$log['browser_version'] = $this->CI->agent->version();
@@ -85,7 +85,7 @@ class Log {
 			$log['id_user'] = $this->CI->session->userdata('id_user');
 		
 		if(is_array($message)) {
-			$vars = var_export($message, true);
+			$vars = json_encode($message, true);
 			$log['message'] = $vars;
 			$log['additional_data'] = $vars;
 		}

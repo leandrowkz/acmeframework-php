@@ -183,10 +183,10 @@
 
 		<div style="margin: 20px 0">
 			<div class="inline" style="width: 150px">
-				<label>login</label>
-				<i class="fa fa-question-circle fa-fw session-login-help"></i>
+				<label>email</label>
+				<i class="fa fa-question-circle fa-fw session-email-help"></i>
 			</div>
-		    <div class="inline"><?php echo $this->session->userdata('login') ?></div>
+		    <div class="inline"><?php echo $this->session->userdata('email') ?></div>
 		</div>
 
 		<div style="margin: 20px 0">
@@ -450,10 +450,10 @@
 	</div>
 </div>
 
-<div class="code-session-login hide">
+<div class="code-session-email hide">
 	<div>
 		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('login'); ?&gt;</code>
+		<code>&lt;?php echo $this->session->userdata('email'); ?&gt;</code>
 	</div>
 </div>
 
@@ -607,10 +607,10 @@
         content: function () { return $(".code-session-user-name").html(); }
     });
 
-    $('.session-login-help').popover( {
+    $('.session-email-help').popover( {
         trigger : 'hover',
         html: true,
-        content: function () { return $(".code-session-login").html(); }
+        content: function () { return $(".code-session-email").html(); }
     });
 
     $('.session-user-img-help').popover( {

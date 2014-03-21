@@ -143,6 +143,75 @@ class App_User extends ACME_Module_Controller {
 	}
 
 	/**
+	* edit()
+	* Update user form.
+	* @param int id_user
+	* @param boolean process
+	* @return void
+	*/
+	public function edit($id_user = 0, $process = false)
+	{		
+		$this->validate_permission('UPDATE');
+
+		if($id_user == 0 || $id_user == '')
+			redirect('app_user');
+		
+		// New user form
+		if( ! $process) {
+			
+			$args['user'] = $this->app_user_model->get_user($id_user);
+
+			$groups = $this->db->select('id_user_group, name')->from('acm_user_group')->order_by('name')->get()->result_array();
+			
+			$args['options'] = $this->form->build_select_options($groups, get_value($args['user'], 'id_user_group'));
+
+			$this->template->load_page('_acme/app_user/edit', $args);
+
+		} else {
+
+			// Proccess form
+			$user_data['id_user_group'] = $this->input->post('id_user_group');
+			$user_data['name'] = $this->input->post('name');
+			$user_data['email'] = $this->input->post('email');
+			$user_data['description'] = $this->input->post('description');
+			$user_data['password'] = md5($this->input->post('password'));
+
+			// update user
+			$this->db->update('acm_user', $user_data, array('id_user' => $id_user));
+
+			// configs update
+			$config['url_default'] = $this->input->post('url_default');
+			$config['lang_default'] = $this->input->post('lang_default');
+
+			$this->db->update('acm_user_config', $config, array('id_user' => $id_user));
+
+			// redirect to config page
+			redirect('app_user');
+		}
+	}
+
+	/**
+	* permissions()
+	* Permission manager for refered user id.
+	* @param integer id_user
+	* @return void
+	*/
+	public function permissions($id_user = 0)
+	{
+		$this->validate_permission('PERMISSION_MANAGER');
+
+		if($id_user == 0 || $id_user == '')
+			redirect('app_user');
+		
+		$args['permissions'] =  $this->app_user_model->get_permissions($id_user);
+		
+		$args['user'] = $this->app_user_model->get_user($id_user);
+		
+		// Carrega view
+		$this->template->load_page('_acme/app_user/permissions', $args);
+	}
+
+	/**
 	* check_email()
 	* Validate an email passed by POST, checking if already exist an user with this email.
 	* @return void
@@ -155,6 +224,33 @@ class App_User extends ACME_Module_Controller {
 			echo json_encode(array('return' => true));
 		else
 			echo json_encode(array('return' => false));
+	}
+
+	/**
+	* save_permission()
+	* ENable or disable permission for user. Fowarded by permissions page, through ajax. Operation must
+	* be sent as parameter and data by $_POST. Print json as result operation status.
+	* @param string operation		// enable, disable
+	* @return void
+	*/
+	public function save_permission($operation = '')
+	{
+		if( ! $this->check_permission('PERMISSION_MANAGER')) {
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			return;
+		}
+
+		$data['id_user'] = $this->input->post('id_user');
+		$data['id_module_permission'] = $this->input->post('id_module_permission');
+
+		// always delete permission to save another
+		$this->db->delete('acm_user_permission', $data);
+		
+		if( strtolower($operation) == 'enable' )
+			$this->db->insert('acm_user_permission', $data); 
+
+		// Adorable return!
+		echo json_encode(array('return' => true));
 	}
 
 	/**
@@ -407,266 +503,49 @@ class App_User extends ACME_Module_Controller {
 	}
 	
 	/**
-	* permission_manager()
-	* Tela de gerenciamento de permissões de usuário.
-	* @param integer id_user
-	* @return void
-	*/
-	public function permission_manager($id_user = 0)
-	{
-		$this->validate_permission('PERMISSION_MANAGER');
-		
-		// Coleta filtros
-		$filters = $this->input->post();
-		
-		// Calcula filtros para modulos (exibir somente modulos do acme ou app)
-		$args['show_acme_modules'] = (get_value($filters, 'show_acme_modules') == 'Y') ? true : false;
-		
-		// Permission do usuario
-		$args['lista'] =  $this->app_user_model->get_list_permissions($id_user, $args['show_acme_modules']);
-		$args['user_data'] = $this->app_user_model->get_user_data($id_user);
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/permission_manager', $args);
-	}
-	
-	/**
-	* ajax_set_user_permission()
-	* Habilita ou desabilita uma permissão de um módulo para determinado usuário
-	* incluindo um novo registro ou deletando da tabela de permissões.
-	* @param integer id_user
-	* @param integer id_module_permission
-	* @param string action
-	* @return void
-	*/
-	public function ajax_set_user_permission($id_user = 0, $id_module_permission = 0, $action = '')
-	{
-		if($this->validate_permission('PERMISSION_MANAGER', false))
-		{
-			$permission_ins['id_user'] = $id_user;
-			$permission_ins['id_module_permission'] = $id_module_permission;	
-			
-			// Dados para inserção
-			if( strtolower($action) == 'enable')
-			{				
-				// Insere um novo registro de acao para este formulario
-				$this->db->insert('acm_user_permission', $permission_ins);
-			}else{					
-				$this->db->delete('acm_user_permission', $permission_ins);
-			}			
-		}	
-	}
-	
-	
-	
-	/**
-	* insert()
-	* Formulário customizado de inserção de usuário. Regras básicas:
-	* -> Caso o usuário que esteja tentando inserir outro usuário pertença a outro grupo diferente
-	*    de ROOT, então não é possível inserir o usuário neste grupo ROOT. Apenas outros usuários
-	*    do grupo ROOT podem inserir.
-	* @return void
-	*/
-	public function insert()
-	{
-		// Valida a permissão
-		$this->validate_permission('INSERT');
-		
-		// Coleta grupos para fazer validação posterior
-		$this->load->model('acme_user_group_model');
-		$args['groups'] = $this->acme_user_group_model->get_user_groups();
-		
-		// Variável de teste se usuário atual é ROOT
-		$args['is_root'] = ($this->session->userdata('user_group') == 'ROOT') ? true : false;
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/form_insert_custom', $args);
-	}
-	
-	/**
-	* form_insert_custom_process()
-	* Processa formulário customizado de inserção de usuário.
-	* @return void
-	*/
-	public function form_insert_custom_process()
-	{
-		// Valida a permissão
-		$this->validate_permission('INSERT');
-		
-		// Inicializa transação
-		$this->db->trans_start();
-		
-		// Insere usuário (acm_user)
-		$arr_ins['id_user_group'] = $this->input->post('id_user_group');
-		$arr_ins['name'] = $this->input->post('name');
-		$arr_ins['email'] = $this->input->post('email');
-		$arr_ins['login'] = $this->input->post('login');
-		$arr_ins['password'] = md5($this->input->post('password'));
-		$arr_ins['observation'] = $this->input->post('observation');
-		$this->db->insert('acm_user', $arr_ins);
-
-		// Retorna o último ID de usuário com base no que foi inserido
-		$user = $this->db->get_where('acm_user', array('login' => $arr_ins['login']))->result_array();
-		$user = isset($user[0]) ? $user[0] : array();
-		$id_user = get_value($user, 'id_user');
-		
-		// Insere na tabela de configurações
-		$arr_con['id_user'] = $id_user;
-		$arr_con['lang_default'] = $this->input->post('lang_default');
-		$arr_con['url_default'] = $this->input->post('url_default');
-		$this->db->insert('acm_user_config', $arr_con);
-		
-		// Loga inserção de usuário
-		$this->log->db_log(lang('Inserção de usuário'), 'insert', 'acm_user', array_merge($arr_ins, $arr_con));
-		
-		// Completa transação
-		$this->db->trans_complete();
-		
-		// Redirect para entrada do módulo
-		redirect('acme_user');
-	}
-	
-	/**
-	* form_update_custom()
-	* Formulário customizado de inserção de usuário. Regras básicas:
-	* -> Caso o usuário atual não seja do grupo ROOT, então não poderá editar os dados de usuários
-	*    do grupo ROOT.
-	* @param int id_user
-	* @return void
-	*/
-	public function form_update_custom($id_user = 0)
-	{
-		// Valida a permissão
-		$this->validate_permission('UPDATE');
-		
-		// Coleta dados do usuário de id encaminhado
-		$args['user'] = $this->app_user_model->get_user_data($id_user);
-		
-		// Coleta grupos para fazer validação posterior
-		$this->load->model('acme_user_group_model');
-		$args['groups'] = $this->acme_user_group_model->get_user_groups();
-		
-		// Variável de teste se usuário atual é ROOT
-		$args['is_root'] = ($this->session->userdata('user_group') == 'ROOT') ? true : false;
-		
-		// Variável para teste de edição
-		$args['editable'] = ($this->session->userdata('user_group') != 'ROOT' && get_value($args['user'], 'group_name') == 'ROOT') ? false : true;
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/form_update_custom', $args);
-	}
-	
-	/**
-	* form_update_custom_process()
-	* Processa formulário customizado de edição de usuário.
-	* @return void
-	*/
-	public function form_update_custom_process()
-	{
-		// Valida a permissão
-		$this->validate_permission('UPDATE');
-		
-		// Inicializa transação
-		$this->db->trans_start();
-		
-		// Coleta os dados do usuário para log
-		$id_user = $this->input->post('id_user');
-		$user = $this->app_user_model->get_user_data($id_user);
-		
-		// Insere usuário (acm_user)
-		if($this->input->post('login') != '')
-		{
-			$arr_ins['login'] = $this->input->post('login');
-		}
-		if($this->input->post('dtt_inative') != '')
-		{
-			$this->db->set('dtt_inative', $this->input->post('dtt_inative'), false);
-		} else {
-			$this->db->set('dtt_inative', 'NULL', false);
-		}
-		$arr_ins['id_user_group'] = $this->input->post('id_user_group');
-		$arr_ins['name'] = $this->input->post('name');
-		$arr_ins['email'] = $this->input->post('email');
-		$arr_ins['observation'] = $this->input->post('observation');
-		$this->db->update('acm_user', $arr_ins, array('id_user' => $id_user));
-		
-		// Coleta os dados de configs do usuário para log
-		$configs = $this->app_user_model->get_user_data($id_user);
-		
-		// Insere na tabela de configurações
-		$arr_con['id_user'] = $id_user;
-		$arr_con['lang_default'] = $this->input->post('lang_default');
-		$arr_con['url_default'] = $this->input->post('url_default');
-		$this->db->update('acm_user_config', $arr_con, array('id_user' => $id_user));
-		
-		// Loga edição de usuário
-		$this->log->db_log(lang('Edição de usuário'), 'update', 'acm_user', array(array_merge($user, $configs), array_merge($arr_ins, $arr_con)));
-		
-		// Completa transação
-		$this->db->trans_complete();
-		
-		// Redirect para entrada do módulo
-		redirect('acme_user');
-	}
-	
-	
-	
-	/**
-	* reset_password()
-	* Tela de confirmação de solicitação de reset de senha.
+	* reset password()
+	* Send an email to user by refered id, this email contains the steps to reset password.
 	* @param int id_user
 	* @return void
 	*/
 	public function reset_password($id_user = 0)
 	{
-		$this->validate_permission('RESET_PASSWORD');
-		
-		// Coleta dados do usuário
-		$args['user'] = $this->app_user_model->get_user_data($id_user);
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/reset_password', $args);
-	}
-	
-	/**
-	* reset_password_process()
-	* Processa tela de confirmação de solicitação de reset de senha. Faz o envio realmente de email
-	* para o usuário.
-	* @return void
-	*/
-	public function reset_password_process()
-	{
-		$this->validate_permission('RESET_PASSWORD');
-		
-		// Coleta dados do usuário
-		$user = $this->app_user_model->get_user_data($this->input->post('id_user'));
-		
-		// Tenta enviar email para usuário
-		// caso falhe, nao faz insert na tabela de log de resets
-		$args['user'] = $user;
-		$args['key_access'] = md5(uniqid());
-		$message_body = $this->template->load_page('_acme/app_user/email_body_message_reset_password', $args, true, false);
-		
-		// Faz o envio, definitivamente
-		if($this->app_email->send_email(lang('Solicitação de Alteração de Senha'), $message_body, get_value($user, 'email')))
-		{
-			// Seta controle OK
-			$args['sent_email'] = true;
-			
-			// Gera chave de acesso para reset de senha
-			$arr_ins['id_user'] = get_value($user, 'id_user');
-			$arr_ins['email'] = get_value($user, 'email');
-			$arr_ins['key_access'] = $args['key_access'];
-			$this->db->insert('acm_user_reset_password', $arr_ins);
-			
-			// Loga reenvio de senha
-			$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', 'acm_user_reset_password', $user);
-		} else {
-			$args['sent_email'] = false;
+		if( ! $this->check_permission('RESET_PASSWORD')) {
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			return;
 		}
+
+		// user data
+		$user = $this->app_user_model->get_user($id_user);
+		$args['user'] = $user;
+		$args['id_user'] = $id_user;
+		$args['key_access'] = md5(uniqid());
+
+		// collect email body msg
+		$body_msg = $this->template->load_page('_acme/app_user/email_reset_password', $args, true, false);
 		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/reset_password_process', $args);
+		// now try to send email
+		$this->load->library('email');
+		$this->email->clear();
+	    $this->email->to(get_value($user, 'email'));
+	    $this->email->from(EMAIL_FROM, APP_NAME);
+	    $this->email->subject(lang('Alteração de senha'));
+	    $this->email->message($body_msg);
+	    
+	    if( ! @$this->email->send() ) {
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Não foi possível enviar a mensagem de email. Verifique as configurações de email da aplicação.')));
+			return;
+		}
+
+		// log asking for reset pass
+		$data['id_user'] = $id_user;
+		$data['key_access'] = $args['key_access'];
+		$data['updated'] = false;
+
+		$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $args);
+		
+		// Adorable return!
+		echo json_encode(array('return' => true));
 	}
 	
 	/**
