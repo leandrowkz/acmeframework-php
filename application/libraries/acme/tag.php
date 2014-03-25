@@ -4,12 +4,12 @@
 *
 * Library Tag
 *
-* Biblioteca de funções relacionadas à manipulação de tags internas da aplicação. Uma tag interna
-* é uma tag que contém o valor de uma constante, por exemplo:
+* Library of functions related to application tag manipulation. An application tag is a tag that
+* contains a constant value, for example:
 *
-*		A tag {URL_ROOT}, quando substituída conterá o valor da constante URL_ROOT.
+*		The tag {URL_ROOT} when replaced will contain the constant value of URL_ROOT.
 *
-* Isto é útil no caso de salvar o valor de URLs no banco de dados.
+* This is very useful in cases when you have to save this mutable values on database.
 * 
 * @since 	24/10/2012
 *
@@ -21,16 +21,13 @@ class Tag {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
 	* @return object
 	*/
-	public function __construct()
-	{
-	}
+	public function __construct () {}
 	
 	/**
 	* tag_replace()
-	* Este método faz replace de todas as tags encontradas em uma string pelo seu respectivo valor.
+	* Replace all tag ocurrences for their respective values inside a string.
 	* @param string string
 	* @return mixed result
 	*/
@@ -48,24 +45,18 @@ class Tag {
 				
 				if(isset($match[0]))
 				{
-					// Executa um a um os comandos localizados na string
+					// Try to find all ocurrences
 					foreach($match[0] as $index => $command)
 					{
-						// Remove caracteres de tag '{' e '}'
+						// Remove characters tag '{' and '}'
 						$command = str_replace(array('{', '}'), '', $command);
 
-						// Verifica se o comando possui ponto e vírgula no final, 
-						// caso não possua, então adiciona
-						$command = (preg_match("/;$/", $command)) ? $command : $command . ';';
+						// debug
+						// echo $command;
 						
-						// Eval no comando localizado, o retorno vai para $replace
-						// echo($command . "\n");
-						eval('$replace = ' . $command);
-						
-						// Caso $replace não tenha retorno, isto é, o eval não 
-						// possui um retorno, então faz a substituição da tag por nada
-						$replace = (!is_null($replace)) ? $replace : '';
-						$return = str_replace($match[0][$index], $replace, $return);
+						// replace only if command is a defined constant
+						if( defined( $command ))
+							$return = str_replace($match[0][$index], constant($command), $return);
 					}
 				}
 			}
@@ -74,31 +65,31 @@ class Tag {
 	}
 	
 	/**
-	* tag_array_replace()
-	* Faz a substituição em uma string do valor {NUMERO_COLUNA} pelo valor de um 
-	* índice de array $arr_data['NUMERO_COLUNA'].
+	* array_tag_replace()
+	* Replaces one tag with name {NUMBER OR COLUMN_NAME} by the value of an array followed
+	* $arr_data['NUMBER OR COLUMN_NAME'].
 	* @param string value
 	* @param array arr_data 
 	* @return string new_string
 	*/
-	public function tag_array_replace($value = null, $arr_data = array())
+	public function array_tag_replace($value = null, $arr_data = array())
 	{
-		// Casa todas as ocorrencias de {A-Z0-9a-z_-}
+		// match all occurrences of {A-Z0-9a-z_-}
 		preg_match_all('/{[0-9a-zA-Z_-]+}/', $value, $matches);	
 		
-		// Varre todas as ocorrencias, substituindo valor do array por tag
+		// cross all occurrences, replacing the value from tag by the value from array
 		foreach($matches as $match)
 		{	
 			$counter = count($match);
 			for($i = 0; $i < $counter; $i++)
 			{
-				// Coleta o indice do array
+				// match array index, to replace that
 				$index = str_replace('}', '', str_replace('{','', $match[$i]));
 				
-				// coleta o indice do array por numero, caso tag == numero
+				// case tag name == array index number
 				$data = (is_integer_($index)) ? array_values($arr_data) : $arr_data;
 				
-				// Faz replace da tag por valor
+				// replaces tag value
 				$value = str_replace($match[$i], get_value($data, $index), $value);
 			}
 		}

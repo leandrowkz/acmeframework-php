@@ -46,6 +46,14 @@
 			</div>
 		    <div class="inline"><?php echo LANGUAGE ?></div>
 		</div>
+
+		<div style="margin: 20px 0">
+			<div class="inline" style="width: 150px">
+				<label>EMAIL_FROM</label>
+				<i class="fa fa-question-circle fa-fw email-from-help"></i>
+			</div>
+		    <div class="inline"><?php echo EMAIL_FROM ?></div>
+		</div>
 		
 		<h3 style="margin: 40px 0 0"><?php echo lang('URLS') ?></h3>
 
@@ -282,6 +290,17 @@
 	</div>
 </div>
 
+<div class="code-email-from hide">
+	<div>
+		<small><strong>PHP:</strong></small>
+		<code>&lt;?php echo EMAIL_FROM; ?&gt;</code>
+	</div>
+	<div style="margin: 10px 0 0">
+		<small><strong>JQuery:</strong></small>
+		<code>$('#EMAIL_FROM').val();</code>
+	</div>
+</div>
+
 <div class="code-url-root hide">
 	<div>
 		<small><strong>PHP:</strong></small>
@@ -509,6 +528,12 @@
         trigger : 'hover',
         html: true,
         content: function () { return $(".code-language").html(); }
+    });
+
+    $('.email-from-help').popover( {
+        trigger : 'hover',
+        html: true,
+        content: function () { return $(".code-email-from").html(); }
     });
 
     $('.url-root-help').popover( {

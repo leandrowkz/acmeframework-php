@@ -1,52 +1,49 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function(){
-		// Validação e máscaras
-		$("#form_default").validationEngine({ inlineValidation:false , promptPosition : "centerRight", scroll : true });
-		$("input:text").setMask();
-	});
-</script>
-<div>
-	<!-- CABEÇALHO DO MÓDULO e MENUS -->
-	<div id="module_header">
-		<div id="module_rotule" class="inline top">
-			<h2 class="inline top font_shadow_gray"><a class="black" href="<?php echo URL_ROOT . '/' . $this->controller ?>"><?php echo lang($this->lang_key_rotule); ?></a></h2>
-			<?php if($this->url_img != '') {?>
-			<img src="<?php echo $this->url_img ?>" />
-			<?php } ?>
-		</div>
-		<!-- MENUS DO MODULO -->
-		<?php if(count($this->menus) > 0){ ?>
-		<div id="module_menus" class="inline top">
-			<?php foreach($this->menus as $menu) { ?>
-			<div class="inline top module_menu_item" title="<?php echo get_value($menu, 'description')?>">
-				<?php if(get_value($menu, 'url_img') != '') { ?>
-				<img class="inline top" src="<?php echo $this->tag->tag_replace(get_value($menu, 'url_img'))?>" />
-				<?php } ?>
-				<h6 class="inline top"><a href="<?php echo $this->tag->tag_replace(get_value($menu, 'link'))?>" <?php echo(get_value($menu, 'target') != '' ? 'target="' . get_value($menu, 'target') . '"' : '')?> <?php echo(get_value($menu, 'javascript') != '' ? get_value($menu, 'javascript') : '')?>><?php echo lang(get_value($menu, 'lang_key_rotule'))?></a></h6>
-			</div>
-			<?php } ?>
-		</div>
-		<?php } ?>		
+<link type="text/css" rel="stylesheet" href="<?php echo URL_CSS ?>/plugins/dataTables/dataTables.bootstrap.css" />
+<script src="<?php echo URL_JS ?>/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="<?php echo URL_JS ?>/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+<div class="row module-header">
+
+	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+		<h1><?php echo lang($this->label) ?>
+		<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+		</h1>
 	</div>
 	
-	<!-- DESCRICAO DO MODULO -->
-	<div id="module_description"><?php echo nl2br($this->description); ?></div>
-	
-	<!-- FILTROS E LISTAGEM DE DADOS -->
-	<table width="100%" id="module_table">
-	<tr>
-		<td colspan="2">
-			<?php if($module_form_filter != ''){ ?>
-			<div id="line_filter">
-				<img id="column_filter_img" src="<?php echo URL_IMG ?>/icon_bullet_minus.png" />
-				<a href="javascript:void(0)" onclick="show_area('column_filter', 'column_filter_img')" class="black inline top font_shadow_gray"><h5 id="form_filter_title"><?php echo lang('Filtros da Consulta')?></h5></a>
-			</div>
-			<?php } ?>
-		</td>
-	</tr>
-	<tr>
-		<td><?php echo $module_table; ?></td>
-		<td id="column_filter" width="200" nowrap style="padding-left:50px;<?php echo(($module_form_filter == '') ? 'display:none;' : ''); ?>"><?php echo $module_form_filter ?></td>
-	</tr>
-	</table>
+	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+		<?php if ( count($this->menus) > 0 ) {?>
+		<div class="btn-group pull-right clearfix">
+			<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+				<i class="fa fa-align-justify hidden-lg hidden-md"></i> 
+				<div class="hidden-xs hidden-sm">
+					<i class="fa fa-align-justify"></i> 
+					<span><?php echo lang('Ações') ?></span> 
+					<span class="caret"></span>
+				</div>
+			</button>
+			<ul class="dropdown-menu">
+				<?php 
+				foreach ($this->menus as $menu) { 
+				// build link
+				$link = tag_replace(get_value($menu, 'link'));
+				$target = (get_value($menu, 'target') != '') ? ' target="' . tag_replace(get_value($menu, 'target')) . '" ' : '';
+				$label = lang(get_value($menu, 'label'));
+				
+				// img must be font-awesome know more in http://fortawesome.github.io/Font-Awesome/
+				if(stristr(get_value($menu, 'url_img'), '<i class="')) {
+					$img = get_value($menu, 'url_img');
+				} else {
+					$img = (file_exists(tag_replace(get_value($menu, 'url_img'))) && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
+				}
+				?>
+				<li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
+				<?php } ?>
+			</ul>
+		</div>
+		<?php } ?>
+		
+	</div>
 </div>
+
+<?php echo $module_table ?>

@@ -37,8 +37,11 @@ class Log {
 		$this->CI =& get_instance();
 		$this->CI->load->library('user_agent');
 
-		// dados do log
-		$log['id_user'] = $this->CI->session->userdata('id_user');
+		// maybe user dont exist
+		if( $this->CI->session->userdata('id_user') != '' )
+			$log['id_user'] = $this->CI->session->userdata('id_user');
+
+		// log data
 		$log['table_name'] = $table;
 		$log['action'] = $action;
 		$log['log_description'] = $text_log;

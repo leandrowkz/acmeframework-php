@@ -533,16 +533,15 @@ class App_User extends ACME_Module_Controller {
 	    $this->email->message($body_msg);
 	    
 	    if( ! @$this->email->send() ) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Não foi possível enviar a mensagem de email. Verifique as configurações de email da aplicação.')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! Não foi possível enviar a mensagem de email. Verifique as configurações de email da aplicação')));
 			return;
 		}
 
 		// log asking for reset pass
-		$data['id_user'] = $id_user;
+		$data['id_user'] = $args['id_user'];
 		$data['key_access'] = $args['key_access'];
-		$data['updated'] = false;
 
-		$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $args);
+		$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $data);
 		
 		// Adorable return!
 		echo json_encode(array('return' => true));

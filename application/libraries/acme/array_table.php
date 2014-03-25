@@ -20,8 +20,8 @@ class Array_Table {
 	public $id = '';
 	public $class = '';
 	public $columns = array();
-	public $columnsBefore = array();
-	public $columnsAfter = array();
+	public $columns_before = array();
+	public $columns_after = array();
 	public $indexColumnBefore = 0;
 	public $indexColumnAfter = 0;
 	public $items_per_page = 100;
@@ -180,8 +180,8 @@ class Array_Table {
 	public function empty_columns($data = array())
 	{
 		$this->columns = array();
-		$this->columnsBefore = array();
-		$this->columnsAfter = array();
+		$this->columns_before = array();
+		$this->columns_after = array();
 	}
 	
 	/**
@@ -243,10 +243,10 @@ class Array_Table {
 		{
 			if($prBefore)
 			{
-				$this->columnsBefore[$this->indexColumnBefore] = $prConteudo;
+				$this->columns_before[$this->indexColumnBefore] = $prConteudo;
 				$this->indexColumnBefore++;
 			} else {
-				$this->columnsAfter[$this->indexColumnAfter] = $prConteudo;
+				$this->columns_after[$this->indexColumnAfter] = $prConteudo;
 				$this->indexColumnAfter++;
 			}
 		}

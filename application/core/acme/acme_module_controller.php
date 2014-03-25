@@ -130,20 +130,17 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			$table->set_data($resultset);
 			
 			// Adiciona a tabela de dados, as possíveis ações do módulo
-			foreach($this->actions as $action) {
-
+			foreach($this->actions as $action)
 				$table->add_column($this->template->load_html_component('module_action', array($action)));
 
-			}
-		
 			// Html da tabela
 			$args['module_table'] = $table->get_html();
 		} else {
-			$args['module_table'] = message('note', '', lang('Módulo sem consulta SQL.'));
+			$args['module_table'] = message('info', '', lang('Módulo sem consulta SQL'));
 		}
 		
 		// Carrega view
-		$this->template->load_page('_acme/acme_module_controller/index', $args);
+		$this->template->load_page('_acme/app_module_controller/index', $args);
 	}
 	
 	/**
