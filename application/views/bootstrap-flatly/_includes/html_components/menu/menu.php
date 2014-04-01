@@ -58,7 +58,7 @@ function menu ($menus = array())
 			if(stristr(get_value($menu, 'url_img'), '<i class="')) {
 				$img = get_value($menu, 'url_img');
 			} else {
-				$img = (file_exists() && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
+				$img = (file_exists(tag_replace(get_value($menu, 'url_img'))) && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
 			}
 			
 			// Monta o label conforme possui filho ou nao

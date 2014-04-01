@@ -6,6 +6,11 @@
         <div class="col-xs-6 col-sm-6 col-md-12 text-center">
             
             <?php 
+
+            $id_user = get_value($user, 'id_user');
+            $url_img = get_value($user, 'url_img');
+            $url_img_large = tag_replace(get_value($user, 'url_img_large'));
+
             // Ajusta thumb
             if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
                 $url_img = tag_replace($url_img);
@@ -34,25 +39,25 @@
     <div class="row" id="user-profile-name">
         <div class="col-sm-12">
             <a class="btn btn-primary btn-sm pull-right" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Voltar') ?></a>
-            <h1 style="margin-top:0"><?php echo $name ?></h1>
+            <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
         </div>
     </div>
     
     <div class="row">
         <div class="col-sm-12 text-top" id="user-profile-badges">
             <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo $group ?></div>
-                <?php if($active == 'Y'){ ?>
+                <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
+                <?php if(get_value($user, 'active') == 'Y'){ ?>
                 <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
                 <?php } else { ?>
                 <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
                 <?php } ?>
             </div>
-            <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . $log_dtt_ins ?></div>
+            <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
         </div>
     </div>
 
-    <h3>// <?php echo lang('Alterar imagem')?></h3>
+    <h3><?php echo lang('Alterar imagem')?></h3>
 
     <div class="row" style="margin-top:20px">
         
@@ -76,12 +81,13 @@
             <p class="lead" style="margin:10px 0 20px 0"><?php echo lang('ou') ?></p>
             <?php } ?>
             
-            <form action="<?php echo URL_ROOT ?>/app_user/upload_photo" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
-                <input type="hidden" name="id_user" id="id_user" value="<?php echo $id_user ?>" />
+            <form action="<?php echo URL_ROOT ?>/app_user/upload_photo/<?php echo $id_user ?>" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
+                
                 <div class="fallback text-center">
                     <input class="btn btn-default btn-xs text-center" name="file" id="file" type="file" />
                     <a class="btn btn-default btn-lg" href="javascript:void(0)" onclick="send_file_fallback()"><?php echo lang('Enviar') ?></a>
                 </div>
+
             </form>
 
             <iframe name="iframe-fallback" id="iframe-fallback" style="display:none"></iframe>
@@ -175,9 +181,8 @@
         enable_loading();
 
         $.ajax({
-            url: $('#URL_ROOT').val() + '/app_user/edit_thumbnail/',
+            url: $('#URL_ROOT').val() + '/app_user/edit_thumbnail/<?php echo $id_user ?>',
             data: {
-                id_user : '<?php echo $id_user ?>',
                 w : $("#img-user").width(),
                 h : $("#img-user").height(),
                 sw : selection.width,

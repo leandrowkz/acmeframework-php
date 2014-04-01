@@ -34,7 +34,9 @@
 	</table>
 
 </div>
-<?php } else { echo message('info', '', lang('Nenhum menu para este módulo')); } ?>
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Nenhum menu para este módulo') ?></em></p>
+<?php } ?>
 	
 <!-- now, modal menus -->
 <?php 
@@ -308,7 +310,6 @@ $id_menu = get_value($menu, 'id_module_menu');
                     // Check return
                     if( ! json.return) { 
                         // close modal and alert
-                        form.find('.modal-footer button').click();
                         bootbox.alert(json.error);
                         return false;
                     }

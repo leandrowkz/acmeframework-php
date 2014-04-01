@@ -1,42 +1,132 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
+<!DOCTYPE html>
+<html>
+
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title><?php echo APP_TITLE; ?></title>
-	<?php echo $this->template->load_array_config_js_files(); ?>
-	<?php echo $this->template->load_array_config_css_files(); ?>
-	<link rel="shortcut icon" type="image/x-icon" href="<?php echo URL_IMG ?>/_favicon.ico">
-	<script type="text/javascript" language="javascript">
-		$(document).ready(function() {
-			enable_form_validations();
-			$('#login').focus();
-		});
-	</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title><?php echo APP_NAME ?></title>
+
+<!-- Core CSS - Include with every page -->
+<link href="<?php echo URL_CSS ?>/bootstrap.css" rel="stylesheet">
+<link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+<!-- ACME CSS - Include with every page -->
+<link href="<?php echo URL_CSS ?>/app-core.css" rel="stylesheet">
+<link href="<?php echo URL_CSS ?>/app-pages.css" rel="stylesheet">
+<link href="<?php echo URL_CSS ?>/app-mobile-portrait.css" rel="stylesheet">
+<link href="<?php echo URL_CSS ?>/app-mobile-landscape.css" rel="stylesheet">
+<link href="<?php echo URL_CSS ?>/app-tablet-desktop.css" rel="stylesheet">
+
 </head>
-<body style="background-color:#f5f5f5;">
-	<div style="width:500px;margin:0 auto;top:15%;position:relative;">
-	<div class="generic_box">
-		<div id="header"><h6 class="white font_shadow_black"><img src="<?php echo URL_IMG ?>/icon_help.png" style="margin-top:3px;" /><?php echo lang('Esqueceu sua senha ?')?></h6></div>	
-		<div id="content">
-			<img src="<?php echo URL_IMG ?>/logo.png" class="inline top" style="width:170px" />
-			<div style="width:250px;margin-left:30px;" class="inline top">
-				<span class="font_11"><?php echo lang('Você deve inserir seu login de acesso para continuar.');?></span>
-				<form name="form_default" id="form_default" action="<?php echo URL_ROOT ?>/acme_access/forgot_password_process" method="post">
-					<div style="margin-top:12px;" class="bold"><h6><?php echo lang('Seu login');?></h6></div>
-					<input type="text" name="login" id="login" value="" style="width:195px;" class="validate[required]" />
-					<br />
-					<br />
-					<input type="checkbox" name="validate_human" id="validate_human" value="OHYEAH" class="validate[required]" />
-					<div class="inline top font_11"><label for="validate_human"><?php echo lang('Clique para confirmar que você não é um robô') ?></label></div>
-					<div style="margin-top:35px">
-						<hr />
-						<div style="margin:10px 3px 0 0" class="inline top"><input type="submit" value="<?php echo lang('Enviar')?>" /></div>
-						<div style="margin:18px 0px 0 0" class="inline top">ou <a href="<?php echo URL_ROOT ?>/acme_access/login"><?php echo lang('voltar')?></a></div>
-					</div>
-				</form>
-				<br />
-			</div>
-		</div>
-	</div>
+
+<body style="background-color:#f8f8f8;">
+
+<div id="fullscreen_bg" class="fullscreen_bg">
+
+    <div class="container">
+
+        <div class="row">
+            
+            <div class="col-md-4 col-md-offset-4">
+
+                <div class="login-panel panel panel-default" style="border: 1px solid #eee">
+                    
+                    <div class="panel-body" style="padding:25px;">
+                        
+                        <div class="text-center" style="margin-bottom:25px">
+                            <?php if( file_exists(PATH_IMG . '/logo.png')){ ?>
+                                <img src="<?php echo URL_IMG ?>/logo.png" id="logo" />
+                            <?php } else { ?>
+                                <h3><?php echo APP_NAME ?></h3>
+                            <?php } ?>
+                        </div>
+
+                        <?php 
+
+                        if( isset($error) ) {
+                        
+                        echo message('error', '', $error); ?>
+
+                        <a href="<?php echo URL_ROOT ?>/app_access/forgot_password" class="btn btn-lg btn-primary btn-block"><?php echo lang('Voltar') ?></a>
+
+                        <?php } elseif( isset($success) ) { 
+
+                        echo message('success', '', $success); ?>
+                        
+                        <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-primary btn-block"><?php echo lang('Voltar') ?></a>
+
+                        <?php } else { ?>
+                        <form role="form" action="<?php echo URL_ROOT ?>/app_access/forgot_password/true" method="post">
+
+                            <h4 class="text-center" style="margin-bottom: 30px"><?php echo lang('Esqueceu sua senha ?') ?></h4>
+
+                            <fieldset>
+                                
+                                <div class="form-group">
+                                    <input class="form-control validate[required,custom[email]]" placeholder="<?php echo lang('Insira seu email') ?>" type="email" name="email" id="email" autofocus>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="validate_human" name="validate_human" class="validate[required]"> <?php echo lang('Sou um ser humano') ?>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+
+                                    <div class="col-xs-6">
+                                        
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('Enviar') ?>" />
+                                        </div>
+
+                                    </div>
+                                    
+                                    <div class="col-xs-6">
+                                        
+                                        <div class="form-group">
+                                            <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-default btn-block"><?php echo lang('Voltar') ?></a>
+                                        </div>
+
+                                    </div>  
+                                </div>
+
+                            </fieldset>
+                        </form>
+                        <?php } ?>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
+<script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
+<script src="<?php echo URL_JS ?>/bootstrap.min.js"></script>
+<script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
+<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
+<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php ECHO LANGUAGE ?>.js"></script>
+
+<script>
+    // Validação de form
+    $("form").validationEngine('attach', {promptPosition : "bottomRight"});
+
+    // Validação de form tem que funcionar no resize
+    $( window ).resize( function () {
+        $("form").validationEngine('updatePromptsPosition');
+    });
+</script>
+
 </body>
+
 </html>

@@ -37,7 +37,9 @@
 	</table>
 
 </div>
-<?php } else { echo message('info', '', lang('Nenhuma permissão para este módulo')); } ?>
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Nenhuma permissão para este módulo') ?></em></p>
+<?php } ?>
 
 <!-- now, modal permissions -->
 <?php 
@@ -243,7 +245,6 @@ $id_permission = get_value($permission, 'id_module_permission');
                     // Check return
                     if( ! json.return) { 
                         // close modal and alert
-                        form.find('.modal-footer button').click();
                         bootbox.alert(json.error);
                         return false;
                     }

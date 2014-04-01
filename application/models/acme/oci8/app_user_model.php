@@ -21,53 +21,33 @@ class App_User_Model extends CI_Model {
 	{
 		parent::__construct();
 	}
-	
+
 	/**
-	* get_list_permissions()
-	* Retorna um array de permissões de um determinado usuário de id encaminhado. Segundo parametro 
-	* diz se é para retornar modulos do acme ou não (chaveador entre modulos do acme e da aplicacao).
-	* @param int id_user
-	* @param boolean show_acme_modules
-	* @return array permissions
+	* get_users()
+	* Return an array list of users.
+	* @return array user
 	*/
-	public function get_list_permissions($id_user = 0, $show_acme_modules = false)
-	{
-		$sql = "SELECT m.id_module,
-					   m.lang_key_rotule as mod_lang_key_rotule, 
-					   m.url_img,
-					   m.description as mod_description,
-                       mp.permission,
-					   mp.id_module_permission,
-					   mp.description as perm_description , 
-					   mp.lang_key_rotule as perm_lang_key_rotule, 
-                       CASE WHEN up.id_user_permission IS NOT NULL THEN 'S' ELSE 'N' END AS tem_permissao
-				  FROM acm_module_permission  mp 
-			 LEFT JOIN acm_module              m ON (mp.id_module = m.id_module)   
-			 LEFT JOIN acm_user_permission    up ON (up.id_module_permission = mp.id_module_permission AND up.id_user = $id_user)
-			 LEFT JOIN acm_user                u ON (u.id_user = up.id_user)";
-		
-		$sql .= ($show_acme_modules) ? " WHERE m.controller LIKE '%acme_%' " : " WHERE m.controller NOT LIKE '%acme_%' ";
-		
-		$sql .= "
-			  ORDER BY m.controller, 
-					   m.lang_key_rotule, 
-					   mp.permission";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data)) ? $data : array();
+	public function get_users()
+	{	
+		$sql = "SELECT u.*,
+					   uc.*,
+					   ug.name AS user_group
+				  FROM acm_user u
+			 LEFT JOIN acm_user_group  ug ON (u.id_user_group = ug.id_user_group)
+			 LEFT JOIN acm_user_config uc ON (u.id_user = uc.id_user)";
+		return $this->db->query($sql)->result_array();
 	}
-	
+
 	/**
-	* get_user_data()
-	* Retorna um array de dados do usuário de id encaminhado.
+	* get_user()
+	* Retorna an array data of user of id refered.
 	* @param int id_user
 	* @return array user
 	*/
-	public function get_user_data($id_user = 0)
+	public function get_user($id_user = 0)
 	{	
 		$sql = "SELECT u.*,
-					   ug.name as grup,
-					   ug.name as group_name,
+					   ug.name as user_group,
 					   uc.lang_default,
 					   uc.url_default,
 					   uc.url_img,
@@ -77,9 +57,35 @@ class App_User_Model extends CI_Model {
 			 LEFT JOIN acm_user_group  ug ON (u.id_user_group = ug.id_user_group)
 			 LEFT JOIN acm_user_config uc ON (u.id_user = uc.id_user)
 			     WHERE u.id_user = $id_user";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? $data[0] : array();
+
+		return $this->db->query($sql)->row_array(0);
+	}
+	
+	/**
+	* get_permissions()
+	* Return an array of permissions to user of refered id.
+	* @param int id_user
+	* @return array permissions
+	*/
+	public function get_permissions($id_user = 0)
+	{
+		$sql = "SELECT m.id_module,
+					   m.label as module,
+					   m.description as module_description,
+					   mp.id_module_permission,
+                       mp.permission,
+					   mp.description as permission_observation , 
+					   mp.label AS permission_description, 
+                       CASE WHEN up.id_user_permission IS NOT NULL THEN 'Y' ELSE 'N' END AS has_permission
+				  FROM acm_module_permission  mp 
+			 LEFT JOIN acm_module              m ON (mp.id_module = m.id_module)   
+			 LEFT JOIN acm_user_permission    up ON (up.id_module_permission = mp.id_module_permission AND up.id_user = $id_user)
+			 LEFT JOIN acm_user                u ON (u.id_user = up.id_user)
+			  ORDER BY m.controller, 
+					   m.label, 
+					   mp.permission";
+
+		return $this->db->query($sql)->result_array();
 	}
 	
 	/**

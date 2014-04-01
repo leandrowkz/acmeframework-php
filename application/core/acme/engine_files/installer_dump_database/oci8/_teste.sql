@@ -58,10 +58,9 @@ CREATE TABLE acm_user
 (	
 	id_user NUMBER(10,0) NOT NULL, 
 	id_user_group NUMBER(10,0) NOT NULL, 
-	login VARCHAR2(250 CHAR) NOT NULL, 
-	password VARCHAR2(2000 CHAR) NOT NULL, 
-	name VARCHAR2(250 CHAR) NOT NULL, 
+	name VARCHAR2(250 CHAR) NOT NULL,  
 	email VARCHAR2(250 CHAR) NOT NULL, 
+	password VARCHAR2(2000 CHAR) NOT NULL, 
 	description VARCHAR2(2000 CHAR), 
 	dtt_inative DATE, 
 	log_dtt_ins DATE DEFAULT SYSDATE
@@ -80,6 +79,13 @@ CREATE INDEX fk_au_id_user_group ON acm_user (id_user_group);
 --  DDL for Index pk_acm_user
 --------------------------------------------------------
 CREATE UNIQUE INDEX pk_acm_user ON acm_user (id_user);
+
+
+<<|SEPARATOR|>>
+--------------------------------------------------------
+--  DDL for Index ml_acm_user
+--------------------------------------------------------
+CREATE UNIQUE INDEX ml_acm_user ON acm_user (email);
 
 
 <<|SEPARATOR|>>
@@ -981,7 +987,6 @@ INSERT INTO acm_module_permission VALUES (5,3,'Entrar no módulo','ENTER',NULL);
 INSERT INTO acm_module_permission VALUES (28,3,'Gerenciar permissões','PERMISSION_MANAGER','Permissão verificada na gerência de permissões de usuário');<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (61,3,'Inserir','INSERT',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (62,3,'Editar','UPDATE',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (63,3,'Editar perfil','EDIT_PROFILE',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (64,3,'Solicitar reset de senha','RESET_PASSWORD','Permissão verificada na solicitação de reset de senha de usuário');<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (66,3,'Copiar permissões','COPY_PERMISSIONS',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (7,5,'Visualizar dashboard','VIEW_DASHBOARD',NULL);<<|SEPARATOR|>>

@@ -29,7 +29,7 @@
 		<div class="row">			
 			<div class="col-lg-12">
 				
-				<h3>
+				<h3 style="margin-top: 0">
 					<span style="margin-right: 10px"><?php echo lang(get_value($module, 'label'))?></span>
 					<a href="<?php echo URL_ROOT ?>/app_module_manager/edit/<?php echo get_value($module, 'id_module')?>" class="btn btn-xs btn-primary">
 						<span><?php echo lang('Editar módulo')?></span>
@@ -185,5 +185,10 @@
 
 	// First load, yeah, its permissions!
 	$.load_area('permissions');
+
+	// Reposition the alerts from form
+    $( window ).resize( function () {
+        $("form").validationEngine('updatePromptsPosition');
+    });
 	
 </script>

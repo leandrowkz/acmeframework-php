@@ -34,7 +34,9 @@
     </table>
 
 </div>
-<?php } else { echo message('info', '', lang('Nenhum action para este módulo')); } ?>
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Nenhuma ação para este módulo') ?></em></p>
+<?php } ?>
     
 <!-- now, modal actions -->
 <?php 
@@ -309,7 +311,6 @@ $id_action = get_value($action, 'id_module_action');
                     // Check return
                     if( ! json.return) { 
                         // close modal and alert
-                        form.find('.modal-footer button').click();
                         bootbox.alert(json.error);
                         return false;
                     }

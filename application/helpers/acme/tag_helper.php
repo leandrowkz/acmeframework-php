@@ -1,80 +1,49 @@
 <?php
 /**
-* -------------------------------------------------------------------------------------------------
+* --------------------------------------------------------------------------------------------------
+*
 * Tag Helper
 *
-* Centraliza funções quanto a utilização de tags na aplicação, que estarão disponíveis em todo 
-* controlador derivado de Acme_Core_Controller.
+* Joins all tag functions for application. This functions can be used on every class extended from
+* ACME_Module_Controller.
 *
-* A chamada das funções contidas neste arquivo ajudante são alias para os métodos de mesmo nome
-* localizados na respectiva biblioteca (Tag). Sendo assim, as instruções abaixo retornam o mesmo
-* resultado esperado:
-*	example_function(); // função localizada neste arquivo
-* 	$this->tag->example_function();
+* Invoking functions from here is an alias for the same call by the library tag. For example:
+*
+*		echo foo_bar();	// from any application point
+*
+* 		Is the same that:
+*
+*		echo $this->tag->foo_bar();
 * 
-* @since		24/10/2012
-* @location		acme.helpers.tag
-* -------------------------------------------------------------------------------------------------
+* @since 	24/10/2012
+*
+* --------------------------------------------------------------------------------------------------
 */
 
 /**
 * tag_replace()
-* Este método faz replace de n instruções localizadas dentro de uma tag pelo resultado destas 
-* instruções. Caso a na string encaminhada como parametro não exista uma tag válida para fazer 
-* replace, retorna a string sem modificações.
-* Veja o exemplo:
-* String contendo a tag: <acme eval=" URL_IMG " />
-* Resultado: URL_IMG substituído
+* Replace all tag ocurrences for their respective values inside a string.
 * @param string string
-* @param array variables
 * @return mixed result
 */
 function tag_replace($string = '')
 {
-	// Objeto CI
-	$codeigniter =& get_instance();
-	
-	// Carrega classe padrão de manipulação de tags
-	$codeigniter->load->library('acme/tag');
-	
-	// Retorna valor padrão utilizando função da biblioteca tag
-	return $codeigniter->tag->tag_replace($string);
+	$CI =& get_instance();
+	$CI->load->library('acme/tag');
+	return $CI->tag->tag_replace($string);
 }
 
 /**
-* replace_tag()
-* Faz a substituição do valor {NUMERO_COLUNA} em uma string por um valor de 
-* um íncide de array.
+* array_tag_replace()
+* Replaces one tag with name {NUMBER OR COLUMN_NAME} by the value of an array followed
+* $arr_data['NUMBER OR COLUMN_NAME'].
 * @param string value
-* @param array data 
+* @param array arr_data 
 * @return string new_string
 */
-function replace_tag($value = null, $arr_data = array())
+function array_tag_replace($value = null, $arr_data = array())
 {
-	// Objeto CI
-	$codeigniter =& get_instance();
-	
-	// Carrega classe padrão de manipulação de tags
-	$codeigniter->load->library('acme/tag');
-	
-	// Retorna valor padrão utilizando função da biblioteca tag
-	return $codeigniter->tag->replace_tag($value, $arr_data);
-}
-
-/**
-* replace_define_constant()
-* Faz a substituição do valor {DEFINE_CONSTANT} pelo valor correspondente da constante.
-* @param string value 
-* @return mixed constant
-*/
-function replace_define_constant($value = '')
-{
-	// Objeto CI
-	$codeigniter =& get_instance();
-	
-	// Carrega classe padrão de manipulação de tags
-	$codeigniter->load->library('acme/tag');
-	
-	// Retorna valor padrão utilizando função da biblioteca tag
-	return $codeigniter->tag->replace_define_constant($value);
+	$CI =& get_instance();
+	$CI->load->library('acme/tag');
+	return $CI->tag->array_tag_replace($value, $arr_data);
 }

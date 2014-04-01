@@ -1,5 +1,6 @@
 /* Mobile landscape */
 @media(max-width: 767px){
+
 	.dropdown-user {
 		left:0;
 		margin-right:-25px !important;
@@ -36,6 +37,10 @@
 	.user-profile-sidebar img {
 		height: 120px;
 		width: 120px;
+	}
+
+	.list-user-info {
+		margin: 2px 0 0 105px !important
 	}
 
 }

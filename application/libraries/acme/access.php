@@ -27,19 +27,19 @@ class Access {
 	
 	/**
 	* validate_login()
-	* Valida um login da aplicação. Espera usuário e senha, retorna false caso login nao exista,
-	* array de dados do usuário caso exista.
-	* @param string user
+	* Validates an application login. Expect an email and pass and return the user data 
+	* in case of true, or boolean false.
+	* @param string email
 	* @param string pass
-	* @return mixed data/false
+	* @return mixed user/false
 	*/
-	public function validate_login($user = '', $pass = '')
+	public function validate_login($email = '', $pass = '')
 	{
 		$this->CI->load->model('libraries/access_model');
 
-		$arr_validate = $this->CI->access_model->validate_login($user, $pass);
+		$user = $this->CI->access_model->validate_login($email, $pass);
 		
-		return (count($arr_validate) > 0) ? $arr_validate : false;
+		return (count($user) > 0) ? $user : false;
 	}
 	
 	/**

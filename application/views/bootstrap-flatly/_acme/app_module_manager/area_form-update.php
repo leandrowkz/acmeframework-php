@@ -1,6 +1,8 @@
 
 <h4 style="margin-top: 20px"><?php echo lang('Formulário de edição') ?></h4>
 
+<?php if(get_value($module, 'table_name') != '') { ?>
+
 <div style="margin: 20px 0">
 
     <div class="inline" style="width: 150px"><label><?php echo lang('Situação') ?></label></div>
@@ -172,7 +174,8 @@ foreach($fields as $field) {
                             <div class="form-group">
                                 <label><?php echo lang('Tipo') ?>*</label>
                                 <select class="form-control validate[required] type">
-                                    <option value="input" <?php echo (get_value($field, 'type') == 'input') ? 'selected="selected"' : ''; ?>>input</option>
+                                    <option value="text" <?php echo (get_value($field, 'type') == 'text') ? 'selected="selected"' : ''; ?>>input text</option>
+                                    <option value="password" <?php echo (get_value($field, 'type') == 'password') ? 'selected="selected"' : ''; ?>>input password</option>
                                     <option value="textarea" <?php echo (get_value($field, 'type') == 'textarea') ? 'selected="selected"' : ''; ?>>textarea</option>
                                     <option value="file" <?php echo (get_value($field, 'type') == 'file') ? 'selected="selected"' : ''; ?>>file</option>
                                     <option value="checkbox" <?php echo (get_value($field, 'type') == 'checkbox') ? 'selected="selected"' : ''; ?>>checkbox</option>
@@ -363,6 +366,10 @@ foreach($fields as $field) {
 
 </form>
 <?php $i++; } ?>
+
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Módulo sem tabela-alvo') ?></em></p>
+<?php } ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
 <script src="<?php echo URL_JS ?>/plugins/meiomask/meiomask.js"></script>

@@ -24,20 +24,19 @@ class Access_Model extends CI_Model {
 	
 	/**
 	* validate_login()
-	* Valida um login (usuário e senha) encaminhado, verificando se existe no banco
-	* de dados um registro de usuário equivalente. Retorna a tupla inteira do registro
-	* do usuário em forma de array, ou array vazio caso não encontrado.
-	* @param string user
+	* Validate an application user by email and pass. Return the database array register for 
+	* this user or an empty array.
+	* @param string email
 	* @param string pass
 	* @return array data
 	*/
-	public function validate_login($user = '', $pass = '')
+	public function validate_login($email = '', $pass = '')
 	{
 		$data = array();
-		if(isset($user) && isset($pass) && $user != '' && $pass != '')
-		{
+		
+		if(isset($email) && isset($pass) && $email != '' && $pass != '') {
+
 			$sql = "SELECT u.id_user,
-						   u.login,
 						   u.email,
 						   u.name AS user_name,
 						   ug.name as user_group,
@@ -45,14 +44,14 @@ class Access_Model extends CI_Model {
 						   uc.lang_default,
 						   uc.url_img
 					  FROM acm_user u
-				INNER JOIN acm_user_config uc ON (uc.id_user = u.id_user)
-				INNER JOIN acm_user_group  ug ON (ug.id_user_group = u.id_user_group)
-					 WHERE login = '" . $this->db->escape_like_str($user) . "' AND password = '" . $this->db->escape_like_str(md5($pass)) . "'
+				 LEFT JOIN acm_user_config uc ON (uc.id_user = u.id_user)
+				 LEFT JOIN acm_user_group  ug ON (ug.id_user_group = u.id_user_group)
+					 WHERE email = '" . $this->db->escape_like_str($email) . "' AND password = '" . $this->db->escape_like_str(md5($pass)) . "'
 					   AND u.dtt_inative IS NULL";
-			$data = $this->db->query($sql);
-			$data = $data->result_array();
-			$data = (isset($data[0])) ? $data[0] : array();
+			
+			$data = $this->db->query($sql)->row_array(0);
 		}
+
 		return $data;
 	}
 

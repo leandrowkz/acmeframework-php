@@ -2,16 +2,16 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* Controller App_Config
+* Controller Module
 * 
-* Módulo de configurações da aplicação. Lista constantes e variáveis de sessão.
+* Dashboard padr�o da aplica��o. Por padr�o, tela de entrada dos usu�rios do grupo ROOT.
 *
-* @since 	28/06/2013
+* @since	15/10/2012
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Config extends ACME_Module_Controller {
-	
+class Module extends ACME_Module_Controller {
+
 	/**
 	* __construct()
 	* Construtor de classe.
@@ -24,15 +24,11 @@ class App_Config extends ACME_Module_Controller {
 	
 	/**
 	* index()
-	* Entrada do módulo. Exibe listagem de variáveis de sessão em um box de visualização.
+	* Tela de dashboard.
 	* @return void
 	*/
 	public function index()
 	{
-		// Valida permissão de entrada do módulo
-		$this->validate_permission('ENTER');
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_config/index');
+		parent::index();
 	}
 }

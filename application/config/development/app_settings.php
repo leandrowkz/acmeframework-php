@@ -14,6 +14,7 @@
 $config['APP_NAME'] = 'TAPMANAGER';			// nome da aplicação
 $config['TEMPLATE'] = 'bootstrap-flatly';	// template utilizado (dentro de /views)
 $config['LANGUAGE'] = 'pt_BR';				// linguagem padrão
+$config['EMAIL_FROM'] = 'noreply@app';		// to send emails
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,7 @@ $config['URL_IMG'] = $config['URL_INCLUDE'] . '/img';
 $config['PATH_TEMP'] = 'application/temp';
 $config['PATH_UPLOAD'] = 'application/uploads';
 $config['PATH_INCLUDE'] = 'application/views/' . $config['TEMPLATE'] . '/_includes';
-$config['PATH_CSS'] = $config['PATH_INCLUDE'] . 'css';
-$config['PATH_JS'] = $config['PATH_INCLUDE'] . 'js';
-$config['PATH_IMG'] = $config['PATH_INCLUDE'] . 'img';
+$config['PATH_CSS'] = $config['PATH_INCLUDE'] . '/css';
+$config['PATH_JS'] = $config['PATH_INCLUDE'] . '/js';
+$config['PATH_IMG'] = $config['PATH_INCLUDE'] . '/img';
 $config['PATH_HTML_COMPONENTS'] = $config['TEMPLATE'] . '/_includes/html_components';

@@ -1,6 +1,8 @@
 
 <h4 style="margin-top: 20px"><?php echo lang('Formulário de inserção') ?></h4>
 
+<?php if(get_value($module, 'table_name') != '') { ?>
+
 <div style="margin: 20px 0">
 
     <div class="inline" style="width: 150px"><label><?php echo lang('Situação') ?></label></div>
@@ -105,14 +107,14 @@
         </thead>
         
         <tbody>
-           	
-           	<?php 
+            
+            <?php 
             $i = 0;
             foreach($fields as $field) { 
                 $id_field = get_value($field, 'id_module_form_field');
                 $dtt_inative = get_value($field, 'dtt_inative');
-           	?>
-          	<tr id="tr-<?php echo $i ?>">
+            ?>
+            <tr id="tr-<?php echo $i ?>">
                 <td>
                     <input type="hidden" class="column_name" value="<?php echo get_value($field, 'column_name') ?>" />
                     <?php if($id_field != '') {?>
@@ -129,9 +131,9 @@
             </tr>
             <?php $i++; } ?>
 
-	    </tbody>
+        </tbody>
 
-	</table>
+    </table>
 
 </div>
 
@@ -172,7 +174,8 @@ foreach($fields as $field) {
                             <div class="form-group">
                                 <label><?php echo lang('Tipo') ?>*</label>
                                 <select class="form-control validate[required] type">
-                                    <option value="input" <?php echo (get_value($field, 'type') == 'input') ? 'selected="selected"' : ''; ?>>input</option>
+                                    <option value="text" <?php echo (get_value($field, 'type') == 'text') ? 'selected="selected"' : ''; ?>>input text</option>
+                                    <option value="password" <?php echo (get_value($field, 'type') == 'password') ? 'selected="selected"' : ''; ?>>input password</option>
                                     <option value="textarea" <?php echo (get_value($field, 'type') == 'textarea') ? 'selected="selected"' : ''; ?>>textarea</option>
                                     <option value="file" <?php echo (get_value($field, 'type') == 'file') ? 'selected="selected"' : ''; ?>>file</option>
                                     <option value="checkbox" <?php echo (get_value($field, 'type') == 'checkbox') ? 'selected="selected"' : ''; ?>>checkbox</option>
@@ -364,6 +367,10 @@ foreach($fields as $field) {
 </form>
 <?php $i++; } ?>
 
+<?php } else { ?>
+<p class="text-muted"><em><?php echo lang('Módulo sem tabela-alvo') ?></em></p>
+<?php } ?>
+
 <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
 <script src="<?php echo URL_JS ?>/plugins/meiomask/meiomask.js"></script>
 <script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
@@ -375,7 +382,7 @@ foreach($fields as $field) {
     // masks
     // =====
     $('input[type=text]').setMask();
-	
+    
     // ========
     // tooltips
     // ========

@@ -4,7 +4,7 @@
 *
 * Library Form
 *
-* Biblioteca de funções relacionadas a formulários html da aplicação.
+* Library of functions related with application html forms.
 * 
 * @since 	27/10/2012
 *
@@ -16,158 +16,47 @@ class Form {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
 	* @return object
 	*/
-	public function __construct()
-	{
-	}
+	public function __construct () { }
 	
 	/**
 	* build_form_fields()
-	* Recebe resultset de inputs de formulario de modulo (tabela acm_module_form_field) e transforma 
-	* em array de elementos de formularios html, como input, select, textarea, etc. 
+	* Receive a resultset of inputs (from table acm_module_form_field) and transforms them into an array
+	* of html input elements, like:
 	*
-	* 		O array de retorno é algo como:
 	*		Array 
 	* 		(
-	*			'Login' => '<input type="text" name="acm_user[login]" id="login" />'
-	* 			'Senha' => '<input type="text" name="acm_user[password]" id="password" />',
+	*			[0] => '<label>Email</label><input type="text" name="acm_user[email]" id="email" />'
+	* 			[1] => '<label>Password</label><input type="text" name="acm_user[password]" id="password" />'
+	*			[2] => ...
 	* 		)
 	*
 	* @param array fields
 	* @param array values
-	* @return array string
+	* @return array html_fields
 	*/
 	public function build_form_fields($fields = array(), $values = array())
 	{
-		$return = array();
+		$html_fields = array();
 
-		if(count($fields) > 0)
-		{
-			// DEBUG:
-			// print_r($values);
+		if(count($fields) <= 0)
+			return array();
+
+		// procced with no errors :)
+		$CI =& get_instance();
+
+		foreach($fields as $field) {
+
+			// Build all attributes
+			$field['value'] = get_value($values, get_value($field, 'table_column'));
+
+			// add field
+			array_push($html_fields, $CI->template->load_html_component('module_form_field', array($field)));
 			
-			foreach($fields as $field)
-			{
-				// Monta atributos comuns a todos os elementos
-				$key  = get_value($field, 'label');
-				$key .= stristr(get_value($field, 'validations'), 'required') ? '*' : '';
-				
-				// Monta o name e id
-				// monta diferenciado, caso montagem seja de filtros
-				$id = 'id="' . get_value($field, 'id_html') . '" ';
-				if($is_filter)
-				{
-					if(stristr(get_value($field, 'table_column'), '.'))
-					{
-						$arr_name = explode('.', get_value($field, 'table_column'));
-						$name = 'name="' . $arr_name[0] . '[' . $arr_name[1] . ']"';
-					} else {
-						$name = 'name="' . get_value($field, 'table_column') . '"';
-					}
-				} else {
-					$name = 'name="' . get_value($field, 'table_name') . '[' . get_value($field, 'table_column') . ']"';
-				}
-				
-				// Class tem tratamento especial por tratar das validações também
-				$class  = ($is_filter) ? 'class="mini ' : 'class="';
-				$class .=  get_value($field, 'class_html');
-				$class .= (get_value($field, 'validations') != '') ? ' ' . $this->get_string_validation(get_value($field, 'validations')) : '';
-				$class .= '"';
-				
-				// Prossegue com atributos tradicionais
-				$javascript = get_value($field, 'javascript');
-				$style = 'style="' . get_value($field, 'style') . '" ';
-				$maxlength = (get_value($field, 'maxlength') != '') ? 'maxlength="' . get_value($field, 'maxlength') . '"' : '';
-				$masks = (get_value($field, 'masks') != '') ? 'alt="' . get_value($field, 'masks') . '"' : '';
-				
-				// Separa options e descricao, que aparece abaixo do campo
-				$options_sql = get_value($field, 'options_sql');
-				$options_json = get_value($field, 'options_json');
-				$description = (get_value($field, 'description') != '') ? '<div style="margin:4px 0 0 0" class="font_11 comment">' . get_value($field, 'description') . '</div>' : '';
-				
-				// Coleta o valor do campo (quando valor encaminhado)
-				if($is_filter && stristr(get_value($field, 'table_column'), '.'))
-				{
-					$arr_name = explode('.', get_value($field, 'table_column'));
-					$value = get_value(get_value($values, $arr_name[0]), $arr_name[1]);
-				} else {
-					$column = get_value($field, 'table_column');
-					$value = get_value($values, $column);
-				}
-				
-				switch(strtolower(get_value($field, 'type')))
-				{
-					case 'text':
-						// Ajusta valor caso tipo seja data
-						if(is_date_format_db($value))
-						{ 
-							$date = strtotime($value);
-							$value = date('d/m/Y', $date);
-						}
-						$field_value = "value=\"$value\"";
-						$return[$key] = "<input type=\"text\" $name $id $class $maxlength $masks $style $javascript $field_value />$description";
-					break;
-					
-					case 'password':
-						$field_value = "value=\"$value\"";
-						$return[$key] = "<input type=\"password\" $name $id $class $maxlength $masks $style $javascript $field_value />$description";
-					break;
-					
-					case 'textarea':
-						$return[$key] = "<textarea $name $id $class $masks $style $javascript>$value</textarea>$description";
-					break;
-					
-					case 'select':
-						// Monta os options dando prioridade para o SQL
-						$options = ($options_sql != '') ? query_array($options_sql) : $this->build_array_options_by_separator($options_values, $options_rotules);
-						
-						// Monta o select [e adiciona options]
-						$return[$key]  = "<select $name $id $class $style $javascript>";
-							$return[$key] .= $this->build_array_html_options($options, $value);
-						$return[$key] .= "</select>";
-					break;
-					
-					case 'radio':
-						// Monta os options dando prioridade para o SQL
-						$options = ($options_sql != '') ? query_array($options_sql) : array_values($this->build_array_options_by_separator($options_values, $options_rotules));
-						
-						// Inicializa o indice
-						$return[$key] = '';
-						
-						// Monta a lista de radios
-						foreach($options as $option)
-						{
-							$option = array_values($option);
-							$field_value = 'value="' . $option[0] . '"';
-							$checked = ($option[0] == $value) ? ' checked="true"' : '';
-							$return[$key] .=  "<div class=\"inline top\" style=\"margin-top:2px\"><input type=\"radio\" $name $id $class $maxlength $masks $style $javascript $field_value $checked /></div>";
-							$return[$key] .=  '<div class="inline top" style="margin-left:4px">' . $option[1] . '</div><br />';
-						}
-					break;
-					
-					
-					case 'file':
-						$field_value = "value=\"$value\"";
-						$return[$key]  = "<input type=\"file\" $name $id $class $maxlength $style $javascript $field_value />";
-					break;
-					
-					// CHECKBOX (BETA)
-					// case 'checkbox':
-					// $return[$key]  = "<input type=\"checkbox\" name=\"$name\" $id $class $maxlength $masks $style $javascript value=\"$value\" />";
-					// break;
-					
-					default:
-						$field_value = "value=\"$value\"";
-						$return[$key] = "<input type=\"text\" $name $id $class $maxlength $masks $style $javascript $field_value />";
-					break;
-				}
-			}
 		}
 		
-		// Retorna array de campos em formato html
-		return $return;
+		return $html_fields;
 	}
 	
 	/** 
@@ -408,11 +297,11 @@ class Form {
 			switch(strtolower(get_value($field_data, 'data_type')))
 			{
 				case 'varchar':
+				case 'varchar2':
 					$field['type'] = 'text';
 				break;
 				
 				case 'text':
-				case 'varchar2':
 					$field['type'] = 'textarea';
 				break;
 				

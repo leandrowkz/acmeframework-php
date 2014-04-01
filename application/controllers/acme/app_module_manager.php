@@ -210,6 +210,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 			break;
 
 			case 'delete';
+				$this->db->delete('acm_user_permission', array('id_module_permission' => $this->input->post('id_module_permission')));
 				$this->db->delete('acm_module_permission', array('id_module_permission' => $this->input->post('id_module_permission')));
 			break;
 		}

@@ -190,3 +190,29 @@
     $.validationEngineLanguage.newLang();
     
 })(jQuery);
+
+// custom validation for email
+var validate_email = function(field, rules, i, options) {
+
+    var exist = false;
+    
+    $.ajax({
+        
+        url: $('#URL_ROOT').val() + '/app_user/check_email/',
+        context: document.body,
+        cache: false,
+        async: false,
+        data: { 'email' : field.val() },
+        type: 'POST',
+        success: function(data){
+
+            json = $.parseJSON(data);
+            
+            if(json.return == true)
+                exist = true;
+        }
+    });
+    
+    if( exist )
+        return "Email address already exist";
+}
