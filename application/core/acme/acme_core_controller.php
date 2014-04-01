@@ -54,6 +54,7 @@ class ACME_Core_Controller extends CI_Controller {
 		$this->load->library('acme/form');
 		$this->load->library('acme/tag');
 		$this->load->library('acme/array_table');
+		$this->load->library('acme/validation');
 		
 		// Define a linguagem padrão da aplicacão
 		$language = ($this->session->userdata('language') != '') ? $this->session->userdata('language') : LANGUAGE;

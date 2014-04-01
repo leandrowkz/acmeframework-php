@@ -205,19 +205,20 @@ class App_Access extends ACME_Core_Controller {
 			    $this->email->subject(lang('Alteração de senha'));
 			    $this->email->message($body_msg);
 			    
-			    if( ! @$this->email->send() ) {
+			    if( ! @$this->email->send() ) 
 					$this->template->load_page($this->view_dir . '/forgot_password', array('error' => lang('Ops! Não foi possível enviar a mensagem de email')), false, false);
-					exit;
+				else {
+
+					// log asking for reset pass
+					$data['id_user'] = $args['id_user'];
+					$data['key_access'] = $args['key_access'];
+
+					$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $data);
+
+					// load page success!
+					$this->template->load_page($this->view_dir . '/forgot_password', array('success' => lang('Feito! Uma mensagem contendo os passos para a alteração da senha foi encaminhada para ') . $email), false, false);
+
 				}
-
-				// log asking for reset pass
-				$data['id_user'] = $args['id_user'];
-				$data['key_access'] = $args['key_access'];
-
-				$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $data);
-
-				// load page success!
-				$this->template->load_page($this->view_dir . '/forgot_password', array('success' => lang('Feito! Uma mensagem contendo os passos para a alteração da senha foi encaminhada para ') . $email), false, false);
 			}
 		}
 	}

@@ -140,167 +140,166 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 		}
 		
 		// Carrega view
-		$this->template->load_page('_acme/app_module_controller/index', $args);
+		$this->template->load_page('_acme/acme_module_controller/index', $args);
 	}
 	
 	/**
 	* form()
-	* Página de montagem de formulario. Recebe como parametro o tipo de formulario (operation)
-	* que devera ser montado.
-	* @param string operation
+	* Build form as the database parameters form.
+	* @param string operation		// insert, update, delete, view
 	* @param integer pk_value
 	* @return void
 	*/
 	public function form($operation = '', $pk_value = '')
 	{
-		// Permissao da operacao do formulario
+		// Test permission as form operation
 		$this->validate_permission(strtoupper($operation));
 		
-		// Ajusta operacao
+		// adjust form operation
 		$operation = strtolower($operation);
 		
-		// Caso a operacao nao seja insert, deve validar a chave primaria
-		if(($operation != 'insert' && $this->validation->is_integer_($pk_value)) || $operation == 'insert')
-		{
-			// Coleta dados do form
-			$form = $this->{$this->controller . '_model'}->get_form($this->id_module, $operation);
-			if(count($form) > 0)
-			{
-				// Coleta fields e values destes fields
-				$fields = $this->{$this->controller . '_model'}->get_form_fields(get_value($form, 'id_module_form'));
-				$values = (is_integer_($pk_value)) ? $this->{$this->controller . '_model'}->select($pk_value) : array();
-				$values = (count($values) > 0) ? $values[0] : $values;
-				
-				// print_r($values[0]);
-				
-				// Transforma campos e valores em campos HTML
-				$html_fields = $this->form->build_array_html_form_fields($fields, $values);
+		// Form data
+		$form = $this->db->get_where('acm_module_form', array('id_module' => $this->id_module, 'operation' => $operation))->row_array(0);
+
+		// Case form operation is not insert, must validate pk given value
+		if( ( $operation != 'insert' && !$this->validation->is_integer_($pk_value) ) || count($form) < 0 )
+			redirect($this->controller);
+
+		// Fields
+		$fields = $this->db->select("f.*, '$this->table_name' AS table_name")
+						   ->from('acm_module_form_field f')
+						   ->where('id_module_form = ' . get_value($form, 'id_module_form') . ' AND dtt_inative IS NULL')
+						   ->order_by('order_')
+						   ->get()->result_array();
+		
+		// load correct model
+		$this->load->model('core/acme_module_controller_model');
+
+		// get pk name
+		$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+
+		// Values
+		$values = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
+		
+		// Transform array values into html inputs
+		$html_fields = $this->form->build_form_fields($fields, $values);
 			
-				// Variaveis do view
-				$args['form'] = $form;
-				$args['html_fields'] = $html_fields;
-				$args['fields'] = $fields;
-				$args['values'] = $values;
-				$args['operation'] = $operation;
-				$args['pk_value'] = $pk_value;
+		// view args
+		$args['form'] = $form;
+		$args['html_fields'] = $html_fields;
+		$args['fields'] = $fields;
+		$args['values'] = $values;
+		$args['operation'] = $operation;
+		$args['pk_value'] = $pk_value;
 			
-				// Load do view
-				$this->template->load_page('_acme/acme_base_module/form_' . $operation, $args);
-			} else {
-				// Carrega página de formulário inexistente
-				$this->template->load_page('_acme/acme_base_module/form_warning_exist');
-			}
-		} else {
-			// Redireciona para entrada do modulo
-			redirect(URL_ROOT . '/' . $this->controller);
-		}
+		// Load view
+		$this->template->load_page('_acme/acme_module_controller/form_' . $operation, $args);
 	}
 	
 	/**
 	* form_process()
-	* Processa formulario do modulo. Contempla as 4 operacoes basicas (insert, update, delete, view).
+	* Process html form module. Contemplates all 4 basic operations (insert, update, delete, view)
 	* @return void
 	*/
 	public function form_process()
 	{
-		// Ajusta operacao
 		$operation = strtolower($this->input->post('operation'));
 		
-		// Permissao da operacao do formulario
 		$this->validate_permission(strtoupper($operation));
 		
-		// VALIDAÇÕES EM PHP, FAZER AQUI!
-		
-		// Chama funcao interna correspondente a operacao (_insert, _update, _view, _delete)
+		// Call internal function that corresponds to _insert, _update, _view, _delete
 		$this->{'_' . $operation}($this->input->post());
 	}
 	
 	/**
 	* _insert()
-	* Insere um registro encaminhado através de um processamento de formulario.
+	* Process insert form. Receive POST data as parameter.
 	* @param array post
 	* @return void
 	*/
 	private function _insert($post = array())
 	{
-		// Só faz insert caso post encaminhado
-		if(count($post) > 0)
-		{			
-			// Array de dados do insert
-			$form_data = get_value($post, $this->table);
+		if(count($post) > 0) {		
+			// fields names in form must be table_name[field]
+			$data = get_value($post, $this->table_name);
 			
-			// insere registro na tabela vinculada ao modulo
-			$this->{$this->controller . '_model'}->insert($form_data);
+			$this->db->insert($this->table_name, $data);
 			
-			// Insere um registro de log
-			$this->log->db_log('Inserção de registro', 'insert', $this->table, $post);
+			$this->log->db_log('Inserção de registro', 'insert', $this->table_name, $data);
 		}
 		
-		// Redireciona para entrada do modulo
-		redirect(URL_ROOT . '/' . $this->controller);
+		redirect($this->controller);
 	}
 	
 	/**
 	* _update()
-	* Atualiza um registro encaminhado atraves de um processamento de formulario.
+	* Process update form. Receive POST data as parameter.
 	* @param array post
 	* @return void
 	*/
 	private function _update($post = array())
 	{
-		// Só faz ação caso post encaminhado
-		if(count($post) > 0)
-		{			
-			// Array de dados
-			$form_data = get_value($post, $this->table);
+		if(count($post) > 0) {
+
+			// fields names in form must be table_name[field]
+			$data = get_value($post, $this->table_name);
 			
-			// Insere um registro de log
-			$old = $this->{$this->controller . '_model'}->select(get_value($post, 'primary_key_value'));
-			$arr_log['old'] = $old[0];
-			$arr_log['new'] = $post;
-			$this->log->db_log('Edição de registro', 'update', $this->table, $arr_log);
+			// load correct model
+			$this->load->model('core/acme_module_controller_model');
+
+			// get pk name and value
+			$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+			$pk_value = $this->input->post('pk_value');
+
+			// old data to log
+			$old_data = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
+
+			$this->db->update($this->table_name, $data, array($pk => $pk_value));
 			
-			// Atualiza registro na tabela vinculada ao modulo
-			$this->{$this->controller . '_model'}->update($form_data, array($this->{$this->controller . '_model'}->primary_key => get_value($post, 'primary_key_value')));
+			$this->log->db_log('Edição de registro', 'update', $this->table_name, array_merge($data, $old_data));
 		}
 		
-		// Redireciona para entrada do modulo
-		redirect(URL_ROOT . '/' . $this->controller);
+		redirect($this->controller);
 	}
 	
 	/**
 	* _delete()
-	* Remove um registro encaminhado atraves de um processamento de formulario.
+	* Process delete form. Receive POST data as parameter.
 	* @param array post
 	* @return void
 	*/
 	private function _delete($post = array())
 	{
-		// Só faz ação caso post encaminhado
-		if(count($post) > 0)
-		{			
-			// Insere um registro de log
-			$old = $this->{$this->controller . '_model'}->select(get_value($post, 'primary_key_value'));
-			$arr_log = $old[0];
-			$this->log->db_log('Deleção de registro', 'delete', $this->table, $arr_log);
+		if(count($post) > 0) {			
 			
-			// Remove registro
-			$this->{$this->controller . '_model'}->delete(array($this->{$this->controller . '_model'}->primary_key => get_value($post, 'primary_key_value')));
+			// load correct model
+			$this->load->model('core/acme_module_controller_model');
+
+			// get pk name and value
+			$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+			$pk_value = $this->input->post('pk_value');
+
+			// old data to log
+			$old_data = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
+			
+			// log delete
+			$this->log->db_log('Deleção de registro', 'delete', $this->table_name, $old_data);
+
+			// Removes
+			$this->db->delete($this->table_name, array($pk => $pk_value));
 		}
 		
-		// Redireciona para entrada do modulo
-		redirect(URL_ROOT . '/' . $this->controller);
+		redirect($this->controller);
 	}
 	
 	/**
 	* _view()
-	* View de um registro encaminhado atraves de um processamento de formulario (não faz nada).
+	* Process view form. Receive POST data as parameter.
 	* @param array post
 	* @return void
 	*/
 	private function _view($post = array())
 	{
-		// Redireciona para entrada do modulo
-		redirect(URL_ROOT . '/' . $this->controller);
+		redirect($this->controller);
 	}
 }

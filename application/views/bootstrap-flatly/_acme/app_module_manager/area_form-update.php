@@ -174,7 +174,8 @@ foreach($fields as $field) {
                             <div class="form-group">
                                 <label><?php echo lang('Tipo') ?>*</label>
                                 <select class="form-control validate[required] type">
-                                    <option value="input" <?php echo (get_value($field, 'type') == 'input') ? 'selected="selected"' : ''; ?>>input</option>
+                                    <option value="text" <?php echo (get_value($field, 'type') == 'text') ? 'selected="selected"' : ''; ?>>input text</option>
+                                    <option value="password" <?php echo (get_value($field, 'type') == 'password') ? 'selected="selected"' : ''; ?>>input password</option>
                                     <option value="textarea" <?php echo (get_value($field, 'type') == 'textarea') ? 'selected="selected"' : ''; ?>>textarea</option>
                                     <option value="file" <?php echo (get_value($field, 'type') == 'file') ? 'selected="selected"' : ''; ?>>file</option>
                                     <option value="checkbox" <?php echo (get_value($field, 'type') == 'checkbox') ? 'selected="selected"' : ''; ?>>checkbox</option>
