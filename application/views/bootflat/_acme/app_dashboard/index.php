@@ -25,7 +25,7 @@
 			</div>
 
 			<div class="panel-body">
-				<div class="list-group">
+				<div class="list-group" style="border: none">
 					<?php foreach($modules as $module) { ?>
 		        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Clique para ir') ?>">
 		        		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>

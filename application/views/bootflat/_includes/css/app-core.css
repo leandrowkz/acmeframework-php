@@ -61,7 +61,7 @@ body, html {
 }
 
 .form-group {
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .module-header h1 {
@@ -74,6 +74,10 @@ body, html {
 
 .top {
     vertical-align: top !important;
+}
+
+.panel, .list-group, .well {
+    border-top: 1px solid #e8e8e8;
 }
 
 /* Wrappers */
@@ -121,8 +125,6 @@ body, html {
 }
 
 .navbar-static-side {
-    
-    
     background-color: #f8f8f8;
     margin-top: -50px;
     padding-top: 50px;
@@ -138,22 +140,22 @@ body, html {
 }
 
 .navbar-static-side ul > li > a:hover {
-    background-color:#656D78;
+    background-color:#434A54;
     color:#fff;
-    border-bottom:1px solid #656D78;
-    border-right:1px solid #656D78;
+    border-bottom:1px solid #434A54;
+    border-right:1px solid #434A54;
 }
 
 .navbar-static-side ul > li.active > a,
 .navbar-static-side ul > li.active > a:hover {
-    background-color:#656D78;
+    background-color:#434A54;
     color:#fff;
-    border-bottom:1px solid #656D78;
-    border-right:1px solid #656D78;
+    border-bottom:1px solid #434A54;
+    border-right:1px solid #434A54;
 }
 
 .navbar-static-side ul > li.active {
-    border-bottom: 1px solid #656D78;
+    border-bottom: 1px solid #434A54;
 }
 
 .navbar-top-links span.user-info {
