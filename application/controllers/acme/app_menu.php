@@ -23,75 +23,39 @@ class App_Menu extends ACME_Module_Controller {
 	}
 	
 	/**
-	* @override
 	* index()
-	* Entrada do módulo. Exibe menus do sistema em formato de árvore drag and drop.
+	* Module index. Show all menus by group, with reorder options in real time. Menus are loaded
+	* after loading page, through ajax.
 	* @return void
 	*/
 	public function index()
 	{
-		// Valida permissão de entrada do módulo
 		$this->validate_permission('ENTER');
 		
-		// Carrega model que fará leitura dos menus no banco de dados
-		$this->load->model('libraries/template_model');
-		$this->load->model('acme_user_group_model');
-		
-		// Filtros encaminhados - dá preferencia por POST, se não tenta localizar o array
-		// de filtros do modulo que fica perambulando na sessao. Para este segundo caso,
-		// tenta localizar conforme o nome do modulo, entao apaga todos os outros filtros.
-		if($this->input->post() != '')
-		{
-			$filters = $this->input->post();
-		} else if (get_value($this->session->userdata('module_array_filters'), $this->controller . '_filters') != '') {
-			$filters = get_value($this->session->userdata('module_array_filters'), $this->controller . '_filters');
-			$this->session->set_userdata('module_array_filters', null);
-		} else {
-			$filters = array();
-		}
-		
-		// Seta o array de filtros em sessão para que quando alterar a pagina ainda dentro do modulo
-		// e voltar para a pagina de listagem os filtros permaneçam como estavam anteriormente.
-		$this->session->set_userdata('module_array_filters', array($this->controller . '_filters' => $filters));
-		
-		// Grupo de usuário
-		$group = (get_value($filters, 'user_group') == '') ? $this->session->userdata('user_group') : get_value($filters, 'user_group');
-		$group_data = $this->acme_user_group_model->get_user_group_by_name($group);
-		
-		// Faz leitura do menu conforme o grupo de usuário atual
-		// Esta leitura é recursiva, para cada menu o model busca
-		// possíveis menus-filhos.
-		$menus = $this->acme_menu_model->get_list_module($group);
-		$menus = (count($menus) > 0) ? $this->template->menus_to_tree($menus) : array();
-		
-		// Opções para combo de filtros
-		$options_groups = $this->form->build_array_html_options($this->acme_menu_model->get_list_groups_options(), $group, false);
-		
-		// Carrega view
-		$this->template->load_page('_acme/acme_menu/index', array('menus' => $menus, 'group' => $group, 'options_groups' => $options_groups, 'group_data' => $group_data));
+		// load all groups
+		$groups = $this->db->select('name, name AS label')->from('acm_user_group')->order_by('name')->get()->result_array();
+
+		// build group options
+		$args['options'] = $this->form->build_select_options($groups, '', false);
+
+		$this->template->load_page('_acme/app_menu/index', $args);
 	}
 	
 	/**
-	* ajax_reorder_menu()
-	* Atualiza o nodo de menu reordenado via interface, com base no id do nodo encaminhado.
-	* @param int id_menu
-	* @param int id_menu_parent_new
-	* @param int order
+	* load_menus()
+	* Load html menu area. Expect $_POST['group'] as parameter to filter menus.
 	* @return void
 	*/
-	public function ajax_reorder_menu($id_menu = 0, $id_menu_parent_new = 0, $order = 0)
+	public function load_menus()
 	{
-		if($this->validate_permission('UPDATE', false))
-		{
-			$this->db->set('id_menu_parent', $id_menu_parent_new, false);
-			$this->db->set('order_', $order, false);
-			$this->db->where(array('id_menu' => $id_menu));
-			$this->db->update('acm_menu');
-		} else {
-			// Quando encaminhado um erro no cabeçalho http, o ajax dispara o callback error
-			// exibindo a mensagem de que o usuário atual não possui esta permissão (UPDATE)
-			header("HTTP/1.0 500 Internal Server Error");
-		}
+		if( ! $this->check_permission('ENTER'))
+			return;
+
+		$group = $this->input->post('group');
+
+		$args['menus'] = $this->template->get_array_menus($group);
+
+		$this->template->load_page('_acme/app_menu/load_menus', $args, false, false);
 	}
 	
 	/**
