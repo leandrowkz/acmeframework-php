@@ -57,15 +57,15 @@ class App_Access extends ACME_Core_Controller {
 		// $sql = trim($sql, " \t\n\r\0\x0B");
 			
 		// if(stristr($sql, "CREATE OR REPLACE TRIGGER") !== false)
-		// 	$sql .= "\n\n/";
+		// $sql .= "\n\n/";
 
 		// 	echo utf8_decode($sql) . "\n\n\n\n";
 			
-		// 	//$stid = oci_parse($conn, $sql);
-		//  	//oci_execute($stid);
+		//  	//$stid = oci_parse($conn, $sql);
+		// //  	//oci_execute($stid);
 			
-		// }
-		// die;
+		//  }
+		//  die;
 		//oci_close($conn);
 		
 		// echo tag_replace('{URL_ROOT}/acme_dashboard asdhgfhasdfha hh ds {URL_IMG} and echo {URL_CSS}');

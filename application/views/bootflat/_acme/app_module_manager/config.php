@@ -131,7 +131,7 @@
                         </ul>
 
                         <!-- Tab panes -->
-                        <div class="tab-content">
+                        <div class="tab-content" style="padding: 0">
                             <div class="tab-pane fade active in" id="permissions-pills">                            	
                             </div>
                             <div class="tab-pane fade" id="form-insert-pills">
@@ -158,7 +158,7 @@
 
 <script>
 	
-	// Função de carregamento de pill
+	// Loading pills function
 	$.load_area = function (param) {
 		
 		enable_loading();
@@ -167,14 +167,12 @@
             url: $('#URL_ROOT').val() + '/app_module_manager/load_area/' + param + '/<?php echo get_value($module, 'id_module') ?>',
             context: document.body,
             cache: false,
-            async: false,
             type: 'POST',
             complete : function (data) {
                 $('#' + param + '-pills').html(data.responseText);
+                disable_loading();
             }
         });
-
-        disable_loading();
 
 	};
 

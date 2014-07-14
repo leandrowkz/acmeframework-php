@@ -931,14 +931,14 @@ ALTER TRIGGER tgr_acm_user_permission ENABLE;
 --------------------------------------------------------
 --  INSERTS for Table acm_user_group
 --------------------------------------------------------
-INSERT INTO acm_user_group VALUES (1,'ROOT','Usuários com super privilégios na aplicação.',NULL);
+INSERT INTO acm_user_group VALUES (1,'ROOT','Usuários com super privilégios na aplicação.');
 
 
 <<|SEPARATOR|>>
 --------------------------------------------------------
 --  INSERTS for Table acm_user
 --------------------------------------------------------
-INSERT INTO acm_user VALUES (1,1,'acmeengine','7c58c7b6630b6c2377b41a0c56cea568','ACME Engine','leandro.w3c@gmail.com',NULL,NULL,SYSDATE);
+INSERT INTO acm_user VALUES (1,1,'ACME Engine','leandro.w3c@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,SYSDATE);
 
 
 <<|SEPARATOR|>>
@@ -952,27 +952,27 @@ INSERT INTO acm_user_config VALUES (1,1,'pt_BR',NULL,NULL,'{URL_ROOT}/app_dashbo
 --------------------------------------------------------
 --  INSERTS for Table acm_menu
 --------------------------------------------------------
-INSERT INTO acm_menu VALUES (12,NULL,1,'Dashboard','{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',10,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (25,NULL,1,'Configurações','{URL_ROOT}/app_config/',NULL,'<i class="fa fa-cogs fa-fw"></i>',50,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (10,NULL,1,'Menus','{URL_ROOT}/app_menu/',NULL,'<i class="fa fa-tasks fa-fw"></i>',60,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (11,NULL,1,'Logs','{URL_ROOT}/app_log/',NULL,'<i class="fa fa-tags fa-fw"></i>',70,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (13,NULL,1,'Usuários','{URL_ROOT}/app_user/',NULL,'<i class="fa fa-users fa-fw"></i>',80,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (20,NULL,1,'Módulos',NULL,NULL,'<i class="fa fa-archive fa-fw"></i>',20,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (21,20,1,'Administração','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-wrench fa-fw"></i>',30,NULL);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (22,20,1,'Construtor de módulos','{URL_ROOT}/app_module_maker/',NULL,'<i class="fa fa-flask fa-fw"></i>',40,NULL);
+INSERT INTO acm_menu VALUES (12,NULL,1,'Dashboard','{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>',10);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (25,NULL,1,'Configurações','{URL_ROOT}/app_config/',NULL,'<i class="fa fa-cogs fa-fw"></i>',50);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (10,NULL,1,'Menus','{URL_ROOT}/app_menu/',NULL,'<i class="fa fa-tasks fa-fw"></i>',60);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (11,NULL,1,'Logs','{URL_ROOT}/app_log/',NULL,'<i class="fa fa-tags fa-fw"></i>',70);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (13,NULL,1,'Usuários','{URL_ROOT}/app_user/',NULL,'<i class="fa fa-users fa-fw"></i>',80);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (20,NULL,1,'Módulos',NULL,NULL,'<i class="fa fa-archive fa-fw"></i>',20);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (21,20,1,'Administração','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-wrench fa-fw"></i>',30);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (22,20,1,'Construtor de módulos','{URL_ROOT}/app_module_maker/',NULL,'<i class="fa fa-flask fa-fw"></i>',40);
 
 
 <<|SEPARATOR|>>
 --------------------------------------------------------
 --  INSERTS for Table acm_module
 --------------------------------------------------------
-INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administração',NULL,'<i class="fa fa-wrench fa-fw"></i>','Módulos da aplicação',NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Construtor de módulos',NULL,'<i class="fa fa-flask fa-fw"></i>','Crie novos módulos',NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Usuários',NULL,'<i class="fa fa-users fa-fw"></i>','Gerencie grupos e usuários',NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>','Estatísticas gerais',NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Logs da aplicação',NULL,'<i class="fa fa-tags fa-fw"></i>','Registros e erros',NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus',NULL,'<i class="fa fa-tasks fa-fw"></i>','Gerencie menus da aplicação',NULL,SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Configurações',NULL,'<i class="fa fa-cogs fa-fw"></i>','Consulte configurações e sessão',NULL,SYSDATE);
+INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administração',NULL,'<i class="fa fa-wrench fa-fw"></i>','Módulos da aplicação',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Construtor de módulos',NULL,'<i class="fa fa-flask fa-fw"></i>','Crie novos módulos',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Usuários',NULL,'<i class="fa fa-users fa-fw"></i>','Gerencie grupos e usuários',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>','Estatísticas gerais',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Logs da aplicação',NULL,'<i class="fa fa-tags fa-fw"></i>','Registros e erros',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus',NULL,'<i class="fa fa-tasks fa-fw"></i>','Gerencie menus da aplicação',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Configurações',NULL,'<i class="fa fa-cogs fa-fw"></i>','Consulte configurações e sessão',SYSDATE);
 
 
 <<|SEPARATOR|>>
@@ -1005,7 +1005,6 @@ INSERT INTO acm_module_permission VALUES (56,15,'Entrar no módulo','ENTER',NULL
 --  INSERTS for Table acm_user_permission
 --------------------------------------------------------
 INSERT INTO acm_user_permission VALUES (1,1,1);<<|SEPARATOR|>>
-INSERT INTO acm_user_permission VALUES (2,1,2);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (3,1,3);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (4,1,4);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (5,1,5);<<|SEPARATOR|>>
@@ -1015,13 +1014,11 @@ INSERT INTO acm_user_permission VALUES (9,1,9);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (10,1,10);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (11,1,15);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (17,1,28);<<|SEPARATOR|>>
-INSERT INTO acm_user_permission VALUES (18,1,21);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (36,1,53);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (37,1,52);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (38,1,54);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (46,1,61);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (47,1,62);<<|SEPARATOR|>>
-INSERT INTO acm_user_permission VALUES (52,1,63);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (53,1,64);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (54,1,66);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (95,1,67);<<|SEPARATOR|>>
