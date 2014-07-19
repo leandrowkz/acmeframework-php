@@ -1,3 +1,13 @@
+<div class="row module-header">
+
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <h1>
+            <?php echo lang('Profile') ?>
+            <small>// <?php echo lang('User information') ?></small>
+        </h1>
+    </div>
+    
+</div>
 
 <div class="user-profile-sidebar">
     
@@ -111,3 +121,140 @@
     // tooltips
     $('body').tooltip({ selector: "[data-toggle=tooltip]" });
 </script>
+
+<style>
+    #user-profile-badges {
+        line-height:30px;
+    }
+
+    .user-profile-actions {
+        margin-top: 20px;
+    }
+
+    .user-profile-actions a {
+        margin-bottom: 10px !important;
+    }
+
+    .user-profile-img {
+        width: 140px;
+        height: 140px;
+        background-size: cover;
+        border-radius: 100px;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+    }
+
+    .user-profile-sidebar {
+        width:150px;
+        position:absolute;
+    }
+
+    .user-profile-main-content {
+        margin-left:180px;
+    }
+
+    /* Mobile devices */
+    @media(max-width: 768px){
+
+        #user-profile-name h1 {
+            text-align: center;
+            font-size:30px;
+            margin: 30px 0 0 0 !important;
+        }
+
+        #user-profile-name a {
+            display:none;
+        }
+
+        #user-profile-badges {
+            text-align:center;
+        }
+
+        .user-profile-sidebar {
+            width:100%;
+            position:relative;
+        }
+
+        .user-profile-main-content {
+            margin-left:0;
+        }
+
+        .user-profile-actions {
+            margin-top:0;
+        }
+
+        .user-profile-sidebar img {
+            height: 120px;
+            width: 120px;
+        }
+
+        .list-user-info {
+            margin: 2px 0 0 105px !important
+        }
+    }
+
+    /* Mobile portrait */
+    @media(max-width: 480px){
+        .user-profile-sidebar {
+            width:100%;
+        }
+
+        .dropdown-user {
+            left:0;
+            margin-right:-25px !important;
+        }
+
+        #user-profile-name h1 {
+            text-align: center;
+            font-size:30px;
+            margin: 30px 0 0 0 !important;
+        }
+
+        #user-profile-name button {
+            display:none;
+        }
+
+        #user-profile-badges {
+            text-align:center;
+        }
+
+
+        .user-profile-actions {
+            margin-top:0;
+        }
+
+        .user-profile-sidebar img {
+            height: 110px;
+            width: 110px;
+        }
+    }
+
+    /* Tablet and large desktops */
+    @media(min-width: 768px) and (max-width: 991px) {
+        .user-profile-sidebar {
+            width:100%;
+            position:relative;
+        }
+
+        .user-profile-main-content {
+            margin-left:0;
+        }
+
+        .user-profile-actions {
+            margin-top:0;
+        }
+
+        .user-profile-sidebar img {
+            height: 120px;
+            width: 120px;
+        }
+
+        #user-profile-name h1  {
+            margin: 30px 0 0 0 !important;
+        }
+
+        #user-profile-name button {
+            margin: 35px 0 0 0 !important;
+        }
+    }
+<style>

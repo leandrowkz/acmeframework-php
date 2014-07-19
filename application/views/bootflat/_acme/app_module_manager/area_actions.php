@@ -300,7 +300,6 @@ $id_action = get_value($action, 'id_module_action');
                 context: document.body,
                 data: { 'id_module_action' : id },
                 cache: false,
-                async: false,
                 type: 'POST',
 
                 complete : function (response) {
@@ -318,10 +317,10 @@ $id_action = get_value($action, 'id_module_action');
                     // Reload area 
                     // this function comes from config.php
                     $.load_area('actions');
+
+                    disable_loading();
                 }
             });
-
-            disable_loading();
             
         });
 

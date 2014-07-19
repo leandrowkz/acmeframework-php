@@ -121,7 +121,9 @@
 </div>
 
 <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/morris/morris-0.4.3.min" />
+
 <script src="<?php echo URL_JS ?>/plugins/morris/raphael-2.1.0.min.js"></script>
+
 <script src="<?php echo URL_JS ?>/plugins/morris/morris.js"></script>
 
 <script>
@@ -209,3 +211,49 @@
         resize: true
   	});
 </script>
+
+<style>
+	.custom-panels .panel-heading i {
+	    font-size: 65px;
+	    margin-left: -20px;
+	}
+
+	.custom-panels h1 {
+	    font-size: 60px;
+	    margin: 0;
+	}
+
+	.custom-panels h4 {
+	    margin: 0;
+	}
+
+	#list-errors {
+	    display: none
+	}
+
+	#list-errors div.list-group {
+	    margin:10px 0 0;
+	    max-height: 250px;
+	    overflow-y: scroll;
+	}
+
+	#list-errors div.list-group-item div {
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	}
+
+	.panel-list .panel-body {
+	    padding: 0;
+	}
+
+	.panel-list .panel-body .list-group {
+	    margin: 0;
+	}
+
+	.panel-list .panel-body .list-group a.list-group-item {
+	    border-radius: 0;
+	    border-left: 0;
+	    border-right: 0;
+	    border-bottom: 0;
+	}
+</style>

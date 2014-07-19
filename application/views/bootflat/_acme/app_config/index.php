@@ -8,12 +8,11 @@
 	
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
 </div>
-
-<h3><?php echo lang('Constantes gerais') ?></h3>
-
+ 
 <div class="row">
 	<div class="col-sm-12 col-lg-8">
 		
+		<h3 style="margin: 0"><?php echo lang('General constants') ?></h3>
 
 		<div style="margin: 20px 0">
 			<div class="inline" style="width: 150px">
@@ -171,7 +170,7 @@
 		    <div class="inline" style="vertical-align:top"><?php echo PATH_HTML_COMPONENTS ?></div>
 		</div>
 
-		<h3 style="margin: 40px 0 0"><?php echo lang('Sessão') ?></h3>
+		<h3 style="margin: 40px 0 0"><?php echo lang('Session') ?></h3>
 
 		<div style="margin: 20px 0">
 			<div class="inline" style="width: 150px">
@@ -226,18 +225,18 @@
 	<div class="col-sm-12 col-lg-4">
 
 		<div class="panel panel-info">
-    		<div class="panel-heading"><?php echo lang('Arquivos de configurações') ?></div>
+    		<div class="panel-heading"><?php echo lang('Settings files') ?></div>
     		<div class="panel-body">
-    			<label><?php echo lang('Configurações da aplicação') ?>:</label>
+    			<label><?php echo lang('Application settings') ?>:</label>
     			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/app_settings.php</div>
 
-    			<label style="margin-top: 20px"><?php echo lang('Banco de dados') ?>:</label>
+    			<label style="margin-top: 20px"><?php echo lang('Databases') ?>:</label>
     			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/database.php</div>
 
-    			<label style="margin-top: 20px"><?php echo lang('Rotas (URLS)') ?>:</label>
+    			<label style="margin-top: 20px"><?php echo lang('Routes (URLs)') ?>:</label>
     			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/routes.php</div>
 
-    			<label style="margin-top: 20px"><?php echo lang('Configurações de email') ?>:</label>
+    			<label style="margin-top: 20px"><?php echo lang('Email settings') ?>:</label>
     			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/email.php</div>
     		</div>
     	</div>

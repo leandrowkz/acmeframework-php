@@ -27,7 +27,7 @@ function user_info($id_user = 0, $login = '', $email = '', $username = '', $user
 
 	// Linha de informações do usuário (e alguns controles)
 	$html  = '	<li class="dropdown">';
-	$html .= '	<a class="dropdown-toggle" data-toggle="dropdown" href="#" style="padding:10px 15px 0 15px;">
+	$html .= '	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
               		<img src="' . $url_img . '" class="img-circle user-photo" />
                     <span class="user-info">
                         <small>' . lang('Bem vindo') . '</small>
@@ -35,9 +35,8 @@ function user_info($id_user = 0, $login = '', $email = '', $username = '', $user
                     </span>
                     <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-user" style="margin-right:-1px">
+                <ul class="dropdown-menu dropdown-user">
                     <li><a href="' . URL_ROOT . '/app_user/profile/' . $id_user . '"><i class="fa fa-user fa-fw"></i> ' . lang('Perfil') . '</a></li>
-                    <li class="divider"></li>
                     <li><a href="#"><i class="fa fa-cogs fa-fw"></i> ' . lang('Configurações') . '</a></li>
                     <li class="divider"></li>
                     <li>

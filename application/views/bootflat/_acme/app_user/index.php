@@ -204,5 +204,15 @@ $email = get_value($user, 'email');
 
     });
 
-
 </script>
+
+<style>
+    .user-profile-img {
+        width: 140px;
+        height: 140px;
+        background-size: cover;
+        border-radius: 100px;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+    }
+</style>

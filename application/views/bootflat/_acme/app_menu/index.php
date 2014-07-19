@@ -19,7 +19,7 @@
 				<div class="input-group">
                     <select class="form-control inline" id="select-groups"><?php echo $options ?></select>
                     <span class="input-group-btn">
-                    	<button class="btn btn-success"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('Novo menu') ?></button> 
+                    	<button class="btn btn-success btn-new-menu" data-toggle="modal" data-target="#modal-new-menu"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('New menu') ?></button> 
                     </span>
                 </div>
 
@@ -31,7 +31,7 @@
 
 			<div class="col-lg-12">
 
-				<div id="menus-container" style="margin-top: 30px"></div>
+				<div id="menus-container" style="margin-top: 20px"></div>
 				
 	        </div>
 
@@ -42,7 +42,8 @@
 </div>
 
 <script>
-
+	
+	// load all menus based on current group
 	$.load_menus = function(group) {
 
 		enable_loading();
@@ -54,15 +55,14 @@
             },
             context: document.body,
             cache: false,
-            async: false,
             type: 'POST',
             complete : function (data) {
-            	// alert(data.responseText);
+
+        		disable_loading();
+           		
                 $('#menus-container').html(data.responseText);
             }
         });
-
-        disable_loading();
 
 	};
 
