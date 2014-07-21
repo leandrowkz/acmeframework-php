@@ -1,73 +1,82 @@
-<div class="row module-header">
+<div class="module-header">
 
-    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-        <h1><?php echo lang('Grupos') ?>
-        <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
-        </h1>
-    </div>
-    
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        
-        <div class="btn-group pull-right clearfix">
-            <a href="<?php echo URL_ROOT ?>/app_user" class="pull-right clearfix btn btn-primary">
-                <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
-                <div class="hidden-xs hidden-sm">
-                    <i class="fa fa-arrow-circle-left"></i> 
-                    <span><?php echo lang('Voltar') ?></span>
-                </div>
-            </a>
+    <div class="row">
 
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <h1><?php echo lang('Grupos') ?>
+            <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+            </h1>
         </div>
+        
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            
+            <div class="btn-group pull-right clearfix">
+                <a href="<?php echo URL_ROOT ?>/app_user" class="pull-right clearfix btn btn-primary">
+                    <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
+                    <div class="hidden-xs hidden-sm">
+                        <i class="fa fa-arrow-circle-left"></i> 
+                        <span><?php echo lang('Voltar') ?></span>
+                    </div>
+                </a>
 
-    </div>
-</div>
+            </div>
 
-<div class="row" style="margin-bottom: 20px ">
-
-    <div class="col-sm-12 col-md-6 col-lg-4">
-
-        <div class="input-group" style="margin-bottom: 10px">
-            <input type="text" id="search-groups" class="form-control input-sm" placeholder="<?php echo lang('Pesquisar grupos') ?>" autofocus>
-            <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
         </div>
 
     </div>
 
 </div>
 
-<button class="btn btn-sm btn-success" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('Novo grupo') ?> <i class="fa fa-plus-circle"></i></button>
+<div class="module-body">
 
-<div class="table-responsive">
+    <div class="row" style="margin-bottom: 20px ">
 
-    <table class="table">
-        
-        <thead>
-            <tr>
-                <th><?php echo lang('Grupo') ?></th>
-                <th><?php echo lang('Descrição') ?></th>
-                <th></th>
-            </tr>
-        </thead>
-        
-        <tbody>
+        <div class="col-sm-12 col-md-6 col-lg-4">
 
-        <?php foreach($groups as $group) { ?>
-        
-            <tr class="group">
+            <div class="input-group" style="margin-bottom: 10px">
+                <input type="text" id="search-groups" class="form-control input-sm" placeholder="<?php echo lang('Pesquisar grupos') ?>" autofocus>
+                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
+            </div>
 
-                <td>
-                    <a data-toggle="modal" data-target="#modal-<?php echo get_value($group, 'id_user_group') ?>" href="#" class="label label-info group-name"><?php echo get_value($group, 'name')?></a>
-                </td>
-                <td class="group-description"><?php echo get_value($group, 'description') ?></td>
-                <td class="text-right" style="width: 01%" title="<?php echo lang('Remover')?>"><a href="javascript:void(0)" id="<?php echo get_value($group, 'id_user_group') ?>"><i class="fa fa-times fa-fw"></i></a></td>
+        </div>
 
-            </tr>
+    </div>
 
-        <?php } ?>
+    <button class="btn btn-sm btn-success" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('Novo grupo') ?> <i class="fa fa-plus-circle"></i></button>
 
-        </tbody>
+    <div class="table-responsive">
 
-    </table>
+        <table class="table">
+            
+            <thead>
+                <tr>
+                    <th><?php echo lang('Grupo') ?></th>
+                    <th><?php echo lang('Descrição') ?></th>
+                    <th></th>
+                </tr>
+            </thead>
+            
+            <tbody>
+
+            <?php foreach($groups as $group) { ?>
+            
+                <tr class="group">
+
+                    <td>
+                        <a data-toggle="modal" data-target="#modal-<?php echo get_value($group, 'id_user_group') ?>" href="#" class="label label-info group-name"><?php echo get_value($group, 'name')?></a>
+                    </td>
+                    <td class="group-description"><?php echo get_value($group, 'description') ?></td>
+                    <td class="text-right" style="width: 01%" title="<?php echo lang('Remover')?>"><a href="javascript:void(0)" id="<?php echo get_value($group, 'id_user_group') ?>"><i class="fa fa-times fa-fw"></i></a></td>
+
+                </tr>
+
+            <?php } ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 

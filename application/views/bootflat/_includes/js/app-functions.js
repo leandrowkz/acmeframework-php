@@ -18,6 +18,54 @@ function disable_loading () {
     $(".loading-box").hide();
 }
 
+$.create_cookie = function (name, value, days) {
+    var expires;
+
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+    } else {
+        expires = "";
+    }
+    document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
+};
+
+$.read_cookie = function (name) {
+    var nameEQ = escape(name) + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return unescape(c.substring(nameEQ.length, c.length));
+    }
+    return null;
+};
+
+$.erase_cookie = function(name) {
+    $.create_cookie(name, "", -1);
+};
+
+$.container_html = function () {
+
+    // put all content inside the container
+    if($('.module-header .container').length <= 0) {
+        $('.module-header').wrapInner('<div class="container"></div>');
+        $('.module-body').wrapInner('<div class="container"></div>');
+        $('.navbar-fixed-top').wrapInner('<div class="container"></div>');
+        
+        // set cookie for this shit (365 days)
+        $.create_cookie('container-html', true, 365);
+    } else {
+        $('.module-header .container > *').unwrap();
+        $('.module-body .container > *').unwrap();
+        $('.navbar-fixed-top .container > *').unwrap();
+    
+        // destroy the cookie
+        $.erase_cookie('container-html');
+    }
+};
+
 //Loads the correct sidebar on window load
 $(function() {
 

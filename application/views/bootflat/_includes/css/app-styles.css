@@ -1,13 +1,31 @@
 /* Mobile landscape */
 @media(max-width: 768px){
 
-    .dropdown-user {
-        left:0;
-        margin-right:-25px !important;
-    }
-
     #page-wrapper {
         position: inherit;
+    }
+
+    .navbar-fixed-top .container{
+        padding-left: 0px !important;
+    }
+
+    .navbar-fixed-top .container .dropdown-user {
+        margin-left: -155px;
+        z-index: 1000;
+        position: absolute !important;
+    }
+
+    .navbar-fixed-top .container .navbar-brand {
+        padding-left: 0px !important;
+        margin-left: 30px;
+    }
+
+    .navbar-fixed-top .container .navbar-collapse {
+        margin: 0 -45px 0 -30px !important;
+    }
+
+    .navbar-fixed-top .container .navbar-collapse .navbar-nav li a {
+        padding-left: 45px !important;
     }
 
     .navbar-nav {
@@ -26,7 +44,6 @@
 
     .navbar-default .navbar-nav .open .dropdown-menu > li > a {
         color: #fff;
-        padding-left: 30px
     }
 
     .navbar-nav .open .dropdown-menu {
@@ -57,10 +74,9 @@
     .navbar-nav.navbar-right {
         position: absolute;
         top: 0;
-        width: 40px !important;
         right: 105px;
         height: 35px;
-        background-color: rgba(0, 0, 0, 0.7);
+        border: 0;
     }
 
     .navbar-nav.navbar-right:last-child {
@@ -72,9 +88,7 @@
 
     .dropdown-user {
         background-color: rgba(0, 0, 0, 0.9) !important;
-        margin-left: -140px;
-        z-index: 1000;
-        position: absolute !important;
+        margin-left: -150px;
     }
 
     .dropdown-user > li > a:hover {
@@ -100,6 +114,14 @@
     .navbar-default .navbar-nav > li > a:hover, 
     .navbar-default .navbar-nav > li > a:focus {
         background-color: #000  !important;
+    }
+
+    .navbar-nav.navbar-right > .open > a,
+    .navbar-nav.navbar-right > .open > a:hover,
+    .navbar-nav.navbar-right > .open > a:focus,
+    .navbar-nav.navbar-right > li > a:hover,
+    .navbar-nav.navbar-right > li > a:focus {
+        background-color: transparent !important;
     }
 
     .navbar-default .navbar-collapse, 
@@ -199,9 +221,14 @@ body, html {
 
 .module-header {
     background-color: #FCF1E8;
-    padding: 30px 15px;
-    margin: -30px -30px 30px -30px ;
+    padding: 30px;
+    margin:  0;
     border-bottom: 1px solid #ddd
+}
+
+.module-body {
+    padding: 30px !important;
+    margin: 0;
 }
 
 .module-header h1,
@@ -235,8 +262,16 @@ body, html {
 }
 
 #page-wrapper {
-    margin: 60px 30px 30px 30px;
+    margin: 30px 0;
     min-height: 100% !important;
+}
+
+.navbar-fixed-top {
+    padding: 0 30px !important;
+}
+
+.container .navbar-brand {
+    padding-left: 15px
 }
 
 .icon-invisible {
@@ -267,7 +302,7 @@ body, html {
     min-height: 35px;
     height: 35px;
     padding: 0;
-    margin: 0 30px;
+    margin: 0 30px 0 0;
     line-height: 35px;
     vertical-align: middle;
 }
@@ -281,6 +316,10 @@ body, html {
     height : 35px;
 }
 
+.navbar-fixed-top .navbar-collapse {
+    margin: 0 -45px 0 -30px !important;
+}
+
 .navbar-default {
     background-color: rgba(0, 0, 0, 0.7);
 }
@@ -288,7 +327,7 @@ body, html {
 .navbar-default .navbar-toggle {
     background-color: #000;
     border-color: transparent;
-    margin: 4px 30px 0;
+    margin: 4px 0px 0;
     border: none;
     padding: 6px 7px;
 }

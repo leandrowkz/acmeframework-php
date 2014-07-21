@@ -1,136 +1,143 @@
-<div class="row module-header">
+<div class="module-header">
 
-    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-        <h1>
-            <?php echo lang('Profile') ?>
-            <small>// <?php echo lang('User information') ?></small>
-        </h1>
-    </div>
-    
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-
-        <div class="pull-right clearfix">
-            <a href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-primary">
-                <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
-                <div class="hidden-xs hidden-sm">
-                    <i class="fa fa-arrow-circle-left"></i> 
-                    <span><?php echo lang('Voltar') ?></span>
-                </div>
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="user-profile-sidebar">
-    
     <div class="row">
 
-        <div class="col-xs-6 col-sm-6 col-md-12 text-center">
-            
-            <?php 
-
-            $id_user = get_value($user, 'id_user');
-            $url_img = get_value($user, 'url_img');
-            $url_img_large = tag_replace(get_value($user, 'url_img_large'));
-
-            // Ajusta thumb
-            if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
-                $url_img = tag_replace($url_img);
-            else
-                $url_img = URL_IMG . '/user-unknown.png';
-            ?>
-
-            <a href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>">
-                <img class="img-circular user-profile-img" src="<?php echo $url_img ?>" />
-            </a>
-
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <h1>
+                <?php echo lang('Profile') ?>
+                <small>// <?php echo lang('User information') ?></small>
+            </h1>
         </div>
         
-        <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
-            <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Editar perfil') ?></a>
-            <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Alterar imagem')?></a>
-            <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Alterar senha') ?></a>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+            <div class="pull-right clearfix">
+                <a href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-primary">
+                    <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
+                    <div class="hidden-xs hidden-sm">
+                        <i class="fa fa-arrow-circle-left"></i> 
+                        <span><?php echo lang('Voltar') ?></span>
+                    </div>
+                </a>
+
+            </div>
+
         </div>
 
     </div>
 
 </div>
 
-<div class="user-profile-main-content">
+<div class="module-body">
 
-    <div class="row" id="user-profile-name">
-        <div class="col-sm-12">
-            <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
+    <div class="user-profile-sidebar">
+        
+        <div class="row">
+
+            <div class="col-xs-6 col-sm-6 col-md-12 text-center">
+                
+                <?php 
+
+                $id_user = get_value($user, 'id_user');
+                $url_img = get_value($user, 'url_img');
+                $url_img_large = tag_replace(get_value($user, 'url_img_large'));
+
+                // Ajusta thumb
+                if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
+                    $url_img = tag_replace($url_img);
+                else
+                    $url_img = URL_IMG . '/user-unknown.png';
+                ?>
+
+                <a href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>">
+                    <img class="img-circular user-profile-img" src="<?php echo $url_img ?>" />
+                </a>
+
+            </div>
+            
+            <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Editar perfil') ?></a>
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Alterar imagem')?></a>
+                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Alterar senha') ?></a>
+            </div>
+
         </div>
+
     </div>
-    
-    <div class="row">
-        <div class="col-sm-12 text-top" id="user-profile-badges">
-            <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
-                <?php if(get_value($user, 'active') == 'Y'){ ?>
-                <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+
+    <div class="user-profile-main-content">
+
+        <div class="row" id="user-profile-name">
+            <div class="col-sm-12">
+                <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12 text-top" id="user-profile-badges">
+                <div style="vertical-align:top;display:inline-block;margin-top:-1px">
+                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
+                    <?php if(get_value($user, 'active') == 'Y'){ ?>
+                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+                    <?php } else { ?>
+                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                    <?php } ?>
+                </div>
+                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
+            </div>
+        </div>
+
+        <h3><?php echo lang('Alterar imagem')?></h3>
+
+        <div class="row" style="margin-top:20px">
+            
+            <?php $file_exists = file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img_large)) && basename($url_img_large) != '' ? true : false; ?>
+            <?php if($file_exists) {?>
+            <div class="col-sm-8 col-xs-12 text-center">
+                <div>
+                <img src="<?php echo $url_img_large ?>" class="img-responsive" id="img-user" style="margin-bottom:15px" />
+                </div>
+            </div>
+            <?php } ?>
+
+            <div class="col-sm-<?php echo ($file_exists) ? '4' : '12'; ?> col-xs-12 text-center">
+                
+                <?php if($file_exists) {?>
+                <button class="btn btn-primary btn-block" onclick="make_thumbnail()"><?php echo lang('Recortar e salvar')?></button>
+                <p class="lead" style="margin:10px 0 20px 0"><?php echo lang('ou') ?></p>
+                <?php } ?>
+                
+                <form action="<?php echo URL_ROOT ?>/app_user/upload_photo/<?php echo $id_user ?>" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
+                    
+                    <div class="fallback text-center">
+                        <input class="btn btn-default btn-xs text-center" name="file" id="file" type="file" />
+                        <a class="btn btn-default btn-lg" href="javascript:void(0)" onclick="send_file_fallback()"><?php echo lang('Enviar') ?></a>
+                    </div>
+
+                </form>
+
+                <iframe name="iframe-fallback" id="iframe-fallback" style="display:none"></iframe>
+
+                <div id="msg-return-container" class="text-left" style="margin-top:15px"></div>
+                <div id="msg-template-error" style="display:none"><?php echo message('error', 'Ops!', '<span id="msg-content"></span>', true); ?></div>
+                <div id="msg-template-success" style="display:none"><?php echo message('success', lang('Feito!'), '<span id="msg-content"></span>', true); ?></div>
+            </div>
+
+        </div>
+
+        <div class="row bottom-group-buttons">
+            
+            <div class="col-sm-12">
+                <?php if($file_exists) { ?>
+                <button class="btn btn-primary" onclick="make_thumbnail()"><?php echo lang('Recortar e salvar') ?></button>
+                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><?php echo lang('Cancelar') ?></a>
                 <?php } else { ?>
-                <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                <a class="btn btn-primary" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Voltar') ?></a>
                 <?php } ?>
             </div>
-            <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
+
         </div>
-    </div>
 
-    <h3><?php echo lang('Alterar imagem')?></h3>
-
-    <div class="row" style="margin-top:20px">
-        
-        <?php $file_exists = file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img_large)) && basename($url_img_large) != '' ? true : false; ?>
-        <?php if($file_exists) {?>
-        <div class="col-sm-8 col-xs-12 text-center">
-            <div>
-            <img src="<?php echo $url_img_large ?>" class="img-responsive" id="img-user" style="margin-bottom:15px" />
-            </div>
-        </div>
-        <?php } ?>
-        <!--
-        <div id="preview" style="width: 100px; height: 100px; overflow: hidden;">
-            <img src="<?php echo URL_IMG ?>/bg-4.jpg" />
-        </div>
-        -->
-
-        <div class="col-sm-<?php echo ($file_exists) ? '4' : '12'; ?> col-xs-12 text-center">
-            <?php if($file_exists) {?>
-            <button class="btn btn-primary btn-block" onclick="make_thumbnail()"><?php echo lang('Recortar e salvar')?></button>
-            <p class="lead" style="margin:10px 0 20px 0"><?php echo lang('ou') ?></p>
-            <?php } ?>
-            
-            <form action="<?php echo URL_ROOT ?>/app_user/upload_photo/<?php echo $id_user ?>" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
-                
-                <div class="fallback text-center">
-                    <input class="btn btn-default btn-xs text-center" name="file" id="file" type="file" />
-                    <a class="btn btn-default btn-lg" href="javascript:void(0)" onclick="send_file_fallback()"><?php echo lang('Enviar') ?></a>
-                </div>
-
-            </form>
-
-            <iframe name="iframe-fallback" id="iframe-fallback" style="display:none"></iframe>
-
-            <div id="msg-return-container" class="text-left" style="margin-top:15px"></div>
-            <div id="msg-template-error" style="display:none"><?php echo message('error', 'Ops!', '<span id="msg-content"></span>', true); ?></div>
-            <div id="msg-template-success" style="display:none"><?php echo message('success', lang('Feito!'), '<span id="msg-content"></span>', true); ?></div>
-        </div>
-    </div>
-
-    <div class="row bottom-group-buttons">
-        <div class="col-sm-12">
-            <?php if($file_exists) { ?>
-            <button class="btn btn-primary" onclick="make_thumbnail()"><?php echo lang('Recortar e salvar') ?></button>
-            <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><?php echo lang('Cancelar') ?></a>
-            <?php } else { ?>
-            <a class="btn btn-primary" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Voltar') ?></a>
-            <?php } ?>
-        </div>
     </div>
 
 </div>

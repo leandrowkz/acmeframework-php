@@ -20,7 +20,7 @@
     <!-- Core CSS - Include with every page -->
     <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
-
+    
     <!-- App CSS - Include with every page -->
     <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
     <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
@@ -30,10 +30,10 @@
 
 <?php echo app_settings_inputs(); ?>
     
-    <div id="wrapper">
+    <div class="wrapper">
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-                
+            
             <div class="navbar-header">
                 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -125,15 +125,15 @@
 <div class="loading-box"><h4 style="vertical-align:middle !important"><?php echo lang('Carregando...')?></h4></div>
 
 <script>
-
-    $check_session = function() {
+    
+    // Check session expires callback
+    $.check_session = function() {
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_access/check_session/',
             context: document.body,
             dataType : 'json',
             cache: false,
-            async: false,
             type: 'POST',
             complete : function (data) {
                 json = $.parseJSON(data.responseText);
@@ -145,10 +145,10 @@
     };
 
     // Run at once
-    $check_session();
+    $.check_session();
 
     // Run every 3 minutes
-    setInterval(function () { $check_session(); }, 180000);
+    setInterval(function () { $.check_session(); }, 180000);
 
 </script>
 
