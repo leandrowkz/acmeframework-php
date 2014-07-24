@@ -405,7 +405,7 @@ foreach($fields as $field) {
             return false;
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_module_manager/save_form/update',
@@ -417,13 +417,13 @@ foreach($fields as $field) {
                 'enctype' : form.find('.enctype').val()
             },
             cache: false,
-            async: false,
             type: 'POST',
 
-            complete : function (response) { $.callbak_edit_response_complete(response, form); }
+            complete : function (response) { 
+                $.disable_loading();
+                $.callbak_edit_response_complete(response, form); 
+            }
         });
-
-        disable_loading();
 
         // Prevent submit
         return false;
@@ -439,7 +439,7 @@ foreach($fields as $field) {
             return false;
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_module_manager/save_form_field/update',
@@ -462,13 +462,13 @@ foreach($fields as $field) {
                 'validations' : form.find('.validations').val()
             },
             cache: false,
-            async: false,
             type: 'POST',
 
-            complete : function (response) { $.callbak_edit_response_complete(response, form); }
+            complete : function (response) { 
+                $.disable_loading();
+                $.callbak_edit_response_complete(response, form); 
+            }
         });
-
-        disable_loading();
 
         // Prevent submit
         return false;
@@ -529,19 +529,19 @@ foreach($fields as $field) {
         var oper = $(this).hasClass('btn-success') ? 'enable-action-form-update' : 'disable-action-form-update';
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_module_manager/save_action/' + oper,
             context: document.body,
             data : { 'id_module' : <?php echo $id_module ?> },
             cache: false,
-            async: false,
             type: 'POST',
-            complete : function (response) { $.callbak_enable_response_complete(response); }
+            complete : function (response) { 
+                $.disable_loading();
+                $.callbak_enable_response_complete(response); 
+            }
         });
-
-        disable_loading();
 
         // Prevent submit
         return false;
@@ -556,19 +556,19 @@ foreach($fields as $field) {
         var oper = $(this).hasClass('btn-success') ? 'enable' : 'disable';
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_module_manager/save_form/' + oper,
             context: document.body,
             data : { 'id_module_form' : <?php echo get_value($form, 'id_module_form') ?> },
             cache: false,
-            async: false,
             type: 'POST',
-            complete : function (response) { $.callbak_enable_response_complete(response); }
+            complete : function (response) { 
+                $.disable_loading();
+                $.callbak_enable_response_complete(response); 
+            }
         });
-
-        disable_loading();
 
         // Prevent submit
         return false;
@@ -586,7 +586,7 @@ foreach($fields as $field) {
         var oper = $(this).is(':checked') ? 'enable' : 'disable';
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_module_manager/save_form_field/' + oper,
@@ -596,12 +596,12 @@ foreach($fields as $field) {
                 'column_name' : $('#tr-' + id + ' .column_name').val()
             },
             cache: false,
-            async: false,
             type: 'POST',
-            complete : function (response) { $.callbak_enable_response_complete(response); }
+            complete : function (response) { 
+                $.disable_loading();
+                $.callbak_enable_response_complete(response); 
+            }
         });
-
-        disable_loading();
 
         // Prevent submit
         return false;

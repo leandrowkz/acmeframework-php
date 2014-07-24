@@ -61,8 +61,10 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	private function _load_module()
 	{
 		// Tenta localizar o módulo com base no nome do controlador
-		$module = $this->db->get_where('acm_module', array('controller' => $this->controller))->result_array();
-		$module = isset($module[0]) ? $module[0] : array();
+		$module = $this->db->from('acm_module')
+						   ->where(array('controller' => $this->controller))
+						   ->get()
+						   ->row_array(0);
 
 		if(count($module) <= 0) {
 			// Não localizou um módulo cadastrado com o nome da classe

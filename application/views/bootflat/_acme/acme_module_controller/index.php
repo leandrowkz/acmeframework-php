@@ -16,7 +16,7 @@
 					<i class="fa fa-align-justify hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-align-justify"></i> 
-						<span><?php echo lang('Ações') ?></span> 
+						<span><?php echo lang('Actions') ?></span> 
 						<span class="caret"></span>
 					</div>
 				</button>
@@ -29,7 +29,7 @@
 					$label = lang(get_value($menu, 'label'));
 					
 					// img must be font-awesome know more in http://fortawesome.github.io/Font-Awesome/
-					if(stristr(get_value($menu, 'url_img'), '<i class="')) {
+					if(stristr(get_value($menu, 'url_img'), 'class="fa')) {
 						$img = get_value($menu, 'url_img');
 					} else {
 						$img = (file_exists(tag_replace(get_value($menu, 'url_img'))) && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
@@ -52,7 +52,3 @@
 	<?php echo $module_table ?>
 
 </div>
-
-<link type="text/css" rel="stylesheet" href="<?php echo URL_CSS ?>/plugins/dataTables/dataTables.bootstrap.css" />
-<script src="<?php echo URL_JS ?>/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/dataTables/dataTables.bootstrap.js"></script>

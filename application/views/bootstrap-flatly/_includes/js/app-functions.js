@@ -8,12 +8,12 @@ function redirect (url) {
     window.location.href = url;
 }
 
-function enable_loading () {
+function $.enable_loading () {
     $(".loading-layer").hide().show();
     $(".loading-box").hide().show();
 }
 
-function disable_loading () {
+function $.disable_loading () {
     $(".loading-layer").hide();
     $(".loading-box").hide();
 }

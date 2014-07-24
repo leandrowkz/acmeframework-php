@@ -314,7 +314,7 @@
 			<div style="margin-top:30px">
 				<hr style="margin-bottom:5px;" />
 				<input type="submit" value="<?php echo lang('Continuar >') ?>" />
-				<div class="inline top" style="margin:8px 0 0 5px">ou <a href="javascript:void(0)" onclick="if(window.confirm('Deseja realmente voltar? Os dados preenchidos neste formulário serão perdidos.')){ redirect('<?php echo URL_ROOT ?>/acme_installer') } else { return false; }"><?php echo lang('Voltar') ?></a></div>
+				<div class="inline top" style="margin:8px 0 0 5px">ou <a href="javascript:void(0)" onclick="if(window.confirm('Deseja realmente voltar? Os dados preenchidos neste formulário serão perdidos.')){ $.redirect('<?php echo URL_ROOT ?>/acme_installer') } else { return false; }"><?php echo lang('Voltar') ?></a></div>
 			</div>
 		</form>
 	</div>

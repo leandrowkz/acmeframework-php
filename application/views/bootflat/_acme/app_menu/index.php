@@ -54,7 +54,7 @@
 	// load all menus based on current group
 	$.load_menus = function(group) {
 
-		enable_loading();
+		$.enable_loading();
 
 		$.ajax({
             url: $('#URL_ROOT').val() + '/app_menu/load_menus/',
@@ -66,7 +66,7 @@
             type: 'POST',
             complete : function (data) {
 
-        		disable_loading();
+        		$.disable_loading();
            		
                 $('#menus-container').html(data.responseText);
             }

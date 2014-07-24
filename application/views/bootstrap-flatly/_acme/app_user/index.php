@@ -172,7 +172,7 @@ $email = get_value($user, 'email');
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_user/reset_password/' + id,
@@ -198,7 +198,7 @@ $email = get_value($user, 'email');
                 }
             });
 
-            disable_loading();
+            $.disable_loading();
             
         });
 

@@ -138,7 +138,7 @@
         var oper = $(this).is(':checked') ? 'enable' : 'disable';
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_user/save_permission/' + oper,
@@ -151,7 +151,7 @@
             type: 'POST',
             complete : function (response) { 
                 
-                disable_loading();
+                $.disable_loading();
                 
                 // Parse json to check errors
                 json = $.parseJSON(response.responseText);

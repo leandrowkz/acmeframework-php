@@ -21,7 +21,7 @@
 function ajax_change_language()
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/acme_session/ajax_change_language/' + $('#combo_language').val();
 	
@@ -38,7 +38,7 @@ function ajax_change_language()
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -354,7 +354,7 @@ function ajax_modal(titulo, url_param, imagem, width, height, close)
 	var style_content = '';
 	
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 
 	// Dispara o ajax da url
 	$.ajax({
@@ -390,7 +390,7 @@ function ajax_modal(titulo, url_param, imagem, width, height, close)
 			$.modal(html, {opacity: 60, zIndex: 10000, closeClass: 'img_close', position: [0,0], escClose: bool_close, close: bool_close});
 			
 			// Desabilita o loading
-			disable_loading();
+			$.disable_loading();
 		}
 	});
 }
@@ -411,11 +411,11 @@ function close_modal()
 }
 
 /**
-* enable_loading()
+* $.enable_loading()
 * Habilita layer de loading.
 * @return void
 */
-function enable_loading()
+function $.enable_loading()
 {
 	// Append do conteudo no body
 	if($("#loading_layer").length <= 0)
@@ -449,11 +449,11 @@ function enable_loading()
 }
 
 /**
-* enable_loading()
+* $.enable_loading()
 * Desabilita loading.
 * @return void
 */
-function disable_loading()
+function $.disable_loading()
 {
 	// Verifica se o elemento existe, para fazer display:none;
 	if($("#loading_layer").length > 0)

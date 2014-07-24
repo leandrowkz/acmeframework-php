@@ -214,9 +214,9 @@ $id_action = get_value($action, 'id_module_action');
         selector: "[data-toggle=popover]"
     });
 
-    // ==========================
+    // ============================
     // insert, edit action callback
-    // ==========================
+    // ============================
     $.submit_callback = function (form, status) {
         
         // Validation is not right
@@ -227,7 +227,7 @@ $id_action = get_value($action, 'id_module_action');
         var id = form.attr('id');
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: form.attr('action'),
@@ -242,11 +242,12 @@ $id_action = get_value($action, 'id_module_action');
                 'order_' : form.find('.order_').val()
             },
             cache: false,
-            async: false,
             type: 'POST',
 
             complete : function (response) {
-                
+
+                $.disable_loading();
+
                 // Parse json to check errors
                 json = $.parseJSON(response.responseText);
                 
@@ -271,8 +272,6 @@ $id_action = get_value($action, 'id_module_action');
             }
         });
 
-        disable_loading();
-
         // Prevent submit
         return false;
     };
@@ -293,7 +292,7 @@ $id_action = get_value($action, 'id_module_action');
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_module_manager/save_action/delete',
@@ -318,7 +317,7 @@ $id_action = get_value($action, 'id_module_action');
                     // this function comes from config.php
                     $.load_area('actions');
 
-                    disable_loading();
+                    $.disable_loading();
                 }
             });
             

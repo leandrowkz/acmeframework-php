@@ -173,7 +173,7 @@
 	// Loading pills function
 	$.load_area = function (param) {
 		
-		enable_loading();
+		$.enable_loading();
 
 		$.ajax({
             url: $('#URL_ROOT').val() + '/app_module_manager/load_area/' + param + '/<?php echo get_value($module, 'id_module') ?>',
@@ -182,7 +182,7 @@
             type: 'POST',
             complete : function (data) {
                 $('#' + param + '-pills').html(data.responseText);
-                disable_loading();
+                $.disable_loading();
             }
         });
 

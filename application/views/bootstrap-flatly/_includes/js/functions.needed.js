@@ -21,7 +21,7 @@
 function ajax_get_html_task_dashboard(id_task)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/task/ajax_get_html_task_dashboard/' + id_task;
 	
@@ -41,7 +41,7 @@ function ajax_get_html_task_dashboard(id_task)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 	
 	return return_data;
 }
@@ -95,7 +95,7 @@ function ajax_post_comment_dashboard(id_task)
 		return false;
 	} else {
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		// Valores do post
 		var time = $(id_time).val();
@@ -126,7 +126,7 @@ function ajax_post_comment_dashboard(id_task)
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 }
 
@@ -139,7 +139,7 @@ function ajax_post_comment_dashboard(id_task)
 function ajax_load_box_details_task(id_task)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/task/ajax_load_box_details_task/' + id_task;
 	
@@ -157,7 +157,7 @@ function ajax_load_box_details_task(id_task)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -177,7 +177,7 @@ function ajax_post_comment_history_reopen()
 		ret = false;
 	} else {
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		// Valores do post
 		var time = $('#time').val();
@@ -212,7 +212,7 @@ function ajax_post_comment_history_reopen()
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 	
 	return ret;
@@ -241,7 +241,7 @@ function ajax_post_comment_history_finalize()
 		ret = false;
 	} else {
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		// Valores do post
 		var time = $('#time').val();
@@ -276,7 +276,7 @@ function ajax_post_comment_history_finalize()
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 	
 	return ret;
@@ -297,7 +297,7 @@ function ajax_post_comment_history()
 		return false;
 	} else {
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		// Valores do post
 		var time = $('#time').val();
@@ -323,7 +323,7 @@ function ajax_post_comment_history()
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 }
 
@@ -340,7 +340,7 @@ function ajax_delete_comment_history(id_task_history, id_task)
 	if(window.confirm("ATENÇÃO!\n\nO comentário selecionado será removido. Para continuar, clique em OK.") == true)
 	{
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		var url_ajax = $('#URL_ROOT').val() + '/task/ajax_delete_comment_history/' + id_task_history;
 		
@@ -357,7 +357,7 @@ function ajax_delete_comment_history(id_task_history, id_task)
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 }
 
@@ -370,7 +370,7 @@ function ajax_delete_comment_history(id_task_history, id_task)
 function ajax_load_box_comments(id_task)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/task/ajax_load_box_comments/' + id_task;
 	
@@ -388,7 +388,7 @@ function ajax_load_box_comments(id_task)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -400,7 +400,7 @@ function ajax_load_box_comments(id_task)
 function ajax_get_html_project(id_project)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/project/ajax_get_html_project/' + id_project;
 	
@@ -420,7 +420,7 @@ function ajax_get_html_project(id_project)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 	
 	return return_data;
 }
@@ -450,7 +450,7 @@ function load_project_line(id_project)
 function ajax_get_html_activity(id_activity)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/activity/ajax_get_html_activity/' + id_activity;
 	
@@ -470,7 +470,7 @@ function ajax_get_html_activity(id_activity)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 	
 	return return_data;
 }
@@ -502,7 +502,7 @@ function load_activity_line(id_activity, id_project)
 function ajax_get_html_task(id_task)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/task/ajax_get_html_task/' + id_task;
 	
@@ -522,7 +522,7 @@ function ajax_get_html_task(id_task)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 	
 	return return_data;
 }
@@ -554,7 +554,7 @@ function load_task_line(id_task, id_activity)
 function ajax_load_activity_tasks(id_activity)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/activity/ajax_load_activity_tasks/' + id_activity;
 	
@@ -571,7 +571,7 @@ function ajax_load_activity_tasks(id_activity)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -583,7 +583,7 @@ function ajax_load_activity_tasks(id_activity)
 function ajax_show_install_errors(id_package)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var url_ajax = $('#URL_ROOT').val() + '/acme_updater/ajax_show_install_errors/' + id_package;
 	
@@ -600,7 +600,7 @@ function ajax_show_install_errors(id_package)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -614,7 +614,7 @@ function ajax_remove_all_log_errors(error_type)
 	if(window.confirm($('#error_all_lang_question').val()) == true)
 	{
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		var url_ajax = $('#URL_ROOT').val() + '/acme_log_error/ajax_remove_all_log_errors/' + error_type;
 		
@@ -656,7 +656,7 @@ function ajax_remove_all_log_errors(error_type)
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 }
 
@@ -671,7 +671,7 @@ function ajax_remove_log_error(id_log_error)
 	if(window.confirm($('#error_lang_question').val()) == true)
 	{
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		var url_ajax = $('#URL_ROOT').val() + '/acme_log_error/ajax_remove_log_error/' + id_log_error;
 		
@@ -710,7 +710,7 @@ function ajax_remove_log_error(id_log_error)
 		});
 		
 		// Desabilita o loading
-		disable_loading();
+		$.disable_loading();
 	}
 }
 
@@ -724,7 +724,7 @@ function ajax_remove_log_error(id_log_error)
 function ajax_reorder_menu(id_menu, id_menu_parent_new)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// DEBUG:
 	// alert($('#menu_li_' + id_menu).prev().attr('order'));
@@ -753,7 +753,7 @@ function ajax_reorder_menu(id_menu, id_menu_parent_new)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -852,7 +852,7 @@ function clear_bullet_update_bookmark(idx_bookmark)
 function ajax_set_user_permission(id_user, id_module_permission)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Inicializa vars
 	var action, classe;
@@ -884,7 +884,7 @@ function ajax_set_user_permission(id_user, id_module_permission)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -897,7 +897,7 @@ function ajax_set_user_permission(id_user, id_module_permission)
 function ajax_load_table_module_custom_data(id_module, data_type)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax da url do form
 	$.ajax({
@@ -915,7 +915,7 @@ function ajax_load_table_module_custom_data(id_module, data_type)
 	});
 	
 	// Fecha o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -929,7 +929,7 @@ function ajax_delete_module_file(file_name)
 	if(window.confirm("ATENÇÃO!\n\nDeseja realmente remover o arquivo " + file_name + "?"))
 	{
 		// Habilita loading
-		enable_loading();
+		$.enable_loading();
 		
 		// Dispara o ajax da url do form
 		$.ajax({
@@ -946,7 +946,7 @@ function ajax_delete_module_file(file_name)
 		});
 		
 		// Fecha o loading
-		disable_loading();
+		$.disable_loading();
 	}
 }
 
@@ -976,7 +976,7 @@ function clear_ini_file(editor)
 function ajax_copy_skeleton_custom_section(section_name, editor)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax da url do form
 	$.ajax({
@@ -993,7 +993,7 @@ function ajax_copy_skeleton_custom_section(section_name, editor)
 	});
 	
 	// Fecha o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -1007,7 +1007,7 @@ function ajax_copy_skeleton_custom_section(section_name, editor)
 function ajax_copy_skeleton_module_file(method, editor)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax da url do form
 	$.ajax({
@@ -1025,7 +1025,7 @@ function ajax_copy_skeleton_module_file(method, editor)
 	});
 	
 	// Fecha o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -1048,7 +1048,7 @@ function enable_column_name_field()
 function check_all_form_fields(operation, id_module_form, id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	var checked = $('#checbox_form_fields_check_all_' + operation).is(':checked');
 	$('input[id^="checkbox_form_field_' + operation + '_"]').each(function(){
@@ -1069,7 +1069,7 @@ function check_all_form_fields(operation, id_module_form, id_module)
 	alert("ATENÇÃO!\n\nCampos salvos com sucesso!");
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }	
 
 /**
@@ -1083,7 +1083,7 @@ function check_all_form_fields(operation, id_module_form, id_module)
 function ajax_set_config_form_field(column_name, operation, id_form, id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax da url do form
 	var action = ($('#checkbox_form_field_' + operation + '_' + column_name).is(':checked')) ? 'enable' : 'disable';
@@ -1115,7 +1115,7 @@ function ajax_set_config_form_field(column_name, operation, id_form, id_module)
 				$('#img_success_form_field_' + operation + '_' + column_name).hide();
 			}, 3000);
 		},
-		complete: function() { disable_loading(); }
+		complete: function() { $.disable_loading(); }
 	});
 	}, 200);
 	
@@ -1131,7 +1131,7 @@ function ajax_set_config_form_field(column_name, operation, id_form, id_module)
 function ajax_set_config_form(operation, id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax da url do form
 	// Inicializa vars
@@ -1167,7 +1167,7 @@ function ajax_set_config_form(operation, id_module)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -1181,7 +1181,7 @@ function ajax_set_config_form(operation, id_module)
 function ajax_set_config_action(operation, id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Inicializa vars
 	var action, classe;
@@ -1215,7 +1215,7 @@ function ajax_set_config_action(operation, id_module)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -1227,7 +1227,7 @@ function ajax_set_config_action(operation, id_module)
 function ajax_set_config_menu_insert(id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Inicializa vars
 	var action, classe;
@@ -1261,7 +1261,7 @@ function ajax_set_config_menu_insert(id_module)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -1274,7 +1274,7 @@ function ajax_set_config_menu_insert(id_module)
 function ajax_load_box_config_form_fields(operation, id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax
 	var url_ajax = $('#URL_ROOT').val() + '/acme_module_manager/ajax_config_form_fields/' + operation + '/' + id_module;
@@ -1292,7 +1292,7 @@ function ajax_load_box_config_form_fields(operation, id_module)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**
@@ -1305,7 +1305,7 @@ function ajax_load_box_config_form_fields(operation, id_module)
 function ajax_load_box_config_form(operation, id_module)
 {
 	// Habilita loading
-	enable_loading();
+	$.enable_loading();
 	
 	// Dispara o ajax da url do form
 	var url_ajax = $('#URL_ROOT').val() + '/acme_module_manager/ajax_config_form/' + operation + '/' + id_module;
@@ -1326,7 +1326,7 @@ function ajax_load_box_config_form(operation, id_module)
 	});
 	
 	// Desabilita o loading
-	disable_loading();
+	$.disable_loading();
 }
 
 /**

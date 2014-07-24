@@ -78,7 +78,7 @@
 		if($('#id_project').val() != '')
 		{
 			// Habilita loading
-			enable_loading();
+			$.enable_loading();
 			
 			var url_ajax = $('#URL_ROOT').val() + '/project/ajax_build_options_project_activities/' + $('#id_project').val();
 			
@@ -96,7 +96,7 @@
 			});
 			
 			// Desabilita o loading
-			disable_loading();
+			$.disable_loading();
 		}
 	}
 </script>

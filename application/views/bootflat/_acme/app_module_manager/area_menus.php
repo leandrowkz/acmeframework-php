@@ -226,7 +226,7 @@ $id_menu = get_value($menu, 'id_module_menu');
         var id = form.attr('id');
 
 		// ajax to save this fucking shit
-		enable_loading();
+		$.enable_loading();
     	
     	$.ajax({
             url: form.attr('menu'),
@@ -241,10 +241,11 @@ $id_menu = get_value($menu, 'id_module_menu');
                 'order_' : form.find('.order_').val()
             },
             cache: false,
-            async: false,
             type: 'POST',
 
             complete : function (response) {
+
+                $.disable_loading();
                 
                 // Parse json to check errors
             	json = $.parseJSON(response.responseText);
@@ -270,8 +271,6 @@ $id_menu = get_value($menu, 'id_module_menu');
             }
         });
 
-        disable_loading();
-
         // Prevent submit
     	return false;
     };
@@ -292,17 +291,18 @@ $id_menu = get_value($menu, 'id_module_menu');
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_module_manager/save_menu/delete',
                 context: document.body,
                 data: { 'id_module_menu' : id },
                 cache: false,
-                async: false,
                 type: 'POST',
 
                 complete : function (response) {
+
+                    $.disable_loading();
                     
                     // Parse json to check errors
                     json = $.parseJSON(response.responseText);
@@ -319,8 +319,6 @@ $id_menu = get_value($menu, 'id_module_menu');
                     $.load_area('menus');
                 }
             });
-
-            disable_loading();
             
         });
 

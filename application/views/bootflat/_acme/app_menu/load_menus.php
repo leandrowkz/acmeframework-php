@@ -277,7 +277,7 @@ $id_menu = get_value($menu, 'id_menu');
 		$('#new-menu .id_user_group').val( $('#select-groups').val() );
 		$('#new-menu .user-group-label').html( $('#select-groups option:selected').text() );
 
-		enable_loading();
+		$.enable_loading();
 
 		// get all menus for this group
 		$.ajax({
@@ -288,7 +288,7 @@ $id_menu = get_value($menu, 'id_menu');
 
             complete : function (response) {
                 
-                disable_loading();
+                $.disable_loading();
                 
 	            // Parse json to check errors
 	            json = $.parseJSON(response.responseText);
@@ -318,7 +318,7 @@ $id_menu = get_value($menu, 'id_menu');
 		$('#modal-menu-' + id + ' .id_user_group').val( $('#select-groups').val() );
 		$('#modal-menu-' + id + ' .user-group-label').html( $('#select-groups option:selected').text() );
 
-		enable_loading();
+		$.enable_loading();
 
 		// get all menus for this group
 		$.ajax({
@@ -329,7 +329,7 @@ $id_menu = get_value($menu, 'id_menu');
 
             complete : function (response) {
                 
-                disable_loading();
+                $.disable_loading();
                 
 	            // Parse json to check errors
 	            json = $.parseJSON(response.responseText);
@@ -363,7 +363,7 @@ $id_menu = get_value($menu, 'id_menu');
         var id = form.attr('id');
 
 		// ajax to save this fucking shit
-		enable_loading();
+		$.enable_loading();
     	
     	$.ajax({
             url: form.attr('menu'),
@@ -383,7 +383,7 @@ $id_menu = get_value($menu, 'id_menu');
 
             complete : function (response) {
                 
-                disable_loading();
+                $.disable_loading();
 
                 // Parse json to check errors
             	json = $.parseJSON(response.responseText);
@@ -419,7 +419,7 @@ $id_menu = get_value($menu, 'id_menu');
     $.reorder_menu = function(source, dest, recursion) {
 
         if ( ! recursion)
-            enable_loading();
+            $.enable_loading();
 
         // calculate order properly
         var order = $('#menu-item-' + source).prev().attr('order');
@@ -443,7 +443,7 @@ $id_menu = get_value($menu, 'id_menu');
             complete : function (response) {
                 
                 if ( !recursion ) {
-                    disable_loading();
+                    $.disable_loading();
 
                     // Parse json to check errors
                     json = $.parseJSON(response.responseText);
@@ -482,14 +482,14 @@ $id_menu = get_value($menu, 'id_menu');
         var id = $(this).closest('.dd3-item').attr('data-id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Deseja realmente remover o menu selecionado? Todos seus submenus serão removidos também.') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected menu? All children menu of its will be deleted as well.') ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_menu/save/delete',
@@ -500,7 +500,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                 complete : function (response) {
 
-    	            disable_loading();
+    	            $.disable_loading();
                     
                     // Parse json to check errors
                     json = $.parseJSON(response.responseText);

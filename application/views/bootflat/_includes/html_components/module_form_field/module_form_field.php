@@ -34,7 +34,7 @@ function module_form_field($field = array())
 	$options_sql = get_value($field, 'options_sql');
 	$options_json = get_value($field, 'options_json');
 	$description = get_value($field, 'description');
-	$value = get_value($field, 'value');
+	$value = htmlentities(get_value($field, 'value'));
 
 	// build label
 	$label .= stristr(get_value($field, 'validations'), 'required') ? '*' : '';

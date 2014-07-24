@@ -209,7 +209,7 @@
         }
 
         // habilita layer de loading
-        enable_loading();
+        $.enable_loading();
 
         $.ajax({
             url: $('#URL_ROOT').val() + '/app_user/edit_thumbnail/<?php echo $id_user ?>',
@@ -225,14 +225,13 @@
             },
             context: document.body,
             cache: false,
-            async: false,
             type: 'POST',
             success: function(data)
             {
-                redirect($('#URL_ROOT').val() + '/app_user/profile/<?php echo $id_user ?>');
+                $.redirect( $('#URL_ROOT').val() + '/app_user/profile/<?php echo $id_user ?>' );
             },
             complete : function () {
-                disable_loading();
+                $.disable_loading();
             }
         });
     }

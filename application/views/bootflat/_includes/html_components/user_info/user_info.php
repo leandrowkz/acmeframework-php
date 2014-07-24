@@ -38,7 +38,7 @@ function user_info($id_user = 0, $login = '', $email = '', $username = '', $user
                     <li><a href="' . URL_ROOT . '/app_user/profile/' . $id_user . '"><i class="fa fa-user fa-fw"></i> ' . lang('Profile') . '</a></li>
                     <li>
                         <a class="container-html cursor-pointer">
-                            <i class="fa fa-fw fa-square text-danger"></i> ' . lang('Container') . '
+                            <i class="fa fa-fw fa-square text-danger"></i> ' . lang('HTML Container') . '
                         </a>
                     </li>
                     <li class="divider"></li>

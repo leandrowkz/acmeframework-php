@@ -1,23 +1,41 @@
 /**
-* redirect()
+* $.redirect()
 * Redireciona página para url encaminhada.
 * @param string url
 * @return void
 */
-function redirect (url) {
+$.redirect = function (url) {
     window.location.href = url;
-}
+};
 
-function enable_loading () {
+/**
+* $.enable_loading()
+* Show loading layer.
+* @return void
+*/
+$.enable_loading = function() {
     $(".loading-layer").hide().show();
     $(".loading-box").hide().show();
-}
+};
 
-function disable_loading () {
+/**
+* $.disable_loading()
+* Hide loading layer.
+* @return void
+*/
+$.disable_loading = function () {
     $(".loading-layer").hide();
     $(".loading-box").hide();
-}
+};
 
+/**
+* $.disable_loading()
+* Create a cookie.
+* @param string name
+* @param mixed value
+* @param int days
+* @return void
+*/
 $.create_cookie = function (name, value, days) {
     var expires;
 
@@ -31,6 +49,12 @@ $.create_cookie = function (name, value, days) {
     document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
 };
 
+/**
+* $.read_cookie()
+* Return a cookie value.
+* @param string name
+* @return mixed value
+*/
 $.read_cookie = function (name) {
     var nameEQ = escape(name) + "=";
     var ca = document.cookie.split(';');
@@ -42,10 +66,20 @@ $.read_cookie = function (name) {
     return null;
 };
 
+/**
+* $.erase_cookie()
+* @param string name
+* @return void
+*/
 $.erase_cookie = function(name) {
     $.create_cookie(name, "", -1);
 };
 
+/**
+* $.container_html()
+* Put all app content inside a html container.
+* @return void
+*/
 $.container_html = function () {
 
     // put all content inside the container
@@ -66,31 +100,6 @@ $.container_html = function () {
     }
 };
 
-//Loads the correct sidebar on window load
-$(function() {
-
-    $(window).bind("load", function() {
-        console.log($(this).width())
-        if ($(this).width() < 768) {
-            $('div.sidebar-collapse').addClass('collapse')
-        } else {
-            $('div.sidebar-collapse').removeClass('collapse')
-        }
-    })
-})
-
-//Collapses the sidebar on window resize
-$(function() {
-
-    $(window).bind("resize", function() {
-        console.log($(this).width())
-        if ($(this).width() < 768) {
-            $('div.sidebar-collapse').addClass('collapse')
-        } else {
-            $('div.sidebar-collapse').removeClass('collapse')
-        }
-    })
-})
 
 
 

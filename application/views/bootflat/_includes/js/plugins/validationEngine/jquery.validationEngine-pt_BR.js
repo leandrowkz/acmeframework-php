@@ -108,6 +108,10 @@
                     "regex": /^[a-zA-Z\ \']+$/,
                     "alertText": "Apenas letras"
                 },
+                "className": {
+                    "regex": /^[a-zA-Z_]+[a-zA-Z0-9_]*$/,
+                    "alertText": "Não é um nome de classe válido"
+                },
                 "onlyLetterNumber": {
                     "regex": /^[0-9a-zA-Z]+$/,
                     "alertText": "Não são permitidos caracteres especiais"

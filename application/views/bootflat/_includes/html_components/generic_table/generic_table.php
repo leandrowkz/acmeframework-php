@@ -22,7 +22,7 @@ function generic_table($array_table = array())
 	
 		<div class="dataTables_wrapper form-inline" role="grid">
 		
-			<table class="table table-striped table-hover dataTable no-footer ' . $array_table->class . '" id="' . $array_table->id . '">
+			<table class="table table-hover table-bordered no-footer ' . $array_table->class . '" id="' . $array_table->id . '">
                 
                 <thead>
                     
@@ -80,6 +80,11 @@ function generic_table($array_table = array())
 
     // now the motherf*** script 
     $html .= '
+    
+    <link type="text/css" rel="stylesheet" href="' . URL_CSS . '/plugins/dataTables/dataTables.bootstrap.css" />
+    <script src="' . URL_JS . '/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="' . URL_JS . '/plugins/dataTables/dataTables.bootstrap.js"></script>
+    
     <script>
 
     	$("#' . $array_table->id . '").dataTable();
@@ -87,7 +92,7 @@ function generic_table($array_table = array())
     </script>';
 	
 	} else { 
-		$html = message('info', '', lang('Consulta sem registros'));
+		$html = message('info', '', lang('There is no content for this query'));
 	}
 	
 	return $html;

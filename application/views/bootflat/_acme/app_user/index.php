@@ -181,16 +181,17 @@
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_user/reset_password/' + id,
                 context: document.body,
                 cache: false,
-                async: false,
                 type: 'POST',
 
                 complete : function (response) {
+
+                    $.disable_loading();
                     
                     // Parse json to check errors
                     json = $.parseJSON(response.responseText);
@@ -206,8 +207,6 @@
                     bootbox.alert('<?php echo lang('Feito! Email encaminhado para o usuário selecionado') ?>');
                 }
             });
-
-            disable_loading();
             
         });
 

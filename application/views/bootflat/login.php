@@ -47,7 +47,7 @@
     </style>
 </head>
 
-<body style="background-color:#f8f8f8;">
+<body>
 
 <div id="fullscreen_bg" class="fullscreen_bg">
 

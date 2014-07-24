@@ -24,6 +24,7 @@
     <!-- App CSS - Include with every page -->
     <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
     <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -57,54 +58,7 @@
                 
                 <ul class="nav navbar-nav">
                     <?php echo $this->template->load_menu() ?>
-                </ul>
-
-                    <!--
-                
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Notifications <i class="fa fa-wrench"></i></a></li>
-                            <li class="dropdown dropdown-submenu">
-                                <a href="#">Edit Account </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Page with comments</a></li>
-                                    <li><a href="#">Page with comments disabled</a></li>
-                                    <li class="dropdown dropdown-submenu">
-                                        <a href="#">More</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">3rd level link more options</a></li>
-                                            <li><a href="#">3rd level link</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="divider"></li>
-                            <li><i class="fa"></i><a href="#" class="dropdown-toggle" data-toggle="dropdown">Logout <i class="fa fa-power-off padding-left-ten-px red-text"></i></a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-                -->
-                
+                </ul>                
         
             </div>
 
@@ -116,13 +70,11 @@
         
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
-
-<div class="loading-layer"></div>
-<div class="loading-box"><h4 style="vertical-align:middle !important"><?php echo lang('Carregando...')?></h4></div>
+    <div class="loading-layer"></div>
+    <div class="loading-box"><h4><i class="fa fa-fw fa-spinner fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
 <script>
     
@@ -138,7 +90,7 @@
             complete : function (data) {
                 json = $.parseJSON(data.responseText);
                 if( json.check_session === false ) {
-                    redirect($("#URL_ROOT").val());
+                    $.redirect( $("#URL_ROOT").val() );
                 }
             }
         });

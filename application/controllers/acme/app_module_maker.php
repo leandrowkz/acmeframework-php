@@ -10,10 +10,7 @@
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Module_Maker extends ACME_Engine_Controller {
-	
-	public $path_handle = null;
-	public $path_module_files = 'application/temp/acme';
+class App_Module_Maker extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
@@ -22,261 +19,266 @@ class App_Module_Maker extends ACME_Engine_Controller {
 	*/
 	public function __construct()
 	{
-		parent::__construct();
-		
-		// Valida acesso (Sessão)
-		$this->access->validate_session();
-		
-		// Verifica se maker pode ser aberto
-		if($this->_check_maker_permissions())
-		{			
-			// Verifica se diretório possui permissões de leitura e/ou escrita
-			if($this->_check_path_permissions($this->path_module_files))
-			{
-				$this->path_handle = @opendir($this->path_module_files);
-			} else {
-				$this->error->show_exception_page(lang('Diretório <strong>' . $this->path_module_files . '</strong> sem permissões de leitura e/ou escrita. Verifique as permissões do diretório e tente o acesso novamente.'));
-			}
-		} else {
-			$this->error->show_exception_page(lang('O módulo Maker (construtor de módulos) não pode ser aberto. Verifique as possíveis causas:<br /><br />
-			&bull;&nbsp;Diretório <strong>application/controllers</strong> sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Diretório <strong>application/models</strong> sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Diretório <strong>application/views/' . TEMPLATE . '</strong> sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Diretório <strong>application/core/acme/engine_files</strong> sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_controller.php</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_model.php</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_module_file.xml</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_module_file.ini</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_module_file_custom_action.ini</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_module_file_custom_menu.ini</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/maker_template_module_file_custom_permission.ini</strong> faltando<br />'));
-		}
+		parent::__construct(__CLASS__);
 	}
 	
 	/**
 	* index()
-	* Método 'padrão' do controlador. Listagem de arquivos não finalizados.
+	* Module index. Redirect for new module page.
 	* @return void
 	*/
 	public function index()
 	{
-		$this->access->validate_permission('acme_maker', 'ENTER');
-		
-		// Inicializa variaveis de arquivo e contagem
-		$i = 0;
-		$files = array();
-		
-		// Monta um array de arquivos do diretório
-		while(false !== ($file = readdir($this->path_handle))) 
-		{
-			if($file != '.' && $file != '..' && $file != '.svn' && $file != '.htaccess')
-			{
-				$files[$i]['name'] = $file;
-				$files[$i]['date_creation'] = date("d/m/Y H:i:s", filectime($this->path_module_files . '/' . $file));
-				$i++;
-			}
-		}
-		
-		// Variaveis para view
-		$args['files'] = $files;
-		
-		// Carrega view
-		$this->template->load_page('_acme/acme_maker/index', $args);
+		$this->validate_permission('ENTER');
+
+		// redirect to new module
+		redirect('app_module_maker/new_module');
 	}
-	
-	/**
-	* delete_module()
-	* Deleção de arquivo de módulo. 
-	* @param string file_name
-	* @return void
-	*/
-	public function delete_module($file_name = '')
-	{
-		$this->access->validate_permission('acme_maker', 'CREATE_MODULE');
-		
-		if($file_name != '')
-		{
-			$this->_delete_module_file($this->path_module_files . '/' . $file_name);
-		} else {
-			redirect('acme_maker');
-		}	
-	}
-	
+
+
 	/**
 	* new_module()
-	* Tela de criação de novo módulo. Exibe textarea onde serão inseridos os parâmetros do módulo a
-	* ser criado. Caso informado file_name, abre a tela com conteúdo do arquivo informado.
-	* @param string file_name (opcional)
+	* Module index. Show page for creating a new module.
+	* @param boolean process
 	* @return void
 	*/
-	public function new_module($file_name = '')
+	public function new_module($process = false)
 	{
-		$this->access->validate_permission('acme_maker', 'CREATE_MODULE');
-		
-		// Inicializa variável de conteúdo
-		$content = '';
-		
-		// Verifica conteudo do arquivo
-		if($file_name != '')
+		$this->validate_permission('CREATE_MODULE');
+
+		$path_permissions = $this->_check_path_permissions();
+
+		$timezone = $this->_check_timezone();
+
+		if( ! $process)
 		{
-			if($this->_check_file_permissions($this->path_module_files . '/' . $file_name))
-			{
-				$content = file_get_contents($this->path_module_files . '/' . $file_name);
-			} else {
-				$this->error->show_exception_page(lang('Arquivo') . ' <strong>' . $this->path_module_files . '/' . $file_name . '</strong> ' . lang('não existe ou não possui permissões de leitura e/ou escrita. Verifique as permissões do arquivo e tente novamente.') . '<br /><br /><a href="' . URL_ROOT . '/acme_maker/new_module/">' . lang('Clique aqui para voltar') .'</a>');
-			}
-		}
-		
-		// Variaveis para view
-		$args['content'] = $content;
-		$args['file_name'] = $file_name;
-		
-		// Carrega view (conforme o método de criação de módulos atualmente setado em engine)
-		$this->template->load_page('_acme/acme_maker/new_module_' . $this->file_method_process, $args);
-	}
-	
-	/**
-	* new_module_process()
-	* Processa tela de criação de novo módulo. Conforme a opção selecionada (salvar ou salvar e analisar)
-	* faz o salvamento e análise do arquivo.
-	* @return void
-	*/
-	public function new_module_process()
-	{
-		// Arquivo já existe, deve sobrescrever conteudo
-		if($this->input->post('ini_file') != '' && $this->input->post('file_name') != '')
-		{
-			$file = $this->input->post('file_name');
-			if(!$this->_update_module_file($this->input->post('ini_file'), $this->path_module_files . '/' . $file))
-				$this->error->show_exception_page(lang('Arquivo não pôde ser criado. Provavelmente o diretório não possui permissões de leitura e/ou escrita habilitadas. Verifique estas permissões e tente novamente.'));
-		} 
-		
-		// Arquivo nao existe, cria-lo
-		else if ($this->input->post('ini_file') != '' && $this->input->post('file_name') == '')
-		{
-			// Cria o arquivo físico com conteúdo do textarea
-			if(($file = $this->_create_module_file($this->input->post('ini_file'), $this->path_module_files)) == false)
-				$this->error->show_exception_page(lang('Arquivo não pôde ser criado. Provavelmente o diretório não possui permissões de leitura e/ou escrita habilitadas. Verifique estas permissões e tente novamente.'));
-		}
-		
-		// Verifica ação do botão
-		if(strtolower($this->input->post('btn_action')) != 'salvar')
-		{
-			// Avalia arquivo encaminhado, pré-criação do módulo
-			redirect('acme_maker/analyze_module/' . $file);
-		}
-		
-		// Caso ini file ou botão salvar
-		redirect('acme_maker');
-	}
-	
-	/**
-	* analyze_module()
-	* Analisa arquivo de nome encaminhado e faz um 'review' do que vai ser criado. Exibe tela de
-	* revisão; um passo antes da criação do módulo.
-	* @param string file_name
-	* @return void
-	*/
-	public function analyze_module($file_name = '')
-	{
-		$this->access->validate_permission('acme_maker', 'CREATE_MODULE');
-		
-		if($file_name != '')
-		{
-			if($this->_check_file_permissions($this->path_module_files . '/' . $file_name))
-			{
-				// Verifica se arquivo possui erros (o retorno ou é um true ou 
-				// um array associativo de erros, por isso o teste com === )
-				$args['file_name'] = $file_name;
-				$args['validation'] = $this->_analyze_module_file($this->path_module_files . '/' . $file_name);
-				$args['file_data'] = $this->_process_module_file($this->path_module_files . '/' . $file_name);
-				
-				// Calcula action do formulário
-				if($args['validation'] === true)
-				{
-					$args['action_form'] = URL_ROOT . '/acme_maker/create_module/' . $file_name;
-					$args['content'] = @file_get_contents($file_name);
-				} else {
-					$args['action_form'] = URL_ROOT . '/acme_maker/new_module/' . $file_name;
-					$args['content'] = '';
-				}
-				
-				// Carrega view
-				$this->template->load_page('_acme/acme_maker/analyze_module', $args);
-			} else {
-				$this->error->show_exception_page(lang('Arquivo') . ' <strong>' . $this->path_module_files . '/' . $file_name . '</strong> ' . lang('não existe ou não possui permissões de leitura e/ou escrita. Verifique as permissões do arquivo e tente novamente.') . '<br /><br /><a href="' . URL_ROOT . '/acme_maker/new_module/">' . lang('Clique aqui para voltar') .'</a>');
-			}
+			// load all groups
+			$groups = $this->db->select('id_user_group AS id, name')->from('acm_user_group')->order_by('name')->get()->result_array();
+
+			// build group options
+			$args['groups'] = json_encode(array('results' => array_change_key_case_recursive($groups, CASE_LOWER)));
+
+			// check permissions for all paths
+			$args['path_permissions'] = $path_permissions;
+
+			// timezone
+			$args['timezone'] = $timezone;
+
+			// Load view
+			$this->template->load_page('_acme/app_module_maker/new_module', $args);
 		} else {
-			redirect('acme_maker');
+
+			// set time process to zero
+			set_time_limit(0);			
+
+			// controller used as a key
+			$controller = strtolower($this->input->post('controller'));
+
+			// Check if module already exist
+			//if( count($this->db->get_where('acm_module', array('controller' => $controller))->row_array(0)) > 0 )
+			//	redirect('app_module_maker/new_module');
+
+			// get table name
+			$table = $this->input->post('table_name');
+
+			// Start building a new module!
+			$module['def_file'] = json_encode($this->input->post());
+			$module['table_name'] = $table;
+			$module['controller'] = $controller;
+			$module['label'] = $this->input->post('label');
+			$module['description'] = $this->input->post('description');
+			$module['sql_list'] = $this->input->post('sql_list');
+			$module['url_img'] = $this->input->post('url_img');
+
+			$this->db->trans_start();
+
+			// Insert a module
+			$this->db->insert('acm_module', $module);
+
+			// get the module from db now
+			$module = $this->db->from('acm_module')->where(array('controller' => $controller))->get()->row_array(0);
+
+			// catch id_module now
+			$id_module = get_value($module, 'id_module');
+
+			// check if table exists
+			$table_exist = false;
+			foreach ($this->db->list_tables() as $idx => $db_table)
+				if ( strtolower($table) == strtolower($db_table) ) 
+				{
+					$table_exist = true;
+					break;
+				}
+
+			// create forms, menus, actions and permissions
+			// only if table name was set
+			$forms = $this->input->post('forms') == '' ? array() : $this->input->post('forms'); 
+			if( $table_exist )
+				foreach ($forms as $operation)
+				{
+					$form = array();
+					$form['id_module'] = $id_module;
+					$form['operation'] = $operation;
+
+					// Create form
+					$this->db->insert('acm_module_form', $form);
+
+					// Get form from db
+					$form = $this->db->from('acm_module_form')->where(array('id_module' => $id_module, 'operation' => $operation))
+									 ->get()
+									 ->row_array(0);
+
+					// now form id
+					$id_form = get_value($form, 'id_module_form');
+
+					// table fields meta-data
+					$fields = $this->db->field_data($table);
+				
+					// loop fields until find correct column
+					foreach ($fields as $field)
+					{
+						// build field to insert on acm_module_form_field
+						$field_data = $this->form->build_field($field, $table);
+						$field_data['id_module_form'] = $id_form;
+
+						// Loop fields to insert
+						foreach($field_data as $index => $value)
+						{
+							$escape = ($value != 'NULL') ? true : false;
+							$this->db->set($index, $value, $escape);
+						}
+						
+						// Insert it!
+						$this->db->insert('acm_module_form_field');
+					}
+
+					// and also for each form we have to create menus, permissions and actions
+					$data['id_module'] = $id_module;
+					$data['label'] = lang(ucwords($operation));
+					$data['link'] = $operation == 'insert' ? '{URL_ROOT}/' . $controller . '/form/' . $operation : '{URL_ROOT}/' . $controller . '/form/' . $operation . '/{0}';
+
+					// now permission
+					$permission['id_module'] = $id_module;
+					$permission['label'] = lang(ucwords($operation) . ' form');
+					$permission['permission'] = strtoupper($operation);
+					
+					// adjust table name
+					$table_ins = $operation == 'insert' ? 'acm_module_menu' : 'acm_module_action';
+
+					// do it!
+					$this->db->insert($table_ins, $data);
+					$this->db->insert('acm_module_permission', $permission);
+
+				}
+
+			// insert one more permission for entering
+			$permission['id_module'] = $id_module;
+			$permission['permission'] = 'ENTER';
+			$permission['label'] = lang('Module entrance');
+
+			$this->db->insert('acm_module_permission', $permission);
+
+			// automatically gives all permissions for the user creator
+			$permissions = $this->db->get_where('acm_module_permission', array('id_module' => $id_module))->result_array(0);
+
+			foreach($permissions as $module_permission)
+			{
+				$usr_permission['id_user'] = $this->session->userdata('id_user');
+				$usr_permission['id_module_permission'] = get_value($module_permission, 'id_module_permission');
+				$this->db->insert('acm_user_permission', $usr_permission);
+			}
+
+			// now create menus for application for all groups matched
+			$groups = $this->input->post('menu_groups') == '' ? array() : $this->input->post('menu_groups'); 
+			$menu['link'] = '{URL_ROOT}/' . $controller;
+			foreach ($groups as $group)
+			{
+				$menu['id_user_group'] = $group;
+				$menu['label'] = ucwords( $this->input->post('label') );
+
+				$this->db->insert('acm_menu', $menu);
+			}
+
+			// and finally, create all files needed
+			// controller
+			$file_controller = file_get_contents('application/core/acme/engine_files/maker_template_controller.php');
+			$file_controller = str_replace('<CLASS_NAME>', $controller, $file_controller);
+			$file_controller = str_replace('<DESCRIPTION>', $this->input->post('description'), $file_controller);
+			$file_controller = str_replace('<CREATION_DATE>', date('d/m/Y'), $file_controller);
+			$file_controller = str_replace('<AUTHOR>', $this->session->userdata('email'), $file_controller);
+			file_put_contents('application/controllers/' . $controller . '.php', $file_controller);
+			
+			// Model
+			$file_model = file_get_contents('application/core/acme/engine_files/maker_template_model.php');
+			$file_model = str_replace('<CLASS_NAME>', $controller, $file_model);
+			$file_model = str_replace('<DESCRIPTION>', $this->input->post('description'), $file_model);
+			$file_model = str_replace('<CREATION_DATE>', date('d/m/Y'), $file_model);
+			$file_model = str_replace('<AUTHOR>', $this->session->userdata('email'), $file_model);
+			file_put_contents('application/models/' . $controller . '_model.php', $file_model);
+			
+			// View
+			@mkdir('application/views/' . TEMPLATE . '/' . $controller);
+
+			// complete all transaction
+			$this->db->trans_complete();
+
+			// build args for view
+			$args['module'] = $module;
+			$args['link'] = $menu['link'];
+
+			// Load view
+			$this->template->load_page('_acme/app_module_maker/new_module_success', $args);
 		}
 	}
-	
+
 	/**
-	* create_module()
-	* Cria o módulo, finalmente, com base em um nome de arquivo encaminhado. O sistema verifica
-	* se o arquivo é válido mais uma vez, por segurança, e faz os devidos inserts no banco de dados
-	* com base nas informações contidas no arquivo.
-	* @param string file_name
+	* check_controller()
+	* Check if a module with the given controller already exist. The controller
+	* name must be forwarded by POST. Print a json as return.
 	* @return void
 	*/
-	public function create_module($file_name = '')
+	public function check_controller()
 	{
-		$this->access->validate_permission('acme_maker', 'CREATE_MODULE');
-		
-		if($file_name != '')
-		{
-			// Arquivo ok, criá-lo
-			if($this->_analyze_module_file($this->path_module_files . '/' . $file_name) === true)
-			{
-				// Coleta dados do novo módulo, para informar na tela de criado com sucesso
-				$args['file_data'] = $this->_process_module_file($this->path_module_files . '/' . $file_name);
-				
-				// Cria o módulo
-				if($this->_create_module($this->path_module_files . '/' . $file_name) === true)
-				{
-					// Destrói arquivo
-					$this->_delete_module_file($this->path_module_files . '/' . $file_name);
-				} else {
-					// Erro na geração
-					$this->error->show_exception_page('Erro ao criar módulo');
-				}
-				
-				// Coleta dados do módulo
-				$query = $this->db->get_where('acm_module', array('controller' => get_Value($args['file_data'], 'controller')));
-				$data = $query->row();
-				$args['id_module'] = $data->id_module;
-				
-				// Carrega página de aviso de sucesso!
-				$this->template->load_page('_acme/acme_maker/create_module', $args);
-			} else {
-				redirect('acme_maker');
-			}
-		} else {
-			redirect('acme_maker');
-		}	
+		$controller = strtolower($this->input->post('controller'));
+
+		if( $this->db->get_where('acm_module', array('controller' => $controller))->num_rows() > 0)
+			echo json_encode(array('return' => true));
+		else
+			echo json_encode(array('return' => false));
 	}
-	
+
 	/**
-	* ajax_get_skeleton_module_file()
-	* Retorna o conteúdo do arquivo template de esqueleto de estrutura de módulo. Segundo parametro
-	* diz qual tipo de arquivo deverá ser copiado
-	* @return void
+	* _check_path_permissions()
+	* Check permissions for needed paths:
+	* 	-> application/controllers
+	* 	-> application/models
+	* 	-> application/views
+	* Returns true or false in case of doesnt has permissions for write.
+	* @return boolean has-permissions
 	*/
-	public function ajax_get_skeleton_module_file($method = '')
+	private function _check_path_permissions()
 	{
-		$this->access->validate_permission('acme_maker', 'CREATE_MODULE');
-		echo $this->_get_skeleton_module_file($method);
+		if ( is_writable('application/controllers') 
+			 && is_writable('application/models')
+			 && is_writable('application/views') 
+			 && is_readable('application/core/acme/engine_files/maker_template_model.php')
+			 && is_readable('application/core/acme/engine_files/maker_template_controller.php')
+		   )
+			return true;
+		else
+			return false;
 	}
-	
+
 	/**
-	* ajax_get_skeleton_custom_section()
-	* Retorna o conteúdo de uma seção custom para arquivo de estrutura de módulo.
-	* @param string section
-	* @return void
+	* _check_timezone()
+	* Check value for php.ini setting date.timezone.
+	* @return boolean is_set
 	*/
-	public function ajax_get_skeleton_custom_section($section = '')
+	private function _check_timezone()
 	{
-		$this->access->validate_permission('acme_maker', 'CREATE_MODULE');
-		echo $this->_get_skeleton_custom_section($section);
+		if ( ini_get('date.timezone') != false )
+			return true;
+		else
+			return false;
 	}
 }

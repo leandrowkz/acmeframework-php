@@ -8,7 +8,7 @@
 		parent.$('#box-projects').html(html_project + html_box_projects);
 		
 		// Fecha a janela, habilita o loading e recarrega pagina
-		parent.enable_loading();
+		parent.$.enable_loading();
 		parent.window.location.reload();
 		parent.close_modal();
 	});		

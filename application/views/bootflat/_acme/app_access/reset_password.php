@@ -3,25 +3,53 @@
 
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title><?php echo APP_NAME ?></title>
+    <title><?php echo APP_NAME ?></title>
 
-<!-- Core CSS - Include with every page -->
-<link href="<?php echo URL_CSS ?>/bootstrap.css" rel="stylesheet">
-<link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- Core Scripts - Include with every page -->
+    <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
+    <script src="<?php echo URL_JS ?>/bootstrap.js"></script>
+    <script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
 
-<!-- ACME CSS - Include with every page -->
-<link href="<?php echo URL_CSS ?>/app-core.css" rel="stylesheet">
-<link href="<?php echo URL_CSS ?>/app-pages.css" rel="stylesheet">
-<link href="<?php echo URL_CSS ?>/app-mobile-portrait.css" rel="stylesheet">
-<link href="<?php echo URL_CSS ?>/app-mobile-landscape.css" rel="stylesheet">
-<link href="<?php echo URL_CSS ?>/app-tablet-desktop.css" rel="stylesheet">
+    <!-- App Scripts - Include with every page -->
+    <script src="<?php echo URL_JS ?>/app-functions.js"></script>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    
+    <!-- App CSS - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
+    <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
+
+    <style>
+        img#logo {
+            max-width: 200px;
+        }
+
+        @media(min-width:768px) {
+            .login-panel {
+                margin-top: 30%;
+            }
+        }
+
+        .fullscreen_bg {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+    </style>
 
 </head>
 
-<body style="background-color:#f8f8f8;">
+<body>
 
 <div id="fullscreen_bg" class="fullscreen_bg">
 

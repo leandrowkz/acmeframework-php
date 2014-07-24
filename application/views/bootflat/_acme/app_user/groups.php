@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <h1><?php echo lang('Grupos') ?>
+            <h1><?php echo lang('Groups') ?>
             <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
             </h1>
         </div>
@@ -15,7 +15,7 @@
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i> 
-                        <span><?php echo lang('Voltar') ?></span>
+                        <span><?php echo lang('Back') ?></span>
                     </div>
                 </a>
 
@@ -29,12 +29,18 @@
 
 <div class="module-body">
 
-    <div class="row" style="margin-bottom: 20px ">
+    <div class="row" style="margin-bottom: 15px">
 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-6 col-lg-8">
+
+            <button class="btn btn-md btn-success" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
 
             <div class="input-group" style="margin-bottom: 10px">
-                <input type="text" id="search-groups" class="form-control input-sm" placeholder="<?php echo lang('Pesquisar grupos') ?>" autofocus>
+                <input type="text" id="search-groups" class="form-control input-sm" placeholder="<?php echo lang('Search groups') ?>" autofocus>
                 <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
             </div>
 
@@ -42,16 +48,14 @@
 
     </div>
 
-    <button class="btn btn-sm btn-success" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('Novo grupo') ?> <i class="fa fa-plus-circle"></i></button>
-
     <div class="table-responsive">
 
-        <table class="table">
+        <table class="table table-bordered">
             
             <thead>
                 <tr>
-                    <th><?php echo lang('Grupo') ?></th>
-                    <th><?php echo lang('Descrição') ?></th>
+                    <th><?php echo lang('Group') ?></th>
+                    <th><?php echo lang('Description') ?></th>
                     <th></th>
                 </tr>
             </thead>
@@ -63,10 +67,10 @@
                 <tr class="group">
 
                     <td>
-                        <a data-toggle="modal" data-target="#modal-<?php echo get_value($group, 'id_user_group') ?>" href="#" class="label label-info group-name"><?php echo get_value($group, 'name')?></a>
+                        <a data-toggle="modal" data-target="#modal-<?php echo get_value($group, 'id_user_group') ?>" href="#" class="label label-info group-name" data-placement="right" data-original-title="<?php echo lang('Click to edit') ?>"><?php echo get_value($group, 'name')?></a>
                     </td>
                     <td class="group-description"><?php echo get_value($group, 'description') ?></td>
-                    <td class="text-right" style="width: 01%" title="<?php echo lang('Remover')?>"><a href="javascript:void(0)" id="<?php echo get_value($group, 'id_user_group') ?>"><i class="fa fa-times fa-fw"></i></a></td>
+                    <td class="text-right" style="width: 01%"><a href="javascript:void(0)" id="<?php echo get_value($group, 'id_user_group') ?>"><i class="fa fa-times fa-fw" data-placement="left" data-original-title="<?php echo lang('Remove') ?>"></i></a></td>
 
                 </tr>
 
@@ -91,26 +95,26 @@ $id_group = get_value($group, 'id_user_group');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar grupo')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit group')?></h4>
                 </div>
                 <div class="modal-body">
 
                     <input type="hidden" class="id_user_group" value="<?php echo $id_group ?>" />
 
                     <div class="form-group">
-                        <label><?php echo lang('Grupo') ?>*</label>
+                        <label><?php echo lang('Group') ?>*</label>
                         <input type="text" class="form-control validate[required] name" value="<?php echo get_value($group, 'name') ?>" />
                     </div>
 
                     <div class="form-group">
-                        <label><?php echo lang('Descrição') ?>*</label>
+                        <label><?php echo lang('Description') ?>*</label>
                         <input type="text" class="form-control validate[required] description" value="<?php echo get_value($group, 'description') ?>" />
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
                     </form>
                 </div>
             </div>
@@ -128,24 +132,24 @@ $id_group = get_value($group, 'id_user_group');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Novo grupo')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('New group')?></h4>
                 </div>
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label><?php echo lang('Grupo') ?>*</label>
+                        <label><?php echo lang('Group') ?>*</label>
                         <input type="text" class="form-control validate[required] name" value="" />
                     </div>
 
                     <div class="form-group">
-                        <label><?php echo lang('Descrição') ?>*</label>
+                        <label><?php echo lang('Description') ?>*</label>
                         <input type="text" class="form-control validate[required] description" value="" />
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
                     </form>
                 </div>
             </div>
@@ -167,10 +171,7 @@ $id_group = get_value($group, 'id_user_group');
     // ========
     // tooltips
     // ========
-    $('body').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
-    });
+    $('a.group-name, i').tooltip();
 
     // =================
     // input de pesquisa
@@ -229,7 +230,7 @@ $id_group = get_value($group, 'id_user_group');
         var id = form.attr('id');
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: form.attr('action'),
@@ -240,10 +241,11 @@ $id_group = get_value($group, 'id_user_group');
                 'description' : form.find('.description').val()
             },
             cache: false,
-            async: false,
             type: 'POST',
 
             complete : function (response) {
+
+                $.disable_loading();
                 
                 // Parse json to check errors
                 json = $.parseJSON(response.responseText);
@@ -269,8 +271,6 @@ $id_group = get_value($group, 'id_user_group');
             }
         });
 
-        disable_loading();
-
         // Prevent submit
         return false;
     };
@@ -284,24 +284,25 @@ $id_group = get_value($group, 'id_user_group');
         var id = $(this).attr('id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Deseja realmente remover o grupo selecionado ?') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected group ?') ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_user/save_group/delete',
                 context: document.body,
                 data : { 'id_user_group' : id },
                 cache: false,
-                async: false,
                 type: 'POST',
 
                 complete : function (response) {
+
+                    $.disable_loading();
                     
                     // Parse json to check errors
                     json = $.parseJSON(response.responseText);
@@ -317,8 +318,6 @@ $id_group = get_value($group, 'id_user_group');
                     window.location.reload();
                 }
             });
-
-            disable_loading();
             
         });
 
