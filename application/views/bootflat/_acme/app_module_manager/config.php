@@ -121,7 +121,7 @@
 	                            <li class="active"><a href="#permissions-pills" id="permissions" data-toggle="tab"><?php echo lang('Permissões')?></a>
 	                            </li>
 	                            <li class="dropdown">
-				                	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+				                	<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
 				                    	<?php echo lang('Formulários') ?> <span class="caret"></span>
 				                  	</a>
 				                  	<ul class="dropdown-menu">
@@ -190,7 +190,8 @@
 
 	// Click on pills
 	$('.nav-pills li a').click(function () {
-		$.load_area($(this).attr('id'));
+		if($(this).attr('id') != undefined)
+			$.load_area($(this).attr('id'));
 	});
 
 	// First load, yeah, its permissions!
