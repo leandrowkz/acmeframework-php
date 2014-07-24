@@ -74,13 +74,13 @@ class Error {
 	/**
 	* show_exception_page()
 	* Desvia o processamento e exibe página de exceção genérica. Recebe como parâmetro o html da mensagem de exceção.
-	* @param string html_message
+	* @param string message
 	* @return void
 	*/
-    public function show_exception_page($html_message = '')
+    public function show_exception_page($message = '')
     {
 		$this->CI =& get_instance();
-		echo $this->CI->template->load_page('_errors/exception_page', array('html_message' => $html_message), true, false);
+		echo $this->CI->template->load_page('_errors/exception_page', array('message' => $message), true, false);
 		exit;
     }
 

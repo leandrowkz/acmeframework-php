@@ -168,22 +168,19 @@ class Template {
 	
 	/**
 	* get_array_menus()
-	* Retorna os menus da aplicação (que estão no banco de dados) em formato de array/árvore.
+	* Return application menus (located in database) in array/tree format.
+	* @return string group [optional]
 	* @return array menus
 	*/
-	public function get_array_menus()
+	public function get_array_menus($group = '')
 	{
-		// Carrega model que fará leitura do menu no banco de dados
 		$this->CI->load->model('libraries/template_model');
 		
-		// Faz leitura do menu conforme o grupo de usuário atual
-		// Esta leitura é recursiva, para cada menu o model busca
-		// possíveis menus-filhos.
-		$menus = $this->CI->template_model->get_menus($this->CI->session->userdata('user_group'));
-		$menus = (count($menus) > 0) ? $this->menus_to_tree($menus) : array();
+		$group = $group != '' ? $group : $this->CI->session->userdata('user_group');
+
+		$menus = $this->CI->template_model->get_menus($group);
 		
-		// Retorna menus em formato de array
-		return $menus;
+		return (count($menus) > 0) ? $this->menus_to_tree($menus) : array();
 	}
 
 	/**

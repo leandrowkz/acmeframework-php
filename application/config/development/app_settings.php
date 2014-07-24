@@ -12,7 +12,7 @@
 |
 */
 $config['APP_NAME'] = 'TAPMANAGER';			// nome da aplicação
-$config['TEMPLATE'] = 'bootstrap-flatly';	// template utilizado (dentro de /views)
+$config['TEMPLATE'] = 'bootflat';	// template utilizado (dentro de /views)
 $config['LANGUAGE'] = 'pt_BR';				// linguagem padrão
 $config['EMAIL_FROM'] = 'noreply@app';		// to send emails
 

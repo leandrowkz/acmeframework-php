@@ -7,7 +7,7 @@
 		parent.$('#project-<?php echo get_value($project, 'id_project')?>').html(html_project);
 		
 		// Fecha a janela, habilita o loading e recarrega pagina
-		parent.enable_loading();
+		parent.$.enable_loading();
 		parent.window.location.reload();
 		parent.close_modal();
 	});		

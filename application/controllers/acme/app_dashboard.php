@@ -44,11 +44,26 @@ class App_Dashboard extends ACME_Module_Controller {
 									->get()
 									->result_array();
 
-		// error tracker
-		$args['errors'] = $this->db->from('acm_log_error')
-								   ->order_by('log_dtt_ins desc')
-								   ->get()
-								   ->result_array();
+		// error tracker - general errors
+		$args['general_errors'] = $this->db->from('acm_log_error')
+										   ->where(array('error_type' => 'error_general'))
+								   	  	   ->order_by('log_dtt_ins desc')
+								   		   ->get()
+								   		   ->result_array();
+
+		// error tracker - php errors
+		$args['php_errors'] = $this->db->from('acm_log_error')
+									   ->where(array('error_type' => 'error_php'))
+								   	   ->order_by('log_dtt_ins desc')
+									   ->get()
+							   		   ->result_array();
+
+		// error tracker - db errors
+		$args['db_errors'] = $this->db->from('acm_log_error')
+									   ->where(array('error_type' => 'error_db'))
+								   	   ->order_by('log_dtt_ins desc')
+									   ->get()
+							   		   ->result_array();
 
 		// browser ranking
 		$args['browsers'] = $this->db->select('distinct browser_name, count(*) as count_access')

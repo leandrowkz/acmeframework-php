@@ -354,7 +354,7 @@
 	<div style="margin-top:35px">
 		<hr />
 		<?php if($validation === true) { ?>
-		<form action="<?php echo $action_form ?>" method="post" name="form_default" onsubmit="enable_loading();">
+		<form action="<?php echo $action_form ?>" method="post" name="form_default" onsubmit="$.enable_loading();">
 		<div style="margin:10px 3px 0 0" class="inline top"><input type="submit" value="<?php echo lang('Ok, Gerar Módulo')?>" /></div>
 		<div style="margin:18px 0px 0 0" class="inline top">ou <a href="<?php echo URL_ROOT ?>/acme_maker/new_module/<?php echo $file_name ?>">voltar</a></div>
 		</form>

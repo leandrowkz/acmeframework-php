@@ -98,7 +98,7 @@ class App_User extends ACME_Module_Controller {
 
 	/**
 	* new_user()
-	* Tela de novo usuário.
+	* New user screen form.
 	* @param boolean process
 	* @return void
 	*/
@@ -207,7 +207,7 @@ class App_User extends ACME_Module_Controller {
 		
 		$args['user'] = $this->app_user_model->get_user($id_user);
 		
-		// Carrega view
+		// Load view
 		$this->template->load_page('_acme/app_user/permissions', $args);
 	}
 
@@ -228,7 +228,7 @@ class App_User extends ACME_Module_Controller {
 
 	/**
 	* save_permission()
-	* ENable or disable permission for user. Fowarded by permissions page, through ajax. Operation must
+	* Enable or disable permission for user. Fowarded by permissions page, through ajax. Operation must
 	* be sent as parameter and data by $_POST. Print json as result operation status.
 	* @param string operation		// enable, disable
 	* @return void
@@ -255,7 +255,7 @@ class App_User extends ACME_Module_Controller {
 
 	/**
 	* profile()
-	* Tela de perfil de usuário.
+	* Profile user page.
 	* @param integer id_user
 	* @return void
 	*/

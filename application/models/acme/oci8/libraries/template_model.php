@@ -35,7 +35,6 @@ class Template_Model extends CI_Model {
 				  FROM acm_menu m 
 			INNER JOIN acm_user_group ug ON (m.id_user_group = ug.id_user_group)
 				 WHERE ug.name = '$user_group'
-				   AND m.dtt_inative IS NULL
 			  ORDER BY m.id_menu_parent, m.order_";
 		
 		// Run SQL and return data

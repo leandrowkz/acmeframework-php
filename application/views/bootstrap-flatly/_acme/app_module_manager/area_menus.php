@@ -226,7 +226,7 @@ $id_menu = get_value($menu, 'id_module_menu');
         var id = form.attr('id');
 
 		// ajax to save this fucking shit
-		enable_loading();
+		$.enable_loading();
     	
     	$.ajax({
             url: form.attr('menu'),
@@ -270,7 +270,7 @@ $id_menu = get_value($menu, 'id_module_menu');
             }
         });
 
-        disable_loading();
+        $.disable_loading();
 
         // Prevent submit
     	return false;
@@ -292,7 +292,7 @@ $id_menu = get_value($menu, 'id_module_menu');
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_module_manager/save_menu/delete',
@@ -320,7 +320,7 @@ $id_menu = get_value($menu, 'id_module_menu');
                 }
             });
 
-            disable_loading();
+            $.disable_loading();
             
         });
 

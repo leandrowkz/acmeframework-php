@@ -227,7 +227,7 @@ $id_action = get_value($action, 'id_module_action');
         var id = form.attr('id');
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: form.attr('action'),
@@ -271,7 +271,7 @@ $id_action = get_value($action, 'id_module_action');
             }
         });
 
-        disable_loading();
+        $.disable_loading();
 
         // Prevent submit
         return false;
@@ -293,7 +293,7 @@ $id_action = get_value($action, 'id_module_action');
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_module_manager/save_action/delete',
@@ -321,7 +321,7 @@ $id_action = get_value($action, 'id_module_action');
                 }
             });
 
-            disable_loading();
+            $.disable_loading();
             
         });
 

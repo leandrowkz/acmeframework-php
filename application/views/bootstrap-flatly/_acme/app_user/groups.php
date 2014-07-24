@@ -220,7 +220,7 @@ $id_group = get_value($group, 'id_user_group');
         var id = form.attr('id');
 
         // ajax to save this fucking shit
-        enable_loading();
+        $.enable_loading();
         
         $.ajax({
             url: form.attr('action'),
@@ -260,7 +260,7 @@ $id_group = get_value($group, 'id_user_group');
             }
         });
 
-        disable_loading();
+        $.disable_loading();
 
         // Prevent submit
         return false;
@@ -282,7 +282,7 @@ $id_group = get_value($group, 'id_user_group');
                 return;
 
             // ajax to remove this fucking shit
-            enable_loading();
+            $.enable_loading();
             
             $.ajax({
                 url: $('#URL_ROOT').val() + '/app_user/save_group/delete',
@@ -309,7 +309,7 @@ $id_group = get_value($group, 'id_user_group');
                 }
             });
 
-            disable_loading();
+            $.disable_loading();
             
         });
 

@@ -140,7 +140,7 @@
                 return;
 
             // ajax to remove that shit
-			enable_loading();
+			$.enable_loading();
 
 			$.ajax({
 	            url: $('#URL_ROOT').val() + '/app_log/save_error/' + id + '/true',
@@ -168,7 +168,7 @@
 	            }
 	        });
 
-	    	disable_loading();
+	    	$.disable_loading();
             
         });
 	});
