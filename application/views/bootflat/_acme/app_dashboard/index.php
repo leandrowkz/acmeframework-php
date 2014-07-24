@@ -19,6 +19,7 @@
 		<div class="col-md-5 col-lg-5">
 			
 			<div class="panel panel-default panel-list">
+
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-8 col-sm-8 col-md-12 col-lg-7" id="title-modules-override">
@@ -31,6 +32,7 @@
 				</div>
 
 				<div class="panel-body">
+					
 					<div class="list-group" style="border: none">
 						<?php foreach($modules as $module) { ?>
 			        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Clique para ir') ?>">
@@ -40,7 +42,9 @@
 			            </a>
 			            <?php } ?>
 			        </div>
+
 			    </div>
+
 			</div>
 
 		</div>
@@ -48,70 +52,279 @@
 		<div class="col-md-7 col-lg-7">
 
 			<div class="row">
+
 				<div class="col-sm-6 col-md-12 col-lg-6 custom-panels">
 
-					<div class="panel panel-primary">
+					<div class="panel panel-primary panel-list">
 
 			            <div class="panel-heading">
-			                <i class="fa fa-tablet fa-fw"></i>
+			                <i class="fa fa-tablet"></i>
 			                <h1 class="pull-right"><?php echo count($devices)?></h1>
-			                <div class="text-right" style="margin-top:5px"><?php echo lang('Dispositivos diferentes')?></div>
+			                <div class="text-right" style="margin-top:5px"><?php echo lang('Different devices')?></div>
 			            </div>
-			            <div class="panel-body">
-			            	<span class="pull-right"><i id="show-devices-arrow" class="fa fa-arrow-circle-right fa-fw"></i></span>
-			                <a href="javascript:void(0)" id="show-devices"><?php echo lang('Ver dispositivos') ?></a>
 
-			                <div class="list-group" id="list-devices" style="margin:10px 0 0;display:none">
-			                <?php foreach($devices as $device) {?>
-				                <div class="list-group-item">
-				                	<span class="text-muted pull-right"><?php echo get_value($device, 'count_access'); ?> <?php echo lang('acessos')?></span>
-				                	<span><?php echo get_value($device, 'device_name'); ?></span>
+			            <div class="panel-body">
+
+			            	<div class="list-group" style="border: none">
+
+				                <div class="list-group-item" style="padding: 15px">
+				                	<span class="pull-right"><i id="show-devices-arrow" class="fa fa-arrow-circle-right fa-fw"></i></span>
+				                	<a href="javascript:void(0)" id="show-devices"><?php echo lang('See devices') ?></a>
 				                </div>
-			                <?php } ?>
+
+				                <div id="list-devices" style="display: none">
+			                	<?php foreach($devices as $device) {?>
+				                	<div class="list-group-item">
+				                		<span class="text-muted pull-right"><?php echo get_value($device, 'count_access'); ?> <?php echo lang('access')?></span>
+				                		<span><?php echo get_value($device, 'device_name'); ?></span>
+				                	</div>
+			                	<?php } ?>
+			                	</div>
+
 			            	</div>
+
 			            </div>
 
 			        </div>
 			    
 				</div>
 
+				<?php
+				$total_general_errors = count($general_errors);
+				$total_php_errors = count($php_errors);
+				$total_db_errors = count($db_errors);
+				$total_errors = $total_general_errors + $total_php_errors + $total_db_errors;
+				?>
+
 				<div class="col-sm-6 col-md-12 col-lg-6 custom-panels">
-					<div class="panel panel-danger">
+
+					<div class="panel panel-list panel-danger">
 			            
 			            <div class="panel-heading">
-			                <i class="fa fa-bug fa-fw"></i>
-			                <h1 class="pull-right" id="count-errors"><?php echo count($errors) ?></h1>
-			                <div class="text-right"style="margin-top:5px"><?php echo lang('Erros encontrados')?></div>
+			                <i class="fa fa-bug"></i>
+			                <h1 class="pull-right" id="count-errors"><?php echo $total_errors ?></h1>
+			                <div class="text-right"style="margin-top:5px"><?php echo lang('Errors found')?></div>
 			            </div>
+
 			            <div class="panel-body">
-			            	<span class="pull-right"><i id="show-errors-arrow" class="fa fa-arrow-circle-right fa-fw"></i></span>
-			                <a href="javascript:void(0)" id="show-errors"><?php echo lang('Resolver problemas') ?></a>
-			                
-			                <div id="list-errors">
-			                	<h5 class="text-muted"><?php echo lang('Exibindo últimos 50')?></h5>
-				                <div class="list-group">
-					                <?php 
-					                $i = 1;
-					                foreach($errors as $error) {?>
-					                	<?php if($i <= 50) {?>
-						                <div class="list-group-item" id="error-<?php echo get_value($error, 'id_log_error') ?>">
-						                	<small class="pull-right"><a href="javascript:void(0)" id="<?php echo get_value($error, 'id_log_error') ?>"><?php echo lang('Remover'); ?></a></small>
-						                	<div><?php echo get_value($error, 'header'); ?></div>
-						                	<div><small><?php echo get_value($error, 'additional_data'); ?></small></div>
-						                	<div><small><?php echo get_value($error, 'message'); ?></small></div>
-						                	<div><?php echo lang('Em') ?> <?php echo get_value($error, 'log_dtt_ins'); ?></div>
-						                </div>
-						            	<?php } ?>
-						            <?php $i++; } ?>
-					            </div>
-					            
-					            <?php if($i >= 50) {?>
-					            <a href="<?php echo URL_ROOT ?>/app_log" title="<?php echo lang('Ver todos') ?>" class="text-center"><h2 style="margin-top:0">. . .</h2></a>
-					            <?php } ?>
+
+			            	<div class="panel-group panel-group-lists collapse in" id="errors-list">
+				            	
+				            	<div class="panel">
+				                	
+				                	<div class="panel-heading">
+
+				                		<?php
+				                		if ($total_general_errors >= 100)
+				                			$badge = 'danger';
+				                		elseif ($total_general_errors > 0)
+				                			$badge = 'warning';
+				                		else
+				                			$badge = 'success';
+				                		?>
+				                  		
+				                  		<div class="panel-title">
+				                    		<a data-toggle="collapse" data-parent="#errors-list" href="#general-errors" class="collapsed">
+				                    		<?php echo lang('General errors') ?>
+				                    		<span class="pull-right badge badge-<?php echo $badge ?>"><?php echo count($general_errors)?></span>
+				                    		</a>
+				                  		</div>
+
+				                	</div>
+
+				                	<div id="general-errors" class="panel-collapse collapse" style="height: 0px;">
+				                  		<div class="panel-body">
+
+				                  			<?php 
+				                  			if($total_general_errors > 0) { 
+				                  				$class_content = 'show';
+				                  				$class_no_content = 'hidden';
+				                  			} else {
+				                  				$class_content = 'hidden';
+				                  				$class_no_content = 'show';
+				                  			}
+				                  			?>
+
+				                  			<div class="error-content <?php echo $class_content ?>">
+					                  			
+					                  			<h5 class="text-muted"><?php echo lang('Showing last 50') ?></h5>
+
+					                  			<div class="error-container">
+
+						                  			<?php foreach($general_errors as $error) {?>
+						                  			<div class="error-box">
+						                  				<small>
+						                  					<strong><?php echo lang('On') ?> <?php echo get_value($error, 'log_dtt_ins') ?></strong>
+						                  					| <a href="javascript:void(0)" id="<?php echo get_value($error, 'id_log_error') ?>"><?php echo lang('Remove')?></a>
+						                  				</small>
+						                  				<p><small><?php echo get_value($error, 'message') ?></small></p>
+						                  			</div>
+						                  			<?php } ?>
+
+						                  		</div>
+
+						                  	</div>
+
+					                  		<p class="<?php echo $class_no_content?>"><small class="text-muted"><?php echo lang('There is no general errors')?></small></p>
+
+				                  			<h5 style="margin: 15px 0 0">
+				                  				<a href="<?php echo URL_ROOT ?>/app_log">
+				                  					<?php echo lang('See all errors')?>
+				                  					<i class="fa fa-fw fa-arrow-circle-right"></i>
+				                  				</a>
+				                  			</h5>
+
+				                  		</div>
+				                	</div>
+
+				              	</div>
+
+				              	<div class="panel">
+				                	
+				                	<div class="panel-heading">
+
+				                		<?php
+				                		if ($total_php_errors >= 100)
+				                			$badge = 'danger';
+				                		elseif ($total_php_errors > 0)
+				                			$badge = 'warning';
+				                		else
+				                			$badge = 'success';
+				                		?>
+				                  		
+				                  		<div class="panel-title">
+				                    		<a data-toggle="collapse" data-parent="#errors-list" href="#php-errors" class="collapsed">
+				                    		<?php echo lang('PHP errors') ?>
+				                    		<span class="pull-right badge badge-<?php echo $badge ?>"><?php echo count($php_errors)?></span>
+				                    		</a>
+				                  		</div>
+
+				                	</div>
+
+				                	<div id="php-errors" class="panel-collapse collapse" style="height: 0px;">
+				                  		<div class="panel-body">
+
+				                  			<?php 
+				                  			if($total_php_errors > 0) { 
+				                  				$class_content = 'show';
+				                  				$class_no_content = 'hidden';
+				                  			} else {
+				                  				$class_content = 'hidden';
+				                  				$class_no_content = 'show';
+				                  			}
+				                  			?>
+
+				                  			<div class="error-content <?php echo $class_content ?>">
+				                    		
+					                  			<h5 class="text-muted"><?php echo lang('Showing last 50') ?></h5>
+
+					                  			<div class="error-container">
+
+						                  			<?php foreach($php_errors as $error) {?>
+						                  			<div class="error-box">
+						                  				<small>
+						                  					<strong><?php echo lang('On') ?> <?php echo get_value($error, 'log_dtt_ins') ?></strong>
+						                  					| <a href="javascript:void(0)" id="<?php echo get_value($error, 'id_log_error') ?>"><?php echo lang('Remove')?></a>
+						                  				</small>
+						                  				<p><small><?php echo get_value($error, 'message') ?></small></p>
+						                  			</div>
+						                  			<?php } ?>
+
+						                  		</div>
+
+						                  	</div>
+
+					                  		<p class="<?php echo $class_no_content?>"><small class="text-muted"><?php echo lang('There is no PHP errors')?></small></p>
+
+				                  			<h5 style="margin: 15px 0 0">
+				                  				<a href="<?php echo URL_ROOT ?>/app_log">
+				                  					<?php echo lang('See all errors')?>
+				                  					<i class="fa fa-fw fa-arrow-circle-right"></i>
+				                  				</a>
+				                  			</h5>
+
+				                  		</div>
+				                	</div>
+
+				              	</div>
+
+				              	<div class="panel">
+				                	
+				                	<div class="panel-heading">
+
+				                		<?php
+				                		if ($total_db_errors >= 100)
+				                			$badge = 'danger';
+				                		elseif ($total_db_errors > 0)
+				                			$badge = 'warning';
+				                		else
+				                			$badge = 'success';
+				                		?>
+				                  		
+				                  		<div class="panel-title">
+				                    		<a data-toggle="collapse" data-parent="#errors-list" href="#database-errors" class="collapsed">
+				                    		<?php echo lang('Database errors') ?>
+				                    		<span class="pull-right badge badge-<?php echo $badge ?>"><?php echo count($db_errors)?></span>
+				                    		</a>
+				                  		</div>
+
+				                	</div>
+
+				                	<div id="database-errors" class="panel-collapse collapse" style="height: 0px;">
+				                  		<div class="panel-body">
+				                    		
+				                  			<?php 
+				                  			if($total_db_errors > 0) { 
+				                  				$class_content = 'show';
+				                  				$class_no_content = 'hidden';
+				                  			} else {
+				                  				$class_content = 'hidden';
+				                  				$class_no_content = 'show';
+				                  			}
+				                  			?>
+
+				                  			<div class="error-content <?php echo $class_content ?>">
+
+					                  			<h5 class="text-muted"><?php echo lang('Showing last 50') ?></h5>
+
+					                  			<div class="error-container">
+
+						                  			<?php foreach($db_errors as $error) {?>
+						                  			<div class="error-box">
+						                  				<small>
+						                  					<strong><?php echo lang('On') ?> <?php echo get_value($error, 'log_dtt_ins') ?></strong>
+						                  					| <a href="javascript:void(0)" id="<?php echo get_value($error, 'id_log_error') ?>"><?php echo lang('Remove')?></a>
+						                  				</small>
+						                  				<p><small><?php echo get_value($error, 'message') ?></small></p>
+						                  			</div>
+						                  			<?php } ?>
+
+						                  		</div>
+
+						                  	</div>
+
+					                  		<p class="<?php echo $class_no_content?>"><small class="text-muted"><?php echo lang('There is no database errors')?></small></p>
+
+				                  			<h5 style="margin: 15px 0 0">
+				                  				<a href="<?php echo URL_ROOT ?>/app_log">
+				                  					<?php echo lang('See all errors')?>
+				                  					<i class="fa fa-fw fa-arrow-circle-right"></i>
+				                  				</a>
+				                  			</h5>
+
+				                  		</div>
+				                	</div>
+
+				              	</div>
+
 					        </div>
+
 			            </div>
+
 			        </div>
+
 				</div>
+
 			</div>
 
 			<div class="row" style="margin-top:10px">
@@ -137,14 +350,14 @@
 
 <script>
 	
-	// trigger to remove log error
-	$('small.pull-right a').click(function () {
+	// trigger to remove error
+	$('.error-box a').click(function () {
 		
 		// get id
         var id = $(this).attr('id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Deseja realmente remover o erro selecionado?') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected error ?') ?>", function (result) {
 
             // Cancel
             if( ! result)
@@ -154,8 +367,9 @@
 			$.enable_loading();
 
 			$.ajax({
-	            url: $('#URL_ROOT').val() + '/app_log/save_error/' + id + '/true',
+	            url: $('#URL_ROOT').val() + '/app_log/save/error/delete',
 	            context: document.body,
+	            data : { 'id_log' : id },
 	            cache: false,
 	            type: 'POST',
 
@@ -174,9 +388,23 @@
 	            		return false;
 	            	}
 
-	            	// procced with no errors, remove error from div
-                	$('#error-' + id).remove();
+                	// update badge counter
+                	var badge = $('#' + id).closest('.panel').find('.badge').html() - 1;
+                	$('#' + id).closest('.panel').find('.badge').html( badge );
+                	
+                	// update general counter
                 	$('#count-errors').html($('#count-errors').html() - 1);
+
+                	// when no errors get reached
+                	if(badge <= 0) {
+						$('#' + id).closest('.panel').find('.badge').removeClass('badge-danger badge-warning').addClass('badge-success');
+                		$('#' + id).closest('.panel-body').find('p').toggleClass('hidden show');
+                		$('#' + id).closest('.error-content').toggleClass('hidden show');
+                	}
+
+                	// procced with no errors, remove error from div
+                	$('#' + id).closest('.error-box').remove();
+
 	            }
 	        });
             
@@ -191,17 +419,6 @@
 		} else {
 			$('#show-devices-arrow').removeClass('fa-arrow-circle-right').addClass('fa-arrow-circle-down');
 			$('#list-devices').slideDown(300);
-		}
-	});
-
-	// slide for errors
-	$('#show-errors, #show-errors-arrow').click(function () {
-		if( $('#list-errors').is(':visible') ) {
-			$('#show-errors-arrow').removeClass('fa-arrow-circle-down').addClass('fa-arrow-circle-right');
-			$('#list-errors').slideUp();
-		} else {
-			$('#show-errors-arrow').removeClass('fa-arrow-circle-right').addClass('fa-arrow-circle-down');
-			$('#list-errors').slideDown(300);
 		}
 	});
 
@@ -223,7 +440,7 @@
 <style>
 	.custom-panels .panel-heading i {
 	    font-size: 65px;
-	    margin-left: -20px;
+	    margin-left: 0
 	}
 
 	.custom-panels h1 {
@@ -258,10 +475,45 @@
 	    margin: 0;
 	}
 
-	.panel-list .panel-body .list-group a.list-group-item {
+	.panel-list .panel-body .list-group .list-group-item {
 	    border-radius: 0;
 	    border-left: 0;
 	    border-right: 0;
 	    border-bottom: 0;
 	}
+
+	.panel-group {
+		border: none;
+		margin-bottom: 0
+	}
+
+	.panel-group .panel {
+		border-top: none;
+		border-left: none;
+		border-right: none;
+	}
+
+	.panel-group-lists .panel,
+	.panel-group-lists .panel .panel-body {
+		box-shadow: none !important;
+	}
+
+	.panel-group-lists .panel-title a:hover {
+		color: #4fc1e9;
+	}
+
+	.panel-group-lists .panel-title a {
+		color: #3bafda;
+	}
+
+	p small {
+		word-break: break-all;
+	}
+
+	.error-container {
+	    max-height: 180px;
+	    overflow-y: scroll;
+	    border-bottom: 1px dotted #e8e8e8;
+	}
+
 </style>
