@@ -139,7 +139,7 @@
 				<div class="row bottom-group-buttons">
 		            <div class="col-sm-12">
 		                <input class="btn btn-primary" type="submit" value="<?php echo lang('Create') ?>" />
-		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>"><?php echo lang('Cancel') ?></a>
+		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_module_manager"><?php echo lang('Cancel') ?></a>
 		            </div>
 		        </div>
 

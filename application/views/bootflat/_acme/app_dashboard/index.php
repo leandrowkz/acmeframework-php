@@ -16,24 +16,28 @@
 
 	<div class="row">
 	
-		<div class="col-md-5 col-lg-5">
+		<div class="col-sm-6 col-md-6 col-lg-6">
 			
-			<div class="panel panel-default panel-list">
+			<div class="panel panel-normal panel-list custom-panels">
 
 				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-8 col-sm-8 col-md-12 col-lg-7" id="title-modules-override">
-							<h4 style="margin:10px 0"><?php echo lang('Módulos da aplicação')?></h4>
-						</div>
-						<div class="col-xs-4 col-sm-4 col-md-12 col-lg-5" id="add-module-override">
-							<a href="<?php echo URL_ROOT ?>/app_module_maker" class="btn btn-success btn-block btn-md" style="white-space:normal"><?php echo lang('Novo módulo')?> <i class="fa fa-plus-circle fa-fw"></i></a>
-						</div>
-					</div>
-				</div>
+	                <i class="fa fa-cubes"></i>
+	                <h1 class="pull-right"><?php echo count($modules) ?></h1>
+	                <div class="text-right"style="margin-top:5px"><?php echo lang('Application modules')?></div>
+	            </div>
 
-				<div class="panel-body">
+				<div class="panel-body panel-body-modules">
 					
 					<div class="list-group" style="border: none">
+
+						<a href="<?php echo URL_ROOT ?>/app_module_maker" class="list-group-item text-success" title="<?php echo lang('Click to go') ?>">
+			            	<h3>
+			            		<?php echo lang('New module') ?>
+			            		<i class="fa fa-fw fa-plus-circle pull-right"></i>
+			            	</h3>
+			            	<p class="list-group-item-text text-success"><?php echo lang('Create a new module with Module Maker') ?></p>
+			            </a>
+
 						<?php foreach($modules as $module) { ?>
 			        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Clique para ir') ?>">
 			        		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
@@ -41,6 +45,7 @@
 			            	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
 			            </a>
 			            <?php } ?>
+
 			        </div>
 
 			    </div>
@@ -49,45 +54,9 @@
 
 		</div>
 		
-		<div class="col-md-7 col-lg-7">
+		<div class="col-sm-6 col-md-6 col-lg-6">
 
 			<div class="row">
-
-				<div class="col-sm-6 col-md-12 col-lg-6 custom-panels">
-
-					<div class="panel panel-primary panel-list">
-
-			            <div class="panel-heading">
-			                <i class="fa fa-tablet"></i>
-			                <h1 class="pull-right"><?php echo count($devices)?></h1>
-			                <div class="text-right" style="margin-top:5px"><?php echo lang('Different devices')?></div>
-			            </div>
-
-			            <div class="panel-body">
-
-			            	<div class="list-group" style="border: none">
-
-				                <div class="list-group-item" style="padding: 15px">
-				                	<span class="pull-right"><i id="show-devices-arrow" class="fa fa-arrow-circle-right fa-fw"></i></span>
-				                	<a href="javascript:void(0)" id="show-devices"><?php echo lang('See devices') ?></a>
-				                </div>
-
-				                <div id="list-devices" style="display: none">
-			                	<?php foreach($devices as $device) {?>
-				                	<div class="list-group-item">
-				                		<span class="text-muted pull-right"><?php echo get_value($device, 'count_access'); ?> <?php echo lang('access')?></span>
-				                		<span><?php echo get_value($device, 'device_name'); ?></span>
-				                	</div>
-			                	<?php } ?>
-			                	</div>
-
-			            	</div>
-
-			            </div>
-
-			        </div>
-			    
-				</div>
 
 				<?php
 				$total_general_errors = count($general_errors);
@@ -96,7 +65,7 @@
 				$total_errors = $total_general_errors + $total_php_errors + $total_db_errors;
 				?>
 
-				<div class="col-sm-6 col-md-12 col-lg-6 custom-panels">
+				<div class="col-sm-12 col-md-12 col-lg-6 custom-panels">
 
 					<div class="panel panel-list panel-danger">
 			            
@@ -106,7 +75,7 @@
 			                <div class="text-right"style="margin-top:5px"><?php echo lang('Errors found')?></div>
 			            </div>
 
-			            <div class="panel-body">
+			            <div class="panel-body panel-body-errors">
 
 			            	<div class="panel-group panel-group-lists collapse in" id="errors-list">
 				            	
@@ -170,7 +139,7 @@
 				                  			<h5 style="margin: 15px 0 0">
 				                  				<a href="<?php echo URL_ROOT ?>/app_log">
 				                  					<?php echo lang('See all errors')?>
-				                  					<i class="fa fa-fw fa-arrow-circle-right"></i>
+				                  					<i class="fa fa-fw fa-arrow-circle-right pull-right"></i>
 				                  				</a>
 				                  			</h5>
 
@@ -239,7 +208,7 @@
 				                  			<h5 style="margin: 15px 0 0">
 				                  				<a href="<?php echo URL_ROOT ?>/app_log">
 				                  					<?php echo lang('See all errors')?>
-				                  					<i class="fa fa-fw fa-arrow-circle-right"></i>
+				                  					<i class="fa fa-fw fa-arrow-circle-right pull-right"></i>
 				                  				</a>
 				                  			</h5>
 
@@ -308,7 +277,7 @@
 				                  			<h5 style="margin: 15px 0 0">
 				                  				<a href="<?php echo URL_ROOT ?>/app_log">
 				                  					<?php echo lang('See all errors')?>
-				                  					<i class="fa fa-fw fa-arrow-circle-right"></i>
+				                  					<i class="fa fa-fw fa-arrow-circle-right pull-right"></i>
 				                  				</a>
 				                  			</h5>
 
@@ -325,15 +294,170 @@
 
 				</div>
 
+				<div class="col-sm-12 col-md-12 col-lg-6 custom-panels">
+
+			        <div class="panel panel-default panel-list">
+
+						<?php $total_browsers = count($browsers); ?>
+
+			            <div class="panel-heading">
+			                <i class="fa fa-compass"></i>
+			                <h1 class="pull-right"><?php echo $total_browsers ?></h1>
+			                <div class="text-right" style="margin-top:5px"><?php echo lang('Different browsers')?></div>
+			            </div>
+
+			            <div class="panel-body panel-body-modules">
+
+			            	<div class="panel-group panel-group-lists">
+				            	
+				            	<div class="panel">
+				                	
+				                	<div class="panel-heading">
+
+				                		<?php if( $total_browsers > 2) { ?>
+					                		
+					                		<?php for($i = 0; $i <= 1; $i++) { ?>
+					             			<div class="panel-title">
+					             				<a href="javascript:void(0)">
+					                    		<span><?php echo get_value($browsers[$i], 'browser_name') ?> <?php echo get_value($browsers[$i], 'browser_version') ?></span>
+					                    		<span class="pull-right badge badge-normal ?>"><?php echo get_value($browsers[$i], 'count_access') ?> <?php echo lang('access') ?></span>
+					                    		</a>
+					                  		</div>
+					                  		<?php } ?>
+
+				                  			<div class="browsers-container" style="display: none">
+				                  				
+				                  				<?php for($i = 2; $i < $total_browsers; $i++) { ?>
+						             			<div class="panel-title">
+						             				<a href="javascript:void(0)">
+						                    		<span><?php echo get_value($browsers[$i], 'browser_name') ?> <?php echo get_value($browsers[$i], 'browser_version') ?></span>
+						                    		<span class="pull-right badge badge-normal ?>"><?php echo get_value($browsers[$i], 'count_access') ?> <?php echo lang('access') ?></span>
+						                    		</a>
+						                  		</div>
+					                  			<?php } ?>
+
+				                  			</div>
+
+				                  			<div class="panel-title">
+					                  			<h5>
+					                  				<a class="see-all-browsers" href="javascript:void(0)">
+														<i class="fa fa-fw fa-arrow-circle-right pull-right"></i>
+					                  					<?php echo lang('See all browsers') ?>
+					                  				</a>
+					                  			</h5>
+					                  		</div>
+
+				                  		<?php } else { ?>
+
+				                  			<?php foreach ($browsers as $browser) { ?>
+
+				                  			<div class="panel-title">
+					             				<a href="javascript:void(0)">
+					                    		<span><?php echo get_value($browser, 'browser_name') ?> <?php echo get_value($browser, 'browser_version') ?></span>
+					                    		<span class="pull-right badge badge-normal ?>"><?php echo get_value($browser, 'count_access') ?> <?php echo lang('access') ?></span>
+					                    		</a>
+					                  		</div>
+
+					                  		<?php } ?>
+				                  		
+				                  		<?php } ?>
+
+				                	</div>
+
+				              	</div>
+
+					        </div>
+
+			            </div>
+
+			        </div>
+			    
+				</div>
+
 			</div>
 
-			<div class="row" style="margin-top:10px">
-				<div class="col-md-12 custom-panels">
-					<div class="well" STYLE="height:400px">
-			            <h4 class="text-center"><?php echo lang('Navegadores e acessos')?></h4>
-						<div id="browser-chart"></div>
+			<div class="row">
+
+				<div class="col-sm-12 col-md-12 col-lg-12 custom-panels">
+
+					<div class="panel panel-default panel-list">
+
+						<?php $total_devices = count($devices); ?>
+
+			            <div class="panel-heading">
+			                <i class="fa fa-tablet"></i>
+			                <h1 class="pull-right"><?php echo $total_devices ?></h1>
+			                <div class="text-right" style="margin-top:5px"><?php echo lang('Different devices')?></div>
+			            </div>
+
+			            <div class="panel-body">
+
+			            	<div class="panel-group panel-group-lists">
+				            	
+				            	<div class="panel">
+				                	
+				                	<div class="panel-heading">
+
+				                		<?php if( $total_devices > 2) { ?>
+					                		
+					                		<?php for($i = 0; $i <= 1; $i++) { ?>
+					             			<div class="panel-title">
+					             				<a href="javascript:void(0)">
+					                    		<span><?php echo get_value($devices[$i], 'device_name') ?> <?php echo get_value($devices[$i], 'device_version') ?></span>
+					                    		<span class="pull-right badge badge-normal ?>"><?php echo get_value($devices[$i], 'count_access') ?> <?php echo lang('access') ?></span>
+					                    		</a>
+					                  		</div>
+					                  		<?php } ?>
+
+				                  			<div class="devices-container" style="display: none">
+				                  				
+				                  				<?php for($i = 2; $i < $total_devices; $i++) { ?>
+						             			<div class="panel-title">
+						             				<a href="javascript:void(0)">
+						                    		<span><?php echo get_value($devices[$i], 'device_name') ?> <?php echo get_value($devices[$i], 'device_version') ?></span>
+						                    		<span class="pull-right badge badge-normal ?>"><?php echo get_value($devices[$i], 'count_access') ?> <?php echo lang('access') ?></span>
+						                    		</a>
+						                  		</div>
+					                  			<?php } ?>
+
+				                  			</div>
+
+				                  			<div class="panel-title">
+					                  			<h5>
+					                  				<a class="see-all-devices" href="javascript:void(0)">
+														<i class="fa fa-fw fa-arrow-circle-right pull-right"></i>
+					                  					<?php echo lang('See all devices') ?>
+					                  				</a>
+					                  			</h5>
+					                  		</div>
+
+				                  		<?php } else { ?>
+
+				                  			<?php foreach ($devices as $device) { ?>
+
+				                  			<div class="panel-title">
+					             				<a href="javascript:void(0)">
+					                    		<span><?php echo get_value($device, 'device_name') ?> <?php echo get_value($device, 'device_version') ?></span>
+					                    		<span class="pull-right badge badge-normal ?>"><?php echo get_value($device, 'count_access') ?> <?php echo lang('access') ?></span>
+					                    		</a>
+					                  		</div>
+
+					                  		<?php } ?>
+				                  		
+				                  		<?php } ?>
+
+				                	</div>
+
+				              	</div>
+
+					        </div>
+
+			            </div>
+
 			        </div>
-				</div>
+
+	       		</div>
+
 			</div>
 
 		</div>
@@ -342,15 +466,11 @@
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/morris/morris-0.4.3.min" />
-
-<script src="<?php echo URL_JS ?>/plugins/morris/raphael-2.1.0.min.js"></script>
-
-<script src="<?php echo URL_JS ?>/plugins/morris/morris.js"></script>
-
 <script>
 	
+	// =======================
 	// trigger to remove error
+	// =======================
 	$('.error-box a').click(function () {
 		
 		// get id
@@ -410,31 +530,33 @@
             
         });
 	});
-
-	// slide devices
-	$('#show-devices, #show-devices-arrow').click(function () {
-		if( $('#list-devices').is(':visible') ) {
-			$('#show-devices-arrow').removeClass('fa-arrow-circle-down').addClass('fa-arrow-circle-right');
-			$('#list-devices').slideUp(300);
+	
+	// ===============
+	// see all devices
+	// ===============
+	$('.see-all-devices').click(function () {
+		if( $('.devices-container').is(':visible') ) {
+			$(this).find('i').toggleClass('fa-arrow-circle-up fa-arrow-circle-right');
+			$('.devices-container').slideUp(300);
 		} else {
-			$('#show-devices-arrow').removeClass('fa-arrow-circle-right').addClass('fa-arrow-circle-down');
-			$('#list-devices').slideDown(300);
+			$(this).find('i').toggleClass('fa-arrow-circle-up fa-arrow-circle-right');
+			$('.devices-container').slideDown(300);
 		}
 	});
 
-	// graph browsers
-	Morris.Bar({
-    	element: 'browser-chart',
-    	data: <?php echo json_encode(array_change_key_case_recursive($browsers, CASE_LOWER)) ?>,
-    	xkey: 'browser_name',
-    	ykeys: ['count_access'],
-    	labels: ['Acessos'],
-    	barRatio: 0.4,
-    	xLabelAngle: 35,
-    	hideHover: 'auto',
-    	pointSize: 2,
-        resize: true
-  	});
+	// ================
+	// see all browsers
+	// ================
+	$('.see-all-browsers').click(function () {
+		if( $('.browsers-container').is(':visible') ) {
+			$(this).find('i').toggleClass('fa-arrow-circle-up fa-arrow-circle-right');
+			$('.browsers-container').slideUp(300);
+		} else {
+			$(this).find('i').toggleClass('fa-arrow-circle-up fa-arrow-circle-right');
+			$('.browsers-container').slideDown(300);
+		}
+	});
+
 </script>
 
 <style>
@@ -462,17 +584,12 @@
 	    overflow-y: scroll;
 	}
 
-	#list-errors div.list-group-item div {
-	    overflow: hidden;
-	    text-overflow: ellipsis;
+	.panel-list .list-group {
+		margin-bottom: 0
 	}
 
 	.panel-list .panel-body {
 	    padding: 0;
-	}
-
-	.panel-list .panel-body .list-group {
-	    margin: 0;
 	}
 
 	.panel-list .panel-body .list-group .list-group-item {
@@ -514,6 +631,62 @@
 	    max-height: 180px;
 	    overflow-y: scroll;
 	    border-bottom: 1px dotted #e8e8e8;
+	}
+
+	.panel-group-lists .panel-heading a {
+		color: inherit;
+	}
+
+	.panel-group-lists .panel-heading a:hover {
+		color: inherit;
+		cursor: default;
+	}
+
+	.panel-group-lists .panel-heading .panel-title {
+		border-bottom: 1px solid #e8e8e8;
+	}
+
+	.panel-group-lists .panel-heading .panel-title:last-child {
+		border-bottom: 1px solid transparent;
+	}
+
+	.panel-body-errors .panel-group-lists .panel-heading .panel-title:last-child {
+		border-bottom: 0;
+	}
+
+	.panel-group-lists .panel-heading .panel-title i {
+		font-size: inherit;
+	}
+
+	.panel-group-lists .panel-heading .panel-title h5 {
+		margin-bottom: 0;
+	}
+
+	.panel-heading .panel-title h5 a {
+		color: #3bafda;
+	}
+
+	.panel-heading .panel-title h5 a:hover {
+		color: #4fc1e9;
+		cursor: pointer;
+	}
+
+	.panel-body-errors .panel-heading a {
+		color: #3bafda;
+	}
+
+	.panel-body-errors .panel-heading a:hover {
+		color: #4fc1e9;
+		cursor: pointer;
+	}
+
+	.panel-body-modules .list-group h3 {
+		color: #8cc152;
+		margin-bottom: 3px;
+	}
+
+	.panel-body-modules .list-group p.text-success {
+		color: #8cc152;
 	}
 
 </style>
