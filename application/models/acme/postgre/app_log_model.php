@@ -74,7 +74,7 @@ class App_Log_Model extends CI_Model {
  	   	   	FROM acm_log_error  l
  	   LEFT JOIN acm_user       u ON (u.id_user = l.id_user)
 
- 	   	) logs WHERE ROWNUM <= 1000 ORDER BY logs.log_dtt_ins DESC';
+ 	   	) logs ORDER BY logs.log_dtt_ins DESC LIMIT 1000 OFFSET 0';
 		
 		return $this->db->query($sql)->result_array();
 	}

@@ -56,8 +56,7 @@ class Form_Model extends CI_Model {
  					   ) fk ON (fk.column_name = c.column_name AND fk.table_name = c.table_name)
 				 WHERE c.table_name  = '" . strtoupper($table) . "'
   				   AND c.column_name = '" . strtoupper($column_name) . "'";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? $data[0] : array();
+		
+		return $this->db->query($sql)->row_array(0);
 	}
 }

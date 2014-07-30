@@ -168,11 +168,16 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			redirect($this->controller);
 
 		// Fields
-		$fields = $this->db->select("f.*, '$this->table_name' AS table_name")
-						   ->from('acm_module_form_field f')
+		$fields = $this->db->from('acm_module_form_field f')
 						   ->where('id_module_form = ' . get_value($form, 'id_module_form') . ' AND dtt_inative IS NULL')
 						   ->order_by('order_')
-						   ->get()->result_array();
+						   ->get()
+						   ->result_array();
+
+		// Adjust fields and put table name on each row
+	   	$count = count($fields);
+		for ($i = 0; $i < $count; $i++)
+			$fields[$i]['table_name'] = $this->table_name;
 		
 		// load correct model
 		$this->load->model('core/acme_module_controller_model');

@@ -35,7 +35,7 @@ class App_Dashboard extends ACME_Module_Controller {
 		$args['modules'] = $this->db->from('acm_module')->order_by('label')->get()->result_array();
 
 		// Devices
-		$args['devices'] = $this->db->select('distinct device_name, device_version, count(*) as count_access')
+		$args['devices'] = $this->db->select('device_name, device_version, count(*) as count_access')
 									->from('acm_log')
 									->where(array('action' => 'login'))
 									->group_by('device_name, device_version')
@@ -44,7 +44,7 @@ class App_Dashboard extends ACME_Module_Controller {
 									->result_array();
 
 		// browser ranking
-		$args['browsers'] = $this->db->select('distinct browser_name, browser_version, count(*) as count_access')
+		$args['browsers'] = $this->db->select('browser_name, browser_version, count(*) as count_access')
 									 ->from('acm_log')
 									 ->where(array('action' => 'login'))
 									 ->group_by('browser_name, browser_version')

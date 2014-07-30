@@ -49,7 +49,7 @@ class Access {
 	*/
 	public function validate_session()
 	{
-		if( ! $this->check_session()) {
+		if( ! $this->check_session() ) {
 			redirect('/');
 			exit;
 		}
@@ -67,20 +67,6 @@ class Access {
 			return false;
 		else
 			return true;
-	}
-	
-	/**
-	* browser_rank()
-	* Retorna lista de browsers que acessaram o sistema e a porcentagem de acesso de cada um.
-	* @return array browsers
-	*/
-	public function browser_rank()
-	{
-		// Carrega model
-		$this->CI->load->model('libraries/access_model');
-		
-		// Verifica se variáveis da sessão estão preenchidas
-		return $this->CI->access_model->browser_rank();
 	}
 
 	/**
@@ -111,14 +97,14 @@ class Access {
 	* validate_permission()
 	* Checa uma permissão de módulo encaminhada para determinado usuário. Retorna true
 	* caso possua a permissão, ou redireciona para página de exceção caso não possua.
-	* @param string module 		// controller name
+	* @param string controller 		// controller name
 	* @param string permission
 	* @param integer id_user
 	* @return mixed boolean/redirect
 	*/
-	public function validate_permission($module = '', $permission = '', $id_user = 0)
+	public function validate_permission($controller = '', $permission = '', $id_user = 0)
 	{
-		if( ! $this->check_permission($module, $permission, $id_user))
+		if( ! $this->check_permission($controller, $permission, $id_user) )
 			$this->CI->error->show_error(lang('Usuário sem Permissão'), lang('Usuário sem permissão para esta ação') . ' (' . $permission . ')', 'error_permission', 500, false);
 		else
 			return false;

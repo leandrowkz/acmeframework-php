@@ -2,15 +2,15 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* Model App_Menu_Model
+* Model Tag_Model
 *
-* Camada model do modulo app_menu.
+* Camada model para a biblioteca Tag.
 * 
-* @since 	26/06/2013
+* @since 	24/10/2012
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Menu_Model extends CI_Model {
+class Tag_Model extends CI_Model {
 	
 	/**
 	* __construct()

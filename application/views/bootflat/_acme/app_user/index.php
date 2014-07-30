@@ -35,10 +35,10 @@
 
     <div class="row" style="margin-bottom: 30px ">
 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-6 col-lg-5">
 
             <div class="input-group" style="margin-bottom: 10px">
-                <input type="text" id="search-users" class="form-control input-sm" placeholder="<?php echo lang('Search users') ?>" autofocus>
+                <input type="text" id="search-users" class="form-control input-md" placeholder="<?php echo lang('Search users') ?>" autofocus>
                 <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
             </div>
 
@@ -148,8 +148,6 @@
             $('.user-name, .user-email, .user-group').each( function(index) {
             
                 var text = $(this).html().toLowerCase();
-
-                console.log(text);
                 
                 if(text.indexOf(search) != -1) {
                     exist = true;

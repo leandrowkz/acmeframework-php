@@ -2,15 +2,15 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* Model App_Menu_Model
+* Model Array_Table_Model
 *
-* Camada model do modulo app_menu.
+* Camada model para a biblioteca Array_Table.
 * 
-* @since 	26/06/2013
+* @since 	24/10/2012
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Menu_Model extends CI_Model {
+class Array_Table_Model extends CI_Model {
 	
 	/**
 	* __construct()

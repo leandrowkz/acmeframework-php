@@ -73,8 +73,9 @@ class Access_Model extends CI_Model {
 				 WHERE up.id_user = $id_user
 				   AND m.controller = '$module'
 				   AND mp.permission = '$permission'";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? get_value($data[0], 'permission') : array();
+
+		$data = $this->db->query($sql)->row_array(0);
+		
+		return (isset($data)) ? get_value($data, 'permission') : array();
 	}
 }

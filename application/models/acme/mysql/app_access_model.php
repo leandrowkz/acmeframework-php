@@ -2,21 +2,21 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* Model App_Menu_Model
+* Model App_Access_Model
 *
-* Camada model do modulo app_menu.
+* Camada model do modulo app_access.
 * 
-* @since 	26/06/2013
+* @since 	04/10/2012
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Menu_Model extends CI_Model {
+class App_Access_Model extends CI_Model {
 	
 	/**
 	* __construct()
 	* Construtor de classe.
 	* @return object
-	*/
+	*/ 
 	public function __construct()
 	{
 		parent::__construct();

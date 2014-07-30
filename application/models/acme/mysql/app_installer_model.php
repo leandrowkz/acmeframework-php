@@ -2,15 +2,15 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* Model App_Menu_Model
+* Model App_Installer_Model
 *
-* Camada model do modulo app_menu.
+* Camada model do modulo app_installer.
 * 
-* @since 	26/06/2013
+* @since 	20/02/2013
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Menu_Model extends CI_Model {
+class App_Installer extends CI_Model {
 	
 	/**
 	* __construct()

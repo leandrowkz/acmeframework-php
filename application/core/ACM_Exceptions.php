@@ -40,7 +40,10 @@ class ACM_Exceptions extends CI_Exceptions {
 		$this->CI =& get_instance();
 
 		// verifica situação da instalação do ACME
-		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
+		if ( $this->CI->acme_installed && is_object($this->CI->db) ) 
+			$log_db = $this->CI->db->database != '' ? true : false;
+		else
+			$log_db = false;
 
 		// Exibe msg de erro
 		$this->CI->error->show_error($header, $message, $error_type, $status_code, $log_db);
@@ -61,7 +64,10 @@ class ACM_Exceptions extends CI_Exceptions {
 		$this->CI =& get_instance();
 
 		// verifica situação da instalação do ACME
-		$log_db = ($this->CI->acme_installed && is_object($this->CI->db)) ? true : false;
+		if ( $this->CI->acme_installed && is_object($this->CI->db) ) 
+			$log_db = $this->CI->db->database != '' ? true : false;
+		else
+			$log_db = false;
 
 		// Exibe msg de erro
 		$this->CI->error->show_php_error($this->levels[$severity], $message, $filepath, $line, $log_db);

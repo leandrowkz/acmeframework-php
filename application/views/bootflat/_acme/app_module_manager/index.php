@@ -35,31 +35,40 @@
 		<div class="col-xs-12">
 
 			<div class="row">
-				<div class="col-sm-6 col-lg-8">
-					<h4 style="margin:10px 0"><?php echo lang('Módulos da aplicação')?></h4>
-				</div>
 
-				<div class="col-sm-6 col-lg-4">
+				<div class="col-sm-6 col-lg-5">
+
 					<div class="input-group" style="margin-bottom: 10px">
-	                    <input type="text" id="search-module" class="form-control input-sm">
+	                    <input type="text" id="search-module" class="form-control input-md" placeholder="<?php echo lang('Search modules') ?>">
 	                    <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
 					</div>
+
 				</div>
+
 			</div>
 
-			<div class="row">			
+			<div class="row">
+
 				<div class="col-lg-12">
+
 					<div class="list-group modules">
+
 						<?php foreach($modules as $module) { ?>
+					   	
 					   	<a href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module')?>" class="list-group-item" title="<?php echo lang('Configurações do módulo') ?>">
 					   		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
 					       	<h5 class="list-group-item-heading"><?php echo get_value($module, 'label') ?></h5>
 					      	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
 					   	</a>
+
 			            <?php } ?>
+
 			        </div>
+
 		        </div>
+
 		    </div>
+		    
 	    </div>
 
 	</div>

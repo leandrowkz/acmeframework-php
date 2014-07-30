@@ -16,234 +16,354 @@
 
 	<div class="row">
 
-		<div class="col-sm-12 col-lg-8">
-			
-			<h3 style="margin: 0"><?php echo lang('General constants') ?></h3>
+		<div class="col-sm-7 col-lg-7">
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>ENVIRONMENT</label>
-					<i class="fa fa-question-circle fa-fw environment-help"></i>
-				</div>
-			    <div class="inline"><?php echo ENVIRONMENT ?></div>
-			</div>
+			<div class="input-group" style="margin-bottom: 15px">
+                <input type="text" id="search-input" class="form-control input-md" placeholder="<?php echo lang('Search settings') ?>" autofocus>
+                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
+            </div>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>APP_NAME</label>
-					<i class="fa fa-question-circle fa-fw app-name-help"></i>
-				</div>
-			    <div class="inline"><?php echo APP_NAME ?></div>
-			</div>
+			<div class="list-group">
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>TEMPLATE</label>
-					<i class="fa fa-question-circle fa-fw template-help"></i>
-				</div>
-			    <div class="inline"><?php echo TEMPLATE ?></div>
-			</div>
+				<a href="javascript:void(0)" class="list-group-item app-name">
+					<h1 class="pull-left"><i class="fa fa-fw fa-info-circle"></i></h1>
+					<span class="label label-primary pull-right">General</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Application name') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo APP_NAME ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/database.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>LANGUAGE</label>
-					<i class="fa fa-question-circle fa-fw language-help"></i>
-				</div>
-			    <div class="inline"><?php echo LANGUAGE ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item environment">
+					<h1 class="pull-left"><i class="fa fa-fw fa-building"></i></h1>
+					<span class="label label-primary pull-right">General</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Environment') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo ENVIRONMENT ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/database.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>EMAIL_FROM</label>
-					<i class="fa fa-question-circle fa-fw email-from-help"></i>
-				</div>
-			    <div class="inline"><?php echo EMAIL_FROM ?></div>
-			</div>
-			
-			<h3 style="margin: 40px 0 0"><?php echo lang('URLS') ?></h3>
+    			<a href="javascript:void(0)" class="list-group-item database-driver">
+					<h1 class="pull-left"><i class="fa fa-fw fa-database"></i></h1>
+					<span class="label label-default pull-right">Database</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Database driver') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo DB_DRIVER ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/database.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_ROOT</label>
-					<i class="fa fa-question-circle fa-fw url-root-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_ROOT ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item language">
+					<h1 class="pull-left"><i class="fa fa-fw fa-language"></i></h1>
+					<span class="label label-primary pull-right">General</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Application language') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo LANGUAGE ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_UPLOAD</label>
-					<i class="fa fa-question-circle fa-fw url-upload-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_UPLOAD ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item template">
+					<h1 class="pull-left"><i class="fa fa-fw fa-gift"></i></h1>
+					<span class="label label-primary pull-right">General</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Current template') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo TEMPLATE ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_TEMPLATE</label>
-					<i class="fa fa-question-circle fa-fw url-template-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_TEMPLATE ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item email-from">
+					<h1 class="pull-left"><i class="fa fa-fw fa-envelope"></i></h1>
+					<span class="label label-primary pull-right">General</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Email "from"') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo EMAIL_FROM ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_INCLUDE</label>
-					<i class="fa fa-question-circle fa-fw url-include-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_INCLUDE ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item url-root">
+					<h1 class="pull-left"><i class="fa fa-fw fa-terminal"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL application/project root') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_ROOT ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_CSS</label>
-					<i class="fa fa-question-circle fa-fw url-css-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_CSS ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item url-upload">
+					<h1 class="pull-left"><i class="fa fa-fw fa-upload"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL uploads') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_UPLOAD ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_JS</label>
-					<i class="fa fa-question-circle fa-fw url-js-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_JS ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item url-include">
+					<h1 class="pull-left"><i class="fa fa-fw fa-cube"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL template') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_TEMPLATE ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>URL_IMG</label>
-					<i class="fa fa-question-circle fa-fw url-img-help"></i>
-				</div>
-			    <div class="inline"><?php echo URL_IMG ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item url-include">
+					<h1 class="pull-left"><i class="fa fa-fw fa-tasks"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL includes') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_INCLUDE ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<h3 style="margin: 40px 0 0"><?php echo lang('PATHS') ?></h3>
+    			<a href="javascript:void(0)" class="list-group-item url-css">
+					<h1 class="pull-left"><i class="fa fa-fw fa-magic"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL css') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_CSS ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>PATH_TEMP</label>
-					<i class="fa fa-question-circle fa-fw path-temp-help"></i>
-				</div>
-			    <div class="inline"><?php echo PATH_TEMP ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item url-js">
+					<h1 class="pull-left"><i class="fa fa-fw fa-code"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL js') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_JS ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>PATH_UPLOAD</label>
-					<i class="fa fa-question-circle fa-fw path-upload-help"></i>
-				</div>
-			    <div class="inline"><?php echo PATH_UPLOAD ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item url-img">
+					<h1 class="pull-left"><i class="fa fa-fw fa-picture-o"></i></h1>
+					<span class="label label-danger pull-right">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL images') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo URL_IMG ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>PATH_INCLUDE</label>
-					<i class="fa fa-question-circle fa-fw path-include-help"></i>
-				</div>
-			    <div class="inline"><?php echo PATH_INCLUDE ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item path-temp">
+					<h1 class="pull-left"><i class="fa fa-fw fa-angle-double-right"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Temporary path') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_TEMP ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>PATH_CSS</label>
-					<i class="fa fa-question-circle fa-fw path-css-help"></i>
-				</div>
-			    <div class="inline"><?php echo PATH_CSS ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item path-upload">
+					<h1 class="pull-left"><i class="fa fa-fw fa-angle-double-right"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Uploads path') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_UPLOAD ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>PATH_JS</label>
-					<i class="fa fa-question-circle fa-fw path-js-help"></i>
-				</div>
-			    <div class="inline"><?php echo PATH_JS ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item path-include">
+					<h1 class="pull-left"><i class="fa fa-fw fa-angle-double-right"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Includes path') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_INCLUDE ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>PATH_IMG</label>
-					<i class="fa fa-question-circle fa-fw path-img-help"></i>
-				</div>
-			    <div class="inline"><?php echo PATH_IMG ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item path-css">
+					<h1 class="pull-left"><i class="fa fa-fw fa-angle-double-right"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Path css') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_CSS ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px; word-break: break-all">
-					<label>PATH_HTML_COMPONENTS</label>
-					<i class="fa fa-question-circle fa-fw path-html-components-help"></i>
-				</div>
-			    <div class="inline" style="vertical-align:top"><?php echo PATH_HTML_COMPONENTS ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item path-js">
+					<h1 class="pull-left"><i class="fa fa-fw fa-angle-double-right"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Path js') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_JS ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<h3 style="margin: 40px 0 0"><?php echo lang('Session') ?></h3>
+    			<a href="javascript:void(0)" class="list-group-item path-img">
+					<h1 class="pull-left"><i class="fa fa-fw fa-angle-double-right"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('Path images') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_IMG ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>user_group</label>
-					<i class="fa fa-question-circle fa-fw session-user-group-help"></i>
-				</div>
-			    <div class="inline"><?php echo $this->session->userdata('user_group') ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item path-html-components">
+					<h1 class="pull-left"><i class="fa fa-fw fa-puzzle-piece"></i></h1>
+					<span class="label label-info pull-right">Path</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('HTML components path') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo PATH_HTML_COMPONENTS ?></div>
+    					<div class="text-muted"><small><?php echo lang('File')?>: application/config/<?php echo ENVIRONMENT ?>/app_settings.php</small></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>user_name</label>
-					<i class="fa fa-question-circle fa-fw session-user-name-help"></i>
-				</div>
-			    <div class="inline"><?php echo $this->session->userdata('user_name') ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item session-url-default">
+					<h1 class="pull-left"><i class="fa fa-fw fa-home"></i></h1>
+					<span class="label label-warning pull-right">Session</span>
+					<span class="label label-danger pull-right" style="margin-right: 5px">URL</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL user home') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo $this->session->userdata('url_default') ?></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>email</label>
-					<i class="fa fa-question-circle fa-fw session-email-help"></i>
-				</div>
-			    <div class="inline"><?php echo $this->session->userdata('email') ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item session-user-group">
+					<h1 class="pull-left clearfix"><i class="fa fa-fw fa-users"></i></h1>
+					<span class="label label-warning pull-right">Session</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('User group') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo $this->session->userdata('user_group') ?></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>user_img</label>
-					<i class="fa fa-question-circle fa-fw session-user-img-help"></i>
-				</div>
-			    <div class="inline"><?php echo $this->session->userdata('user_img') ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item session-user-name">
+					<h1 class="pull-left"><i class="fa fa-fw fa-child"></i></h1>
+					<span class="label label-warning pull-right">Session</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('User name') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo $this->session->userdata('user_name') ?></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>language</label>
-					<i class="fa fa-question-circle fa-fw session-language-help"></i>
-				</div>
-			    <div class="inline"><?php echo $this->session->userdata('language') ?></div>
-			</div>
+    			<a href="javascript:void(0)" class="list-group-item session-email">
+					<h1 class="pull-left"><i class="fa fa-fw fa-envelope-o"></i></h1>
+					<span class="label label-warning pull-right">Session</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('User email') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo $this->session->userdata('email') ?></div>
+    				</div>
+    			</a>
 
-			<div style="margin: 20px 0">
-				<div class="inline" style="width: 150px">
-					<label>url_default</label>
-					<i class="fa fa-question-circle fa-fw session-url-default-help"></i>
-				</div>
-			    <div class="inline"><?php echo $this->session->userdata('url_default') ?></div>
-			</div>				
+    			<a href="javascript:void(0)" class="list-group-item session-user-img">
+					<h1 class="pull-left"><i class="fa fa-fw fa-picture-o"></i></h1>
+					<span class="label label-warning pull-right">Session</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('URL user image') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div>
+    						<?php 
+    						if( $this->session->userdata('user_img') == '') 
+    							echo lang('No image');
+    						else
+    							echo $this->session->userdata('user_img'); 
+    						?>
+    					</div>
+    				</div>
+    			</a>
+
+    			<a href="javascript:void(0)" class="list-group-item session-language">
+					<h1 class="pull-left"><i class="fa fa-fw fa-language"></i></h1>
+					<span class="label label-warning pull-right">Session</span>
+    				<h5 class="list-group-item-heading">
+    					<span><?php echo lang('User language') ?></span>
+    				</h5>
+    				<div class="list-group-item-text">
+    					<div><?php echo $this->session->userdata('language') ?></div>
+    				</div>
+    			</a>
+
+			</div>		
 		
 		</div>
 
-		<div class="col-sm-12 col-lg-4">
+		<div class="col-sm-5 col-lg-5">
 
-			<div class="panel panel-info">
-	    		<div class="panel-heading"><?php echo lang('Settings files') ?></div>
+			<div class="panel panel-primary">
+	    		
+	    		<div class="panel-heading">
+	    			<?php echo lang('Settings files') ?>
+	    			<i class="fa fa-fw fa-cogs"></i>
+	    		</div>
+
 	    		<div class="panel-body">
-	    			<label><?php echo lang('Application settings') ?>:</label>
-	    			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/app_settings.php</div>
+	    			<label><?php echo lang('Application settings') ?></label>
+	    			<div>application/config/<?php echo ENVIRONMENT ?>/<strong>app_settings.php</strong></div>
 
-	    			<label style="margin-top: 20px"><?php echo lang('Databases') ?>:</label>
-	    			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/database.php</div>
+	    			<label style="margin-top: 20px"><?php echo lang('Databases') ?></label>
+	    			<div>application/config/<?php echo ENVIRONMENT ?>/<strong>database.php</strong></div>
 
-	    			<label style="margin-top: 20px"><?php echo lang('Routes (URLs)') ?>:</label>
-	    			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/routes.php</div>
+	    			<label style="margin-top: 20px"><?php echo lang('Routes (URLs)') ?></label>
+	    			<div>application/config/<?php echo ENVIRONMENT ?>/<strong>routes.php</strong></div>
 
-	    			<label style="margin-top: 20px"><?php echo lang('Email settings') ?>:</label>
-	    			<div><i class="fa fa-file-text-o fa-fw"></i> applications/config/<?php echo ENVIRONMENT ?>/email.php</div>
+	    			<label style="margin-top: 20px"><?php echo lang('Email settings') ?></label>
+	    			<div>application/config/<?php echo ENVIRONMENT ?>/<strong>email.php</strong></div>
 	    		</div>
 	    	</div>
 
@@ -253,272 +373,352 @@
 
 </div>
 
-<div class="code-environment hide">
-	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo ENVIRONMENT; ?&gt;</code>
-	</div>
-	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#ENVIRONMENT').val();</code>
-	</div>
-</div>
+<!-- html popovers content  -->
 
 <div class="code-app-name hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo APP_NAME; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo APP_NAME; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#APP_NAME').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#APP_NAME').val();</pre>
+	</div>
+</div>
+
+<div class="code-environment hide">
+	<div>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo ENVIRONMENT; ?&gt;</pre>
+	</div>
+	<div style="margin: 10px 0 0">
+		<small><strong>JQuery</strong></small>
+		<pre>$('#ENVIRONMENT').val();</pre>
+	</div>
+</div>
+
+<div class="code-database-driver hide">
+	<div>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo DB_DRIVER; ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-template hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo TEMPLATE; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo TEMPLATE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#TEMPLATE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#TEMPLATE').val();</pre>
 	</div>
 </div>
 
 <div class="code-language hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo LANGUAGE; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo LANGUAGE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#LANGUAGE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#LANGUAGE').val();</pre>
 	</div>
 </div>
 
 <div class="code-email-from hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo EMAIL_FROM; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo EMAIL_FROM; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#EMAIL_FROM').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#EMAIL_FROM').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-root hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_ROOT; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_ROOT; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_ROOT').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_ROOT').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-upload hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_UPLOAD; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_UPLOAD; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_UPLOAD').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_UPLOAD').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-template hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_TEMPLATE; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_TEMPLATE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_TEMPLATE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_TEMPLATE').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-include hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_INCLUDE; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_INCLUDE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_INCLUDE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_INCLUDE').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-css hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_CSS; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_CSS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_CSS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_CSS').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-js hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_JS; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_JS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_JS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_JS').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-img hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_IMG; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo URL_IMG; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_IMG').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_IMG').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-temp hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_TEMP; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_TEMP; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_TEMP').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_TEMP').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-upload hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_UPLOAD; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_UPLOAD; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_UPLOAD').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_UPLOAD').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-include hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_INCLUDE; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_INCLUDE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_INCLUDE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_INCLUDE').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-css hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_CSS; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_CSS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_CSS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_CSS').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-js hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_JS; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_JS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_JS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_JS').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-img hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_IMG; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_IMG; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_IMG').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_IMG').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-html-components hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_HTML_COMPONENTS; ?&gt;</code>
+		<small><strong>PHP (<?php echo lang('as a constant') ?>)</strong></small>
+		<pre>&lt;?php echo PATH_HTML_COMPONENTS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_HTML_COMPONENTS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_HTML_COMPONENTS').val();</pre>
 	</div>
 </div>
 
 <div class="code-session-user-group hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('user_group'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('user_group'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-user-name hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('user_name'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('user_name'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-email hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('email'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('email'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-user-img hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('user_img'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('user_img'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-language hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('language'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('language'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-url-default hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('url_default'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('url_default'); ?&gt;</pre>
 	</div>
 </div>
 
 <style>
-	code { white-space: normal !important; }
-	.panel-body div { word-break: break-all; }
-	div.inline { word-break: break-all; }
+
+	.list-group-item {
+		cursor: default;
+	}
+
+	.list-group-item-heading {
+		margin-bottom: 5px
+	}
+
+	.list-group-item-text {
+		word-break: break-all;
+	}
+
+	.list-group-item-text .text-muted {
+		margin-top: 5px;
+		word-break: break-all;
+	}
+
+	.list-group-item-heading .label {
+		font-size: 100%;
+	}
+
+	.list-group-item h1 {
+		font-size: 40px;
+		margin: -2px 10px 17px -5px;
+	}
+
+    .panel-body > div {
+        word-break: break-all;
+    }
+
 </style>
 
 <script>
 	
-	// popovers
-    $('.environment-help').popover( {
-        trigger : 'hover',
-        html: true,
-        content: function () { return $(".code-environment").html(); }
+	// ===========
+	// popovers :)
+	// ===========
+	$('.list-group-item').popover( {
+    	trigger : 'hover',
+    	title :  '<?php echo lang('Example of use') ?>:',
+    	container: 'body',
+    	html: true,
+    	content: function () {
+    		var cls = $(this).attr('class').replace('list-group-item ', '');
+    		return $('.code-' + cls).html(); 
+    	}
+	});
+
+	// ======
+    // search
+    // ======
+    $("#search-input").keyup( function() {
+        
+        var exist = false;
+        
+        if($("#search-input").val().length > 2) {
+            
+            $('.list-group-item').each( function() {
+                $(this).hide();                             
+            });
+            
+            var search = $("#search-input").val().toLowerCase();       
+            
+            $('.list-group-item-heading, .list-group-item-text > div:first-child, .list-group-item .label').each( function(index) {
+            
+                var text = $(this).html().toLowerCase();
+                
+                if(text.indexOf(search) != -1) {
+                    exist = true;
+                    $(this).closest('.list-group-item').show();
+                }
+            });
+            
+            if(exist == false)
+                return;
+        
+        } else if($("#search-input").val().length <= 2 || $("#search-input").val().length == '') {
+            $('.list-group-item').each(function(index) { 
+                $(this).show();
+            });
+        }
     });
 
+    /*
     $('.app-name-help').popover( {
         trigger : 'hover',
         html: true,
@@ -662,5 +862,6 @@
         html: true,
         content: function () { return $(".code-session-url-default").html(); }
     });
+*/
 
 </script>

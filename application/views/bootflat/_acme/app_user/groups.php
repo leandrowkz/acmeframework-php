@@ -31,18 +31,18 @@
 
     <div class="row" style="margin-bottom: 15px">
 
-        <div class="col-sm-6 col-lg-8">
+        <div class="col-sm-6 col-lg-5">
 
-            <button class="btn btn-md btn-success" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
+            <div class="input-group" style="margin-bottom: 15px">
+                <input type="text" id="search-groups" class="form-control input-md" placeholder="<?php echo lang('Search groups') ?>" autofocus>
+                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
+            </div>
 
         </div>
 
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-6 col-lg-7">
 
-            <div class="input-group" style="margin-bottom: 10px">
-                <input type="text" id="search-groups" class="form-control input-sm" placeholder="<?php echo lang('Search groups') ?>" autofocus>
-                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
-            </div>
+            <button class="btn btn-md btn-success pull-right" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
 
         </div>
 
@@ -191,8 +191,6 @@ $id_group = get_value($group, 'id_user_group');
             $('.group-name, .group-description').each( function(index) {
             
                 var text = $(this).html().toLowerCase();
-
-                console.log(text);
                 
                 if(text.indexOf(search) != -1) {
                     exist = true;
