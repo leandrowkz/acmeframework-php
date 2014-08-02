@@ -133,7 +133,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			
 			// Adiciona a tabela de dados, as possíveis ações do módulo
 			foreach($this->actions as $action)
-				$table->add_column($this->template->load_html_component('module_action', array($action)));
+				$table->add_column($this->template->load_html_component('module_action', array('action' => $action)));
 
 			// Html da tabela
 			$args['module_table'] = $table->get_html();
@@ -147,7 +147,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	/**
 	* form()
-	* Build form as the database parameters form.
+	* Build form a single form of the given operation. The fields are got from database.
 	* @param string operation		// insert, update, delete, view
 	* @param integer pk_value
 	* @return void
@@ -184,6 +184,9 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 
 		// get pk name
 		$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+
+		// adjust pk value
+		$pk_value = $pk_value == '' ? 0 : $pk_value;
 
 		// Values
 		$values = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
@@ -227,10 +230,24 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	private function _insert($post = array())
 	{
 		if(count($post) > 0) {		
+			
 			// fields names in form must be table_name[field]
 			$data = get_value($post, $this->table_name);
+
+			// adjust data (for empty values)
+			foreach ($data as $column => $value) {
+				
+				$escape = true;
+
+				if($value == '') {
+					$escape = false;
+					$value = 'NULL';
+				}
+
+				$this->db->set($column, $value, $escape);
+			}
 			
-			$this->db->insert($this->table_name, $data);
+			$this->db->insert($this->table_name);
 			
 			$this->log->db_log('Inserção de registro', 'insert', $this->table_name, $data);
 		}
@@ -261,7 +278,21 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			// old data to log
 			$old_data = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
 
-			$this->db->update($this->table_name, $data, array($pk => $pk_value));
+			// adjust data (for empty values)
+			foreach ($data as $column => $value) {
+				
+				$escape = true;
+
+				if($value == '') {
+					$escape = false;
+					$value = 'NULL';
+				}
+
+				$this->db->set($column, $value, $escape);
+			}
+
+			$this->db->where( array($pk => $pk_value) );
+			$this->db->update($this->table_name);
 			
 			$this->log->db_log('Edição de registro', 'update', $this->table_name, array_merge($data, $old_data));
 		}

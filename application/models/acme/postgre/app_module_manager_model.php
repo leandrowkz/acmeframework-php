@@ -33,14 +33,23 @@ class App_Module_Manager_Model extends CI_Model {
 	{
 		$sql = "SELECT DISTINCT
 					   c.column_name,
-					   c.column_key,
+					   pk.column_key,
 					   'N' AS column_not_exists,
 					   c.ordinal_position,
 					   f.*
 				  FROM information_schema.columns c
 			 LEFT JOIN acm_module_form_field      f on (f.table_column = c.column_name and f.id_module_form = $id_form)
+
+			 LEFT JOIN (SELECT CASE WHEN tc.constraint_type = 'PRIMARY KEY' THEN 'PRI' ELSE '' END AS column_key,
+			 				   ccu.column_name
+			 	 		  FROM information_schema.table_constraints         tc
+					 LEFT JOIN information_schema.constraint_column_usage  ccu ON (ccu.constraint_name = tc.constraint_name)
+					     WHERE tc.table_name   = '$table'
+						   AND tc.constraint_type = 'PRIMARY KEY'
+			 ) pk ON (pk.column_name = c.column_name)
+
 				 WHERE c.table_name = '$table'
-				   AND c.table_schema = '" . $this->db->database . "'
+				   AND c.table_catalog = '" . $this->db->database . "'
 							
 			  UNION
 				

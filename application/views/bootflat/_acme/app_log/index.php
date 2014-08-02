@@ -5,6 +5,8 @@
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h1>
                 <?php echo lang($this->label) ?>
+
+                <span><?php echo image($this->url_img) ?></span>
                 
                 <?php if( count ($logs) >= 1000 ) { ?>
                 <i class="fa fa-fw fa-exclamation-circle text-danger" data-placement="right" data-original-title="<?php echo lang('For security reasons you are seeing only 1000 records.')?>"></i>
@@ -309,7 +311,7 @@
         var type = 'error';
         
         // Confirm this shit
-        bootbox.confirm("<?php echo addslashes(message('warning', lang('Warning!'), lang('All error logs will be deleted. Are you sure to remove all error logs ?'))) ?>", function (result) {
+        bootbox.confirm("<?php echo addslashes(str_replace("\n", '', message('warning', lang('Warning!'), lang('All error logs will be deleted. Are you sure to remove all error logs ?')))) ?>", function (result) {
 
             // Cancel
             if( ! result)

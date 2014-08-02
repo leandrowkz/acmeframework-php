@@ -260,7 +260,7 @@ class Array_Table {
 	*/
 	public function process()
 	{
-		$this->html = $this->CI->template->load_html_component('generic_table', array('this' => $this));
+		$this->html = $this->CI->template->load_html_component('generic_table', array('array_table' => $this));
 	}
 	
     /**

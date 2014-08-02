@@ -3,8 +3,10 @@
     <div class="row">
 
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <h1><?php echo lang('Groups') ?>
-            <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+            <h1>
+                <?php echo lang('Groups') ?>
+                <span><?php echo image($this->url_img) ?></span>
+                <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
             </h1>
         </div>
         

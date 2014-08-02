@@ -30,10 +30,11 @@ class ACME_Module_Controller_Model extends CI_Model {
 	*/
 	public function get_pk_name($table = '')
 	{
-		$sql = "SELECT column_name 
-				  FROM information_schema.columns
-				 WHERE table_name = '" . $table . "'
-				   AND column_key = 'PRI'";
+		$sql = "SELECT ccu.column_name
+			      FROM information_schema.table_constraints         tc
+			 LEFT JOIN information_schema.constraint_column_usage  ccu ON (ccu.constraint_name = tc.constraint_name)
+				 WHERE tc.table_name   = '$table'
+				   AND tc.constraint_type = 'PRIMARY KEY'";
 
 		return get_value($this->db->query($sql)->row_array(0), 'column_name');
 	}

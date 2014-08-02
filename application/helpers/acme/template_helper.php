@@ -33,6 +33,19 @@ function message($type = 'info', $title = '', $description = '', $close = false,
 }
 
 /**
+* image()
+* Return the HTML component image, which is responsible for building an img tag, also checking if
+* the given value is a font-awesome icon.
+* @param string url_img
+* @return string html
+*/
+function image($url_img = '')
+{
+	$CI =& get_instance();
+	return $CI->template->image($url_img);
+}
+
+/**
 * app_settings_inputs()
 * Retorna configurações da aplicação no formato de inputs tipo hidden.
 * @return string html

@@ -3,8 +3,10 @@
 	<div class="row">
 
 		<div class="col-xs-12">
-			<h1><?php echo lang($this->label) ?> 
-			<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+			<h1>
+				<?php echo lang($this->label) ?> 
+				<span><?php echo image($this->url_img) ?></span>
+				<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
 			</h1>
 		</div>
 

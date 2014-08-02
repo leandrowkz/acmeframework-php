@@ -45,13 +45,13 @@
 | the active record class
 */
 
-$active_group = 'postgre';
+$active_group = 'mysql';
 $active_record = TRUE;
 
 $tnsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
 			(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XE)))';
 
-$db['mysql']['hostname'] = 'localhost';
+$db['mysql']['hostname'] = '127.0.0.1';
 $db['mysql']['db_port'] = '3306';
 $db['mysql']['username'] = 'root';
 $db['mysql']['password'] = 'mysql';

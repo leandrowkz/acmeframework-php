@@ -52,7 +52,7 @@ class Form {
 			$field['value'] = get_value($values, get_value($field, 'table_column'));
 
 			// add field
-			array_push($html_fields, $CI->template->load_html_component('module_form_field', array($field)));
+			array_push($html_fields, $CI->template->load_html_component('module_form_field', array('field' => $field)));
 			
 		}
 		

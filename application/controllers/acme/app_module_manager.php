@@ -70,8 +70,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 		if( ! $process) {
 			
 			// Dados do modulo
-			$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->result_array();
-			$args['module'] = isset($module[0]) ? $module[0] : array();
+			$args['module'] = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->row_array(0);
 
 			// Carrega camada de visualização
 			$this->template->load_page('_acme/app_module_manager/edit', $args);
@@ -81,6 +80,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 			$data['label'] = $this->input->post('label');
 			$data['description'] = $this->input->post('description');
 			$data['table_name'] = $this->input->post('table_name');
+			$data['url_img'] = $this->input->post('url_img');
 			$data['sql_list'] = $this->input->post('sql_list');
 
 			// Update it!
@@ -494,34 +494,6 @@ class App_Module_Manager  extends ACME_Module_Controller {
 
 		// Adorable return!
 		echo json_encode(array('return' => true));
-	}
-	
-	/**
-	* config_forms()
-	* Página de configurações de formulários de módulos. Nesta página o usuário desenvolvedor
-	* define quais formulários-padrão o módulo poderá ou não utilizar.
-	* @param integer id_module
-	* @return void
-	*/
-	public function config_forms($id_module = 0)
-	{
-		if($this->validation->is_integer_($id_module))
-		{
-			$this->validate_permission('CONFIG_FORMS');
-			
-			// Dados do modulo
-			$module = $this->db->get_where('acm_module', array('id_module' => $id_module))->row_array(0);
-			
-			// Verifica existência da tabela e sql (filtros e outros forms)
-			$args['module'] = $module;
-			$args['table_name'] = get_value($module, 'table_name');
-			$args['sql_list'] = get_value($module, 'sql_list');
-			$args['id_module'] = $id_module;
-			
-			$this->template->load_page('_acme/acme_module_manager/config_forms', $args);
-		} else {
-			redirect('acme_module_manager');
-		}
 	}
 	
 }

@@ -273,6 +273,24 @@ CREATE TABLE acm_user_permission
 	CONSTRAINT FK_acm_user_permission_acm_module_permission FOREIGN KEY (id_module_permission) REFERENCES acm_module_permission (id_module_permission) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+<<|SEPARATOR|>>
+-- -----------------------------------------------------
+--  DML for Sequences
+-- -----------------------------------------------------
+ALTER SEQUENCE acm_log_error_id_log_error_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_log_id_log_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_menu_id_menu_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_action_id_module_action_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_form_field_id_module_form_field_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_form_id_module_form_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_id_module_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_menu_id_module_menu_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_permission_id_module_permission_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_config_id_user_config_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_group_id_user_group_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_id_user_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_permission_id_user_permission_seq RESTART WITH 300;
+
 
 <<|SEPARATOR|>>
 -- -----------------------------------------------------
@@ -300,9 +318,9 @@ INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app_dashbo
 --  INSERTS for Table acm_menu
 -- -----------------------------------------------------
 INSERT INTO acm_menu VALUES (2,NULL,1,NULL,'{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-fw fa-home"></i>',10);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (1,NULL,1,'System',NULL,NULL,'<i class="fa fa-fw fa-cube"></i>',20);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (3,1,1,'Modules',NULL,NULL,'<i class="fa fa-fw fa-archive"></i>',30);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (4,3,1,'Administration','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-fw fa-wrench"></i>',40);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (1,NULL,1,'System',NULL,NULL,'<i class="fa fa-fw fa-cog"></i>',20);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (3,1,1,'Modules',NULL,NULL,'<i class="fa fa-fw fa-cube"></i>',30);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (4,3,1,'Administration','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-fw fa-cubes"></i>',40);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (5,3,1,'Module maker','{URL_ROOT}/app_module_maker/',NULL,'<i class="fa fa-fw fa-flask"></i>',50);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (6,1,1,'Settings','{URL_ROOT}/app_config/',NULL,'<i class="fa fa-fw fa-cogs"></i>',60);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (7,1,1,'Logs','{URL_ROOT}/app_log/',NULL,'<i class="fa fa-fw fa-tags"></i>',70);<<|SEPARATOR|>>
@@ -315,13 +333,13 @@ INSERT INTO acm_menu VALUES (9,1,1,'Users','{URL_ROOT}/app_user/',NULL,'<i class
 -- -----------------------------------------------------
 --  INSERTS for Table acm_module
 -- -----------------------------------------------------
-INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administration',NULL,'<i class="fa fa-wrench fa-fw"></i>','Application modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Module maker',NULL,'<i class="fa fa-flask fa-fw"></i>','Create new modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Users',NULL,'<i class="fa fa-users fa-fw"></i>','Manage groups and users',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-dashboard fa-fw"></i>','General statistics',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Application logs',NULL,'<i class="fa fa-tags fa-fw"></i>','Activities and errors',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus',NULL,'<i class="fa fa-tasks fa-fw"></i>','Manage application menus',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Settings',NULL,'<i class="fa fa-cogs fa-fw"></i>','See settings and session',CURRENT_TIMESTAMP);
+INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administration',NULL,'<i class="fa fa-fw fa-cubes"></i>','Application modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Module maker',NULL,'<i class="fa fa-fw fa-flask"></i>','Create new modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Users',NULL,'<i class="fa fa-fw fa-users"></i>','Manage groups and users',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-fw fa-home"></i>','General statistics',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Application logs',NULL,'<i class="fa fa-fw fa-tags"></i>','Activities and errors',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus',NULL,'<i class="fa fa-fw fa-tasks"></i>','Manage application menus',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Settings',NULL,'<i class="fa fa-fw fa-cogs"></i>','See settings and session',CURRENT_TIMESTAMP);
 
 
 <<|SEPARATOR|>>

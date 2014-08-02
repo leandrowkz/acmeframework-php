@@ -5,6 +5,7 @@
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h1>
                 <?php echo lang('Profile') ?>
+                <span><i class="fa fa-fw fa-user"></i></span>
                 <small>// <?php echo lang('User information') ?></small>
             </h1>
         </div>

@@ -3,8 +3,10 @@
 	<div class="row">
 
 		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-			<h1><?php echo lang($this->label) ?>
-			<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+			<h1>
+				<?php echo lang($this->label) ?>
+				<span><?php echo image($this->url_img) ?></span>
+				<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
 			</h1>
 		</div>
 		
@@ -38,7 +40,7 @@
 
 				<div class="col-sm-6 col-lg-5">
 
-					<div class="input-group" style="margin-bottom: 10px">
+					<div class="input-group" style="margin-bottom: 15px">
 	                    <input type="text" id="search-module" class="form-control input-md" placeholder="<?php echo lang('Search modules') ?>">
 	                    <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
 					</div>
@@ -56,9 +58,23 @@
 						<?php foreach($modules as $module) { ?>
 					   	
 					   	<a href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module')?>" class="list-group-item" title="<?php echo lang('Configurações do módulo') ?>">
+
+					   		<div class="module-img inline top"><?php echo image(get_value($module, 'url_img')) ?></div>
+					   		
 					   		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
-					       	<h5 class="list-group-item-heading"><?php echo get_value($module, 'label') ?></h5>
-					      	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
+					       	
+					       	<div class="inline">
+						       	
+						       	<h5 class="list-group-item-heading">
+						       		
+						       		<?php echo get_value($module, 'label') ?>
+
+						       	</h5>
+						      	
+						      	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
+
+					     	 </div>
+
 					   	</a>
 
 			            <?php } ?>
@@ -74,6 +90,26 @@
 	</div>
 
 </div>
+
+<style>
+
+.module-img {
+	min-width: 55px;
+}
+
+.module-img img {
+	vertical-align: top;
+	max-width: 32px;
+	margin: 0 0 0 5px;
+}
+
+.module-img i {
+	font-size: 32px;
+	vertical-align: top;
+	margin-right: 10px;
+}
+
+</style>
 
 <script>
 
@@ -93,12 +129,10 @@
 			$('.modules .list-group-item h5, .modules .list-group-item p').each( function(index) {
 			
 				var text = $(this).text().toLowerCase();
-
-				// alert(text);
 				
 				if(text.indexOf(search) != -1) {
 					exist = true;
-					$(this).parent().show();
+					$(this).closest('.list-group-item').show();
 				}
 			});
 			

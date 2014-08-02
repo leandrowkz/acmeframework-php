@@ -50,7 +50,7 @@ class App_Access extends ACME_Core_Controller {
 		// $conn = oci_connect('tapmanager', 'tapmanager', 'localhost/XE');
 
 		/*
-		$script = file_get_contents('application/core/acme/engine_files/installer_dump_postgres.sql');
+		$script = file_get_contents('application/core/acme/engine_files/installer_dump_' . DB_DRIVER . '.sql');
 
 		$statements = explode('<<|SEPARATOR|>>', $script);
 

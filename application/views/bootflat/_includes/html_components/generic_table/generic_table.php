@@ -1,99 +1,99 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* generic_table()
+* generic_table.php
+* 
+* This HTML component build the given table for object $array_table. Is is loaded when the call
+* $this->array_table->get_html(); is triggered.
 *
-* Builds a generic HTML table with the given data from array_table object. When the process() method
-* is called, this component is loaded.
+* @param    object $array_table
+* @since    28/06/2013
 *
-* This component uses the plugin dataTables for better improvement and features.
-*
-* @param object array_table
-* @return string html
-*
+* --------------------------------------------------------------------------------------------------
 */
-function generic_table($array_table = array())
-{
-    
-    if( count($array_table->data) > 0 ) {
+?>
+
+<?php if( count($array_table->data) > 0 ) { ?>
+
+<div class="table-responsive">
 	
-	$html = '
-	<div class="table-responsive">
-	
-		<div class="dataTables_wrapper form-inline" role="grid">
+	<div class="dataTables_wrapper form-inline" role="grid">
 		
-			<table class="table table-hover table-bordered no-footer ' . $array_table->class . '" id="' . $array_table->id . '">
-                
-                <thead>
+		<table class="table table-hover table-bordered no-footer <?php echo $array_table->class ?>" id="<?php echo $array_table->id ?>">
+            
+            <thead>
                     
-                    <tr role="row">';
+                <tr role="row">
 
-	                    // add columns before
-	                    for( $i = 0; $i < count($array_table->columns_before); $i++ )
-	    					$html .= '<th tabindex="0" rowspan="1" colspan="1" style="width: 01%"></th>';
+                    <?php
+                    // add columns before
+                    for( $i = 0; $i < count($array_table->columns_before); $i++ ) { ?>
+	    			    <th tabindex="0" rowspan="1" colspan="1" style="width: 01%"></th>
+                    <?php } ?>
 
-	    				// proccess table header
-	    				foreach ($array_table->data[0] as $index => $value)
-	    					$html .= '<th class="sorting" tabindex="0" rowspan="1" colspan="1">' . $index . '</th>';
+                    <?php 
+	    			// proccess table header
+	    			foreach ($array_table->data[0] as $index => $value) { ?>
+	    				<th class="sorting" tabindex="0" rowspan="1" colspan="1"><?php echo  $index ?></th>
+                    <?php } ?>
 
-	    				// add columns after
-	                    for( $i = 0; $i < count($array_table->columns_after); $i++ )
-	    					$html .= '<th tabindex="0" rowspan="1" colspan="1" style="width: 01%"></th>';
+                    <?php
+	    			// add columns after
+                    for( $i = 0; $i < count($array_table->columns_after); $i++ ) { ?>
+	    			    <th tabindex="0" rowspan="1" colspan="1" style="width: 01%"></th>
+                    <?php } ?>
 
-          			$html .= '
-          			</tr>
+          		</tr>
 
-          		</thead>
+          	</thead>
 
-          		<tbody>';
+            <tbody>
 
+                <?php
           		// now, proccess table lines
-          		foreach ($array_table->data as $data) {
+          		foreach ($array_table->data as $data) { ?>
+          			<tr class="gradeA">
 
-          			$html .= '
-          			<tr class="gradeA">';
-
+                    <?php    
           			// process columns before
-          			foreach($array_table->columns_before as $index => $value)
-          				$html .= '<td>' . array_tag_replace($value, $data) . '</td>';
+          			foreach($array_table->columns_before as $index => $value) { ?>
+          				<td><?php echo array_tag_replace($value, $data) ?></td>
+                    <?php } ?>
 
+                    <?php
           			// process columns from table data
-          			foreach ($data as $column => $value)
-          				$html .= '<td>' . $value . '</td>';
+          			foreach ($data as $column => $value) { ?>
+          				<td><?php echo $value ?></td>
+                    <?php } ?>
 
+                    <?php
           			// process columns after
-          			foreach($array_table->columns_after as $index => $value)
-          				$html .= '<td>' . array_tag_replace($value, $data) . '</td>';
+          			foreach($array_table->columns_after as $index => $value) { ?>
+          				<td><?php echo array_tag_replace($value, $data) ?></td>
+                    <?php } ?>
 
-          			$html .= '
-          			</tr>';
-          		}
+          			</tr>
+          		<?php } ?>
 
-          		$html .= '
-          		</tbody>
+      		</tbody>
 
-          	</table>
+      	</table>
 
-        </div>
+    </div>
 
-    </div>';
-
-    // now the motherf*** script 
-    $html .= '
+</div>
     
-    <link type="text/css" rel="stylesheet" href="' . URL_CSS . '/plugins/dataTables/dataTables.bootstrap.css" />
-    <script src="' . URL_JS . '/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="' . URL_JS . '/plugins/dataTables/dataTables.bootstrap.js"></script>
-    
-    <script>
+<link type="text/css" rel="stylesheet" href="<?php echo URL_CSS ?>/plugins/dataTables/dataTables.bootstrap.css" />
 
-    	$("#' . $array_table->id . '").dataTable();
+<script src="<?php echo URL_JS ?>/plugins/dataTables/jquery.dataTables.js"></script>
     
-    </script>';
-	
-	} else { 
-		$html = message('info', '', lang('There is no content for this query'));
-	}
-	
-	return $html;
-}
+<script src="<?php echo URL_JS ?>/plugins/dataTables/dataTables.bootstrap.js"></script>
+    
+<script>
+
+	$("#<?php echo $array_table->id ?>").dataTable();
+
+</script>
+
+<?php } else { echo message('info', '', lang('There is no content for this query')); } ?>

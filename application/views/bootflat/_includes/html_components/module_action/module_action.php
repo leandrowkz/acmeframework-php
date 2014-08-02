@@ -1,22 +1,44 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* module_action()
+* module_action.php
+* 
+* This HTML component build an action (icon, link) that will be placed on each row of module 
+* list (sql_list).
 *
-* Monta o conteúdo da coluna de ação de listagem de SQL do módulo.
+* An $action is something like:
 *
-* @param array $action
-* @return string html
+*		$action = array(
+*			[id_module_action] => 2
+*			[id_module] => 0
+*			[label] => 
+*			[link] => {URL_ROOT}/app_dashboard
+*			[target] => 
+*			[url_img] => <i class="fa fa-fw fa-home"></i>
+*		)
 *
+* @param    array $action
+* @since    28/06/2013
+*
+* --------------------------------------------------------------------------------------------------
 */
-function module_action($action = array())
-{
-	$html  = '<a href="' . tag_replace(get_value($action, 'link')) . '"';
-	$html .= (get_value($action, 'target') != '') ? ' target="' . get_value($action, 'target') . '"' : '';
-	$html .= ">";
-	$html .= (get_value($action, 'url_img') != '') ? '<img src="' . tag_replace(get_value($action, 'url_img')) . '" />' : '';
-	$html .= (get_value($action, 'url_img') == '') ? get_value($action, 'label') : '';
-	$html .= '</a>';
+?>
 
-	return $html;
-}
+<?php 
+
+// Adjust target
+$target = (get_value($action, 'target') != '') ? ' target="' . get_value($action, 'target') . '"' : ''; 
+
+// Image also can be a font-awesome - know more on fontawesome.github.io/Font-Awesome/
+if(stristr(get_value($action, 'url_img'), 'class="fa'))
+	$img = get_value($action, 'url_img');
+else
+	$img = (file_exists(tag_replace(get_value($action, 'url_img'))) && get_value($action, 'url_img') != '') ? '<img src="' . tag_replace(get_value($action, 'url_img')) . '" style="display:block !important;" />' : '';
+
+?>
+
+<a href="<?php echo tag_replace(get_value($action, 'link')) ?>" <?php echo $target ?>>
+	<?php echo $img ?>
+	<?php echo get_value($action, 'label') ?>
+</a>
