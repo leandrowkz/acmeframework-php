@@ -25,7 +25,7 @@
 
 				<ul class="dropdown-menu">
 					
-					<li><a href="<?php echo URL_ROOT ?>/app_module_maker"><?php echo lang('Novo módulo')?> <i class="fa fa-plus-circle fa-fw"></i></a></li>
+					<li><a href="<?php echo URL_ROOT ?>/app_module_maker"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('Novo módulo')?></a></li>
 					
 					<?php 
                     foreach ($this->menus as $menu) { 
@@ -37,7 +37,7 @@
                     $img = image(get_value($menu, 'url_img'));
 
                     ?>
-                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $label . ' ' . $img ?></a></li>
+                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
                     <?php } ?>
 
 				</ul>

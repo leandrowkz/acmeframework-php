@@ -31,8 +31,8 @@
 
                 <ul class="dropdown-menu">
                     
-                    <li><a href="<?php echo URL_ROOT ?>/app_log"><?php echo lang('Refresh')?> <i class="fa fa-fw fa-refresh"></i></a></li>
-                    <li><a href="javascript:void(0)" class="remove-all"><?php echo lang('Remove all errors')?> <i class="fa fa-fw fa-warning"></i></a></li>
+                    <li><a href="<?php echo URL_ROOT ?>/app_log"><i class="fa fa-fw fa-refresh"></i> <?php echo lang('Refresh')?></a></li>
+                    <li><a href="javascript:void(0)" class="remove-all"><i class="fa fa-fw fa-warning"></i> <?php echo lang('Remove all errors')?></a></li>
 
                     <?php 
                     foreach ($this->menus as $menu) { 
@@ -44,7 +44,7 @@
                     $img = image(get_value($menu, 'url_img'));
 
                     ?>
-                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $label . ' ' . $img ?></a></li>
+                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
                     <?php } ?>
 
                 </ul>

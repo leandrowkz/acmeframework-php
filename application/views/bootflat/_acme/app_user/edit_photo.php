@@ -71,7 +71,7 @@
 
         <div class="row" id="user-profile-name">
             <div class="col-sm-12">
-                <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
+                <h1 style="margin: 0 0 10px 0"><?php echo get_value($user, 'name') ?></h1>
             </div>
         </div>
         
@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <h3><?php echo lang('Alterar imagem')?></h3>
+        <h3 style="margin: 30px 0 30px 0"><?php echo lang('Alterar imagem')?></h3>
 
         <div class="row" style="margin-top:20px">
             

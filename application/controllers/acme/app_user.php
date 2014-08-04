@@ -152,18 +152,26 @@ class App_User extends ACME_Module_Controller {
 	public function edit($id_user = 0, $process = false)
 	{		
 		$this->validate_permission('UPDATE');
-
-		if($id_user == 0 || $id_user == '')
-			redirect('app_user');
 		
-		// New user form
+		// Edit user form
 		if( ! $process) {
 			
-			$args['user'] = $this->app_user_model->get_user($id_user);
+			// user data
+			$user = $this->app_user_model->get_user($id_user);
 
+			// check if user exist
+			if( count($user) <= 0 )
+				redirect('app_user');
+
+			// get all groups for select
 			$groups = $this->db->select('id_user_group, name')->from('acm_user_group')->order_by('name')->get()->result_array();
 			
-			$args['options'] = $this->form->build_select_options($groups, get_value($args['user'], 'id_user_group'));
+			// build options html
+			$options = $this->form->build_select_options($groups, get_value($user, 'id_user_group'));
+
+			// vars for view
+			$args['user'] = $user;
+			$args['options'] = $options;
 
 			$this->template->load_page('_acme/app_user/edit', $args);
 
@@ -200,13 +208,20 @@ class App_User extends ACME_Module_Controller {
 	{
 		$this->validate_permission('PERMISSION_MANAGER');
 
-		if($id_user == 0 || $id_user == '')
+		// get user data
+		$user = $this->app_user_model->get_user($id_user);
+
+		// check if user exist
+		if ( count($user) <= 0 )
 			redirect('app_user');
 		
-		$args['permissions'] =  $this->app_user_model->get_permissions($id_user);
-		
-		$args['user'] = $this->app_user_model->get_user($id_user);
-		
+		// get all permissions for this user
+		$permissions =  $this->app_user_model->get_permissions($id_user);
+
+		// vars for view
+		$args['user'] = $user;
+		$args['permissions'] = $permissions;
+
 		// Load view
 		$this->template->load_page('_acme/app_user/permissions', $args);
 	}

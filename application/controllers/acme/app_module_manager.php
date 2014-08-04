@@ -49,11 +49,14 @@ class App_Module_Manager  extends ACME_Module_Controller {
 		$this->validate_permission('CONFIG');
 		
 		// Dados do modulo
-		$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->result_array();
-		$args['module'] = isset($module[0]) ? $module[0] : array();
+		$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->row_array(0);
+		
+		// Check if module exist
+		if( count($module) <= 0 )
+			redirect('app_module_manager');
 		
 		// Carrega camada de visualização
-		$this->template->load_page('_acme/app_module_manager/config', $args);
+		$this->template->load_page('_acme/app_module_manager/config', array('module' => $module));
 	}
 
 	/**
@@ -70,10 +73,14 @@ class App_Module_Manager  extends ACME_Module_Controller {
 		if( ! $process) {
 			
 			// Dados do modulo
-			$args['module'] = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->row_array(0);
+			$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->row_array(0);
+
+			// Check if module exist
+			if( count($module) <= 0 )
+				redirect('app_module_manager');
 
 			// Carrega camada de visualização
-			$this->template->load_page('_acme/app_module_manager/edit', $args);
+			$this->template->load_page('_acme/app_module_manager/edit', array('module' => $module));
 		} else {
 
 			// Proccess update form

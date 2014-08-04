@@ -70,7 +70,7 @@
 
         <div class="row" id="user-profile-name">
             <div class="col-sm-12">
-                <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
+                <h1 style="margin:0 0 10px 0"><?php echo get_value($user, 'name') ?></h1>
             </div>
         </div>
         

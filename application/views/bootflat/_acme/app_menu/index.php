@@ -37,7 +37,7 @@
                     $img = image(get_value($menu, 'url_img'));
 
                     ?>
-                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $label . ' ' . $img ?></a></li>
+                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
                     <?php } ?>
                 </ul>
 
