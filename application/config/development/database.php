@@ -45,7 +45,7 @@
 | the active record class
 */
 
-$active_group = 'mysql';
+$active_group = 'postgre';
 $active_record = TRUE;
 
 $tnsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))

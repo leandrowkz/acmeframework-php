@@ -42,11 +42,12 @@ class ACME_Module_Controller_Model extends CI_Model {
 	/**
 	* insert()
 	* Insere registro na tabela do modulo.
+	* @param string table
 	* @param array data
 	* @return mixed result
 	*/
-	public function insert($data = array())
-	{
+	public function insert($table = '', $data = array())
+	{	
 		// Ajusta array dados
 		foreach($data as $column => $value)
 		{
@@ -54,29 +55,26 @@ class ACME_Module_Controller_Model extends CI_Model {
 			{
 				$value = 'NULL';
 				$escape = false;
+			
 			} else {
-				// Verifica se valor é date e o converte corretamente
-				if(is_date_format($value))
-				{ 
-					$arrdate = explode('/', $value);
-					$value = $arrdate[2] . '-' . $arrdate[1] . '-' . $arrdate[0];
-				}
 				$escape = true;
 			}
+			
 			$this->db->set($column, $value, $escape);
 		}
-		$result = $this->db->insert($this->table);
-		return $result;
+		
+		return $this->db->insert($table);
 	}
 	
 	/**
 	* update()
 	* Altera registro(s) na tabela do modulo.
+	* @param string table
 	* @param array data
-	* @param mixed where (pode ser array('id' => $id)... ou string "id = 1")
+	* @param mixed where (it can be array('id' => $id)... or string "id = 1")
 	* @return mixed result
 	*/
-	public function update($data = array(), $where = array())
+	public function update($table = '', $data = array(), $where = array())
 	{
 		// Ajusta array dados
 		foreach($data as $column => $value)
@@ -85,19 +83,16 @@ class ACME_Module_Controller_Model extends CI_Model {
 			{
 				$value = 'NULL';
 				$escape = false;
+
 			} else {
-				// Verifica se valor é date e o converte corretamente
-				if(is_date_format($value))
-				{ 
-					$arrdate = explode('/', $value);
-					$value = $arrdate[2] . '-' . $arrdate[1] . '-' . $arrdate[0];
-				}
 				$escape = true;
 			}
+			
 			$this->db->set($column, $value, $escape);
 		}
+		
 		$this->db->where($where);
-		$result = $this->db->update($this->table);
-		return $result;
+		
+		return $this->db->update($table);
 	}
 }

@@ -268,7 +268,9 @@
     // =========
     // dataTable
     // =========
-    $('#table-logs').dataTable();
+    $('#table-logs').dataTable({
+        'ordering' : false
+    });
 
     // ===============
     // remove callback

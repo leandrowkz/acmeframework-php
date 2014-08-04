@@ -165,6 +165,9 @@
                     mask: '99.999.999/9999-99'
                 },
                 'date': {
+                    mask: '9999-19-39'
+                }, 
+                'date-ptb': {
                     mask: '39/19/9999'
                 }, // uk date
                 'date-us': {
@@ -183,6 +186,11 @@
                     mask: '999999999999'
                 },
                 'decimal': {
+                    mask: '99.9999999999',
+                    type: 'reverse',
+                    defaultValue: '000'
+                },
+                'decimal-ptb': {
                     mask: '99,999.999.999.999',
                     type: 'reverse',
                     defaultValue: '000'

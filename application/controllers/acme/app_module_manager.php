@@ -251,7 +251,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				
 				$data['id_module'] = $id_module;
 				$data['link'] = '{URL_ROOT}/' . get_value($module, 'controller') . '/form/insert';
-				$data['label'] = lang('New record');
+				$data['label'] = lang('Insert');
 				$data['order_'] = 10;
 				$this->db->insert('acm_module_menu', $data);
 				
