@@ -45,27 +45,61 @@
 | the active record class
 */
 
-$active_group = 'default';
+$active_group = 'postgre';
 $active_record = TRUE;
 
 $tnsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
 			(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XE)))';
 
-$db['default']['hostname'] = $tnsname;
-$db['default']['username'] = 'acmeengine';
-$db['default']['password'] = 'acmeengine';
-$db['default']['database'] = '';
-$db['default']['dbdriver'] = 'oci8';
-$db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
-$db['default']['cache_on'] = FALSE;
-$db['default']['cachedir'] = '';
-$db['default']['char_set'] = 'utf8';
-$db['default']['dbcollat'] = 'utf8_general_ci';
-$db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['mysql']['hostname'] = '127.0.0.1';
+$db['mysql']['db_port'] = '3306';
+$db['mysql']['username'] = 'root';
+$db['mysql']['password'] = 'mysql';
+$db['mysql']['database'] = 'acme_test';
+$db['mysql']['dbdriver'] = 'mysql';
+$db['mysql']['dbprefix'] = '';
+$db['mysql']['pconnect'] = TRUE;
+$db['mysql']['db_debug'] = TRUE;
+$db['mysql']['cache_on'] = FALSE;
+$db['mysql']['cachedir'] = '';
+$db['mysql']['char_set'] = 'utf8';
+$db['mysql']['dbcollat'] = 'utf8_general_ci';
+$db['mysql']['swap_pre'] = '';
+$db['mysql']['autoinit'] = TRUE;
+$db['mysql']['stricton'] = FALSE;
+
+$db['postgre']['hostname'] = 'localhost';
+$db['postgre']['db_port'] = '5432';
+$db['postgre']['username'] = 'postgres';
+$db['postgre']['password'] = 'postgre';
+$db['postgre']['database'] = 'acme_test';
+$db['postgre']['dbdriver'] = 'postgre';
+$db['postgre']['dbprefix'] = '';
+$db['postgre']['pconnect'] = TRUE;
+$db['postgre']['db_debug'] = TRUE;
+$db['postgre']['cache_on'] = FALSE;
+$db['postgre']['cachedir'] = '';
+$db['postgre']['char_set'] = 'utf8';
+$db['postgre']['dbcollat'] = 'utf8_general_ci';
+$db['postgre']['swap_pre'] = '';
+$db['postgre']['autoinit'] = TRUE;
+$db['postgre']['stricton'] = FALSE;
+
+$db['oci8']['hostname'] = $tnsname;
+$db['oci8']['username'] = 'acmeengine';
+$db['oci8']['password'] = 'acmeengine';
+$db['oci8']['database'] = '';
+$db['oci8']['dbdriver'] = 'oci8';
+$db['oci8']['dbprefix'] = '';
+$db['oci8']['pconnect'] = TRUE;
+$db['oci8']['db_debug'] = TRUE;
+$db['oci8']['cache_on'] = FALSE;
+$db['oci8']['cachedir'] = '';
+$db['oci8']['char_set'] = 'utf8';
+$db['oci8']['dbcollat'] = 'utf8_general_ci';
+$db['oci8']['swap_pre'] = '';
+$db['oci8']['autoinit'] = TRUE;
+$db['oci8']['stricton'] = FALSE;
 
 
 /* End of file database.php */

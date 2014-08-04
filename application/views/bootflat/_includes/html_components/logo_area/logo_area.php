@@ -1,17 +1,21 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* logo_area()
+* logo_area.php
+* 
+* This HTML component build a logo area that will contain application logo inside it.
 *
-* Retorna a área de logo da aplicação.
+* It is loaded by the call $this->template->load_logo_area();
 *
-* @param string link_url
-* @return string html
+* @param 	string $url		// user's url default (home)
+* @since 	28/06/2013
+*
+* --------------------------------------------------------------------------------------------------
 */
-function logo_area ($url = '')
-{
-	if( ! file_exists(URL_IMG . '/logo.png'))
-		return '<div class="navbar-brand"><a href="' . $url . '">' . APP_NAME . '</a></div>';
-	else
-        return '<div class="navbar-brand"><a href="' . $url . '"><img src="' . URL_IMG . '/logo.png" /></a></div>';
-}
+?>
+<?php if( ! file_exists(URL_IMG . '/logo.png') ) { ?>
+	<div class="navbar-brand"><a href="<?php echo $url ?>"><?php echo APP_NAME ?></a></div>
+<?php } else { ?>
+	<div class="navbar-brand"><a href="<?php echo $url ?>"><img src="<?php echo  URL_IMG ?>/logo.png" /></a></div>
+<?php } ?>

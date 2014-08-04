@@ -3,14 +3,17 @@
     <div class="row">
 
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <h1><?php echo lang('Groups') ?>
-            <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+            <h1>
+                <?php echo lang('Groups') ?>
+                <span><?php echo image($this->url_img) ?></span>
+                <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
             </h1>
         </div>
         
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             
             <div class="btn-group pull-right clearfix">
+                
                 <a href="<?php echo URL_ROOT ?>/app_user" class="pull-right clearfix btn btn-primary">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
@@ -31,18 +34,18 @@
 
     <div class="row" style="margin-bottom: 15px">
 
-        <div class="col-sm-6 col-lg-8">
+        <div class="col-sm-6 col-lg-5">
 
-            <button class="btn btn-md btn-success" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
+            <div class="input-group" style="margin-bottom: 15px">
+                <input type="text" id="search-groups" class="form-control input-md" placeholder="<?php echo lang('Search groups') ?>" autofocus>
+                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
+            </div>
 
         </div>
 
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-6 col-lg-7">
 
-            <div class="input-group" style="margin-bottom: 10px">
-                <input type="text" id="search-groups" class="form-control input-sm" placeholder="<?php echo lang('Search groups') ?>" autofocus>
-                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
-            </div>
+            <button class="btn btn-md btn-success pull-right" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
 
         </div>
 
@@ -191,8 +194,6 @@ $id_group = get_value($group, 'id_user_group');
             $('.group-name, .group-description').each( function(index) {
             
                 var text = $(this).html().toLowerCase();
-
-                console.log(text);
                 
                 if(text.indexOf(search) != -1) {
                     exist = true;

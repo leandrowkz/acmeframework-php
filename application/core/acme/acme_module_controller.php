@@ -84,6 +84,9 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 		
 		// Carrega model do modulo
 		$this->load->model($this->controller . '_model');
+
+		// Load base model
+		$this->load->model('core/acme_module_controller_model');
 	}
 	
 	/**
@@ -133,7 +136,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			
 			// Adiciona a tabela de dados, as possíveis ações do módulo
 			foreach($this->actions as $action)
-				$table->add_column($this->template->load_html_component('module_action', array($action)));
+				$table->add_column($this->template->load_html_component('module_action', array('action' => $action)));
 
 			// Html da tabela
 			$args['module_table'] = $table->get_html();
@@ -147,7 +150,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	/**
 	* form()
-	* Build form as the database parameters form.
+	* Build form a single form of the given operation. The fields are got from database.
 	* @param string operation		// insert, update, delete, view
 	* @param integer pk_value
 	* @return void
@@ -159,29 +162,34 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 		
 		// adjust form operation
 		$operation = strtolower($operation);
+
+		// get pk name
+		$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
 		
 		// Form data
 		$form = $this->db->get_where('acm_module_form', array('id_module' => $this->id_module, 'operation' => $operation))->row_array(0);
 
-		// Case form operation is not insert, must validate pk given value
-		if( ( $operation != 'insert' && !$this->validation->is_integer_($pk_value) ) || count($form) < 0 )
-			redirect($this->controller);
-
 		// Fields
-		$fields = $this->db->select("f.*, '$this->table_name' AS table_name")
-						   ->from('acm_module_form_field f')
+		$fields = $this->db->from('acm_module_form_field f')
 						   ->where('id_module_form = ' . get_value($form, 'id_module_form') . ' AND dtt_inative IS NULL')
 						   ->order_by('order_')
-						   ->get()->result_array();
-		
-		// load correct model
-		$this->load->model('core/acme_module_controller_model');
-
-		// get pk name
-		$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+						   ->get()
+						   ->result_array();
 
 		// Values
-		$values = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
+		if($pk == '' || $pk_value == '')
+			$values = array();
+		else
+			$values = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
+
+		// Case form operation is not insert, must validate pk given value
+		if( ( $operation != 'insert' && count($values) <= 0 ) || get_value($form, 'dtt_inative') != '' || count($fields) <= 0)
+			redirect($this->controller);
+
+		// Adjust fields and put table name on each row
+	   	$count = count($fields);
+		for ($i = 0; $i < $count; $i++)
+			$fields[$i]['table_name'] = $this->table_name;
 		
 		// Transform array values into html inputs
 		$html_fields = $this->form->build_form_fields($fields, $values);
@@ -222,11 +230,14 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	private function _insert($post = array())
 	{
 		if(count($post) > 0) {		
+			
 			// fields names in form must be table_name[field]
 			$data = get_value($post, $this->table_name);
-			
-			$this->db->insert($this->table_name, $data);
-			
+
+			// Insert data by the auxiliar model
+			$this->acme_module_controller_model->insert($this->table_name, $data);
+
+			// Log insert record
 			$this->log->db_log('Inserção de registro', 'insert', $this->table_name, $data);
 		}
 		
@@ -245,20 +256,22 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 
 			// fields names in form must be table_name[field]
 			$data = get_value($post, $this->table_name);
-			
-			// load correct model
-			$this->load->model('core/acme_module_controller_model');
 
 			// get pk name and value
 			$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
 			$pk_value = $this->input->post('pk_value');
 
-			// old data to log
+			// old data to log it
 			$old_data = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
 
-			$this->db->update($this->table_name, $data, array($pk => $pk_value));
+			// build array for update
+			$where[$pk] = $pk_value;
+
+			// Update data by the auxiliar model
+			$this->acme_module_controller_model->update($this->table_name, $data, $where);
 			
-			$this->log->db_log('Edição de registro', 'update', $this->table_name, array_merge($data, $old_data));
+			// Log update record
+			$this->log->db_log('Edição de registro', 'update', $this->table_name, array_merge(array('new_data' => $data), array('old_data' => $old_data)));
 		}
 		
 		redirect($this->controller);

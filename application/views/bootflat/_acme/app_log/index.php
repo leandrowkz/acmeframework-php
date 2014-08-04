@@ -5,6 +5,8 @@
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h1>
                 <?php echo lang($this->label) ?>
+
+                <span><?php echo image($this->url_img) ?></span>
                 
                 <?php if( count ($logs) >= 1000 ) { ?>
                 <i class="fa fa-fw fa-exclamation-circle text-danger" data-placement="right" data-original-title="<?php echo lang('For security reasons you are seeing only 1000 records.')?>"></i>
@@ -17,6 +19,7 @@
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             
             <div class="btn-group pull-right clearfix">
+                
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-align-justify hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
@@ -25,10 +28,27 @@
                         <span class="caret"></span>
                     </div>
                 </button>
+
                 <ul class="dropdown-menu">
+                    
                     <li><a href="<?php echo URL_ROOT ?>/app_log"><i class="fa fa-fw fa-refresh"></i> <?php echo lang('Refresh')?></a></li>
                     <li><a href="javascript:void(0)" class="remove-all"><i class="fa fa-fw fa-warning"></i> <?php echo lang('Remove all errors')?></a></li>
+
+                    <?php 
+                    foreach ($this->menus as $menu) { 
+                    
+                    // build link
+                    $link = tag_replace(get_value($menu, 'link'));
+                    $target = (get_value($menu, 'target') != '') ? ' target="' . tag_replace(get_value($menu, 'target')) . '" ' : '';
+                    $label = lang(get_value($menu, 'label'));
+                    $img = image(get_value($menu, 'url_img'));
+
+                    ?>
+                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
+                    <?php } ?>
+
                 </ul>
+                
             </div>
 
         </div>
@@ -248,7 +268,9 @@
     // =========
     // dataTable
     // =========
-    $('#table-logs').dataTable();
+    $('#table-logs').dataTable({
+        'ordering' : false
+    });
 
     // ===============
     // remove callback
@@ -309,7 +331,7 @@
         var type = 'error';
         
         // Confirm this shit
-        bootbox.confirm("<?php echo addslashes(message('warning', lang('Warning!'), lang('All error logs will be deleted. Are you sure to remove all error logs ?'))) ?>", function (result) {
+        bootbox.confirm("<?php echo addslashes(str_replace("\n", '', message('warning', lang('Warning!'), lang('All error logs will be deleted. Are you sure to remove all error logs ?')))) ?>", function (result) {
 
             // Cancel
             if( ! result)

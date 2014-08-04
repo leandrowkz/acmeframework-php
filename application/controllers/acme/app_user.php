@@ -152,18 +152,26 @@ class App_User extends ACME_Module_Controller {
 	public function edit($id_user = 0, $process = false)
 	{		
 		$this->validate_permission('UPDATE');
-
-		if($id_user == 0 || $id_user == '')
-			redirect('app_user');
 		
-		// New user form
+		// Edit user form
 		if( ! $process) {
 			
-			$args['user'] = $this->app_user_model->get_user($id_user);
+			// user data
+			$user = $this->app_user_model->get_user($id_user);
 
+			// check if user exist
+			if( count($user) <= 0 )
+				redirect('app_user');
+
+			// get all groups for select
 			$groups = $this->db->select('id_user_group, name')->from('acm_user_group')->order_by('name')->get()->result_array();
 			
-			$args['options'] = $this->form->build_select_options($groups, get_value($args['user'], 'id_user_group'));
+			// build options html
+			$options = $this->form->build_select_options($groups, get_value($user, 'id_user_group'));
+
+			// vars for view
+			$args['user'] = $user;
+			$args['options'] = $options;
 
 			$this->template->load_page('_acme/app_user/edit', $args);
 
@@ -200,13 +208,20 @@ class App_User extends ACME_Module_Controller {
 	{
 		$this->validate_permission('PERMISSION_MANAGER');
 
-		if($id_user == 0 || $id_user == '')
+		// get user data
+		$user = $this->app_user_model->get_user($id_user);
+
+		// check if user exist
+		if ( count($user) <= 0 )
 			redirect('app_user');
 		
-		$args['permissions'] =  $this->app_user_model->get_permissions($id_user);
-		
-		$args['user'] = $this->app_user_model->get_user($id_user);
-		
+		// get all permissions for this user
+		$permissions =  $this->app_user_model->get_permissions($id_user);
+
+		// vars for view
+		$args['user'] = $user;
+		$args['permissions'] = $permissions;
+
 		// Load view
 		$this->template->load_page('_acme/app_user/permissions', $args);
 	}
@@ -267,10 +282,6 @@ class App_User extends ACME_Module_Controller {
 
 		// load user data
 		$args['user'] = $this->app_user_model->get_user($id_user);
-		
-		// browser ranking access
-		$browser_rank = $this->app_user_model->browser_rank_user($id_user);
-		$args['browser_rank'] = isset($browser_rank[0]) ? $browser_rank : array(0 => array());
 		
 		// load view
 		$this->template->load_page('_acme/app_user/profile', $args);
@@ -545,53 +556,5 @@ class App_User extends ACME_Module_Controller {
 		
 		// Adorable return!
 		echo json_encode(array('return' => true));
-	}
-	
-	/**
-	* ajax_copy_permissions()
-	* Modal de cópia de permissões de um determinado usuário para o usuário de id encaminhado.
-	* @param integer id_user
-	* @return void
-	*/
-	public function ajax_copy_permissions($id_user = 0)
-	{
-		// Valida permissão
-		$args['permission'] = $this->validate_permission('COPY_PERMISSIONS', false);
-		
-		// Dados do usuário
-		$args['user'] = $this->app_user_model->get_user_data($id_user);
-		
-		// Dados de opções de usuário
-		$args['user_options'] = $this->form->build_array_html_options($this->app_user_model->get_users_to_html_options());
-		
-		// Variável para teste de caso usuario nao seja root e esteja tentando acessar uma copia para um
-		$args['editable'] = ($this->session->userdata('user_group') != 'ROOT' && get_value($args['user'], 'group_name') == 'ROOT') ? false : true;
-		
-		// Carrega view
-		$this->template->load_page('_acme/app_user/ajax_copy_permissions', $args, false, false);
-	}
-	
-	/**
-	* ajax_copy_permissions_process()
-	* Processa modal de cópia de permissões de um determinado usuário para outro, ambos de id
-	* encaminhado por post.
-	* @return void
-	*/
-	public function ajax_copy_permissions_process()
-	{
-		$id_user_to = $this->input->post('id_user_to');
-		$id_user_from = $this->input->post('id_user_from');
-		if($this->validate_permission('COPY_PERMISSIONS', false) && $id_user_from != '' && $id_user_to != '')
-		{
-			// Deleta permissões anteriores do usuário PARA
-			$this->db->where(array('id_user' => $id_user_to));
-			$this->db->delete('acm_user_permission');
-			
-			// Copia permissões
-			$this->app_user_model->copy_permissions($id_user_from, $id_user_to);
-			
-			// Carrega view
-			$this->template->load_page('_acme/app_user/ajax_copy_permissions_process', array(), false, false);
-		}		
 	}
 }

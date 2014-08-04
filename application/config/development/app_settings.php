@@ -41,4 +41,4 @@ $config['PATH_INCLUDE'] = 'application/views/' . $config['TEMPLATE'] . '/_includ
 $config['PATH_CSS'] = $config['PATH_INCLUDE'] . '/css';
 $config['PATH_JS'] = $config['PATH_INCLUDE'] . '/js';
 $config['PATH_IMG'] = $config['PATH_INCLUDE'] . '/img';
-$config['PATH_HTML_COMPONENTS'] = $config['TEMPLATE'] . '/_includes/html_components';
+$config['PATH_HTML_COMPONENTS'] = $config['PATH_INCLUDE'] . '/html_components';

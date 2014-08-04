@@ -57,10 +57,9 @@ class Template {
 	*/
 	public function load_html_component($component = '', $params = array())
 	{
-		include_once('application/views/' . PATH_HTML_COMPONENTS . '/' . $component . '/' . $component . '.php');
-		
-		// Realiza chamada da função
-		return call_user_func_array($component, $params);	
+		$path = str_replace('application/views/' . TEMPLATE . '/', '', PATH_HTML_COMPONENTS);
+
+		return $this->load_page($path . '/' . $component . '/' . $component, $params, true, false);	
 	}
 	
 	/**
@@ -95,7 +94,7 @@ class Template {
 	*/
 	public function load_menu()
 	{
-		return $this->load_html_component('menu', array($this->get_array_menus()));
+		return $this->load_html_component('menu', array('menus' => $this->get_array_menus()));
 	}
 	
 	/**
@@ -126,10 +125,10 @@ class Template {
 	*/
 	public function load_logo_area()
 	{
-		$url = $this->CI->session->userdata('url_default');
+		$args['url'] = $this->CI->session->userdata('url_default');
 		
 		// Retorna o html do componente logo
-		return $this->load_html_component('logo_area', array($url));
+		return $this->load_html_component('logo_area', $args);
 	}
 
 	/**
@@ -163,7 +162,25 @@ class Template {
 	*/
 	public function message($type = 'info', $title = '', $description = '', $close = false, $style = '')
 	{
-		return $this->load_html_component('message_', array($type, $title, $description, $close, $style));
+		$args['type'] = $type;
+		$args['title'] = $title;
+		$args['description'] = $description;
+		$args['close'] = $close;
+		$args['style'] = $style;
+
+		return $this->load_html_component('message', $args);
+	}
+
+	/**
+	* image()
+	* Return the HTML component image, which is responsible for building an img tag, also checking if
+	* the given value is a font-awesome icon.
+	* @param string url_img
+	* @return string html
+	*/
+	public function image($url_img = '')
+	{
+		return $this->load_html_component('image', array('url_img' => $url_img));
 	}
 	
 	/**

@@ -148,6 +148,7 @@
 /* Global and override Styles */
 body, html {
     background-color: #f5f5f5;
+    color: #333;
 }
 
 .bootbox .modal-body {
@@ -230,7 +231,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .module-header {
-    background-color: #FCF1E8;
+    background-color: #fcf1e8;
     padding: 30px;
     margin:  0;
     border-bottom: 1px solid #ddd
@@ -246,12 +247,74 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+.module-header h1 small {
+    color: #ddd;
+}
+
+.module-header img {
+    max-width: 64px
+}
+
 .module-header .btn-group {
     margin-top: 10px !important
 }
 
 .module-header .pull-right {
     margin-top: 5px;
+}
+
+.toggle {
+    height: 24px;
+    cursor: pointer;
+}
+
+.toggle .handle{
+    width: 40px;
+    height: 24px;
+    background-color: #ed5565;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.toggle .handle:after,
+.toggle .handle:before {
+    width:22px;
+    height:22px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.toggle input[type=checkbox]:disabled+.handle,
+.toggle input[type=checkbox]:disabled+.handle:after,
+.toggle input[type=checkbox]:disabled+.handle:before,
+.toggle input[type=radio]:disabled+.handle,
+.toggle input[type=radio]:disabled+.handle:after,
+.toggle input[type=radio]:disabled+.handle:before {
+    -webkit-box-shadow:inset 0 0 0 1px #b8bfc8;
+    -moz-box-shadow:inset 0 0 0 1px #b8bfc8;
+    box-shadow:inset 0 0 0 1px #b8bfc8;
+    background-color:#e6e9ed;
+    filter:alpha(opacity=60);
+    opacity:.6
+}
+
+.toggle input[type=checkbox]:checked+.handle:before,
+.toggle input[type=radio]:checked+.handle:before { 
+    width: 40px;
+    background-color: #a0d468;
+    -webkit-box-shadow: 0 0 0 1px #a0d468;
+    -moz-box-shadow: 0 0 0 1px #a0d468;
+    box-shadow: 0 0 0 1px #a0d468;
+}
+
+.toggle input[type=checkbox]:checked+.handle:after,
+.toggle input[type=radio]:checked+.handle:after {
+    left: 19px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none
 }
 
 .dataTables_wrapper .table {
@@ -310,7 +373,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 35px;
 }
 
-.navbar-nav > li > a > i {
+.navbar-nav li a i {
     font-size: 18px;
 }
 
@@ -346,7 +409,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-default {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.72);
 }
 
 .navbar-default .navbar-toggle {
@@ -441,6 +504,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .dropdown-menu > li > a:hover {
     background-color: #444;
+}
+
+.navbar-nav > li > a > img {
+    margin-top: -2px;
+    max-width: 16px;
+}
+
+.dropdown-menu li a img {
+    margin-top: -2px;
+    max-width: 16px;
 }
 
 /* Submenu stuffs */

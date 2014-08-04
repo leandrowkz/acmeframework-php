@@ -67,8 +67,10 @@ class ACME_Core_Controller extends CI_Controller {
 			$this->load->database();
 			
 			// If the type connection is ORACLE so disable the escape identifiers
-			$this->db->_protect_identifiers = false;
-			$this->db->_escape_char = '';
+			if(strtolower($this->db->dbdriver) == 'oci8') {
+				$this->db->_protect_identifiers = false;
+				$this->db->_escape_char = '';
+			}
 		}
 	}
 

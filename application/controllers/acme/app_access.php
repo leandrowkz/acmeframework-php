@@ -49,23 +49,26 @@ class App_Access extends ACME_Core_Controller {
 
 		// $conn = oci_connect('tapmanager', 'tapmanager', 'localhost/XE');
 
-		// $script = file_get_contents('application/core/acme/engine_files/installer_dump_database/oci8/_teste.sql');
+		/*
+		$script = file_get_contents('application/core/acme/engine_files/installer_dump_' . DB_DRIVER . '.sql');
 
-		// $statements = explode('<<|SEPARATOR|>>', $script);
+		$statements = explode('<<|SEPARATOR|>>', $script);
 
-		// foreach($statements as $sql) {
-		// $sql = trim($sql, " \t\n\r\0\x0B");
+		foreach($statements as $sql) {
+			$sql = trim($sql, " \t\n\r\0\x0B");
 			
-		// if(stristr($sql, "CREATE OR REPLACE TRIGGER") !== false)
-		// $sql .= "\n\n/";
+		if(stristr($sql, "CREATE OR REPLACE TRIGGER") !== false)
+			$sql .= "\n\n/";
 
-		// 	echo utf8_decode($sql) . "\n\n\n\n";
+		echo utf8_decode($sql) . "\n\n\n\n";
 			
 		//  	//$stid = oci_parse($conn, $sql);
 		// //  	//oci_execute($stid);
 			
-		//  }
-		//  die;
+		}
+		die;
+		*/
+		
 		//oci_close($conn);
 		
 		// echo tag_replace('{URL_ROOT}/acme_dashboard asdhgfhasdfha hh ds {URL_IMG} and echo {URL_CSS}');

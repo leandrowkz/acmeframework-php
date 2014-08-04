@@ -52,7 +52,7 @@ class Form {
 			$field['value'] = get_value($values, get_value($field, 'table_column'));
 
 			// add field
-			array_push($html_fields, $CI->template->load_html_component('module_form_field', array($field)));
+			array_push($html_fields, $CI->template->load_html_component('module_form_field', array('field' => $field)));
 			
 		}
 		
@@ -191,7 +191,7 @@ class Form {
 				case 'number':
 				case 'integer':
 				case 'ipv4':
-				case 'datept_BR':
+				case 'date':
 				case 'onlyNumberSp':
 				case 'onlyLetterSp':
 				case 'onlyLetterNumber':
@@ -259,6 +259,7 @@ class Form {
 	*/
 	public function build_field($obj_field = null, $table = '')
 	{
+
 		// Monta array com colunas do banco de dados
 		$field = array();
 		$field['id_module_form'] = 'NULL';
@@ -294,10 +295,14 @@ class Form {
 			$field['order_'] = get_value($field_data, 'ordinal_position') * 10;
 			$field['validations'] = (get_value($field_data, 'is_nullable') != 'YES') ? 'required;' : '';
 			
-			switch(strtolower(get_value($field_data, 'data_type')))
+			switch( strtolower($obj_field->type) )
 			{
+				case 'char':
 				case 'varchar':
 				case 'varchar2':
+				case 'longtext':
+				case 'mediumtext':
+				case 'tinytext':
 					$field['type'] = 'text';
 				break;
 				
@@ -308,38 +313,51 @@ class Form {
 				case 'date':
 				case 'datetime':
 				case 'timestamp':
+				case 'timestamptz':
 					$field['type'] = 'text';
 					$field['masks'] = 'date';
 					$field['validations'] .= 'date';
-					$field['description'] = lang('Formato DD/MM/AAAA');
+					$field['description'] = lang('YYYY-MM-DD format');
 				break;
 
 				case 'time':
+				case 'timetz':
 					$field['type'] = 'text';
 					$field['masks'] = 'time';
-					$field['description'] = lang('Formato HH:MM');
+					$field['description'] = lang('HH:MM format');
 				break;
 				
 				case 'int':
+				case 'int2':
+				case 'int4':
+				case 'int8':
+				case 'int16':
+				case 'int32':
+				case 'integer':
 				case 'number':
+				case 'bigint':
+				case 'mediumint':
+				case 'smallint':
+				case 'tinyint':
 					$field['type'] = 'text';
 					$field['masks'] = 'integer';
 					$field['validations'] .= 'integer';
-					$field['description'] = lang('Somente números');
-				break;
-				
-				case 'decimal':
-					$field['type'] = 'text';
-					$field['masks'] = 'decimal';
-					$field['maxlength'] = (get_value($field_data, 'numeric_precision') + get_value($field_data, 'numeric_scale')) - 1;
-					$field['validations'] .= 'number';
+					$field['description'] = lang('Only numbers');
 				break;
 				
 				case 'float':
+				case 'float2':
+				case 'float4':
+				case 'float8':
+				case 'float16':
+				case 'float32':
 				case 'double':
+				case 'decimal':
+				case 'money':
+				case 'numeric':
 					$field['type'] = 'text';
 					$field['masks'] = 'decimal';
-					$field['validations'] .= 'number';
+					$field['validations'] .= 'decimal';
 				break;
 				
 				default:
@@ -355,7 +373,7 @@ class Form {
 				$field['options_sql'] = 'SELECT ' . $obj_field->name . ', ' . $obj_field->name . ' AS LABEL FROM ' . get_value($field_data, 'referenced_table_name');
 			}
 		}
-		
+
 		return $field;
 	}
 }

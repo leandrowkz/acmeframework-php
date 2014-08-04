@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Form_Model
+* Model Form_Model
 *
-* Gerencia camada de dados da biblioteca form.
+* Camada model para a biblioteca Form.
 * 
-* @since		16/03/2013
-* @location		acme.models.form_model
+* @since 	24/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Form_Model extends CI_Model {
-	// Definição de Atributos
 	
 	/**
 	* __construct()
@@ -21,7 +21,6 @@ class Form_Model extends CI_Model {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 	}
 	
 	/**
@@ -35,18 +34,27 @@ class Form_Model extends CI_Model {
 	{
 		$sql = "SELECT * 
 				  FROM information_schema.columns c
-			 LEFT JOIN (SELECT t2.column_name, 
-							   t2.referenced_table_name, 
-							   t1.constraint_type, 
-							   t1.table_name
-						  FROM information_schema.table_constraints t1
-					 LEFT JOIN information_schema.key_column_usage  t2 ON (t2.constraint_name = t1.constraint_name and t1.table_name = t2.table_name)
-					     WHERE t1.table_name = '$table' 
-						   AND constraint_type = 'FOREIGN KEY') t2 ON (c.table_name = t2.table_name and t2.column_name = c.column_name)
+
+			 LEFT JOIN (SELECT ccu.column_name, 
+							   ccu.table_name AS referenced_table_name, 
+							   tc.constraint_type
+						  FROM information_schema.table_constraints        tc
+					 LEFT JOIN information_schema.constraint_column_usage ccu ON (ccu.constraint_name = tc.constraint_name)
+					     WHERE tc.table_name   = '$table' 
+						   AND tc.constraint_type = 'FOREIGN KEY'
+			 ) fk ON (fk.column_name = c.column_name)
+			 
+			 LEFT JOIN (SELECT CASE WHEN tc.constraint_type = 'PRIMARY KEY' THEN 'PRI' ELSE '' END AS column_key,
+			 				   ccu.column_name
+			 	 		  FROM information_schema.table_constraints         tc
+					 LEFT JOIN information_schema.constraint_column_usage  ccu ON (ccu.constraint_name = tc.constraint_name)
+					     WHERE tc.table_name   = '$table'
+						   AND tc.constraint_type = 'PRIMARY KEY'
+			 ) pk ON (pk.column_name = c.column_name)
+
 			 	 WHERE c.table_name  = '$table'
 				   AND c.column_name = '$column_name'";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? $data[0] : array();
+		
+		return $this->db->query($sql)->row_array(0);
 	}
 }

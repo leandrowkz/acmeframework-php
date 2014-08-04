@@ -18,12 +18,11 @@
 				
 				$class = get_value($menu, 'dtt_inative') != '' ? 'text-error' : '';
 
-				if(stristr(get_value($menu, 'url_img'), 'class="fa'))
-					$img = get_value($menu, 'url_img');
-				else
-					$img = (file_exists(tag_replace(get_value($menu, 'url_img'))) && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
+                $img = image(get_value($menu, 'url_img'));
 
-				$html .= '<a href="javascript:void(0)" class="menu-label ' . $class . '" data-toggle="modal" data-target="#modal-menu-' . get_value($menu, 'id_menu') . '">' . $img . ' ' . lang(get_value($menu, 'label')) . '</a>';
+                $label = get_value($menu, 'url_img') == '' && get_value($menu, 'label') == '' ? '[NO NAME]' : lang(get_value($menu, 'label'));
+
+				$html .= '<a href="javascript:void(0)" class="menu-label ' . $class . '" data-toggle="modal" data-target="#modal-menu-' . get_value($menu, 'id_menu') . '">' . $img . ' ' . $label . '</a>';
 				
 				$html .= '<i class="text-success fa fa-fw fa-check-circle" style="display: none; margin-left: 5px"></i>';
 
@@ -48,13 +47,18 @@ foreach($form_menus as $menu) {
 $id_menu = get_value($menu, 'id_menu');
 ?>
 <form menu="<?php echo URL_ROOT ?>/app_menu/save/update" method="post">
-	<div class="modal fade" id="modal-menu-<?php echo $id_menu ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	
+    <div class="modal fade" id="modal-menu-<?php echo $id_menu ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
         <div class="modal-dialog">
+            
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar menu')?></h4>
                 </div>
+                
                 <div class="modal-body">
 
                     <input type="hidden" class="id_menu" value="<?php echo $id_menu ?>" />
@@ -91,7 +95,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                         	<div class="form-group">
                         		<label><?php echo lang('Link') ?> </label>
-                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Utilize {URL_ROOT} por exemplo, para gravar o valor da constante PHP URL_ROOT.')?>"></i>
+                                <i class="fa fa-fw fa-question-circle url-root"></i>
                                 <input type="text" class="form-control link" value="<?php echo get_value($menu, 'link') ?>" />
                             </div>
 
@@ -112,7 +116,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                             <div class="form-group">
                                 <label><?php echo lang('Image URL') ?></label>
-                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Utilize {URL_IMG} por exemplo, para gravar o valor da constante PHP URL_IMG.')?>"></i>
+                                <i class="fa fa-fw fa-question-circle url-img"></i>
                                 <input type="text" class="form-control url_img" value="<?php echo htmlentities(get_value($menu, 'url_img')) ?>" />
                             </div>
 
@@ -128,28 +132,38 @@ $id_menu = get_value($menu, 'id_menu');
                         </div>
                     </div>
                 </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
                     <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
         			</form>
                 </div>
+
             </div>
             <!-- /.modal-content -->
+
         </div>
         <!-- /.modal-dialog -->
+
     </div>
+
 </form>
 <?php } ?>
 
 <!-- modal to new menu -->
 <form menu="<?php echo URL_ROOT ?>/app_menu/save/insert" method="post" id="new-menu">
+   
     <div class="modal fade" id="modal-new-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
         <div class="modal-dialog">
+            
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel"><?php echo lang('New menu')?></h4>
                 </div>
+                
                 <div class="modal-body">
 
                 	<input type="hidden" class="id_user_group" value="" />
@@ -184,6 +198,7 @@ $id_menu = get_value($menu, 'id_menu');
                             
                             <div class="form-group">
                                 <label><?php echo lang('Link') ?></label>
+                                <i class="fa fa-fw fa-question-circle url-root"></i>
                                 <input type="text" class="form-control link" value="" />
                             </div>
                             
@@ -204,6 +219,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                             <div class="form-group">
                                 <label><?php echo lang('Image URL') ?></label>
+                                <i class="fa fa-fw fa-question-circle url-img"></i>
                                 <input type="text" class="form-control url_img" value="" />
                             </div>
 
@@ -220,17 +236,40 @@ $id_menu = get_value($menu, 'id_menu');
                     </div>
 
                 </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
                     <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
                     </form>
                 </div>
+
             </div>
             <!-- /.modal-content -->
+
         </div>
         <!-- /.modal-dialog -->
+
     </div>
+
 </form>
+
+<div class="popover-url-root hide">
+    <div>
+        <small><strong><?php echo lang('Use {URL_ROOT} to save value of PHP URL_ROOT constant, like') ?>:</strong></small>
+        <pre>{URL_ROOT}/controller/action</pre>
+    </div>
+</div>
+
+<div class="popover-url-img hide">
+    <div>
+        <small><strong><?php echo lang('Use {URL_IMG} to save value of PHP URL_IMG constant, like') ?>:</strong></small>
+        <pre>{URL_IMG}/my-image.png</pre>
+    </div>
+    <div style="margin: 10px 0 0">
+        <small><strong><?php echo lang('You can also use font-awesome, like')?>:</strong></small>
+        <pre>&lt;i class="fa fa-home"&gt;&lt;/i&gt;</pre>
+    </div>
+</div>
 
 <link href="<?php echo URL_CSS ?>/plugins/nestable/nestable.css" rel="stylesheet" type="text/css" />
 
@@ -249,17 +288,32 @@ $id_menu = get_value($menu, 'id_menu');
 <?php } else { echo message('info', '', lang('There is no menu items for this group. Click on button New menu above to start adding a new menu.')); } ?>
 
 <script>
+
+    // ===========
+    // popovers :)
+    // ===========
+    $('.form-group i').popover( {
+        trigger : 'hover',
+        title :  '<?php echo lang('Example of use') ?>:',
+        html: true,
+        content: function () {
+            console.log($(this).attr('class'));
+            var cls = $(this).attr('class').replace('fa fa-fw fa-question-circle ', '');
+            console.log(cls);
+            return $('.popover-' + cls).html(); 
+        }
+    });
 	
 	// ==============
-	// nestable items
-	// ============== 
-	$('.dd').nestable({
-		
-		dropCallback: function(details) {
-			
-			$.reorder_menu(details.sourceId, details.destId, false);
-		}
-	});
+    // nestable items
+    // ============== 
+    $('.dd').nestable({
+        
+        dropCallback: function(details) {
+            
+            $.reorder_menu(details.sourceId, details.destId, false);
+        }
+    });
 	
 	// ======================
 	// show delete button 'x'
@@ -352,9 +406,6 @@ $id_menu = get_value($menu, 'id_menu');
     // ==========================
     $.submit_callback = function (form, status) {
     	
-    	console.log(form);
-    	console.log(status);
-
     	// Validation is not right
     	if( ! status)
     		return false;
@@ -456,10 +507,10 @@ $id_menu = get_value($menu, 'id_menu');
                     }
 
                     // Success icon!
-                    $('#menu-item-' + source + ' .fa').first().fadeIn();
+                    $('#menu-item-' + source + ' .text-success').first().fadeIn();
 
                     setTimeout( function () {
-                        $('#menu-item-' + source + ' .fa').first().fadeOut();
+                        $('#menu-item-' + source + ' .text-success').first().fadeOut();
                     }, 4000);
                 }
 

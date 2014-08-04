@@ -3,14 +3,17 @@
     <div class="row">
 
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <h1><?php echo lang($this->label) ?>
-            <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+            <h1>
+                <?php echo lang($this->label) ?>
+                <span><?php echo image($this->url_img) ?></span>
+                <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
             </h1>
         </div>
         
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
             
             <div class="btn-group pull-right clearfix">
+                
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-align-justify hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
@@ -19,10 +22,27 @@
                         <span class="caret"></span>
                     </div>
                 </button>
+
                 <ul class="dropdown-menu">
+                    
                     <li><a href="<?php echo URL_ROOT ?>/app_user/new_user"><i class="fa fa-user fa-fw"></i> <?php echo lang('New user')?></a></li>
                     <li><a href="<?php echo URL_ROOT ?>/app_user/groups"><i class="fa fa-group fa-fw"></i> <?php echo lang('Groups')?></a></li>
+
+                    <?php 
+                    foreach ($this->menus as $menu) { 
+                    
+                    // build link
+                    $link = tag_replace(get_value($menu, 'link'));
+                    $target = (get_value($menu, 'target') != '') ? ' target="' . tag_replace(get_value($menu, 'target')) . '" ' : '';
+                    $label = lang(get_value($menu, 'label'));
+                    $img = image(get_value($menu, 'url_img'));
+
+                    ?>
+                    <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
+                    <?php } ?>
+
                 </ul>
+
             </div>
 
         </div>
@@ -35,10 +55,10 @@
 
     <div class="row" style="margin-bottom: 30px ">
 
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="col-sm-6 col-lg-5">
 
             <div class="input-group" style="margin-bottom: 10px">
-                <input type="text" id="search-users" class="form-control input-sm" placeholder="<?php echo lang('Search users') ?>" autofocus>
+                <input type="text" id="search-users" class="form-control input-md" placeholder="<?php echo lang('Search users') ?>" autofocus>
                 <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
             </div>
 
@@ -148,8 +168,6 @@
             $('.user-name, .user-email, .user-group').each( function(index) {
             
                 var text = $(this).html().toLowerCase();
-
-                console.log(text);
                 
                 if(text.indexOf(search) != -1) {
                     exist = true;

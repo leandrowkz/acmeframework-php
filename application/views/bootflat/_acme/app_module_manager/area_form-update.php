@@ -6,14 +6,26 @@
 <div style="margin: 20px 0">
 
     <div class="inline" style="width: 150px"><label><?php echo lang('Situação') ?></label></div>
+    
     <div class="inline activate-form">
-        <?php if( get_value($form, 'dtt_inative') == '' ) { ?>
-        <span class="text-success"><?php echo lang('Habilitado')?></span>
-        <button class="btn btn-danger btn-xs"><?php echo lang('Desabilitar') ?></button>
-        <?php } else { ?>
-        <span class="text-danger"><?php echo lang('Desabilitado')?></span>
-        <button class="btn btn-success btn-xs"><?php echo lang('Habilitar') ?></button>
-        <?php } ?>
+        
+        <?php
+        if( get_value($form, 'dtt_inative') == '' ) {
+            $checked = 'checked="checked"';
+            $status = 'ON';
+        } else {
+            $checked = '';
+            $status = 'OFF';
+        }
+        ?>
+
+        <span style="width: 35px"><strong><?php echo $status ?></strong></span>
+        
+        <label class="toggle" style="position: absolute;margin: -22px 0 0 38px">
+            <input type="checkbox" class="enable-form" <?php echo $checked ?> />
+            <span class="handle"></span>
+        </label>
+
     </div>
 
 </div>
@@ -24,14 +36,26 @@
         <label><?php echo lang('Ação vinculada') ?> </label>
         <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Ação de registro na listagem do módulo que aponta para este formulário') ?>"></i>
     </div>
+
     <div class="inline activate-action">
-        <?php if( count($action) > 0) { ?>
-        <span class="text-success"><?php echo lang('Habilitado')?> </span>
-        <button class="btn btn-danger btn-xs"><?php echo lang('Desabilitar') ?></button>
-        <?php } else { ?>
-        <span class="text-danger"><?php echo lang('Desabilitado')?> </span>
-        <button class="btn btn-success btn-xs"><?php echo lang('Habilitar') ?></button>
-        <?php } ?>
+        
+        <?php
+        if( count($action) > 0 ) {
+            $checked = 'checked="checked"';
+            $status = 'ON';
+        } else {
+            $checked = '';
+            $status = 'OFF';
+        }
+        ?>
+
+        <span style="width: 35px"><strong><?php echo $status ?></strong></span>
+        
+        <label class="toggle" style="position: absolute;margin: -22px 0 0 38px">
+            <input type="checkbox" class="enable-action" <?php echo $checked ?> />
+            <span class="handle"></span>
+        </label>
+
     </div>
 
 </div>
@@ -94,7 +118,7 @@
 
 <div class="table-responsive">
     
-    <table class="table">
+    <table class="table table-bordered">
         
         <thead>
             <tr>
@@ -127,7 +151,7 @@
                 <td><?php echo get_value($field, 'label') ?></td>
                 <td><?php echo get_value($field, 'type')?></td>
                 <td style="width: 01%"><?php echo get_value($field, 'order_') ?></td>
-                <td style="width: 01%"><input type="checkbox" id="<?php echo $i ?>" <?php echo ($dtt_inative == '' && $id_field != '') ? 'checked="checked"' : ''; ?> /></td>
+                <td style="width: 01%"><input type="checkbox" class="enable-field" id="<?php echo $i ?>" <?php echo ($dtt_inative == '' && $id_field != '') ? 'checked="checked"' : ''; ?> /></td>
             </tr>
             <?php $i++; } ?>
 
@@ -520,13 +544,13 @@ foreach($fields as $field) {
         });
     };
 
-    // ==========================
-    // click enable action button
-    // ==========================
-    $('.activate-action button').click( function () {
+    // ===================================
+    // click enable action checkbox toggle
+    // ===================================
+    $('.enable-action').click( function () {
 
         // get operation
-        var oper = $(this).hasClass('btn-success') ? 'enable-action-form-update' : 'disable-action-form-update';
+        var oper = $(this).is(':checked') ? 'enable-action-form-update' : 'disable-action-form-update';
 
         // ajax to save this fucking shit
         $.enable_loading();
@@ -547,13 +571,13 @@ foreach($fields as $field) {
         return false;
     });
 
-    // ========================
-    // click enable form button
-    // ========================
-    $('.activate-form button').click( function () {
+    // =================================
+    // click enable form checkbox toggle
+    // =================================
+    $('.enable-form').click( function () {
 
         // get operation
-        var oper = $(this).hasClass('btn-success') ? 'enable' : 'disable';
+        var oper = $(this).is(':checked') ? 'enable' : 'disable';
 
         // ajax to save this fucking shit
         $.enable_loading();
@@ -577,7 +601,7 @@ foreach($fields as $field) {
     // ===========================
     // click enable field checkbox
     // ===========================
-    $('input[type=checkbox]').click( function () {
+    $('.enable-field').click( function () {
 
         // get id
         var id = $(this).attr('id');

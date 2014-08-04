@@ -1,70 +1,45 @@
 <?php
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* menu()
+* menu.php
+* 
+* This HTML component build the application menu.
 *
-* This function builds the application menu, located at top bar application. It also receives
-* automatically all menus for the current group user.
+* It is loaded by the call $this->template->load_menu();
 *
-* Default structure menu:
+* The menu structure is:
+* 
+* 		$menus[0] = array(
+*			[id_menu] => 2
+*			[id_menu_parent] => 0
+*			[id_user_group] => 1
+*			[label] => 
+*			[link] => {URL_ROOT}/app_dashboard
+*			[target] => 
+*			[url_img] => <i class="fa fa-fw fa-home"></i>
+*			[order_] => 10
+*			[children] => Array
+*				(
+*				)
+*		)
 *
-* <ul class="nav navbar-nav">
+* @param    array $menus
+* @since    28/06/2013
 *
-* 	 <li><a href="#">Home</a></li>
-*    <li><a href="#about">About</a></li>
-*    <li><a href="#contact">Contact</a></li>
-*   
-*    <li class="dropdown">
-*        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-*        <ul class="dropdown-menu" role="menu">
-*            <li><a href="#">Action</a></li>
-*            <li><a href="#">Another action</a></li>
-*            <li><a href="#">Something else here</a></li>
-*            <li class="divider"></li>
-*            <li class="dropdown-header">Nav header</li>
-*            <li><a href="#">Separated link</a></li>
-*            <li><a href="#">One more separated link</a></li>
-*        </ul>
-*    </li>
-*    <li class="dropdown">
-*      	 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-*        <ul class="dropdown-menu">
-*            <li><a href="#">Notifications <i class="fa fa-wrench"></i></a></li>
-*            <li class="dropdown dropdown-submenu">
-*                <a href="#">Edit Account </a>
-*                <ul class="dropdown-menu">
-*                    <li><a href="#">Page with comments</a></li>
-*                    <li><a href="#">Page with comments disabled</a></li>
-*                    <li class="dropdown-submenu">
-*                        <a href="#">More</a>
-*                        <ul class="dropdown-menu">
-*                            <li><a href="#">3rd level link more options</a></li>
-*                            <li><a href="#">3rd level link</a></li>
-*                        </ul>
-*                    </li>
-*                </ul>
-*           </li>
-*           <li class="divider"></li>
-*           <li><i class="fa"></i><a href="#" class="dropdown-toggle" data-toggle="dropdown">Logout <i class="fa fa-power-off padding-left-ten-px red-text"></i></a>
-*           </li>
-*        </ul>
-*    </li>
-*
-* </ul>	
-*
-* @param array menus
-* @return string html
-*
+* --------------------------------------------------------------------------------------------------
 */
-function menu ($menus = array())
-{
+?>
+
+<?php
+
+function build_menu ($menus = array()) {
+
 	// Check if current level is parent
 	$current_line = isset($menus[0]) ? $menus[0] : array();
 	$root_level = (get_value($current_line, 'id_menu_parent') <= 0) ? true : false;
-	
-	$html = '';
 
-	if(count($menus) > 0) {
+	if( count($menus) > 0 ) {
 		foreach($menus as $menu) {
 			
 			// DEBUG: 
@@ -77,12 +52,7 @@ function menu ($menus = array())
 			$link = tag_replace(get_value($menu, 'link'));
 			$target = (get_value($menu, 'target') != '') ? ' target="' . tag_replace(get_value($menu, 'target')) . '" ' : '';
 			$label = lang(get_value($menu, 'label'));
-			
-			// Image also can be a font-awesome - know more on fontawesome.github.io/Font-Awesome/
-			if(stristr(get_value($menu, 'url_img'), 'class="fa'))
-				$img = get_value($menu, 'url_img');
-			else
-				$img = (file_exists(tag_replace(get_value($menu, 'url_img'))) && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
+			$img = image(get_value($menu, 'url_img'));
 			
 			// Build a single line menu
 			if($count_menu_children > 0) {
@@ -90,15 +60,23 @@ function menu ($menus = array())
 				$class = $root_level ? 'dropdown' : 'dropdown dropdown-submenu';
 				$caret = $root_level ? '<span class="caret"></span>' : '';
 
-				$html .= '<li class="' . $class . '">';
-					$html .= '<a href="' . $link . '"' . $target . ' class="dropdown-toggle" data-toggle="dropdown">';
-					$html .= $img . ' ' . $label . $caret;
-					$html .= '</a>';
-					$html .= '<ul class="dropdown-menu">' . menu(get_value($menu, 'children')) . '</ul>';
-				$html .= '</li>';
-			} else
-				$html .=  '<li><a href="' . $link . '"' . $target . '>' . $img . ' ' . $label . '</a></li>';
+			?>
+				<li class="<?php echo $class ?>">
+					<a href="<?php echo $link ?>" <?php echo $target ?> class="dropdown-toggle" data-toggle="dropdown">
+						<?php echo $img . ' ' . $label . $caret ?>
+					</a>
+					<ul class="dropdown-menu"><?php build_menu(get_value($menu, 'children')) ?></ul>
+				</li>
+			<?php 
+			} else { 
+			?>
+				<li><a href="<?php echo $link ?>" <?php echo $target ?> ><?php echo $img . ' ' . $label ?></a></li>
+			<?php 
+			}
 		}
 	}
-	return $html;
 }
+
+build_menu($menus); 
+
+?>

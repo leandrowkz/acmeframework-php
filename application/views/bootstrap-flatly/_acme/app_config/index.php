@@ -246,254 +246,256 @@
 
 </div>
 
-<div class="code-environment hide">
-	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo ENVIRONMENT; ?&gt;</code>
-	</div>
-	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#ENVIRONMENT').val();</code>
-	</div>
-</div>
+<!-- html popovers content -->
 
 <div class="code-app-name hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo APP_NAME; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo APP_NAME; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#APP_NAME').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#APP_NAME').val();</pre>
+	</div>
+</div>
+
+<div class="code-environment hide">
+	<div>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo ENVIRONMENT; ?&gt;</pre>
+	</div>
+	<div style="margin: 10px 0 0">
+		<small><strong>JQuery</strong></small>
+		<pre>$('#ENVIRONMENT').val();</pre>
 	</div>
 </div>
 
 <div class="code-template hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo TEMPLATE; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo TEMPLATE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#TEMPLATE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#TEMPLATE').val();</pre>
 	</div>
 </div>
 
 <div class="code-language hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo LANGUAGE; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo LANGUAGE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#LANGUAGE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#LANGUAGE').val();</pre>
 	</div>
 </div>
 
 <div class="code-email-from hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo EMAIL_FROM; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo EMAIL_FROM; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#EMAIL_FROM').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#EMAIL_FROM').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-root hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_ROOT; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_ROOT; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_ROOT').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_ROOT').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-upload hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_UPLOAD; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_UPLOAD; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_UPLOAD').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_UPLOAD').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-template hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_TEMPLATE; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_TEMPLATE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_TEMPLATE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_TEMPLATE').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-include hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_INCLUDE; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_INCLUDE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_INCLUDE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_INCLUDE').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-css hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_CSS; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_CSS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_CSS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_CSS').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-js hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_JS; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_JS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_JS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_JS').val();</pre>
 	</div>
 </div>
 
 <div class="code-url-img hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo URL_IMG; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo URL_IMG; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#URL_IMG').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#URL_IMG').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-temp hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_TEMP; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_TEMP; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_TEMP').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_TEMP').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-upload hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_UPLOAD; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_UPLOAD; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_UPLOAD').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_UPLOAD').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-include hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_INCLUDE; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_INCLUDE; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_INCLUDE').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_INCLUDE').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-css hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_CSS; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_CSS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_CSS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_CSS').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-js hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_JS; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_JS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_JS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_JS').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-img hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_IMG; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_IMG; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_IMG').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_IMG').val();</pre>
 	</div>
 </div>
 
 <div class="code-path-html-components hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo PATH_HTML_COMPONENTS; ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo PATH_HTML_COMPONENTS; ?&gt;</pre>
 	</div>
 	<div style="margin: 10px 0 0">
-		<small><strong>JQuery:</strong></small>
-		<code>$('#PATH_HTML_COMPONENTS').val();</code>
+		<small><strong>JQuery</strong></small>
+		<pre>$('#PATH_HTML_COMPONENTS').val();</pre>
 	</div>
 </div>
 
 <div class="code-session-user-group hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('user_group'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('user_group'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-user-name hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('user_name'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('user_name'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-email hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('email'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('email'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-user-img hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('user_img'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('user_img'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-language hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('language'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('language'); ?&gt;</pre>
 	</div>
 </div>
 
 <div class="code-session-url-default hide">
 	<div>
-		<small><strong>PHP:</strong></small>
-		<code>&lt;?php echo $this->session->userdata('url_default'); ?&gt;</code>
+		<small><strong>PHP</strong></small>
+		<pre>&lt;?php echo $this->session->userdata('url_default'); ?&gt;</pre>
 	</div>
 </div>
 

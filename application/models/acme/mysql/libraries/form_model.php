@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
+* --------------------------------------------------------------------------------------------------
 *
-* Classe Form_Model
+* Model Form_Model
 *
-* Gerencia camada de dados da biblioteca form.
+* Camada model para a biblioteca Form.
 * 
-* @since		16/03/2013
-* @location		acme.models.form_model
+* @since 	24/10/2012
 *
+* --------------------------------------------------------------------------------------------------
 */
 class Form_Model extends CI_Model {
-	// Definição de Atributos
 	
 	/**
 	* __construct()
@@ -21,7 +21,6 @@ class Form_Model extends CI_Model {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 	}
 	
 	/**
@@ -45,8 +44,7 @@ class Form_Model extends CI_Model {
 						   AND constraint_type = 'FOREIGN KEY') t2 ON (c.table_name = t2.table_name and t2.column_name = c.column_name)
 			 	 WHERE c.table_name  = '$table'
 				   AND c.column_name = '$column_name'";
-		$data = $this->db->query($sql);
-		$data = $data->result_array();
-		return (isset($data[0])) ? $data[0] : array();
+		
+		return $this->db->query($sql)->row_array(0);
 	}
 }

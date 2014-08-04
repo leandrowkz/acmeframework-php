@@ -3,14 +3,17 @@
     <div class="row">
 
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-            <h1><?php echo lang($this->label) ?>
-            <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+            <h1>
+                <?php echo lang($this->label) ?>
+                <span><?php echo image($this->url_img) ?></span>
+                <?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
             </h1>
         </div>
         
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
             <div class="pull-right clearfix">
+                
                 <a href="<?php echo URL_ROOT ?>/app_user" class="pull-right clearfix btn btn-primary">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">

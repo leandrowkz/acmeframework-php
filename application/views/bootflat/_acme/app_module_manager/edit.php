@@ -3,14 +3,17 @@
 	<div class="row">
 
 		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-			<h1><?php echo lang($this->label) ?>
-			<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
+			<h1>
+				<?php echo lang($this->label) ?>
+				<span><?php echo image($this->url_img) ?></span>
+				<?php if($this->description != ''){ ?><small>// <?php echo lang($this->description)?></small> <?php } ?>
 			</h1>
 		</div>
 		
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
 			<div class="pull-right clearfix">
+				
 				<a href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module')?>" class="pull-right clearfix btn btn-primary">
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">
@@ -37,6 +40,11 @@
 			
 				<h3 style="margin: 0 0 30px 0"><?php echo lang('Editar módulo') ?></h3>
 
+	            <div class="form-group">
+	                <label><?php echo lang('Tabela') ?></label>
+	                <input type="text" id="table_name" name="table_name" class="form-control" value="<?php echo get_value($module, 'table_name') ?>" />
+	            </div>
+
 				<div class="form-group">
 	                <label><?php echo lang('Label') ?>*</label>
 	                <input type="text" id="label" name="label" class="form-control validate[required]" value="<?php echo get_value($module, 'label') ?>" />
@@ -48,8 +56,8 @@
 	            </div>
 
 	            <div class="form-group">
-	                <label><?php echo lang('Tabela') ?></label>
-	                <input type="text" id="table_name" name="table_name" class="form-control" value="<?php echo get_value($module, 'table_name') ?>" />
+	                <label><?php echo lang('Image URL') ?></label>
+	                <input type="text" id="url_img" name="url_img" class="form-control" value="<?php echo htmlentities(get_value($module, 'url_img')) ?>" />
 	            </div>
 
 	            <div class="form-group">

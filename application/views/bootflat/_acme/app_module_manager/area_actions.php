@@ -4,7 +4,7 @@
 <?php if( count($actions) > 0 ) { ?>
 <div class="table-responsive" style="margin-top: -10px">
     
-    <table class="table">
+    <table class="table table-bordered">
         
         <thead>
             <tr>

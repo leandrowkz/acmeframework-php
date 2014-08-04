@@ -5,6 +5,7 @@
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h1>
                 <?php echo lang('Profile') ?>
+                <span><i class="fa fa-fw fa-user"></i></span>
                 <small>// <?php echo lang('User information') ?></small>
             </h1>
         </div>
@@ -12,6 +13,7 @@
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
             <div class="pull-right clearfix">
+                
                 <a href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-primary">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
@@ -68,7 +70,7 @@
 
         <div class="row" id="user-profile-name">
             <div class="col-sm-12">
-                <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
+                <h1 style="margin:0 0 10px 0"><?php echo get_value($user, 'name') ?></h1>
             </div>
         </div>
         
