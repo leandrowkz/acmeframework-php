@@ -18,10 +18,7 @@
 				
 				$class = get_value($menu, 'dtt_inative') != '' ? 'text-error' : '';
 
-				if(stristr(get_value($menu, 'url_img'), 'class="fa'))
-					$img = get_value($menu, 'url_img');
-				else
-					$img = (file_exists(tag_replace(get_value($menu, 'url_img'))) && get_value($menu, 'url_img') != '') ? '<img src="' . tag_replace(get_value($menu, 'url_img')) . '" style="display:block !important;" />' : '';
+                $img = image(get_value($menu, 'url_img'));
 
 				$html .= '<a href="javascript:void(0)" class="menu-label ' . $class . '" data-toggle="modal" data-target="#modal-menu-' . get_value($menu, 'id_menu') . '">' . $img . ' ' . lang(get_value($menu, 'label')) . '</a>';
 				

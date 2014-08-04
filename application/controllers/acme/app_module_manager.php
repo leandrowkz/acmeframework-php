@@ -244,7 +244,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				
 				$data['id_module'] = $id_module;
 				$data['link'] = '{URL_ROOT}/' . get_value($module, 'controller') . '/form/insert';
-				$data['label'] = lang('Novo');
+				$data['label'] = lang('New record');
 				$data['order_'] = 10;
 				$this->db->insert('acm_module_menu', $data);
 				
@@ -263,7 +263,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				$data['link'] = $this->input->post('link');
 				$data['target'] = $this->input->post('target');
 				$data['url_img'] = $this->input->post('url_img');
-				$data['order_'] = $this->input->post('order_');
+				$data['order_'] = $this->input->post('order_') == '' ? 10 : $this->input->post('order_');
 
 				// update, remove or insert
 				if( strtolower($operation) == 'insert' )
@@ -334,7 +334,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				$data['link'] = $this->input->post('link');
 				$data['target'] = $this->input->post('target');
 				$data['url_img'] = $this->input->post('url_img');
-				$data['order_'] = $this->input->post('order_');
+				$data['order_'] = $this->input->post('order_') == '' ? 10 : $this->input->post('order_');
 
 				// update, remove or insert
 				if(strtolower($operation) == 'insert') {
@@ -474,7 +474,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				$upd['label'] = $this->input->post('label');
 				$upd['table_column'] = $this->input->post('table_column');
 				$upd['type'] = $this->input->post('type');
-				$upd['order_'] = $this->input->post('order_');
+				$upd['order_'] = $this->input->post('order_') == '' ? 10 : $this->input->post('order_');
 				$upd['description'] = $this->input->post('description');
 				$upd['id_html'] = $this->input->post('id_html');
 				$upd['class_html'] = $this->input->post('class_html');

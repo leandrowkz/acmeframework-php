@@ -13,6 +13,7 @@
 		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
 			<div class="pull-right clearfix">
+				
 				<a href="<?php echo URL_ROOT ?>/app_module_manager" class="pull-right clearfix btn btn-primary">
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">

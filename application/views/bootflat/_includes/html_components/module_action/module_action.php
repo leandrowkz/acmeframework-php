@@ -30,11 +30,8 @@
 // Adjust target
 $target = (get_value($action, 'target') != '') ? ' target="' . get_value($action, 'target') . '"' : ''; 
 
-// Image also can be a font-awesome - know more on fontawesome.github.io/Font-Awesome/
-if(stristr(get_value($action, 'url_img'), 'class="fa'))
-	$img = get_value($action, 'url_img');
-else
-	$img = (file_exists(tag_replace(get_value($action, 'url_img'))) && get_value($action, 'url_img') != '') ? '<img src="' . tag_replace(get_value($action, 'url_img')) . '" style="display:block !important;" />' : '';
+// Adjust image
+$img = image(get_value($action, 'url_img'));
 
 ?>
 
