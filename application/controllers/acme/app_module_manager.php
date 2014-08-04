@@ -373,6 +373,28 @@ class App_Module_Manager  extends ACME_Module_Controller {
 			case 'enable':
 			case 'disable':
 
+				// Check if a permission with same operation already exists
+				if(strtolower($operation) == 'enable') {
+
+					$where = array('id_module_form' => $this->input->post('id_module_form'));
+
+					$module = $this->db->get_where('acm_module_form', $where)->row_array(0);
+
+					$data['id_module'] = get_value($module, 'id_module');
+					$data['permission'] = strtoupper(get_value($module, 'operation'));
+
+					$permission = $this->db->get_where('acm_module_permission', $data)->row_array(0);
+
+					// if there is no permission for the given form then create it
+					if(count($permission) <= 0) {
+
+						$data['label'] = ucwords(get_value($module, 'operation')) . ' form';
+						
+						$this->db->insert('acm_module_permission', $data);
+					}
+
+				}
+
 				// check if is disable
 				$dtt_inative = ( strtolower($operation) == 'disable' ) ? 'CURRENT_TIMESTAMP' : 'NULL';
 
