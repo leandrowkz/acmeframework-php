@@ -4,7 +4,7 @@
 *
 * Model Array_Table_Model
 *
-* Camada model para a biblioteca Array_Table.
+* Database layer for the library array_table.
 * 
 * @since 	24/10/2012
 *
@@ -14,8 +14,7 @@ class Array_Table_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

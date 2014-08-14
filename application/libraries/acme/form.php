@@ -4,7 +4,7 @@
 *
 * Library Form
 *
-* Library of functions related with application html forms.
+* Gathers methods related with application html forms.
 * 
 * @since 	27/10/2012
 *
@@ -16,13 +16,13 @@ class Form {
 	
 	/**
 	* __construct()
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct () { }
 	
 	/**
 	* build_form_fields()
-	* Receive a resultset of inputs (from table acm_module_form_field) and transforms them into an array
+	* Receives a resultset of inputs (from table acm_module_form_field) and transforms them into an array
 	* of html input elements, like:
 	*
 	*		Array 
@@ -61,9 +61,11 @@ class Form {
 	
 	/** 
 	* build_select_options()
-	* Monta um conjunto de tags html <option> com base em um array encaminhado como parametro. 
-	* O array encaminhado deverá possuir dois indices em uma mesma linha, ao menos, 
-	* por exemplo:
+	* Builds a set of HTML tags <option> from a resultset array. This array must has two indexes, the
+	* first one is value will be placed on value attribute and the second one must be the label will
+	* be placed on option.
+	*  
+	* Take an example:
 	*
 	* 		Array 
 	* 		(
@@ -72,8 +74,8 @@ class Form {
 	*		)
 	*
 	* @param array data
-	* @param option_selected 		// valor que deve ser marcado como selected="selected"
-	* @param boolean blank_option 	// true para inserir <option> inicial em branco
+	* @param option_selected 		// Value must be set as selected="selected"
+	* @param boolean blank_option 	// true for inserting an initial blank <option>
 	* @return string html
 	*/
 	public function build_select_options($data = null, $option_selected = '', $blank_option = true)
@@ -103,26 +105,29 @@ class Form {
 	}
 	
 	/** 
-	* build_array_comma()
-	* Recebe 2 strings de dados separados por ponto-e-virgula e retorna um único array de 
-	* índice => valor com base nestas strings. Por exemplo:
-	* 		
-	*		As strings:
-	* 		String 1: "1;2;3;4"
-	* 		String 2: "A;B;C;D"
+	* build_array_semicolon()
+	* Receives two strings each one separated by semicolon and returns a single array
+	* of index => value containing this labels and values.
 	*
-	* 		Retornarao o array:
-	*		Array 
-	*		(
-	*			[1] => A,
-	*			[2] => B ...
-	*		)
+	* Example:
+	* 		
+	*			$indexes = '1;2;3;4';
+	* 			$values  = 'A;B;C;D';
+	*		
+	*			print_r( build_array_semicolon($indexes, $vales) );
+	*
+	*			// Will reproduce:
+	*			Array 
+	*			(
+	*				[1] => A,
+	*				[2] => B ...
+	*			)
 	*
 	* @param string indexes
 	* @param string values
 	* @return array options
 	*/
-	public function build_array_comma($indexes = '', $values = '')
+	public function build_array_semicolon($indexes = '', $values = '')
 	{
 		$return = array();
 		$arr_index = explode(';', $indexes);
@@ -143,21 +148,24 @@ class Form {
 	
 	/**
 	* build_string_validation()
-	* Monta a string de validação de formulários utilizada pelo plugin jquery.validationEngine.
-	* As validações deverão ser encaminhadas todas em uma string separadas por ponto-e-vírgula.
-	* 
-	*		Exemplos de validação:
-	* 		- required
-	*		- email
-	*		- phone
-	* 		- url
-	* 		- number
-	*		- integer
+	* Builds a validation string, used by plugin jquery.validationEngine.js and by all 
+	* application forms validation.
 	*
-	*		A string deverá ser encaminhada como:
-	*		required;email;phone
-	*		
-	* OBS: Para mais informações, consulte https://github.com/posabsolute/jQuery-Validation-Engine
+	* For more information see https://github.com/posabsolute/jQuery-Validation-Engine
+	*
+	* All validations must be forwarded separating each one by semicolon.
+	* 
+	* Validation examples:
+	* 			
+	*			- required
+	*			- email
+	*			- phone
+	* 			- url
+	* 			- number
+	*			- integer
+	*
+	*			The string value must be sent as:
+	*			required;email;phone
 	*
 	* @param string validate
 	* @return string new_validate
@@ -169,12 +177,12 @@ class Form {
 		$part_two = '';
 		$part_thr = '';
 		
-		// Ajusta string de validação e explode os itens de validacao
+		// Adjusts the validation string, separating each validation
 		trim($validate, ';');
 		$arr_validations = explode(';', $validate);
 		$count_validations = count($arr_validations);
 		
-		// Varre todo o array de validações, alterando a string final
+		// Starts to build the correct validation string
 		for($i = 0; $i < $count_validations; $i++)
 		{
 			switch($arr_validations[$i])
@@ -198,7 +206,7 @@ class Form {
 					$part_two .= $arr_validations[$i] . ',';
 				break;
 				
-				// Anothers
+				// Others
 				default:
 					if(stristr($arr_validations[$i], 'equals'))
 						$part_one .= $arr_validations[$i] . ',';
@@ -234,7 +242,7 @@ class Form {
 			// if(strtolower($arr_validations[$i]) == "required")
 		}
 		
-		// Monta a string pelas partes montadas
+		// Builds the correct string from all parts
 		$part_one = ($part_one != '') ? rtrim($part_one, ',') : $part_one;
 		$part_two = ($part_two != '') ? rtrim($part_two, ',') : $part_two;
 		$part_thr = ($part_thr != '') ? rtrim($part_thr, ',') : $part_thr;
@@ -244,15 +252,15 @@ class Form {
 		$return .= ($part_thr != '' && ($part_two != '' || $part_one != '')) ? ',' . $part_thr : '';
 		$return .= ($part_thr != '' && ($part_two == '' || $part_one == '')) ? $part_thr : '';
 		$return .= ']';
-		
-		// Retorna string ajustada
+
+		// Return something like validate[required,custom[email]]
 		return $return;
 	}
 	
 	/** 
 	* build_field()
-	* Prepara e retorna um array de campo pronto para ser inserido na tabela acm_form_field.
-	* Este field/array é montado a partir de um objeto do codeigniter // $this->db->field_data(table).
+	* Prepares and returns an array representing a valid row to be inserted on table acm_module_form_field.
+	* This array is builded from a codeigniter object generated by the call $this->db->field_data(table).
 	* @param object obj_field
 	* @param string table
 	* @return array field
@@ -260,7 +268,7 @@ class Form {
 	public function build_field($obj_field = null, $table = '')
 	{
 
-		// Monta array com colunas do banco de dados
+		// Builds an array with all table columns
 		$field = array();
 		$field['id_module_form'] = 'NULL';
 		$field['table_column'] = 'NULL';
@@ -279,15 +287,15 @@ class Form {
 		$field['order_'] = 'NULL';
 		$field['dtt_inative'] = 'NULL';
 		
-		// Processa campo
+		// Process field
 		if(!is_null($obj_field))
 		{
-			// Coleta do banco de dados informações sobre o campo (outras que o CI não fornece)
+			// Gets from database other information about this column that CI doesnt supply
 			$this->CI =& get_instance();
 			$this->CI->load->model('libraries/form_model');
 			$field_data = $this->CI->form_model->get_field_meta_data($table, $obj_field->name);
 			
-			// Preenche dados básicos do campo
+			// Fill basic data of field
 			$field['table_column'] = $obj_field->name;
 			$field['label'] = $obj_field->name;
 			$field['id_html'] = $obj_field->name;
@@ -295,6 +303,7 @@ class Form {
 			$field['order_'] = get_value($field_data, 'ordinal_position') * 10;
 			$field['validations'] = (get_value($field_data, 'is_nullable') != 'YES') ? 'required;' : '';
 			
+			// Set some specific data about the field
 			switch( strtolower($obj_field->type) )
 			{
 				case 'char':
@@ -365,7 +374,7 @@ class Form {
 				break;
 			}
 			
-			// Campo processado, ainda existe a possibilidade de ser chave estrangeira
+			// Still exists the possibility of this field be a foreing key
 			if(get_value($field_data, 'constraint_type') == 'FOREIGN KEY')
 			{
 				$field['type'] = 'select';

@@ -77,27 +77,27 @@
                         
                         echo message('error', '', $error); ?>
 
-                        <a href="<?php echo URL_ROOT ?>/app_access/forgot_password" class="btn btn-lg btn-primary btn-block"><?php echo lang('Voltar') ?></a>
+                        <a href="<?php echo URL_ROOT ?>/app_access/forgot_password" class="btn btn-lg btn-primary btn-block"><?php echo lang('Back') ?></a>
 
                         <?php } elseif( isset($success) ) { 
 
                         echo message('success', '', $success); ?>
                         
-                        <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-primary btn-block"><?php echo lang('Voltar') ?></a>
+                        <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-primary btn-block"><?php echo lang('Back') ?></a>
 
                         <?php } else { ?>
                         <form role="form" action="<?php echo URL_ROOT ?>/app_access/forgot_password/true" method="post">
 
-                            <h4 class="text-center" style="margin-bottom: 30px"><?php echo lang('Esqueceu sua senha ?') ?></h4>
+                            <h4 class="text-center" style="margin-bottom: 30px"><?php echo lang('Forgot your password ?') ?></h4>
 
                             <fieldset>
                                 
                                 <div class="form-group">
-                                    <input class="form-control validate[required,custom[email]]" placeholder="<?php echo lang('Insira seu email') ?>" type="email" name="email" id="email" autofocus>
+                                    <input class="form-control validate[required,custom[email]]" placeholder="<?php echo lang('Enter your email') ?>" type="email" name="email" id="email" autofocus>
                                     
                                     <div class="checkbox" style="margin-top: 15px">
                                         <label>
-                                            <input type="checkbox" id="validate_human" name="validate_human" class="validate[required]"> <?php echo lang('Sou um ser humano') ?>
+                                            <input type="checkbox" id="validate_human" name="validate_human" class="validate[required]"> <?php echo lang('I am a human being') ?>
                                         </label>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                                     <div class="col-xs-6">
                                         
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('Enviar') ?>" />
+                                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('Send') ?>" />
                                         </div>
 
                                     </div>
@@ -116,7 +116,7 @@
                                     <div class="col-xs-6">
                                         
                                         <div class="form-group">
-                                            <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-default btn-block"><?php echo lang('Voltar') ?></a>
+                                            <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-default btn-block"><?php echo lang('Back') ?></a>
                                         </div>
 
                                     </div>  

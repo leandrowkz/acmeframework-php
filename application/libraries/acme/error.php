@@ -4,7 +4,7 @@
 *
 * Library Error
 *
-* Biblioteca de funções relacionadas a manipulação de erros no sistema.
+* Gathers methods related with the application error handling.
 * 
 * @since 	01/10/2012
 *
@@ -16,16 +16,16 @@ class Error {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
+		$this->CI =& get_instance();
 	}
 	
 	/**
 	* show_error()
-	* Exibe uma página de erro conforme parametros encaminhados.
+	* Shows a generic error page according with the forwarded parameters.
 	* @param string header
 	* @param string message
 	* @param string template
@@ -35,7 +35,7 @@ class Error {
 	*/
     public function show_error($header = '', $message = '', $template = 'error_general', $status_code = 500, $log_error = true)
     {
-		$this->CI =& get_instance();
+		
 
 		// Loga erro no banco de dados
 		if($log_error)
@@ -48,7 +48,7 @@ class Error {
 
     /**
 	* show_php_error()
-	* Box de erro ou warning do PHP. O processamento não é interrompido.
+	* Shows a HTML box containing a PHP error. The page proccess is not interrupted.
 	* @param string severity
 	* @param string message
 	* @param string filepath
@@ -73,7 +73,7 @@ class Error {
 	
 	/**
 	* show_exception_page()
-	* Desvia o processamento e exibe página de exceção genérica. Recebe como parâmetro o html da mensagem de exceção.
+	* Shows an exception page containing the forwarded message.
 	* @param string message
 	* @return void
 	*/
@@ -86,7 +86,7 @@ class Error {
 
 	/**
 	* show_404()
-	* Página de erro 404.
+	* Shows a 404 error page.
 	* @return void
 	*/
 	public function show_404()

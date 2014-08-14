@@ -18,7 +18,7 @@
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i> 
-                        <span><?php echo lang('Voltar') ?></span>
+                        <span><?php echo lang('Back') ?></span>
                     </div>
                 </a>
 
@@ -43,7 +43,7 @@
                 $id_user = get_value($user, 'id_user');
                 $url_img = get_value($user, 'url_img');
 
-                // Ajusta thumb
+                // Adjust thumb
                 if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
                     $url_img = tag_replace($url_img);
                 else
@@ -69,18 +69,18 @@
         <div class="row" style="margin-bottom: 30px ">
             <div class="col-sm-12 text-top" id="user-profile-badges">
                 <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
+                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
                     <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
                     <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
                     <?php } ?>
                 </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
+                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
             </div>
         </div>
 
-        <h3 style="margin: 0 0 30px 0"><?php echo lang('Permissões') ?></h3>
+        <h3 style="margin: 0 0 30px 0"><?php echo lang('Permissions') ?></h3>
         
         <div class="permission" style="margin-bottom: 40px;">
             <h4><?php echo get_value($permissions[0], 'module') ?></h4>
@@ -115,24 +115,23 @@
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
+
+<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>
 
 <script>
+
+    // ichecks
+    $('input[type="checkbox"]').iCheck({
+        checkboxClass: 'icheckbox_flat-red',
+        radioClass: 'iradio_flat-red'
+    });
+
     // tooltips
     $('body').tooltip({ selector: "[data-toggle=tooltip]" });
 
-    // Validação de form
-    $("form").validationEngine('attach', {promptPosition : "bottomRight"});
-
-    // Validação de form tem que funcionar no resize
-    $( window ).resize( function () {
-        $("form").validationEngine('updatePromptsPosition');
-    });
-
     // click enable field checkbox
-    $('input[type=checkbox]').click( function () {
+    $('input[type=checkbox]').on('ifChecked ifUnchecked', function () {
 
         // get id
         var id = $(this).attr('id');

@@ -4,7 +4,7 @@
 *
 * Model Log_Model
 *
-* Camada model para a biblioteca Log.
+* Database layer for the library log.
 * 
 * @since 	24/10/2012
 *
@@ -14,8 +14,7 @@ class Log_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

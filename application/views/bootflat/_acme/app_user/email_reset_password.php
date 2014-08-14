@@ -18,20 +18,20 @@
 
 <body>
 	
-	<p><strong><?php echo lang('Olá') ?>, <?php echo get_value($user, 'name') ?></strong></p>
+	<p><strong><?php echo lang('Hello') ?>, <?php echo get_value($user, 'name') ?></strong></p>
 
-	<p><?php echo lang('Utilize este email para atualizar sua senha de acesso ao sistema. Verifique abaixo seus dados de acesso e caso existam divergências, descarte esta mensagem e solicite o reenvio novamente.')?></p>
+	<p><?php echo lang('Use this email message to reset your application access password. Check your information below and if they are not correct just dispose this message and request it again.')?></p>
 		
 	<div>
 
-		<label><?php echo lang('Seu e-mail') ?>:</label>
+		<label><?php echo lang('Your e-mail') ?>:</label>
 		<?php echo get_value($user, 'email') ?>
 
 	</div>
 
-	<p><?php echo lang('Para atualizar sua senha de acesso, clique')?> <a href="<?php echo URL_ROOT ?>/app_access/reset_password/<?php echo get_value($user, 'id_user') ?>/<?php echo $key_access; ?>" target="_blank"><?php echo lang('aqui') ?></a>.</p>
+	<p><?php echo lang('To change your access password, click')?> <a href="<?php echo URL_ROOT ?>/app_access/reset_password/<?php echo get_value($user, 'id_user') ?>/<?php echo $key_access; ?>" target="_blank"><?php echo lang('here') ?></a>.</p>
 	<p>
-		<?php echo lang('Caso você tenha problemas de acesso com o link acima, copie a URL abaixo e cole em uma nova aba do seu navegador:')?>
+		<?php echo lang('If you have problems with the link above just copy and paste the following URL in a new browser tab:')?>
 		<br />
 		<?php echo URL_ROOT ?>/app_access/reset_password/<?php echo get_value($user, 'id_user') ?>/<?php echo $key_access; ?>
 	</p>

@@ -18,7 +18,7 @@
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-arrow-circle-left"></i> 
-						<span><?php echo lang('Voltar') ?></span>
+						<span><?php echo lang('Edit') ?></span>
 					</div>
 				</a>
 
@@ -38,10 +38,10 @@
 
 			<form action="<?php echo URL_ROOT ?>/app_module_manager/edit/<?php echo get_value($module, 'id_module') ?>/true" method="post">
 			
-				<h3 style="margin: 0 0 30px 0"><?php echo lang('Editar módulo') ?></h3>
+				<h3 style="margin: 0 0 30px 0"><?php echo lang('Edit module') ?></h3>
 
 	            <div class="form-group">
-	                <label><?php echo lang('Tabela') ?></label>
+	                <label><?php echo lang('Table') ?></label>
 	                <input type="text" id="table_name" name="table_name" class="form-control" value="<?php echo get_value($module, 'table_name') ?>" />
 	            </div>
 
@@ -51,7 +51,7 @@
 	            </div>
 
 	            <div class="form-group">
-	                <label><?php echo lang('Descrição') ?></label>
+	                <label><?php echo lang('Description') ?></label>
 	                <input type="text" id="description" name="description" class="form-control" value="<?php echo get_value($module, 'description') ?>" />
 	            </div>
 
@@ -61,14 +61,14 @@
 	            </div>
 
 	            <div class="form-group">
-	                <label><?php echo lang('SQL de listagem') ?></label>
+	                <label><?php echo lang('SQL query list') ?></label>
 	                <textarea name="sql_list" id="sql_list" class="form-control" style="height: 180px"><?php echo get_value($module, 'sql_list') ?></textarea>
 	            </div>
 
 				<div class="row bottom-group-buttons">
 		            <div class="col-sm-12">
-		                <input class="btn btn-primary" type="submit" value="<?php echo lang('Salvar') ?>" />
-		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module') ?>"><?php echo lang('Cancelar') ?></a>
+		                <input class="btn btn-primary" type="submit" value="<?php echo lang('Save') ?>" />
+		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module') ?>"><?php echo lang('Cancel') ?></a>
 		            </div>
 		        </div>
 

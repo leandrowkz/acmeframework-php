@@ -4,18 +4,17 @@
 *
 * Model App_Installer_Model
 *
-* Camada model do modulo app_installer.
+* Database layer for the controller app_installer.
 * 
 * @since 	20/02/2013
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Installer extends CI_Model {
+class App_Installer_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

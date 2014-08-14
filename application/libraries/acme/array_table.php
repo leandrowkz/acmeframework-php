@@ -4,11 +4,14 @@
 *
 * Library Array_Table
 *
-* Biblioteca de funções de montagem de tabela (html, table) a partir de um array de dados.
+* Gathers methods related with HTML tables. 
 *
-* OBS: Esta biblioteca opera com o padrão singleton.
+* The objective of this library is build HTML tables from arrays. 
+*
+* This library operates using singleton. One instance can be got by the call 
+* $this->array_table->get_instance();
 * 
-* @since 	27/08/2012
+* @since 	01/10/2012
 *
 * --------------------------------------------------------------------------------------------------
 */
@@ -22,16 +25,11 @@ class Array_Table {
 	public $columns = array();
 	public $columns_before = array();
 	public $columns_after = array();
-	public $indexColumnBefore = 0;
-	public $indexColumnAfter = 0;
-	public $items_per_page = 100;
-	public $page_link = '';
-	public $actual_page = 1;
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-    * Define o ID da tabela, classe e o array de dados, caso necessário.
+	* Class constructor.
+    * Defines HTML id, class and array data of the current object.
 	* @param string id
 	* @param string class
 	* @param array data
@@ -47,8 +45,8 @@ class Array_Table {
 	
 	/**
 	* get_instance()
-	* Retorna uma instancia desta classe.
-	* @return object array_table
+	* Returns an instance of this class.
+	* @return Array_Table object
 	*/
 	public function get_instance()
 	{
@@ -56,71 +54,8 @@ class Array_Table {
 	}
 	
 	/**
-	* set_items_per_page()
-	* Seta a quantidade de itens por página, para a tabela.
-	* @param integer count
-	* @return void
-	*/
-	public function set_items_per_page($count = null)
-	{
-		$this->items_per_page = (!is_null($count) && $count != '') ? $count : $this->items_per_page;
-	}
-	
-	/**
-	* get_items_per_page()
-	* Retorna a quantidade de itens por pagina.
-	* @return $this->items_per_page
-	*/
-	public function get_items_per_page()
-	{
-		return $this->items_per_page;
-	}
-	
-	/**
-	* set_page_link()
-	* Seta o link da página da tabela atual, para o submit da paginação.
-	* @param string link
-	* @return void
-	*/
-	public function set_page_link($link = null)
-	{
-		$this->page_link = (!is_null($link)) ? $link : $this->page_link;
-	}
-	
-	/**
-	* get_page_link()
-	* Retorna o link de submit e paginacao da pagina.
-	* @return $this->page_link
-	*/
-	public function get_page_link()
-	{
-		return $this->page_link;
-	}
-	
-	/**
-	* set_actual_page()
-	* Seta a pagina atual da paginacao.
-	* @param integer actual_page
-	* @return void
-	*/
-	public function set_actual_page($actual_page = null)
-	{
-		$this->actual_page = (!is_null($actual_page) && $actual_page != '') ? $actual_page : $this->actual_page;
-	}
-	
-	/**
-	* get_actual_page()
-	* Retorna a pagina atual da paginação.
-	* @return $this->page_link
-	*/
-	public function get_actual_page()
-	{
-		return $this->actual_page;
-	}
-	
-	/**
 	* set_data()
-	* Seta o array de dados para o encaminhado.
+	* Sets the array data of table.
 	* @param array data
 	* @return void
 	*/
@@ -130,8 +65,8 @@ class Array_Table {
 	}
 	
 	/**
-	* getData()
-	* Retorna o array de dados da classe.
+	* get_data()
+	* Gets the array data of table.
 	* @return $this->data
 	*/
 	public function get_data()
@@ -141,16 +76,17 @@ class Array_Table {
 	
 	/**
 	* set_columns()
-	* Array definindo quais colunas serão visiveis.
-	* @param array data
+	* Sets columns of table - columns will be show.
+	* @param array columns
 	* @return void
 	*/
-	public function set_columns($data = array())
+	public function set_columns($columns = array())
 	{
-		$this->columns = (!is_null($data) && count($data) > 0 ) ? $data : $this->columns;
+		$this->columns = (!is_null($columns) && count($columns) > 0 ) ? $columns : $this->columns;
 		
-		// Passa valores internos do array para caixa-baixa
+		// Puts all values to lowercase
 		$count_columns = count($this->columns);
+
 		if($count_columns > 0)
 		{
 			for($i = 0; $i < $count_columns; $i++)
@@ -163,7 +99,7 @@ class Array_Table {
 	
 	/**
 	* get_columns()
-	* Retorna o array de dados da classe.
+	* Returns all table columns.
 	* @return $this->columns
 	*/
 	public function get_columns()
@@ -173,11 +109,10 @@ class Array_Table {
 	
 	/**
 	* empty_columns()
-	* Zera todas as colunas da tabela.
-	* @param array data
+	* Clears all table columns.
 	* @return void
 	*/
-	public function empty_columns($data = array())
+	public function empty_columns()
 	{
 		$this->columns = array();
 		$this->columns_before = array();
@@ -186,7 +121,7 @@ class Array_Table {
 	
 	/**
 	* set_id()
-	* Seta o ID encaminhado para o aributo id da classe.
+	* Sets the HTML id attribute of table.
 	* @param string id
 	* @return void
 	*/
@@ -197,7 +132,7 @@ class Array_Table {
 	
 	/**
 	* get_id()
-	* Retorna o ID do atributo id da classe.
+	* Gets the HTML id attribute of table.
 	* @return $this->id
 	*/
 	public function get_id()
@@ -207,7 +142,7 @@ class Array_Table {
 	
 	/**
 	* set_class()
-	* Seta o class encaminhado para o aributo class da classe.
+	* Sets the HTML class attribute of table.
 	* @param string class
 	* @return void
 	*/
@@ -218,7 +153,7 @@ class Array_Table {
 	
 	/**
 	* get_class()
-	* Retorna o Class do atributo class da classe.
+	* Gets the HTML class attribute of table.
 	* @return $this->class
 	*/
 	public function get_class()
@@ -228,34 +163,26 @@ class Array_Table {
     
     /**
 	* add_column()
-	* Este método adiciona uma coluna à tabela. Caso algum número
-	* de coluna do SQL esteja entre a tag [NÚMERO_COLUNA], então 
-	* a tabela substitui o valor da coluna da linha corrente pela tag.
-	* O segundo parâmetro verifica se a coluna deve ser posta no iní-
-	* cio da tabela ou após o processamento do SQL.
-	* @param string prConteudo
-    * @param boolean prBefore
+	* Adds a column value for each table row before or after selected columns.
+	* @param string content
+    * @param boolean before
 	* @return void
 	*/
-	public function add_column($prConteudo = null, $prBefore = true)
+	public function add_column($content = null, $before = true)
 	{
-		if(!is_null($prConteudo))
+		if(!is_null($content))
 		{
-			if($prBefore)
-			{
-				$this->columns_before[$this->indexColumnBefore] = $prConteudo;
-				$this->indexColumnBefore++;
-			} else {
-				$this->columns_after[$this->indexColumnAfter] = $prConteudo;
-				$this->indexColumnAfter++;
-			}
+			if($before)
+				$this->columns_before[] = $content;
+			else
+				$this->columns_after[] = $content;
 		}
 	}
     
 	/**
 	* process()
-	* Este método processa o array de dados e monta a tabela conforme
-	* os dados configurados anteriormente. Utiliza componente html generic table.
+	* Processes table data. Call the HTML component generic table, which is really responsible
+	* to process this table.
 	* @return void
 	*/
 	public function process()
@@ -265,9 +192,8 @@ class Array_Table {
 	
     /**
 	* get_html()
-	* Este método processa a tabela e retorna o 
-	* HTML processado.
-	* @return string HtmlTable
+	* Gets HTML table from current table.
+	* @return string html
 	*/
 	public function get_html()
 	{
@@ -277,7 +203,7 @@ class Array_Table {
     
     /**
 	* render()
-	* Processa a tabela e renderiza o html gerado.
+	* Renders HTML table from current table.
 	* @return void
 	*/
 	public function render()

@@ -77,7 +77,7 @@
 
                         echo message('success', '', $success); ?>
                         
-                        <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-primary btn-block"><?php echo lang('Voltar') ?></a>
+                        <a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-primary btn-block"><?php echo lang('Back') ?></a>
 
                         <?php } else { ?>
 
@@ -85,17 +85,17 @@
                             <fieldset>
                                 
                                 <div class="form-group">
-                                    <label><?php echo lang('Nova senha') ?></label>
+                                    <label><?php echo lang('New password') ?></label>
                                     <input class="form-control validate[required,minSize[6]]" value="" type="password" name="password" id="password" autofocus>
                                 </div>
 
                                 <div class="form-group">
-                                    <label><?php echo lang('Confirme a senha') ?></label>
+                                    <label><?php echo lang('Confirm password') ?></label>
                                     <input class="form-control validate[required,minSize[6],equals[password]]" value="" type="password" name="password_repeat" id="password_repeat">
                                 </div>
                                 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('OK, Altere minha senha') ?>" />
+                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('OK, Change my password') ?>" />
                                 </div>
                             
                             </fieldset>

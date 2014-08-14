@@ -4,7 +4,7 @@
 *
 * Model App_Config_Model
 *
-* Camada model do modulo app_config.
+* Database layer for the controller app_config.
 * 
 * @since 	28/06/2013
 *
@@ -14,8 +14,7 @@ class App_Config_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

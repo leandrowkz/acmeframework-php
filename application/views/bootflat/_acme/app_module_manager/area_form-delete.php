@@ -1,11 +1,11 @@
 
-<h4 style="margin-top: 20px"><?php echo lang('Formulário de remoção') ?></h4>
+<h4 style="margin-top: 20px"><?php echo lang('Delete form') ?></h4>
 
 <?php if(get_value($module, 'table_name') != '') { ?>
 
 <div style="margin: 20px 0">
 
-    <div class="inline" style="width: 150px"><label><?php echo lang('Situação') ?></label></div>
+    <div class="inline" style="width: 150px"><label><?php echo lang('Status') ?></label></div>
 
     <div class="inline activate-form">
         
@@ -33,8 +33,8 @@
 <div style="margin: 20px 0">
 
     <div class="inline" style="width: 150px">
-        <label><?php echo lang('Ação vinculada') ?> </label>
-        <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Ação de registro na listagem do módulo que aponta para este formulário') ?>"></i>
+        <label><?php echo lang('Linked action') ?> </label>
+        <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Linked action on module list that points to this form') ?>"></i>
     </div>
 
     <div class="inline activate-action">
@@ -62,7 +62,7 @@
 
 <div style="margin: 20px 0">
 
-    <div class="inline" style="width: 150px"><label><?php echo lang('URL do form') ?></label></div>
+    <div class="inline" style="width: 150px"><label><?php echo lang('Form URL') ?></label></div>
     
     <div class="inline">
 
@@ -71,7 +71,7 @@
         &nbsp;
 
         <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-edit-form">
-            <?php echo lang('Dados do form') ?>
+            <?php echo lang('Edit form') ?>
             <i class="fa fa-fw fa-pencil"></i>
         </button>
 
@@ -87,7 +87,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar formulário')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit form')?></h4>
                 </div>
                 <div class="modal-body">
 
@@ -111,8 +111,8 @@
                 </div>
                 <div class="modal-footer">
                     
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
 
                 </div>
             </div>
@@ -123,7 +123,7 @@
 
 </form>
 
-<h4 style="margin-top: 40px"><?php echo lang('Campos do formulário') ?></h4>
+<h4 style="margin-top: 40px"><?php echo lang('Form fields') ?></h4>
 
 <div class="table-responsive">
     
@@ -131,10 +131,10 @@
         
         <thead>
             <tr>
-                <th><?php echo lang('Tabela.coluna') ?></th>
+                <th><?php echo lang('Table.column') ?></th>
                 <th><?php echo lang('Label') ?></th>
-                <th><?php echo lang('Tipo') ?></th>
-                <th><?php echo lang('Ordenação') ?></th>
+                <th><?php echo lang('Type') ?></th>
+                <th><?php echo lang('Order') ?></th>
                 <th></th>
             </tr>
         </thead>
@@ -151,10 +151,10 @@
                 <td>
                     <input type="hidden" class="column_name" value="<?php echo get_value($field, 'column_name') ?>" />
                     <?php if($id_field != '') {?>
-                    <a href="javascript:void(0)" title="<?php echo lang('Editar') ?>" data-toggle="modal" data-target="#modal-edit-field-<?php echo $i ?>"><?php echo get_value($field, 'column_name') ?></a>
+                    <a href="javascript:void(0)" title="<?php echo lang('Edit') ?>" data-toggle="modal" data-target="#modal-edit-field-<?php echo $i ?>"><?php echo get_value($field, 'column_name') ?></a>
                     <?php } else { echo get_value($field, 'column_name'); } ?>
                     <?php if(get_value($field, 'column_key') == 'PRI') { ?>
-                    <i class="fa fa-key fa-fw text-warning" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Chave primária') ?>"></i>
+                    <i class="fa fa-key fa-fw text-warning" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Primary key') ?>"></i>
                     <?php } ?>
                 </td>
                 <td><?php echo get_value($field, 'label') ?></td>
@@ -182,7 +182,7 @@ foreach($fields as $field) {
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar formulário')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit field')?></h4>
                 </div>
                 <div class="modal-body">
 
@@ -194,7 +194,7 @@ foreach($fields as $field) {
                     </div>
 
                     <div class="form-group">
-                        <label><?php echo lang('Tabela.coluna') ?></label>
+                        <label><?php echo lang('Table.column') ?></label>
                         <div class="input-group">
                             <span class="input-group-addon"><?php echo get_value($module, 'table_name') ?>.</span>
                             <input type="text" class="form-control table_column" value="<?php echo get_value($field, 'table_column') ?>" />
@@ -205,7 +205,7 @@ foreach($fields as $field) {
                         <div class="col-sm-8">
 
                             <div class="form-group">
-                                <label><?php echo lang('Tipo') ?>*</label>
+                                <label><?php echo lang('Type') ?>*</label>
                                 <select class="form-control validate[required] type">
                                     <option value="text" <?php echo (get_value($field, 'type') == 'text') ? 'selected="selected"' : ''; ?>>input text</option>
                                     <option value="password" <?php echo (get_value($field, 'type') == 'password') ? 'selected="selected"' : ''; ?>>input password</option>
@@ -222,7 +222,7 @@ foreach($fields as $field) {
                         <div class="col-sm-4">
 
                             <div class="form-group">
-                                <label><?php echo lang('Ordenação') ?></label>
+                                <label><?php echo lang('Order') ?></label>
                                 <input type="text" class="form-control order_" alt="integer" value="<?php echo get_value($field, 'order_') ?>" />
                             </div>
 
@@ -230,7 +230,7 @@ foreach($fields as $field) {
                     </div>
 
                     <h4 class="ap-opener" style="margin-top: 20px">
-                        <a href="javascript:void(0)"><?php echo lang('Propriedades adicionais') ?></a>
+                        <a href="javascript:void(0)"><?php echo lang('Additional properties') ?></a>
                         <i class="fa fa-arrow-circle-right fa-fw"></i>
                     </h4>
                     <hr style="margin: 10px 0" />
@@ -238,7 +238,7 @@ foreach($fields as $field) {
                     <div class="additional-properties" style="display: none">
                         
                         <div class="form-group">
-                            <label><?php echo lang('Descrição') ?></label>
+                            <label><?php echo lang('Description') ?></label>
                             <input type="text" class="form-control description" value="<?php echo get_value($field, 'description') ?>" />
                         </div>
 
@@ -267,7 +267,7 @@ foreach($fields as $field) {
 
                                 <div class="form-group">
                                     <label><?php echo lang('Style HTML') ?></label>
-                                    <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Insira propriedades CSS separadas por ponto-e-vírgula. Não é necessário inserir a declaração style=') ?>"></i>
+                                    <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Enter any CSS property separated by semicolon. It is not necessary put the style= declaration') ?>"></i>
                                     <input type="text" class="form-control style" value="<?php echo get_value($field, 'style') ?>" />
                                 </div>
 
@@ -283,30 +283,30 @@ foreach($fields as $field) {
                             </div>
                         </div>
 
-                        <h5 class="text-muted"><?php echo lang('Para campos tipo Select, Checkbox e Radio') ?></h5>
+                        <h5 class="text-muted"><?php echo lang('For fields Select, Checkbox and Radio') ?></h5>
                         
                         <div class="form-group">
-                            <label><?php echo lang('JSON de opções') ?></label>
+                            <label><?php echo lang('JSON options') ?></label>
                             <i class="popover-json fa fa-question-circle fa-fw cursor-pointer"></i>
                             <textarea class="form-control options_json"><?php echo get_value($field, 'options_json') ?></textarea>
                             <div class="list-json hide">
                                 <small>
-                                    <div><?php echo lang('Exemplo:') ?></div>
+                                    <div><?php echo lang('Example:') ?></div>
                                     <pre>[ { "CAMPO1" : "VALOR 1" }, { "CAMPO2" : "VALOR 2" } ]</pre>
                                 </small>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label><?php echo lang('SQL de opções') ?></label>
-                            <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('O SQL a ser executado deve conter duas colunas, sendo uma delas o valor que ficará no value e outra o label da opção. Por exemplo: SELECT VALUE, LABEL FROM TABLE') ?>"></i>
+                            <label><?php echo lang('SQL query options') ?></label>
+                            <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('The SQL to be executed must has two columns, one of them being the value that will be placed on HTML value attribute and another one that will be placed on label option. For example: SELECT VALUE, LABEL FROM TABLE') ?>"></i>
                             <textarea class="form-control options_sql"><?php echo get_value($field, 'options_sql') ?></textarea>
                         </div>
 
                     </div>
 
                     <h4 class="js-opener" style="margin-top: 60px">
-                        <a href="javascript:void(0)"><?php echo lang('Javascript, máscaras e validações') ?></a>
+                        <a href="javascript:void(0)"><?php echo lang('Javascript, masks and validations') ?></a>
                         <i class="fa fa-arrow-circle-right fa-fw"></i>
                     </h4>
                     <hr style="margin: 10px 0" />
@@ -315,7 +315,7 @@ foreach($fields as $field) {
 
                         <div class="form-group">
                             <label><?php echo lang('Javascript') ?></label>
-                            <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Exemplos: onclick=do_something( this.value ), onchange=free_me_please( this.value )') ?>"></i>
+                            <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Example: onclick=do_something( this.value ), onchange=free_me_please( this.value )') ?>"></i>
                             <textarea class="form-control javascript"><?php echo get_value($field, 'javascript') ?></textarea>
                         </div>
 
@@ -323,12 +323,12 @@ foreach($fields as $field) {
                             <div class="col-sm-6">
                                 
                                 <div class="form-group">
-                                    <label><?php echo lang('Máscaras') ?></label>
+                                    <label><?php echo lang('Masks') ?></label>
                                     <i class="popover-masks fa fa-question-circle fa-fw cursor-pointer"></i>
                                     <textarea class="form-control masks"><?php echo get_value($field, 'masks') ?></textarea>
                                     <div class="list-masks hide">
                                         <small>
-                                            <div><?php echo lang('Insira máscaras separadas por ponto-e-vírgula.') ?></div>
+                                            <div><?php echo lang('Enter masks separated by semicolon') ?></div>
                                             <div><strong>phone:</strong> (99) 9999.9999</div>
                                             <div><strong>cpf:</strong> 999.999.999-99</div>
                                             <div><strong>cnpj:</strong> 99.999.999/9999-99</div>
@@ -349,32 +349,32 @@ foreach($fields as $field) {
                             <div class="col-sm-6">
 
                                 <div class="form-group">
-                                    <label><?php echo lang('Validações') ?></label>
+                                    <label><?php echo lang('Validations') ?></label>
                                     <i class="popover-validations fa fa-question-circle fa-fw cursor-pointer"></i>
                                     <textarea class="form-control validations"><?php echo get_value($field, 'validations') ?></textarea>
                                     <div class="list-validations hide">
                                         <small>
-                                            <div><?php echo lang('Insira validações separadas por ponto-e-vírgula.') ?></div>
-                                            <div><strong>required:</strong> campo obrigatório</div>
-                                            <div><strong>email:</strong> validador de email</div>
-                                            <div><strong>phone:</strong> validador de telefone</div>
-                                            <div><strong>url:</strong> URL válida/inválida</div>
-                                            <div><strong>number:</strong> double e float com negação ou não</div>
-                                            <div><strong>integer:</strong> inteiros</div>
-                                            <div><strong>ipv4:</strong> endereços de ip v4</div>
-                                            <div><strong>date:</strong> datas no formato DD/MM/AAAA</div>
-                                            <div><strong>onlyLetterSp:</strong> apenas letras</div>
-                                            <div><strong>onlyNumberSp:</strong> apenas números</div>
-                                            <div><strong>onlyLetterNumber:</strong> apenas letras e números, sem espaços</div>
-                                            <div><strong>equals[field-id]:</strong> compara com o valor de outro campo (por exemplo, password)</div>
-                                            <div><strong>minCheckbox[7]:</strong> mínimo de checkbox a ser marcado</div>
-                                            <div><strong>maxCheckbox[7]:</strong> máximo de checkbox a ser marcado</div>
-                                            <div><strong>min[7]:</strong> valida quando o valor do campo é menor do que o parametro informado [7]</div>
-                                            <div><strong>max[7]:</strong> valida quando o valor do campo é maior do que o parametro informado [7]</div>
-                                            <div><strong>past[NOW or date YYYY-MM-DD]:</strong> verifica se o valor do elemento é uma data anterior à data informada como parametro</div>
-                                            <div><strong>future[NOW or date YYYY-MM-DD]:</strong> verifica se o valor do elemento é uma data posterior à data informada como parametro</div>
-                                            <div><strong>minSize[7]:</strong> verifica se o tamanho em caracteres do campo é maior do que o informado [7]</div>
-                                            <div><strong>maxSize[7]:</strong> verifica se o tamanho em caracteres do campo é menor do que o informado [7]</div>
+                                            <div><?php echo lang('Enter validations separated by semicolon') ?></div>
+                                            <div><strong>required:</strong> <?php echo lang('mandatory field') ?></div>
+                                            <div><strong>email:</strong> <?php echo lang('email validator') ?></div>
+                                            <div><strong>phone:</strong> <?php echo lang('phone validator') ?></div>
+                                            <div><strong>url:</strong> <?php echo lang('URL validator') ?></div>
+                                            <div><strong>decimal:</strong> <?php echo lang('double/float values') ?></div>
+                                            <div><strong>integer:</strong> <?php echo lang('integer numbers only') ?></div>
+                                            <div><strong>ipv4:</strong> <?php echo lang('IP addresses') ?></div>
+                                            <div><strong>date:</strong> <?php echo lang('dates on format YYYY-MM-DD') ?></div>
+                                            <div><strong>onlyLetterSp:</strong> <?php echo lang('only letters') ?></div>
+                                            <div><strong>onlyNumberSp:</strong> <?php echo lang('only numbers') ?></div>
+                                            <div><strong>onlyLetterNumber:</strong> <?php echo lang('only letters and numbers, no spacing') ?></div>
+                                            <div><strong>equals[field-id]:</strong> <?php echo lang('compare the value with another field id value, like password') ?></div>
+                                            <div><strong>minCheckbox[7]:</strong> <?php echo lang('min checkboxes to be checked') ?></div>
+                                            <div><strong>maxCheckbox[7]:</strong> <?php echo lang('max checkboxes to be checked') ?></div>
+                                            <div><strong>min[7]:</strong> <?php echo lang('check if the field value is less than the given parameter [7]') ?></div>
+                                            <div><strong>max[7]:</strong> <?php echo lang('check if the field value is more than the given parameter [7]') ?></div>
+                                            <div><strong>past[NOW or date YYYY-MM-DD]:</strong> <?php echo lang('check if value is in the past of given date') ?></div>
+                                            <div><strong>future[NOW or date YYYY-MM-DD]:</strong> <?php echo lang('check if value is in the future of given date') ?></div>
+                                            <div><strong>minSize[7]:</strong> <?php echo lang('size of field value must be at least the same of the given parameter [7]') ?></div>
+                                            <div><strong>maxSize[7]:</strong> <?php echo lang('size of field value must be max of the given parameter [7]') ?></div>
                                         </small>
                                     </div>
                                 </div>
@@ -387,8 +387,8 @@ foreach($fields as $field) {
                 </div>
                 <div class="modal-footer">
                     
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
 
                 </div>
             </div>
@@ -401,7 +401,7 @@ foreach($fields as $field) {
 <?php $i++; } ?>
 
 <?php } else { ?>
-<p class="text-muted"><em><?php echo lang('Módulo sem tabela-alvo') ?></em></p>
+<p class="text-muted"><em><?php echo lang('Module with no table') ?></em></p>
 <?php } ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />

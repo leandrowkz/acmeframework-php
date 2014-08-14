@@ -4,16 +4,16 @@
 | App settings
 |--------------------------------------------------------------------------
 |
-| Configurações gerais da aplicação. Reúne informações como nome,
-| template atual e idioma padrão. 
+| General application settings. Gather information like name, template and
+| default language. 
 |
-| Para cada índice do array $config deste arquivo uma constante será
-| definida e estará disponível em nível global.
+| For each index from array $config a constant will be defined and will be 
+| ready to use in a global level.
 |
 */
-$config['APP_NAME'] = 'TAPMANAGER';			// nome da aplicação
-$config['TEMPLATE'] = 'bootflat';	// template utilizado (dentro de /views)
-$config['LANGUAGE'] = 'pt_BR';				// linguagem padrão
+$config['APP_NAME'] = 'ACME Framework';		// application name
+$config['TEMPLATE'] = 'bootflat';			// current template (inside /views)
+$config['LANGUAGE'] = 'en_US';				// default language
 $config['EMAIL_FROM'] = 'noreply@app';		// to send emails
 
 /*
@@ -21,10 +21,10 @@ $config['EMAIL_FROM'] = 'noreply@app';		// to send emails
 | URLs e PATHs
 |--------------------------------------------------------------------------
 |
-| Definição de URLs e PATHs da aplicação. A URL raiz da aplicação é URL_ROOT.
+| Application URLs and Paths. The application root URL is the constant URL_ROOT.
 |
-| Para cada índice do array $config deste arquivo uma constante será
-| definida e estará disponível em nível global.
+| For each index from array $config a constant will be defined and will be 
+| ready to use in a global level.
 |
 */
 $config['URL_ROOT'] = rtrim(base_url(), '/');

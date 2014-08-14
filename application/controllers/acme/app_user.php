@@ -4,7 +4,7 @@
 *
 * Controller App_User
 * 
-* Módulo de usuários da aplicação.
+* Application users module. Manage users and groups with this module.
 *
 * @since	13/08/2012
 *
@@ -16,8 +16,7 @@ class App_User extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -26,7 +25,7 @@ class App_User extends ACME_Module_Controller {
 
 	/**
 	* index()
-	* Entrada do módulo.
+	* Application users list.
 	* @return void
 	*/
 	public function index()
@@ -40,7 +39,7 @@ class App_User extends ACME_Module_Controller {
 
 	/**
 	* groups()
-	* Grupos de usuários.
+	* Application groups list.
 	* @return void
 	*/
 	public function groups()
@@ -62,7 +61,7 @@ class App_User extends ACME_Module_Controller {
 	public function save_group($operation = '')
 	{
 		if( ! $this->check_permission('ENTER')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -84,7 +83,7 @@ class App_User extends ACME_Module_Controller {
 			case 'delete';
 				// there are users in this group!
 				if( $this->db->get_where('acm_user', array('id_user_group' => $this->input->post('id_user_group')))->num_rows() > 0 ) {
-					echo json_encode(array('return' => false, 'error' => lang('Ops! Existem usuários neste grupo')));
+					echo json_encode(array('return' => false, 'error' => lang('Ops! There are users in this group.')));
 					return;
 				} 
 
@@ -98,7 +97,7 @@ class App_User extends ACME_Module_Controller {
 
 	/**
 	* new_user()
-	* New user screen form.
+	* New user form page.
 	* @param boolean process
 	* @return void
 	*/
@@ -178,14 +177,23 @@ class App_User extends ACME_Module_Controller {
 		} else {
 
 			// Proccess form
-			$user_data['id_user_group'] = $this->input->post('id_user_group');
-			$user_data['name'] = $this->input->post('name');
-			$user_data['email'] = $this->input->post('email');
-			$user_data['description'] = $this->input->post('description');
-			$user_data['password'] = md5($this->input->post('password'));
+			$this->db->set('id_user_group', $this->input->post('id_user_group'));
+			$this->db->set('name', $this->input->post('name'));
+			$this->db->set('email', $this->input->post('email'));
+			$this->db->set('description', $this->input->post('description'));
+			$this->db->set('password', $this->input->post('password'));
+
+			// Basic check for status
+			if($this->input->post('status') == '')
+				$this->db->set('dtt_inative', date('Y-m-d'));
+			else
+				$this->db->set('dtt_inative', 'NULL', false);
+
+			// where conditions
+			$this->db->where(array('id_user' => $id_user));
 
 			// update user
-			$this->db->update('acm_user', $user_data, array('id_user' => $id_user));
+			$this->db->update('acm_user');
 
 			// configs update
 			$config['url_default'] = $this->input->post('url_default');
@@ -251,7 +259,7 @@ class App_User extends ACME_Module_Controller {
 	public function save_permission($operation = '')
 	{
 		if( ! $this->check_permission('PERMISSION_MANAGER')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -522,7 +530,7 @@ class App_User extends ACME_Module_Controller {
 	public function reset_password($id_user = 0)
 	{
 		if( ! $this->check_permission('RESET_PASSWORD')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -540,11 +548,11 @@ class App_User extends ACME_Module_Controller {
 		$this->email->clear();
 	    $this->email->to(get_value($user, 'email'));
 	    $this->email->from(EMAIL_FROM, APP_NAME);
-	    $this->email->subject(lang('Alteração de senha'));
+	    $this->email->subject(lang('Reset password'));
 	    $this->email->message($body_msg);
 	    
 	    if( ! @$this->email->send() ) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Não foi possível enviar a mensagem de email. Verifique as configurações de email da aplicação')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! It was not possible to send the email message. Check the email settings and try again.')));
 			return;
 		}
 
@@ -552,9 +560,61 @@ class App_User extends ACME_Module_Controller {
 		$data['id_user'] = $args['id_user'];
 		$data['key_access'] = $args['key_access'];
 
-		$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $data);
+		$this->log->db_log(lang('Reset password request'), 'reset_password', '', $data);
 		
 		// Adorable return!
 		echo json_encode(array('return' => true));
+	}
+
+	/**
+	* change_password()
+	* Password change page.
+	* @param integer id_user
+	* @param boolean process
+	* @return void
+	*/
+	public function change_password($id_user = 0, $process = false)
+	{		
+		// only the logged user can see your profile
+		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+			redirect($this->session->userdata('url_default'));
+
+		// View vars
+		$args['password_error'] = false;
+
+		// load user data
+		$args['user'] = $this->app_user_model->get_user($id_user);
+
+		if( ! $process) {
+						
+			// load view
+			$this->template->load_page('_acme/app_user/change_password', $args);
+		} else {
+
+			// update user password
+			$old_pass = md5($this->input->post('old_pass'));
+			$new_pass = md5($this->input->post('new_pass'));
+			$cnf_pass = md5($this->input->post('cnf_pass'));
+
+			// try to find user by old password and email
+			$user = $this->db->get_where('acm_user', array('password' => $old_pass, 'id_user' => $id_user))->row_array(0);
+
+			// basic password check
+			if($new_pass != $cnf_pass || count($user) <= 0)
+				$args['password_error'] = true;
+
+			
+			if($args['password_error'])
+				$this->template->load_page('_acme/app_user/change_password', $args);
+			else {
+
+				// Update pass on dtabase
+				$upd_user['password'] = $new_pass;
+
+				$this->db->update('acm_user', $upd_user, array('id_user' => $id_user));
+
+				redirect('app_user/profile/' . $id_user);
+			}
+		}
 	}
 }

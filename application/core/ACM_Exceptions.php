@@ -4,8 +4,8 @@
 *
 * ACM_Exceptions (extended from CI_Exceptions)
 *
-* Responsável pela manipulação de erros da aplicação. Toda vez que um erro (php, database, 404) é 
-* disparado, passam por aqui.
+* This core class is responsible for error handling on application. Every time an error is detected
+* this class is loaded and treated depending on the type of error.
 *
 * @since 	13/08/2012
 *
@@ -17,18 +17,16 @@ class ACM_Exceptions extends CI_Exceptions {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 	}
 	
 	/**
 	* show_error()
-	* Mapeia e manipula erros gerais da aplicação. Recebe automaticamente um conjunto de parametros
-	* que definem o nivel do erro.
+	* Map and handle general application errors.
 	* @param string header
 	* @param string message
 	* @param string error_type
@@ -39,20 +37,19 @@ class ACM_Exceptions extends CI_Exceptions {
 	{
 		$this->CI =& get_instance();
 
-		// verifica situação da instalação do ACME
+		// Check if acme is installed so doesnt log on database
 		if ( $this->CI->acme_installed && is_object($this->CI->db) ) 
 			$log_db = $this->CI->db->database != '' ? true : false;
 		else
 			$log_db = false;
 
-		// Exibe msg de erro
+		// Show error msg
 		$this->CI->error->show_error($header, $message, $error_type, $status_code, $log_db);
 	}
 	
 	/**
 	* show_php_error()
-	* Mapeia e manipula erros de php da aplicação. Recebe automaticamente um conjunto de parametros
-	* que definem o nivel do erro.
+	* Map and handle application php errors.
 	* @param string severity
 	* @param string message
 	* @param string filepath
@@ -63,20 +60,20 @@ class ACM_Exceptions extends CI_Exceptions {
 	{
 		$this->CI =& get_instance();
 
-		// verifica situação da instalação do ACME
+		// Check if acme is installed so doesnt log on database
 		if ( $this->CI->acme_installed && is_object($this->CI->db) ) 
 			$log_db = $this->CI->db->database != '' ? true : false;
 		else
 			$log_db = false;
 
-		// Exibe msg de erro
+			// Show error msg
 		$this->CI->error->show_php_error($this->levels[$severity], $message, $filepath, $line, $log_db);
 		
 	}
 	
 	/**
 	* show_404()
-	* Página de erro 404. Redireciona manualmente para o controlador acme_access/page_not_found
+	* Map and handle application 404 errors.
 	* @return void
 	*/
 	function show_404($page = '', $log_error = TRUE)

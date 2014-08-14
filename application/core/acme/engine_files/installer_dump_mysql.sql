@@ -1,7 +1,7 @@
 
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_user_group
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_user_group 
 (	
 	id_user_group INT NOT NULL AUTO_INCREMENT, 
@@ -13,9 +13,9 @@ CREATE TABLE acm_user_group
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_user
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_user 
 (	
 	id_user INT NOT NULL AUTO_INCREMENT, 
@@ -35,9 +35,9 @@ CREATE TABLE acm_user
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_log
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_log 
 (	
 	id_log INT NOT NULL AUTO_INCREMENT, 
@@ -62,9 +62,9 @@ CREATE TABLE acm_log
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_log_error
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_log_error 
 (	
 	id_log_error INT NOT NULL AUTO_INCREMENT, 
@@ -90,9 +90,9 @@ CREATE TABLE acm_log_error
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_menu
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_menu 
 (	
 	id_menu INT NOT NULL AUTO_INCREMENT, 
@@ -113,9 +113,9 @@ CREATE TABLE acm_menu
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_module
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_module 
 (	
 	id_module INT NOT NULL AUTO_INCREMENT, 
@@ -134,9 +134,9 @@ CREATE TABLE acm_module
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_module_action
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_module_action 
 (	
 	id_module_action INT NOT NULL AUTO_INCREMENT,  
@@ -154,9 +154,9 @@ CREATE TABLE acm_module_action
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_module_form
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_module_form 
 (	
 	id_module_form INT NOT NULL AUTO_INCREMENT, 
@@ -174,9 +174,9 @@ CREATE TABLE acm_module_form
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_module_form_field
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_module_form_field 
 (	
 	id_module_form_field INT NOT NULL AUTO_INCREMENT, 
@@ -204,9 +204,9 @@ CREATE TABLE acm_module_form_field
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_module_menu
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_module_menu 
 (	
 	id_module_menu INT NOT NULL AUTO_INCREMENT,  
@@ -224,9 +224,9 @@ CREATE TABLE acm_module_menu
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_module_permission
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_module_permission 
 (	
 	id_module_permission INT NOT NULL AUTO_INCREMENT, 
@@ -242,9 +242,9 @@ CREATE TABLE acm_module_permission
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_user_config
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_user_config 
 (	
 	id_user_config INT NOT NULL AUTO_INCREMENT, 
@@ -261,9 +261,9 @@ CREATE TABLE acm_user_config
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  DDL for Table acm_user_permission
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 CREATE TABLE acm_user_permission 
 (	
 	id_user_permission INT NOT NULL AUTO_INCREMENT, 
@@ -279,30 +279,30 @@ CREATE TABLE acm_user_permission
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_user_group
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_user_group VALUES (1,'ROOT','Users with application super privileges.');
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_user
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_user VALUES (1,1,'ACME Engine','leandro.w3c@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,CURRENT_TIMESTAMP);
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_user_config
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app_dashboard');
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_menu
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_menu VALUES (2,NULL,1,NULL,'{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-fw fa-home"></i>',10);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (1,NULL,1,'System',NULL,NULL,'<i class="fa fa-fw fa-cog"></i>',20);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (3,1,1,'Modules',NULL,NULL,'<i class="fa fa-fw fa-cube"></i>',30);<<|SEPARATOR|>>
@@ -316,9 +316,9 @@ INSERT INTO acm_menu VALUES (9,1,1,'Users','{URL_ROOT}/app_user/',NULL,'<i class
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_module
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administration',NULL,'<i class="fa fa-fw fa-cubes"></i>','Application modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
 INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Module maker',NULL,'<i class="fa fa-fw fa-flask"></i>','Create new modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
 INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Users',NULL,'<i class="fa fa-fw fa-users"></i>','Manage groups and users',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
@@ -329,33 +329,33 @@ INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Settings',NULL,'<i cla
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_module_permission
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_module_permission VALUES (1,1,'Module entrance','ENTER',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (10,1,'UPDATE module settings','CONFIG',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (10,1,'Update module settings','CONFIG',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (3,2,'Module entrance','ENTER',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (4,2,'Create a new module','CREATE_MODULE',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (5,3,'Module entrance','ENTER',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (28,3,'Manage permissions','PERMISSION_MANAGER','Permissão verificada na gerência de permissões de usuário');<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (28,3,'Manage permissions','PERMISSION_MANAGER','Checked on user permissions page');<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (61,3,'Insert','INSERT',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (62,3,'UPDATE','UPDATE',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (64,3,'Request reset password','RESET_PASSWORD','Permissão verificada na solicitação de reset de senha de usuário');<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (62,3,'Update','UPDATE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (64,3,'Request reset password','RESET_PASSWORD','Checked on user request reset password');<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (7,5,'See dashboard','VIEW_DASHBOARD',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (8,6,'Module entrance','ENTER',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (15,6,'View','VIEW',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (67,6,'Delete','DELETE',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (9,7,'Module entrance','ENTER',NULL);<<|SEPARATOR|>>
-INSERT INTO acm_module_permission VALUES (52,7,'UPDATE','UPDATE',NULL);<<|SEPARATOR|>>
+INSERT INTO acm_module_permission VALUES (52,7,'Update','UPDATE',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (53,7,'Delete','DELETE',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (54,7,'Insert','INSERT',NULL);<<|SEPARATOR|>>
 INSERT INTO acm_module_permission VALUES (56,15,'Module entrance','ENTER',NULL);
 
 
 <<|SEPARATOR|>>
--- -----------------------------------------------------
+/* -----------------------------------------------------
 --  INSERTS for Table acm_user_permission
--- -----------------------------------------------------
+-- -------------------------------------------------- */
 INSERT INTO acm_user_permission VALUES (1,1,1);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (3,1,3);<<|SEPARATOR|>>
 INSERT INTO acm_user_permission VALUES (4,1,4);<<|SEPARATOR|>>

@@ -4,87 +4,474 @@
 *
 * Controller App_Installer
 * 
-* Instalador do ACME Engine.
+* ACME Framework installer.
 *
-* @since 	30/03/2013
+* @since 	04/08/2014
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_Installer extends ACME_Engine_Controller {
+class App_Installer extends ACME_Core_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
 		parent::__construct();
-		
-		// Defines específicos para visualização do template (scripts e imagens)
-		define('URL_INCLUDE_ACME', URL_TEMPLATE . '/_acme/_includes');
-		define('URL_CSS_ACME', URL_INCLUDE_ACME . '/css');
-		define('URL_IMG_ACME', URL_INCLUDE_ACME . '/img');
-		
-		// Verifica se installer pode ser aberto
-		if(!$this->_check_installer_permissions())
-		{
-			$this->template->load_page('_acme/acme_installer/error_opening', array('msg' => lang('O módulo Installer (instalador) não pode ser aberto. Verifique as possíveis causas:<br /><br />
-			&bull;&nbsp;Diretório <strong>application/controllers</strong> (e seus subdiretórios) sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Diretório <strong>application/core</strong> (e seus subdiretórios) sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Diretório <strong>application/config</strong> (e seus subdiretórios) sem permissões de leitura e/ou escrita<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/installer_create_database.sql</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/installer_dump_database.sql</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/installer_insert_master_user.sql</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/installer_template_acme_installer.php</strong> faltando<br />
-			&bull;&nbsp;Arquivo <strong>application/core/acme/engine_files/installer_template_application_settings.php</strong> faltando<br />')), false, false);
-		}
+
+		// Set language setting
+		if ( $this->session->userdata('language') == '')
+			$this->session->set_userdata('language', LANGUAGE);
+
+		// Set url_default setting
+		if ( $this->session->userdata('url_default') == '')
+			$this->session->set_userdata('url_default', 'http://www.acmeframework.org');
+
 	}
 	
 	/**
 	* index()
-	* Método 'padrão' do controlador. Tela de instalação, ou passo 1.
+	* Redirect to step one of installation.
 	* @return void
 	*/
 	public function index()
 	{
-		redirect('acme_access');
+		// Check if acme is already installed
+		if ( $this->acme_installed )
+			redirect('app_access');
+		
+		// Redirect to step one
+		redirect('app_installer/system_requirements');
 	}
-	
+
 	/**
-	* step_two()
-	* Passo 2 da instalação do sistema. Testa novamente os requisitos do sistema antes de 
-	* prosseguir.
+	* system_requirements()
+	* Step 1 of installation - System requirements page.
 	* @return void
 	*/
-	public function step_two()
+	public function system_requirements()
 	{
-		redirect('acme_access');
+		// Check if acme is already installed
+		if ( $this->acme_installed )
+			redirect('app_access');
+
+		// Database settings
+		$db_driver = $this->input->post('db_driver'); 
+		$db_host = $this->input->post('db_host'); 
+		$db_port = $this->input->post('db_port'); 
+		$db_user = $this->input->post('db_user'); 
+		$db_pass = $this->input->post('db_pass'); 
+		$db_database = $this->input->post('db_database'); 
+
+		// View vars and requirements
+		$args['path_permissions'] = $this->_check_path_permissions();
+		$args['php_version'] = $this->_check_php_version();
+		$args['php_database_extension'] = $this->_check_php_database_extension($db_driver);
+		$args['database_server'] = $this->_check_database_server($db_driver, $db_host, $db_port, $db_user, $db_pass, $db_database);
+
+		// Form data for database
+		$args['params'] = $this->input->post();
+
+		// Load view
+		$this->template->load_page('_acme/app_installer/system_requirements', $args, false, false);
 	}
-	
+
 	/**
-	* step_two_process()
-	* Processa passo 2 da instalação do sistema. Testa novamente os requisitos do sistema antes de 
-	* prosseguir. Caso a validação do formulário esteja ok, instala o sistema.
+	* new_app_info()
+	* Step 2 of installation - New application info page.
+	* @param boolean process
 	* @return void
 	*/
-	public function step_two_process()
+	public function new_app_info($process = false)
 	{
-		redirect('acme_access');
+		// Check if acme is already installed
+		if ( $this->acme_installed )
+			redirect('app_access');
+
+		// Database settings
+		$db_driver = $this->input->post('db_driver'); 
+		$db_host = $this->input->post('db_host'); 
+		$db_port = $this->input->post('db_port'); 
+		$db_user = $this->input->post('db_user'); 
+		$db_pass = $this->input->post('db_pass'); 
+		$db_database = $this->input->post('db_database'); 
+
+		// View vars and requirements
+		$path_permissions = $this->_check_path_permissions();
+		$php_version = $this->_check_php_version();
+		$php_database_extension = $this->_check_php_database_extension($db_driver);
+		$database_server = $this->_check_database_server($db_driver, $db_host, $db_port, $db_user, $db_pass, $db_database);
+
+		// Form data
+		$args['post'] = $this->input->post();
+
+		// Dummy logo var
+		$args['app_logo'] = true;
+
+		// procced only with no errors
+		if( ! $path_permissions || ! $php_version || ! $php_database_extension || $database_server !== true)
+			redirect('app_installer');
+
+		// Just load page
+		if( ! $process)
+			$this->template->load_page('_acme/app_installer/new_app_info', $args, false, false);
+		
+		// install acme framework - create new application
+		else {
+
+			// Try to upload logo
+			if( isset($_FILES['app_logo']['name']) ) {
+
+				if($_FILES['app_logo']['name'] != '') {
+					
+					// config array for uploading
+					$config['overwrite'] = true;
+					$config['file_name'] = 'logo';
+					$config['upload_path'] = PATH_IMG;
+					$config['allowed_types'] = 'png';
+					$config['max_size']	= '2000';
+					$config['max_width']  = '120';
+					$config['max_height']  = '20';
+					$this->load->library('upload', $config);
+
+					// Try to upload logo
+					$args['app_logo'] = $this->upload->do_upload('app_logo') ? true : $this->upload->display_errors('<span>','</span>');
+			 	}
+			}
+
+			// Check if there is errors on logo
+			if ( $args['app_logo'] !== true )
+				$this->template->load_page('_acme/app_installer/new_app_info', $args, false, false);
+
+			// Procced with installation!
+			else {
+
+				// install acme framework
+				$this->_install_acme_framework($this->input->post());
+
+				// Set session var saying that app was created
+				$this->session->set_userdata('installed', true);
+
+				// Redirect to summary page
+				redirect('app_installer/summary');
+			}
+		}
 	}
-	
+
 	/**
 	* summary()
-	* Resumo da instalação.
+	* Step 3 of installation - Application review. At this point the 
+	* application is already created.
 	* @return void
 	*/
 	public function summary()
 	{
-		if($this->session->userdata('installed') === true)
-		{
-			$this->template->load_page('_acme/acme_installer/summary', array(), false, false);
-		} else {
-			redirect('acme_installer');
-		}	
+		if( $this->session->userdata('installed') === true )
+			$this->template->load_page('_acme/app_installer/summary', array(), false, false);
+		else
+			redirect('app_installer');	
 	}
+
+	/**
+	* _check_path_permissions()
+	* Check permissions for needed paths:
+	* 	-> application/controllers
+	* 	-> application/models
+	* 	-> application/views
+	* Returns true or false in case of doesnt has permissions for write.
+	* @return boolean has-permissions
+	*/
+	private function _check_path_permissions()
+	{
+		if ( is_writable('application/core/acme/acme_core_controller.php') 
+			 && is_writable('application/config/development/app_settings.php')
+			 && is_writable('application/config/development/database.php')
+			 && is_writable('application/config/production/app_settings.php')
+			 && is_writable('application/config/production/database.php')
+			 && is_readable('application/core/acme/engine_files')
+		   )
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	* _check_php_version()
+	* Check minor php version needed.
+	* @return boolean
+	*/
+	private function _check_php_version()
+	{
+		return is_php('5.3.5');
+	}
+
+	/**
+	* _check_php_database_extension()
+	* Check if exist PHP connector extension for the given selected database.
+	* @param string db_driver
+	* @return boolean
+	*/
+	private function _check_php_database_extension($db_driver = '')
+	{
+		return extension_loaded( strtolower($db_driver) );
+	}
+
+	/**
+	* _check_database_server()
+	* Check if exist a database server running on the given db_params. Return
+	* true in case of success otherwise return the message of error.
+	* @param string db_driver	// mysql, pgsql, oci8
+	* @param string db_host
+	* @param string db_port
+	* @param string db_user
+	* @param string db_pass
+	* @param string db_database
+	* @return boolean|string
+	*/
+	private function _check_database_server($db_driver = '', $db_host = '', $db_port = '', $db_user = '', $db_pass = '', $db_database = '')
+	{
+		if ($db_driver == '' || $db_host == '' || $db_port == '' || $db_user == '' || $db_database == '')
+			return lang('You must set all database settings');
+
+		// check dbdriver
+		switch (strtolower($db_driver)) {
+
+			// MySQL driver
+			case 'mysql':
+
+				// mannually open a link with mysql
+				$link = @mysqli_connect($db_host, $db_user, $db_pass, null, $db_port);
+
+				// If there is an error opening the link
+				if( ! $link)
+					return lang('Error connecting on MySQL server: ') . mysqli_connect_error();
+
+				/*
+				// Check if given user has all neccessary permissions / grants
+				@mysqli_select_db($link, 'mysql');
+				$result = @mysqli_query($link, "SELECT user, select_priv, insert_priv, create_priv FROM mysql.user WHERE host = '$db_host' AND user = '$db_user'");
+				$result = @mysqli_fetch_assoc($result);
+
+				// Check privilegies
+				if ( strtolower(get_value($result, 'select_priv')) != 'y' )
+					return lang('User doesn\'t has permissions for query (SELECT)');
+				
+				if ( strtolower(get_value($result, 'insert_priv')) != 'y' )
+					return lang('User doesn\'t has permissions for insertion (INSERT)');
+				
+				if(strtolower(get_value($result, 'create_priv')) != 'y')
+					return lang('User doesn\'t has permissions for create tables or schemas (CREATE)');
+				*/
+
+				// Check if schema already exist
+				$result = @mysqli_query($link, "SELECT count(*) AS COUNT_DATABASE FROM information_schema.schemata where schema_name = '$db_database'");
+				$result = @mysqli_fetch_assoc($result);
+					
+				if( get_value($result, 'COUNT_DATABASE') > 0 )
+					return lang('Schema already exist:') . ' <u>' . $db_database . '</u> ';
+
+				// close connection
+				@mysqli_close($link);
+
+				// There is no errors, you can procced :)
+				return true;
+
+			break;
+
+			// PostgreSQL driver
+			case 'pgsql':
+
+				// mannually open a link with pg
+				$connection = "host=$db_host port=$db_port user=$db_user password=$db_pass";
+				$link = @pg_connect($connection);
+
+				// If there is an error opening the link
+				if( ! $link)
+					return lang('Error connecting on PostgreSQL server: unable to connect with the given parameters');
+
+				// Check if schema already exist
+				$result = pg_query($link, "SELECT count(*) AS COUNT_DATABASE FROM pg_catalog.pg_database WHERE lower(datname) = lower('$db_database')");
+				$result = pg_fetch_assoc($result);
+					
+				if( get_value($result, 'COUNT_DATABASE') > 0 )
+					return lang('Schema already exist:') . ' <u>' . $db_database . '</u> ';
+
+				// close connection
+				@pg_close($link);
+
+				// There is no errors, you can procced :)
+				return true;
+
+			break;
+
+		}
+
+	}
+	
+	/**
+	* _install_acme_framework()
+	* Receive a POST data and install acme fmk, creating a new application.
+	* @param array post
+	* @return void
+	*/
+	private function _install_acme_framework($post = array())
+	{
+		// Get app_settings content
+		$config = file_get_contents('application/core/acme/engine_files/installer_app_settings.php');
+		
+		// Replace app_settings values
+		$config = str_replace('<APP_NAME>', get_value($post, 'app_name'), $config);
+		$config = str_replace('<LANGUAGE>', get_value($post, 'app_language'), $config);
+
+		// Set new content for valid app_settings file
+		file_put_contents('application/config/development/app_settings.php', $config);
+		file_put_contents('application/config/production/app_settings.php', $config);
+		
+		// Get database settings file content
+		$database = file_get_contents('application/config/development/database.php');
+
+		// Values for database
+		$db_driver = get_value($post, 'db_driver');
+		$db_host = get_value($post, 'db_host');
+		$db_port = get_value($post, 'db_port');
+		$db_user = get_value($post, 'db_user');
+		$db_pass = get_value($post, 'db_pass');
+		$db_database = get_value($post, 'db_database');
+
+		// Build specific string connection for oci8
+		if ( strtolower($db_driver) == 'oci8') {
+
+			$db_host = "(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = $db_host)(PORT = $db_port)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = $db_database)))";
+			$db_port = '';
+			$db_database = '';
+		} 
+
+		// Specific driver for postgre
+		$db_file_driver = strtolower($db_driver) == 'pgsql' ? 'postgre' : $db_driver;
+
+		// Recplae database settings values
+		$database = str_replace('<DB_DRIVER>', $db_file_driver, $database);
+		$database = str_replace('<DB_HOST>', $db_host, $database);
+		$database = str_replace('<DB_PORT>', $db_port, $database);
+		$database = str_replace('<DB_USER>', $db_user, $database);
+		$database = str_replace('<DB_PASS>', $db_pass, $database);
+		$database = str_replace('<DB_DATABASE>', $db_database, $database);
+
+		// Set new content for database settings
+		file_put_contents('application/config/development/database.php', $database);
+		file_put_contents('application/config/production/database.php', $database);
+
+		// Install database
+		$this->_install_database($db_driver, $post);
+
+		// And the last thing...
+		// Change core file, set acme to installed
+		$core = file_get_contents('application/core/acme/acme_core_controller.php');
+		$core = str_replace('$acme_installed = false;', '$acme_installed = true;', $core);
+		file_put_contents('application/core/acme/acme_core_controller.php', $core);
+
+	}
+
+	/**
+	* _install_database()
+	* Install database stuffs (create table and stuffs) for the given driver.
+	* @param string db_driver
+	* @param array post
+	* @return void
+	*/
+	private function _install_database($db_driver = '', $post = array())
+	{
+		// Script name (for database)
+		$script = file_get_contents('application/core/acme/engine_files/installer_dump_' . strtolower( $db_driver ) . '.sql');
+
+		// Separe all statements
+		$statements = explode('<<|SEPARATOR|>>', $script);
+
+		// Unload object db if exist, to create it again
+		if ( isset($this->db) )
+			unset($this->db);
+
+		switch(strtolower($db_driver))
+		{
+
+			// MySQL or PostgreSQL
+			case 'mysql':
+			case 'pgsql':
+
+				// Values for database
+				$db_driver = strtolower(get_value($post, 'db_driver')) == 'pgsql' ? 'postgre' : get_value($post, 'db_driver');
+				$db_host = get_value($post, 'db_host');
+				$db_port = get_value($post, 'db_port');
+				$db_user = get_value($post, 'db_user');
+				$db_pass = get_value($post, 'db_pass');
+				$db_database = get_value($post, 'db_database');
+
+				// Open mannually database connection
+				$db = array(
+					'hostname' => $db_host,
+					'port'     => $db_port,
+					'username' => $db_user,
+					'password' => $db_pass,
+					'dbdriver' => $db_driver,
+					'database' => ''
+				);
+
+				// Load connection with the given values
+				$this->load->database($db);
+
+				// Load dbforge to construct a new database
+				$this->load->dbforge();
+				
+				// Try to create database
+				$this->dbforge->create_database($db_database);
+
+				// Close to procced with other queries
+				unset($this->db);
+
+				// Now connect with database settings file and recently created database
+				$this->load->database();
+
+				foreach($statements as $sql) {
+					
+					// Prepare statement
+					$sql = trim($sql, " \t\n\r\0\x0B");
+
+					// Run query
+					$this->db->query($sql);
+				}
+
+			break;
+
+		}
+
+		// Auxiliar helper for security on database
+		$this->load->helper('security');
+
+		// After create database, set values for ROOT user
+		$user['email'] = xss_clean( get_value($post, 'email') );
+		$user['password'] = md5( xss_clean( get_value($post, 'user_pass') ) );
+		$user['name'] = xss_clean( get_value($post, 'user_name') );
+		$user['name'] = xss_clean( get_value($post, 'user_name') );
+
+		// Update user
+		$this->db->update('acm_user', $user, array('id_user' => 1));
+
+		// Update user language
+		$user_config['lang_default'] = xss_clean( get_value ($post, 'app_language') );
+		$this->db->update('acm_user_config', $user_config, array('id_user' => 1));
+	}
+
+	/**
+	* change_language()
+	* Change current language on session.
+	* @param string language 	// en_US, pt_BR, es_ES ...
+	* @return string json
+	*/
+	public function change_language($language = '')
+	{
+		$this->session->set_userdata('language', $language);
+		echo json_encode(array('return' => true));
+	}
+	
 }

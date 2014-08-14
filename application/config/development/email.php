@@ -14,8 +14,8 @@
 $config['protocol']     = 'smtp';
 $config['smtp_host']    = 'ssl://smtp.googlemail.com';
 $config['smtp_port']    = '465';
-$config['smtp_user']    = 'suporte.antunes@gmail.com';
-$config['smtp_pass']    = 'lalog123';
+$config['smtp_user']    = 'someemail@gmail.com';
+$config['smtp_pass']    = 'somepass';
 $config['mailtype']  	= 'html';
 $config['starttls']  	= true;
 $config['newline']   	= "\r\n";

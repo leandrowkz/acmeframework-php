@@ -1,30 +1,33 @@
 <?php
 /**
-* -------------------------------------------------------------------------------------------------
-* Template Helper
-*
-* Centraliza funções da biblioteca de templates da aplicação derivado de Acme_Base_Module.
-*
-* A chamada das funções contidas neste arquivo ajudante são alias para os métodos de mesmo nome
-* localizados na respectiva biblioteca (Template). Sendo assim, as instruções abaixo retornam o mesmo
-* resultado esperado:
-*	example_function(); // função localizada neste arquivo
-* 	$this->template->example_function();
+* --------------------------------------------------------------------------------------------------
 * 
-* @since		21/03/2013
-* @location		acme.helpers.template
-* -------------------------------------------------------------------------------------------------
+* Helper Template
+*
+* Gathers functions related with application template.
+*
+* These functions are aliases to the same method names of template library.
+*
+* @example	// Function of this helper	
+*			example_function();
+*
+*			// Equivalent call
+* 			$this->template->example_function();
+* 
+* @since 	15/07/2013
+*
+* --------------------------------------------------------------------------------------------------
 */
 
 /**
 * message()
-* Retorna o componente html mensagem, que é montado conforme parametros encaminhados.
-* @param string tipo
-* @param string titulo
-* @param string descricao
+* Returns the HTML of a message according with forwarded parameters.
+* @param string type 	// danger|error, warning, info, success, note, primary, default
+* @param string title
+* @param string description
 * @param boolean close
 * @param string style
-* @return string html_message
+* @return string html
 */
 function message($type = 'info', $title = '', $description = '', $close = false, $style = '')
 {
@@ -34,8 +37,8 @@ function message($type = 'info', $title = '', $description = '', $close = false,
 
 /**
 * image()
-* Return the HTML component image, which is responsible for building an img tag, also checking if
-* the given value is a font-awesome icon.
+* Returns the HTML component image, which is responsible for building an img tag, also 
+* checking if the given value is a font-awesome icon.
 * @param string url_img
 * @return string html
 */
@@ -47,7 +50,7 @@ function image($url_img = '')
 
 /**
 * app_settings_inputs()
-* Retorna configurações da aplicação no formato de inputs tipo hidden.
+* Returns a set of HTML hidden inputs, each one for each app setting as APP_NAME, TEMPLATE, etc.
 * @return string html
 */
 function app_settings_inputs()
@@ -58,12 +61,12 @@ function app_settings_inputs()
 
 /**
 * load_html_component()
-* Carrega componente html de nome encaminhado. Espera-se que exista um diretorio, arquivo e 
-* função de mesmo nome do que encaminhado. O segundo parametro é um array de parametros que 
-* serão encaminhados à função.
+* Loads a HTML component, located at 
+* application/views/TEMPLATE/_includes/html_components/$component/$component.php
+* The second parameter is all variables must be available inside this component.
 * @param string component
-* @param array config
-* @return string html_menu
+* @param array params
+* @return string html
 */
 function load_html_component($component = '', $params = array())
 {
@@ -73,8 +76,8 @@ function load_html_component($component = '', $params = array())
 
 /**
 * load_js_file()
-* Carrega um arquivo js, retornando tag script. O nome do arquivo encaminhado como parametro
-* não deve conter a extensão do arquivo.
+* Returns the HTML of tag <script src="$file"> according the forwarded file. It is
+* necessary only the file name. 
 * @param string file
 * @return string html
 */
@@ -86,8 +89,8 @@ function load_js_file($file = '')
 
 /**
 * load_css_file()
-* Carrega um arquivo css, retornando tag <link...>. O nome do arquivo encaminhado como parametro
-* pode não conter a extensão do arquivo.
+* Returns the HTML of tag <link href="$file"> according the forwarded file. It is
+* necessary only the file name. 
 * @param string file
 * @return string html
 */

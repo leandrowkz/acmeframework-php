@@ -18,7 +18,7 @@
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i> 
-                        <span><?php echo lang('Voltar') ?></span>
+                        <span><?php echo lang('Back') ?></span>
                     </div>
                 </a>
 
@@ -44,7 +44,7 @@
                 $url_img = get_value($user, 'url_img');
                 $url_img_large = tag_replace(get_value($user, 'url_img_large'));
 
-                // Ajusta thumb
+                // Adjust thumb
                 if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
                     $url_img = tag_replace($url_img);
                 else
@@ -58,9 +58,9 @@
             </div>
             
             <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Editar perfil') ?></a>
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Alterar imagem')?></a>
-                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Alterar senha') ?></a>
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Edit profile') ?></a>
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Change image')?></a>
+                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Change password') ?></a>
             </div>
 
         </div>
@@ -71,25 +71,25 @@
 
         <div class="row" id="user-profile-name">
             <div class="col-sm-12">
-                <h1 style="margin: 0 0 10px 0"><?php echo get_value($user, 'name') ?></h1>
+                <h1 style="margin-top: 0"><?php echo get_value($user, 'name') ?></h1>
             </div>
         </div>
         
         <div class="row">
             <div class="col-sm-12 text-top" id="user-profile-badges">
                 <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
+                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
                     <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
                     <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
                     <?php } ?>
                 </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
+                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
             </div>
         </div>
 
-        <h3 style="margin: 30px 0 30px 0"><?php echo lang('Alterar imagem')?></h3>
+        <h3 style="margin: 30px 0 30px 0"><?php echo lang('Change image')?></h3>
 
         <div class="row" style="margin-top:20px">
             
@@ -105,15 +105,15 @@
             <div class="col-sm-<?php echo ($file_exists) ? '4' : '12'; ?> col-xs-12 text-center">
                 
                 <?php if($file_exists) {?>
-                <button class="btn btn-primary btn-block" onclick="make_thumbnail()"><?php echo lang('Recortar e salvar')?></button>
-                <p class="lead" style="margin:10px 0 20px 0"><?php echo lang('ou') ?></p>
+                <button class="btn btn-primary btn-block" onclick="make_thumbnail()"><?php echo lang('Cut and save')?></button>
+                <p class="lead" style="margin:10px 0 20px 0"><?php echo lang('or') ?></p>
                 <?php } ?>
                 
                 <form action="<?php echo URL_ROOT ?>/app_user/upload_photo/<?php echo $id_user ?>" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
                     
                     <div class="fallback text-center">
                         <input class="btn btn-default btn-xs text-center" name="file" id="file" type="file" />
-                        <a class="btn btn-default btn-lg" href="javascript:void(0)" onclick="send_file_fallback()"><?php echo lang('Enviar') ?></a>
+                        <a class="btn btn-default btn-lg" href="javascript:void(0)" onclick="send_file_fallback()"><?php echo lang('Send') ?></a>
                     </div>
 
                 </form>
@@ -121,8 +121,8 @@
                 <iframe name="iframe-fallback" id="iframe-fallback" style="display:none"></iframe>
 
                 <div id="msg-return-container" class="text-left" style="margin-top:15px"></div>
-                <div id="msg-template-error" style="display:none"><?php echo message('error', 'Ops!', '<span id="msg-content"></span>', true); ?></div>
-                <div id="msg-template-success" style="display:none"><?php echo message('success', lang('Feito!'), '<span id="msg-content"></span>', true); ?></div>
+                <div id="msg-template-error" style="display:none"><?php echo message('danger', 'Ops!', '<span id="msg-content"></span>', true); ?></div>
+                <div id="msg-template-success" style="display:none"><?php echo message('success', lang('OK!'), '<span id="msg-content"></span>', true); ?></div>
             </div>
 
         </div>
@@ -131,10 +131,10 @@
             
             <div class="col-sm-12">
                 <?php if($file_exists) { ?>
-                <button class="btn btn-primary" onclick="make_thumbnail()"><?php echo lang('Recortar e salvar') ?></button>
-                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><?php echo lang('Cancelar') ?></a>
+                <button class="btn btn-primary" onclick="make_thumbnail()"><?php echo lang('Cut and save') ?></button>
+                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
                 <?php } else { ?>
-                <a class="btn btn-primary" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Voltar') ?></a>
+                <a class="btn btn-primary" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Back') ?></a>
                 <?php } ?>
             </div>
 
@@ -163,11 +163,12 @@
     });
 
     <?php if($file_exists) { ?>
-    // para a seleção no loading
+    
+    // for loading selection
     var px2 = ($('#img-user').width() < 150) ? $('#img-user').width() : 150;
     var py2 = ($('#img-user').height() < 150) ? $('#img-user').height() : 150;
 
-    // instancia o crop
+    // instantiate the crop
     var api = $('#img-user').imgAreaSelect({ instance : true });
     api.setOptions({ 
         aspectRatio: '1:1', 
@@ -181,7 +182,7 @@
     });
     api.update();
 
-    // reabilita o crop no resize da janela
+    // Re-enable crop on window resize
     $( window ).resize(function () {
 
         api.setOptions({ hide : true });
@@ -195,22 +196,17 @@
 
     });
 
-    // Button Recortar e salvar
+    // Button cut and save
     function make_thumbnail() {
         
-        // Retorna a seleção atual (x1, y1, ...)
+        // actual selection (x1, y1, ...)
         selection = api.getSelection();
 
-        // DEBUG:
-        // alert(selection.width);
-        // alert(selection.height);
-
         if(!selection.width || !selection.height) {
-            alert('<?php echo lang("Para recortar, selecione uma área da imagem atual.")?>');
+            bootbox.alert("<?php echo lang('To cut the image, select an area of current image.')?>");
             return; 
         }
 
-        // habilita layer de loading
         $.enable_loading();
 
         $.ajax({
@@ -228,12 +224,15 @@
             context: document.body,
             cache: false,
             type: 'POST',
-            success: function(data)
-            {
+            success: function(data) {
+                
                 $.redirect( $('#URL_ROOT').val() + '/app_user/profile/<?php echo $id_user ?>' );
+
             },
             complete : function () {
+                
                 $.disable_loading();
+            
             }
         });
     }
@@ -255,14 +254,14 @@
                 return;
                 <?php } ?>
                 
-                // Adiciona mensagem de sucesso
-                $("#msg-template-success #msg-content").html("<?php echo lang('Imagem enviada com sucesso.')?>"); 
+                // add success message
+                $("#msg-template-success #msg-content").html("<?php echo lang('File successfully sent.')?>"); 
                 $("#msg-return-container").html($("#msg-template-success").html());
 
-                // Atualiza img em tempo real
+                // Change img on the fly
                 $("#img-user").attr("src", "<?php echo URL_UPLOAD . '/' . $this->photos_dir ?>/" + response);
 
-                // Reinicia API crop de imagens
+                // Reset crop api
                 api.setOptions({ hide : true });
                 api.update();
 
@@ -272,7 +271,7 @@
                 api.setOptions({ enable : true });
                 api.update();
 
-                // Remove todos os thumbs
+                // And then remove all thumbs
                 this.removeAllFiles();
                 
             });
@@ -286,22 +285,20 @@
 
         addRemoveLinks : true,
 
-        dictDefaultMessage : '<div class="cursor-pointer"><i class="fa fa-cloud-upload fa-fw" style="font-size:70px;margin:0"></i><div class="lead" style="margin:0"><?php echo lang("Envie uma imagem")?></div><div><?php echo lang("Clique ou arraste para esta área")?></div></div>',
+        dictDefaultMessage : '<div class="cursor-pointer"><i class="fa fa-cloud-upload fa-fw" style="font-size:70px;margin:0"></i><div class="lead" style="margin:0"><?php echo lang('Send an image')?></div><div><?php echo lang('Click or drop on this area')?></div></div>',
         
-        dictRemoveFile : "<?php echo lang('Remover')?>",
+        dictRemoveFile : "<?php echo lang('Remove')?>",
 
         paramName : "file",
 
         forceFallback : false
     };
 
-    // Função retaguarda para envio de arquivo (cross-browser)
+    // Fallback function to send file (cross-browser)
     function send_file_fallback() {
 
-        // troca o target do form
+        // change form target
         $('form#sendFile').attr('target', 'iframe-fallback').submit();
-
-        // alert($("#iframe-fallback").contents());
         
         // Get initial text:
         var changed = false;
@@ -320,13 +317,13 @@
                 
                 // That's right!
                 } else {
-                    $("#msg-template-success #msg-content").html("<?php echo lang('Imagem enviada com sucesso.')?>"); 
+                    $("#msg-template-success #msg-content").html("<?php echo lang('File successfully sent.')?>"); 
                     $("#msg-return-container").html($("#msg-template-success").html());
 
-                    // atualiza imagem
+                    // change image on the fly
                     $("#img-user").attr("src", "<?php echo URL_UPLOAD . '/' . $this->photos_dir ?>/" + $("#iframe-fallback").contents().find("body").html());
 
-                    // Reinicia API crop de imagens
+                    // Reset crop api
                     api.setOptions({ hide : true });
                     api.update();
 
@@ -340,6 +337,7 @@
                 changed = true;
 
             }
+            
             // Store what contents are for later comparison
             previous = $("#iframe-fallback").contents().find("body");
 
@@ -357,7 +355,7 @@
 
         // Max size
         if(size > max_upload_size) {
-            $("#msg-template-error #msg-content").html('<?php echo lang("Arquivo muito grande") ?> (' + size + ' MB). ' + '<?php echo lang("Tamanho máximo de arquivo")?>: ' + max_upload_size + ' MB.');
+            $("#msg-template-error #msg-content").html("<?php echo lang('File is too large') ?> (" + size + " MB). " + "<?php echo lang('Max file size')?>: " + max_upload_size + " MB.");
             $("#msg-return-container").html($("#msg-template-error").html());
             $(this).val('');
         }

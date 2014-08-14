@@ -1,5 +1,5 @@
 
-<button class="btn btn-sm btn-success" style="margin: 20px 0" data-toggle="modal" data-target="#modal-new-permission"><?php echo lang('Nova permissão') ?> <i class="fa fa-plus-circle"></i></button>
+<button class="btn btn-sm btn-success" style="margin: 20px 0" data-toggle="modal" data-target="#modal-new-permission"><?php echo lang('New permission') ?> <i class="fa fa-plus-circle"></i></button>
 
 <?php if( count($permissions) > 0 ) { ?>
 <div class="table-responsive" style="margin-top: -10px">
@@ -8,8 +8,8 @@
         
         <thead>
             <tr>
-                <th><?php echo lang('Permissão') ?></th>
-                <th><?php echo lang('Descrição') ?></th>
+                <th><?php echo lang('Permission') ?></th>
+                <th><?php echo lang('Description') ?></th>
                 <th></th>
             </tr>
         </thead>
@@ -28,7 +28,7 @@
                 	<?php } ?>
                	</td>
                 <td class="lbl"><?php echo get_value($permission, 'label')?></td>
-                <td class="text-right" style="width: 01%" title="<?php echo lang('Remover')?>"><a href="javascript:void(0)" id="<?php echo $id_permission ?>"><i class="fa fa-times fa-fw"></i></a></td>
+                <td class="text-right" style="width: 01%" title="<?php echo lang('Remove')?>"><a href="javascript:void(0)" id="<?php echo $id_permission ?>"><i class="fa fa-times fa-fw"></i></a></td>
             </tr>
             <?php } ?>
 
@@ -38,7 +38,7 @@
 
 </div>
 <?php } else { ?>
-<p class="text-muted"><em><?php echo lang('Nenhuma permissão para este módulo') ?></em></p>
+<p class="text-muted"><em><?php echo lang('There is no permissions for this module') ?></em></p>
 <?php } ?>
 
 <!-- now, modal permissions -->
@@ -52,7 +52,7 @@ $id_permission = get_value($permission, 'id_module_permission');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar permissão')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit permission')?></h4>
                 </div>
                 <div class="modal-body">
 
@@ -60,24 +60,24 @@ $id_permission = get_value($permission, 'id_module_permission');
                     <input type="hidden" class="id_module_permission" value="<?php echo $id_permission ?>" />
 
                 	<div class="form-group">
-                		<label><?php echo lang('Permissão') ?>*</label>
+                		<label><?php echo lang('Permission') ?>*</label>
                 		<input type="text" class="form-control validate[required] permission" value="<?php echo get_value($permission, 'permission') ?>" />
                 	</div>
 
                 	<div class="form-group">
-                		<label><?php echo lang('Descrição') ?>*</label>
+                		<label><?php echo lang('Description') ?>*</label>
                 		<input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($permission, 'label') ?>" />
                 	</div>
 
                     <div class="form-group">
-                        <label><?php echo lang('Observações') ?></label>
+                        <label><?php echo lang('Observations') ?></label>
                         <input type="text" class="form-control description" value="<?php echo get_value($permission, 'description') ?>" />
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
         			</form>
                 </div>
             </div>
@@ -95,31 +95,31 @@ $id_permission = get_value($permission, 'id_module_permission');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Nova permissão')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('New permission')?></h4>
                 </div>
                 <div class="modal-body">
 
                     <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
 
                     <div class="form-group">
-                        <label><?php echo lang('Permissão') ?>*</label>
+                        <label><?php echo lang('Permission') ?>*</label>
                         <input type="text" class="form-control validate[required] permission" value="" />
                     </div>
 
                     <div class="form-group">
-                        <label><?php echo lang('Descrição') ?>*</label>
+                        <label><?php echo lang('Description') ?>*</label>
                         <input type="text" class="form-control validate[required] lbl" value="" />
                     </div>
 
                     <div class="form-group">
-                        <label><?php echo lang('Observações') ?></label>
+                        <label><?php echo lang('Observations') ?></label>
                         <input type="text" class="form-control description" value="" />
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
                     </form>
                 </div>
             </div>
@@ -219,7 +219,7 @@ $id_permission = get_value($permission, 'id_module_permission');
         var id = $(this).attr('id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Deseja realmente remover a permissão selecionada ?') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected module permission ?') ?>", function (result) {
 
             // Cancel
             if( ! result)

@@ -22,6 +22,9 @@
 
 <?php
 
+// Get language
+$lang = $this->session->userdata('language');
+
 // User first name
 $first_name = get_value(explode(' ', $user_name), '0');
 
@@ -33,7 +36,7 @@ $user_img = ( ! file_exists(PATH_UPLOAD . '/user_photos/' . basename($user_img))
 <li class="dropdown">
     
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-  		<img src="<?php echo $user_img ?>" class="img-circle user-photo" />
+        <img src="<?php echo $user_img ?>" class="img-circle user-photo" />
         <span class="user-info">
             <small><?php echo lang('Welcome') ?></small>
             <br /><?php echo $first_name ?>
@@ -57,12 +60,16 @@ $user_img = ( ! file_exists(PATH_UPLOAD . '/user_photos/' . basename($user_img))
         </li>
         <li class="divider"></li>
         <li>
-        	<a href="javascript:void(0)" class="change-language" id="en_US">
-        	<i class="fa fa-check fa-fw"></i><?php echo lang('English') ?></a>
+            <a href="javascript:void(0)" class="change-language" id="en_US">
+                <i class="fa fa-fw text-danger <?php echo $lang == 'en_US' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+                <?php echo lang('English') ?>
+            </a>
         </li>
         <li>
             <a href="javascript:void(0)" class="change-language" id="pt_BR">
-            <i class="fa fa-check fa-fw"></i> <?php echo lang('Brazilian Portuguese') ?></a>
+                <i class="fa fa-fw text-danger <?php echo $lang == 'pt_BR' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+                <?php echo lang('Brazilian Portuguese') ?>
+            </a>
         </li>
         <li class="divider"></li>
         <li>
@@ -83,7 +90,16 @@ $user_img = ( ! file_exists(PATH_UPLOAD . '/user_photos/' . basename($user_img))
 </li>
 
 <script>
+
+    // bind container html click
+    $('.change-language').on('click', function(e) {
+
+        $.change_language($(this).attr('id'));
+    });
+
+
     
+    // bind container html click
     $('.container-html').on('click', function(e) {
 
         // prevent clicking

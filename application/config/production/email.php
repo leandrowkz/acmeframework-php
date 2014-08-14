@@ -11,16 +11,14 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |
 */
-$config['protocol']     = EMAIL_PROTOCOL;
-$config['smtp_host']    = EMAIL_SMTP_HOST;
-$config['smtp_port']    = EMAIL_SMTP_PORT;
-$config['smtp_timeout'] = EMAIL_SMTP_TIMEOUT;
-$config['smtp_user']    = EMAIL_SMTP_USER;
-$config['smtp_pass']    = EMAIL_SMTP_PASS;
-$config['newline']      = EMAIL_CHAR_NEWLINE;
-$config['crlf'] 		= EMAIL_CHAR_CRLF;
-$config['mailtype']     = EMAIL_MAILTYPE;
-$config['charset']      = EMAIL_CHARSET;
+$config['protocol']     = 'smtp';
+$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+$config['smtp_port']    = '465';
+$config['smtp_user']    = 'someemail@gmail.com';
+$config['smtp_pass']    = 'somepass';
+$config['mailtype']  	= 'html';
+$config['starttls']  	= true;
+$config['newline']   	= "\r\n";
 
 /* End of file email.php */
 /* Location: ./application/config/email.php */

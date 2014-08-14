@@ -4,17 +4,16 @@
 *
 * ACME_Module_Controller
 * 
-* Controlador base da aplicação. Contém o conjunto de regras e métodos referentes aos módulos da
-* aplicação. Todos os controladores devem extender desta classe.
+* Application base controller. All other controllers must be extended by this one.
 *
-* Fluxo de carregamento de um módulo:
-* 1) Construção do objeto da classe;
-* 2) Verifica se a sessão é válida, isto é, usuário está logado;
-* 3) Localiza dados do módulo no banco de dados, com base no nome da classe;
-* 4) Carrega o módulo, isto é, transpassa os dados do banco de dados para o objeto,
-*    para que fique num estado utilizável;
-* 5) Carrega model do módulo
-* 6) Redireciona para listagem / tela de entrada do módulo;
+* Application module load flow from an URL:
+* 
+* 1) Check if session is valid
+* 2) Try to locate the module on database through the class name in lower case
+* 3) Load the module data from database to current object
+* 4) Load module model
+* 5) If is to call index() method, then the index method will be generate a HTML table with
+*    SQL query list result
 *
 * @since	25/10/2012
 *
@@ -23,19 +22,19 @@
 class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	public $id_module;
-	public $controller; 		// controlador do módulo
-	public $table_name;			// nome da tabela (caso possua uma tabela-alvo)
-	public $label;				// label, rótulo do módulo
-	public $url_img;			// URL da imagem do módulo
-	public $description;		// descrição
-	public $sql_list;			// SQL de listagem (exibido na entrada do módulo)
-	public $menus = array();	// menus do módulo
-	public $actions = array();	// ações de registro (para cada registro da listagem)
-	
+	public $controller; 		// module controller
+	public $table_name;			// table name (only if the module has a table)
+	public $label;				// module label
+	public $url_img;			// module URL img 
+	public $description;		// module description
+	public $sql_list;			// SQL query list - when the default index() will be called 
+								// then this query will be executed
+	public $menus = array();	// module menus
+	public $actions = array();	// module actions (each SQL query row will be receive an action)
 
 	/**
 	* __construct()
-	* Recebe o nome da classe do módulo a ser carregado.
+	* Class constructor. Receives the class name from module to be loaded.
 	* @param string controller
 	* @return object
 	*/
@@ -43,36 +42,36 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	{
 		parent::__construct();
 		
-		// Valida a sessão (comportamento padrão de módulo)
+		// Check session
 		$this->access->validate_session();
 		
-		// Define o nome do controlador atual do módulo
+		// lower case on module name
 		$this->controller = strtolower($controller);
 		
-		// Tenta carregar o módulo
+		// Try to load module
 		$this->_load_module();
 	}
 	
 	/**
 	* load_module()
-	* Carrega os dados do módulo do banco de dados para o objeto atual.
+	* Loads module data from database to current object.
 	* @return void
 	*/
 	private function _load_module()
 	{
-		// Tenta localizar o módulo com base no nome do controlador
+		// Try to locate the module on database
 		$module = $this->db->from('acm_module')
 						   ->where(array('controller' => $this->controller))
 						   ->get()
 						   ->row_array(0);
 
 		if(count($module) <= 0) {
-			// Não localizou um módulo cadastrado com o nome da classe
-			$this->error->show_error(lang('Módulo não localizado.'), lang('Não foi possível carregar o módulo especificado. Certifique-se que o nome da classe definida para este módulo está de acordo com o cadastrado no banco de dados.') . ' Classe: ' . $this->controller);			
+			// There is no modules on database with this name
+			$this->error->show_error(lang('Module not found'), lang('It was not possible to load the specified module. Make sure that the class name is the same registered on database.') . ' Classe: ' . $this->controller);			
 			exit;
 		}
 
-		// Seta atributos do objeto atual
+		// Set current object attributes values
 		$this->id_module = get_value($module, 'id_module');
 		$this->label = lang(get_value($module, 'label'));
 		$this->sql_list = get_value($module, 'sql_list');
@@ -82,7 +81,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 		$this->menus = $this->db->get_where('acm_module_menu', array('id_module' => $this->id_module))->result_array();
 		$this->actions = $this->db->get_where('acm_module_action', array('id_module' => $this->id_module))->result_array();
 		
-		// Carrega model do modulo
+		// Load the module model
 		$this->load->model($this->controller . '_model');
 
 		// Load base model
@@ -91,8 +90,8 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	/**
 	* validate_permission()
-	* Valida uma permissão do módulo corrente para o usuário de id informado. Retorna true
-	* caso possua permissão, ou redireciona para página de erro de permissão caso false.
+	* Validates a module permission for the given id user. Returns true in case
+	* of having permission or show error permission page if user does not has this permission.
 	* @param string permission
 	* @param integer id_user
 	* @return mixed has_permission
@@ -104,7 +103,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 
 	/**
 	* check_permission()
-	* Valida uma permissão do módulo corrente para o usuário de id informado. Retorna true/false.
+	* Validates a permission for the given user id. Returns true or false.
 	* @param string permission
 	* @param integer id_user
 	* @return boolean
@@ -116,7 +115,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 	
 	/**
 	* index()
-	* Tela de entrada, listagem do módulo, retrieve de dados.
+	* Module index. Shows HTML table list with the result of SQL query ($this->sql_list)
 	* @return void
 	*/
 	public function index()
@@ -125,32 +124,32 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 		
 		if($this->sql_list != '') {
 			
-			// Executa o sql do módulo e converte em array
+			// Run module query and turn into array
 			$resultset = $this->db->query($this->sql_list)->result_array();
 		
-			// Monta tabela de dados
+			// Build html table
 			$table = $this->array_table->get_instance();
 			$table->set_id( uniqid() );
 			$table->set_items_per_page(100);
 			$table->set_data($resultset);
 			
-			// Adiciona a tabela de dados, as possíveis ações do módulo
+			// Add to each row of this table all actions of this module
 			foreach($this->actions as $action)
 				$table->add_column($this->template->load_html_component('module_action', array('action' => $action)));
 
-			// Html da tabela
+			// Html table
 			$args['module_table'] = $table->get_html();
 		} else {
-			$args['module_table'] = message('info', '', lang('Módulo sem consulta SQL'));
+			$args['module_table'] = message('info', '', lang('This module has no SQL query.'));
 		}
 		
-		// Carrega view
+		// Load view
 		$this->template->load_page('_acme/acme_module_controller/index', $args);
 	}
 	
 	/**
 	* form()
-	* Build form a single form of the given operation. The fields are got from database.
+	* Builds form a single form of the given operation. The fields are got from database.
 	* @param string operation		// insert, update, delete, view
 	* @param integer pk_value
 	* @return void

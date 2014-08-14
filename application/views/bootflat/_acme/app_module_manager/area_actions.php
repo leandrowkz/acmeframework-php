@@ -1,5 +1,5 @@
 
-<button class="btn btn-sm btn-success" data-toggle="modal" style="margin: 20px 0" data-target="#modal-new-action"><?php echo lang('Nova ação') ?> <i class="fa fa-plus-circle"></i></button>
+<button class="btn btn-sm btn-success" data-toggle="modal" style="margin: 20px 0" data-target="#modal-new-action"><?php echo lang('New action') ?> <i class="fa fa-plus-circle"></i></button>
 
 <?php if( count($actions) > 0 ) { ?>
 <div class="table-responsive" style="margin-top: -10px">
@@ -8,9 +8,9 @@
         
         <thead>
             <tr>
-                <th><?php echo lang('action') ?></th>
+                <th><?php echo lang('Action') ?></th>
                 <th><?php echo lang('Link') ?></th>
-                <th><?php echo lang('Ordenação') ?></th>
+                <th><?php echo lang('Order') ?></th>
                 <th></th>
             </tr>
         </thead>
@@ -25,7 +25,7 @@
                 <td><a data-toggle="modal" data-target="#modal-<?php echo $id_action ?>" href="#"><?php echo get_value($action, 'label')?></a></td>
                 <td class="link"><?php echo get_value($action, 'link')?></td>
                 <td style="width: 01%"><?php echo get_value($action, 'order_')?></td>
-                <td class="text-right" style="width: 01%" title="<?php echo lang('Remover')?>"><a href="javascript:void(0)" id="<?php echo $id_action ?>"><i class="fa fa-times fa-fw"></i></a></td>
+                <td class="text-right" style="width: 01%" title="<?php echo lang('Remove')?>"><a href="javascript:void(0)" id="<?php echo $id_action ?>"><i class="fa fa-times fa-fw"></i></a></td>
             </tr>
             <?php } ?>
 
@@ -35,7 +35,7 @@
 
 </div>
 <?php } else { ?>
-<p class="text-muted"><em><?php echo lang('Nenhuma ação para este módulo') ?></em></p>
+<p class="text-muted"><em><?php echo lang('There is no actions for this module') ?></em></p>
 <?php } ?>
     
 <!-- now, modal actions -->
@@ -49,7 +49,7 @@ $id_action = get_value($action, 'id_module_action');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar ação')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit action')?></h4>
                 </div>
                 <div class="modal-body">
 
@@ -57,7 +57,7 @@ $id_action = get_value($action, 'id_module_action');
                     <input type="hidden" class="id_module_action" value="<?php echo $id_action ?>" />
 
                     <div class="form-group">
-                        <label><?php echo lang('Nome da ação') ?>*</label>
+                        <label><?php echo lang('Action name') ?>*</label>
                         <input type="text" class="form-control validate[required] lbl" value="<?php echo get_value($action, 'label') ?>" />
                     </div>
 
@@ -66,7 +66,7 @@ $id_action = get_value($action, 'id_module_action');
 
                             <div class="form-group">
                                 <label><?php echo lang('Link') ?>* </label>
-                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Se a ação for utilizada em estrutura de repetição, utilize {NUMERO OU NOME_COLUNA} para substituir pelo valor da coluna por linha.')?>"></i>
+                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('If the action will be used inside a loop structure, then use {NUMBER OR COLUMN_NAME} to replace for the column value on each row')?>"></i>
                                 <input type="text" class="form-control validate[required] link" value="<?php echo get_value($action, 'link') ?>" />
                             </div>
 
@@ -86,8 +86,8 @@ $id_action = get_value($action, 'id_module_action');
                         <div class="col-sm-8">
 
                             <div class="form-group">
-                                <label><?php echo lang('URL de imagem') ?></label>
-                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Utilize {URL_IMG} por exemplo, para gravar o valor da constante PHP URL_IMG.')?>"></i>
+                                <label><?php echo lang('Image URL') ?></label>
+                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Use {URL_IMG} for example, to save the PHP URL_IMG constant value')?>"></i>
                                 <input type="text" class="form-control url_img" value="<?php echo get_value($action, 'url_img') ?>" />
                             </div>
 
@@ -96,7 +96,7 @@ $id_action = get_value($action, 'id_module_action');
                         <div class="col-sm-4">
 
                             <div class="form-group">
-                                <label><?php echo lang('Ordenação') ?></label>
+                                <label><?php echo lang('Order') ?></label>
                                 <input type="text" class="form-control order_" alt="integer" value="<?php echo get_value($action, 'order_') ?>" />
                             </div>
 
@@ -104,8 +104,8 @@ $id_action = get_value($action, 'id_module_action');
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
                     </form>
                 </div>
             </div>
@@ -123,14 +123,14 @@ $id_action = get_value($action, 'id_module_action');
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Nova ação')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('New action')?></h4>
                 </div>
                 <div class="modal-body">
 
                     <input type="hidden" class="id_module" value="<?php echo $id_module ?>" />
 
                     <div class="form-group">
-                        <label><?php echo lang('Nome da ação') ?>*</label>
+                        <label><?php echo lang('Action name') ?>*</label>
                         <input type="text" class="form-control validate[required] lbl" value="" />
                     </div>
 
@@ -139,7 +139,7 @@ $id_action = get_value($action, 'id_module_action');
                             
                             <div class="form-group">
                                 <label><?php echo lang('Link') ?>*</label>
-                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Se a ação for utilizada em estrutura de repetição, utilize {NUMERO OU NOME_COLUNA} para substituir pelo valor da coluna por linha.')?>"></i>
+                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('If the action will be used inside a loop structure, then use {NUMBER OR COLUMN_NAME} to replace for the column value on each row')?>"></i>
                                 <input type="text" class="form-control validate[required] link" value="" />
                             </div>
                             
@@ -159,7 +159,8 @@ $id_action = get_value($action, 'id_module_action');
                         <div class="col-sm-8">
 
                             <div class="form-group">
-                                <label><?php echo lang('URL de imagem') ?></label>
+                                <label><?php echo lang('Image URL') ?></label>
+                                <i class="cursor-pointer fa fa-question-circle fa-fw" data-toggle="popover" data-placement="right" data-content="<?php echo lang ('Use {URL_IMG} for example, to save the PHP URL_IMG constant value')?>"></i>
                                 <input type="text" class="form-control url_img" value="" />
                             </div>
 
@@ -168,7 +169,7 @@ $id_action = get_value($action, 'id_module_action');
                         <div class="col-sm-4">
                             
                             <div class="form-group">
-                                <label><?php echo lang('Ordenação') ?></label>
+                                <label><?php echo lang('Order') ?></label>
                                 <input type="text" class="form-control order_" alt="integer" value="" />
                             </div>
 
@@ -177,8 +178,8 @@ $id_action = get_value($action, 'id_module_action');
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Fechar') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Salvar') ?>" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
                     </form>
                 </div>
             </div>
@@ -285,7 +286,7 @@ $id_action = get_value($action, 'id_module_action');
         var id = $(this).attr('id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Deseja realmente remover a ação selecionada ?') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected action ?') ?>", function (result) {
 
             // Cancel
             if( ! result)

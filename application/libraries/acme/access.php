@@ -4,8 +4,7 @@
 *
 * Library Access
 *
-* Biblioteca de funções relacionadas ao acesso ao sistema, como validação de sessão ou
-* permissões de módulo.
+* Gathers methods related with the application access.
 * 
 * @since 	01/10/2012
 *
@@ -17,8 +16,7 @@ class Access {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -27,8 +25,8 @@ class Access {
 	
 	/**
 	* validate_login()
-	* Validates an application login. Expect an email and pass and return the user data 
-	* in case of true, or boolean false.
+	* Validates an application login. Expect an email and password and returns the user data 
+	* in case of true, or boolean in case of false.
 	* @param string email
 	* @param string pass
 	* @return mixed user/false
@@ -44,7 +42,7 @@ class Access {
 	
 	/**
 	* validate_session()
-	* Valida a sessão. Retorna true caso logado, redireciona para pagina inicial caso nao logado.
+	* Validates the session. Returns true if user is logged or redirect to login page if it does not.
 	* @return mixed boolean
 	*/
 	public function validate_session()
@@ -58,7 +56,7 @@ class Access {
 
 	/**
 	* check_session()
-	* Valida a sessão. Retorna true caso logado, falso caso não logado.
+	* Validates the session. Returns true true or false if user is logged or not.
 	* @return mixed boolean
 	*/
 	public function check_session()
@@ -71,8 +69,8 @@ class Access {
 
 	/**
 	* check_permission()
-	* Checa uma permissão de módulo encaminhada para determinado usuário. Retorna true
-	* caso o usuário possua a permissão, ou false caso não possua.
+	* Verifies a single permission for the forwarded module and user. Returns true or false
+	* if user has this permission or not.
 	* @param string module 		// controller name
 	* @param string permission
 	* @param integer id_user
@@ -80,24 +78,23 @@ class Access {
 	*/
 	public function check_permission($module = '', $permission = '', $id_user = 0)
 	{
-		// Carrega model
 		$this->CI->load->model('libraries/access_model');
 		
 		// Resolve iduser
 		$id_user = ($id_user != 0) ? $id_user : $this->CI->session->userdata('id_user');
 		
-		// Checa permissão no banco de dados
+		// Checks permission on database
 		$count_permission = $this->CI->access_model->get_user_permission($module, $permission, $id_user);
 		
-		// Ajusta retorno
+		// Adjusts return
 		return ($count_permission > 0) ? true : false;
 	}
 	
 	/**
 	* validate_permission()
-	* Checa uma permissão de módulo encaminhada para determinado usuário. Retorna true
-	* caso possua a permissão, ou redireciona para página de exceção caso não possua.
-	* @param string controller 		// controller name
+	* Verifies a single permission for the forwarded module and user. Returns true if user
+	* has this permission, or load an error permission page if user has not.
+	* @param string module 		// controller name
 	* @param string permission
 	* @param integer id_user
 	* @return mixed boolean/redirect
@@ -105,7 +102,7 @@ class Access {
 	public function validate_permission($controller = '', $permission = '', $id_user = 0)
 	{
 		if( ! $this->check_permission($controller, $permission, $id_user) )
-			$this->CI->error->show_error(lang('Usuário sem Permissão'), lang('Usuário sem permissão para esta ação') . ' (' . $permission . ')', 'error_permission', 500, false);
+			$this->CI->error->show_error(lang('User without permission'), lang('User without permission for this action') . ' (' . $permission . ')', 'error_permission', 500, false);
 		else
 			return false;
 	}

@@ -4,7 +4,7 @@
 *
 * Controller App_Log
 * 
-* Módulo de logs do sistema. Gerencia logs e logs de erros.
+* Application logs module. Manage logs and error logs.
 *
 * @since 	13/08/2012
 *
@@ -14,8 +14,7 @@ class App_Log extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -24,7 +23,7 @@ class App_Log extends ACME_Module_Controller {
 	
 	/**
 	* index()
-	* Entrada do módulo.
+	* Show logs - logs list page.
 	* @return void
 	*/
 	public function index()
@@ -52,7 +51,7 @@ class App_Log extends ACME_Module_Controller {
 		$permission = strtolower($operation) == 'delete-all' ? 'delete' : $operation;
 
 		if( ! $this->check_permission(strtoupper($permission))) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 

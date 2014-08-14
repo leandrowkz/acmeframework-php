@@ -73,19 +73,19 @@
                             <fieldset>
                                 
                                 <div class="form-group<?php echo ($bool_email_error === true) ? ' has-error' : ''; ?>">
-                                    <input class="form-control" placeholder="<?php echo lang('E-mail')?>" value="<?php echo $email_user; ?>" name="email" id="email" autofocus>
+                                    <input class="form-control" placeholder="<?php echo lang('Email')?>" value="<?php echo $email_user; ?>" name="email" id="email" autofocus>
                                     <?php if ($email_msg_error != '') { echo '<div class="text-danger" style="margin-top:3px">' . $email_msg_error . '</div>'; } ?>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="<?php echo lang('Senha') ?>" name="pass" id="pass" type="password" value="">
+                                    <input class="form-control" placeholder="<?php echo lang('Password') ?>" name="pass" id="pass" type="password" value="">
                                 </div>
                                 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar" />
+                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('Enter')?>" />
                                 </div>
                                 
-                                <div class="text-center"><a href="<?php echo URL_ROOT ?>/app_access/forgot_password"><?php echo lang('Esqueceu sua senha?')?></a></div>
+                                <div class="text-center"><a href="<?php echo URL_ROOT ?>/app_access/forgot_password"><?php echo lang('Forgot your password ?')?></a></div>
                             
                             </fieldset>
                         </form>

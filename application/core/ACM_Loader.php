@@ -4,7 +4,7 @@
 *
 * ACM_Loader (extended from CI_Loader)
 * 
-* Classe responsável pelo carregamento de libraries, models e views.
+* This core class is responsible for properly load models for acme framework.
 *
 * @since 	16/01/2013
 *
@@ -24,10 +24,9 @@ class ACM_Loader extends CI_Loader {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 	}

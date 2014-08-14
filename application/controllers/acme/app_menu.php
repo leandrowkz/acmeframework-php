@@ -4,7 +4,7 @@
 *
 * Controller App_Menu
 * 
-* Módulo de gerenciamento de menus da aplicação.
+* Application menus module. Manage all application menus.
 *
 * @since 	13/08/2012
 *
@@ -14,8 +14,7 @@ class App_Menu extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -68,7 +67,7 @@ class App_Menu extends ACME_Module_Controller {
 	public function group_menus_options($group = '')
 	{
 		if( ! $this->check_permission( 'UPDATE' ) ) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -91,7 +90,7 @@ class App_Menu extends ACME_Module_Controller {
 	/**
 	* save()
 	* Insert, update and delete for application menus. All data must be sent through ajax. Operation must
-	* be sent as parameter and data by $_POST. Print json as result operation status.
+	* be sent as parameter and data by $_POST. Print JSON as result operation status.
 	* @param string operation		// insert, update, delete
 	* @return void
 	*/
@@ -100,7 +99,7 @@ class App_Menu extends ACME_Module_Controller {
 		$permission = strtolower( $operation ) == 'reorder' ? 'UPDATE' : strtoupper( $operation );
 
 		if( ! $this->check_permission( $permission ) ) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 

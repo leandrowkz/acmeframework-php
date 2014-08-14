@@ -56,7 +56,7 @@ $id_menu = get_value($menu, 'id_menu');
                 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Editar menu')?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit menu')?></h4>
                 </div>
                 
                 <div class="modal-body">
@@ -533,7 +533,7 @@ $id_menu = get_value($menu, 'id_menu');
         var id = $(this).closest('.dd3-item').attr('data-id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Are you sure to remove the selected menu? All children menu of its will be deleted as well.') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected menu? All children menu of it will be deleted as well.') ?>", function (result) {
 
             // Cancel
             if( ! result)
