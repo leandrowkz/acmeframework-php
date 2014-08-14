@@ -1,4 +1,4 @@
-# ACME Framework
+# ACME Framework v2.1.7
 
 For a complete documentation in english and portuguese, visit http://acmeframework.org
 
@@ -39,4 +39,10 @@ ACME Framework is also builded and uses some of the better technologies.
 - MySQL 5.0+, PostgreSQL 9.0+ or Oracle 10G+
 - MySQL, PostgreSQL or Oracle PHP extension
 - Apache rewrite engine
+
+### LICENSE
+
+Basicly, ACME Framework is FREE. 
+
+It is developed under de Creative Commons Attribution 3.0 Unported. See more on http://creativecommons.org/licenses/by/3.0/
 
