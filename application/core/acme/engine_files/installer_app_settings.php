@@ -11,9 +11,9 @@
 | ready to use in a global level.
 |
 */
-$config['APP_NAME'] = 'ACME Framework';		// application name
+$config['APP_NAME'] = '<APP_NAME>';		// application name
 $config['TEMPLATE'] = 'bootflat';			// current template (inside /views)
-$config['LANGUAGE'] = 'en_US';				// default language
+$config['LANGUAGE'] = '<LANGUAGE>';				// default language
 $config['EMAIL_FROM'] = 'noreply@app';		// to send emails
 
 /*

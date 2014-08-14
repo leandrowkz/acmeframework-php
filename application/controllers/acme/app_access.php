@@ -4,7 +4,8 @@
 *
 * Controller App_Access
 * 
-* Módulo de acesso a aplicação. Gerencia entrada e saída (login/logout) e páginas externas.
+* Access module to application. Manage application entering and exit (login/logout) and all 
+* external pages.
 *
 * @since	01/10/2012
 *
@@ -17,20 +18,24 @@ class App_Access extends ACME_Core_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->view_dir = '_acme/app_access';
 		$this->controller_name = 'app_access';
+
+		// Check if acme is already installed
+		if ( ! $this->acme_installed )
+			redirect('app_installer');
 	}
 	
 	/**
 	* index()
-	* Método 'padrão' do controlador. Carrega action da tela de login.
-	* @return object
+	* Default action, call login page.
+	* @return void
 	*/
 	public function index()
 	{
@@ -39,53 +44,24 @@ class App_Access extends ACME_Core_Controller {
 	
 	/**
 	* login()
-	* Tela de login.
+	* Login page.
 	* @return void
 	*/
 	public function login()
 	{
-		// echo $note;
-		//echo md5('123456');
-
-		// $conn = oci_connect('tapmanager', 'tapmanager', 'localhost/XE');
-
-		/*
-		$script = file_get_contents('application/core/acme/engine_files/installer_dump_' . DB_DRIVER . '.sql');
-
-		$statements = explode('<<|SEPARATOR|>>', $script);
-
-		foreach($statements as $sql) {
-			$sql = trim($sql, " \t\n\r\0\x0B");
-			
-		if(stristr($sql, "CREATE OR REPLACE TRIGGER") !== false)
-			$sql .= "\n\n/";
-
-		echo utf8_decode($sql) . "\n\n\n\n";
-			
-		//  	//$stid = oci_parse($conn, $sql);
-		// //  	//oci_execute($stid);
-			
-		}
-		die;
-		*/
-		
-		//oci_close($conn);
-		
-		// echo tag_replace('{URL_ROOT}/acme_dashboard asdhgfhasdfha hh ds {URL_IMG} and echo {URL_CSS}');
-
-		// Coleta nome de usuário
+		// Get email for errors
 		$args['email_user'] = $this->session->userdata('email_user');
 		$this->session->unset_userdata('email_user');
 	
-		// Coleta possivel mensagem de erro de login
+		// Get email error message
 		$args['email_msg_error'] = $this->session->userdata('email_msg_error');
 		$this->session->unset_userdata('email_msg_error');
 		
-		// Booleano se o erro de login está no campo usuário
+		// Boolean defining if error is in email input
 		$args['bool_email_error'] = $this->session->userdata('bool_email_error');
 		$this->session->unset_userdata('bool_email_error');
 		
-		// Carrega pagina view do form de login
+		// Load view
 		$this->template->load_page('login', $args, false, false);
 	}
 	
@@ -109,20 +85,18 @@ class App_Access extends ACME_Core_Controller {
 			$this->session->set_userdata('email_user', $email);
 			$this->session->set_userdata('bool_email_error', true);
 			
-
 			if ( $email == '' )
-				$this->session->set_userdata('email_msg_error', lang('Insira seu nome de usuário.'));
+				$this->session->set_userdata('email_msg_error', lang('Enter your email address'));
 			elseif ( $email != '' )
-				$this->session->set_userdata('email_msg_error', lang('O usuário ou senha informados estão incorretos.'));
-			
-			
+				$this->session->set_userdata('email_msg_error', lang('The given email address or password are incorrect'));
+				
 			redirect($this->controller_name);
 
 		} else {
-			// Check url's default for user, if not exist try to redirect to default dashboard
+			// Check url default for user, if not exist try to redirect to default dashboard
 			$url_default = (get_value($user, 'url_default') != '') ? $this->tag->tag_replace(get_value($user, 'url_default')) : URL_ROOT . '/app_dashboard/';
 			
-			// Put some user data to session
+			// Put some user data in session
 			$session['id_user'] = get_value($user, 'id_user');
 			$session['user_group'] = get_value($user, 'user_group');
 			$session['user_name'] = get_value($user, 'user_name');
@@ -145,7 +119,7 @@ class App_Access extends ACME_Core_Controller {
 	
 	/**
 	* logout()
-	* Saída do sistema.
+	* Application exit. Clear all session data and redirect to login.
 	* @return void
 	*/
 	public function logout()
@@ -156,7 +130,7 @@ class App_Access extends ACME_Core_Controller {
 	
 	/**
 	* not_found()
-	* 404, página não encontrada.
+	* For 404 pages.
 	* @return void
 	*/
 	public function not_found()
@@ -189,7 +163,7 @@ class App_Access extends ACME_Core_Controller {
 
 			// user doesnt exist
 			if( count($user) <= 0 )
-				$this->template->load_page($this->view_dir . '/forgot_password', array('error' => lang('Ops! Nenhum usuário cadastrado com este email')), false, false);
+				$this->template->load_page($this->view_dir . '/forgot_password', array('error' => lang('Ops! There is no users registered with this email address')), false, false);
 			
 			else {
 
@@ -205,21 +179,21 @@ class App_Access extends ACME_Core_Controller {
 				$this->email->clear();
 			    $this->email->to(get_value($user, 'email'));
 			    $this->email->from(EMAIL_FROM, APP_NAME);
-			    $this->email->subject(lang('Alteração de senha'));
+			    $this->email->subject(lang('Reset password'));
 			    $this->email->message($body_msg);
 			    
 			    if( ! @$this->email->send() ) 
-					$this->template->load_page($this->view_dir . '/forgot_password', array('error' => lang('Ops! Não foi possível enviar a mensagem de email')), false, false);
+					$this->template->load_page($this->view_dir . '/forgot_password', array('error' => lang('Ops! It was not possible to send the email message')), false, false);
 				else {
 
 					// log asking for reset pass
 					$data['id_user'] = $args['id_user'];
 					$data['key_access'] = $args['key_access'];
 
-					$this->log->db_log(lang('Solicitação de Alteração de Senha'), 'reset_password', '', $data);
+					$this->log->db_log(lang('Reset password request'), 'reset_password', '', $data);
 
 					// load page success!
-					$this->template->load_page($this->view_dir . '/forgot_password', array('success' => lang('Feito! Uma mensagem contendo os passos para a alteração da senha foi encaminhada para ') . $email), false, false);
+					$this->template->load_page($this->view_dir . '/forgot_password', array('success' => lang('OK! One message containing all steps to reset your password was forwarded to ') . $email), false, false);
 
 				}
 			}
@@ -228,8 +202,8 @@ class App_Access extends ACME_Core_Controller {
 	
 	/**
 	* reset_password()
-	* Form to reset user password. The parameters (iduser, key_access) must be valid in order to get access to this form.
-	* The second parameter says to process this same form.
+	* Form to reset user password. The parameters (iduser, key_access) must be valid in 
+	* order to get access to this form. The second parameter says to process this same form.
 	* @param int id_user
 	* @param string key_access
 	* @param boolean process
@@ -283,18 +257,114 @@ class App_Access extends ACME_Core_Controller {
 			$this->db->delete('acm_log', array('id_log' => $id_log));
 
 			// load view (update ok)
-			$this->template->load_page($this->view_dir . '/reset_password', array('id_user' => $id_user, 'key_access' => $key_access, 'success' => lang('Feito! Senha alterada com sucesso')), false, false);
+			$this->template->load_page($this->view_dir . '/reset_password', array('id_user' => $id_user, 'key_access' => $key_access, 'success' => lang('OK! Password successfully changed')), false, false);
 		}
 	}
 	
 	/**
 	* check_session()
-	* Verifica sessão (se está ativa, usuário logado) e retorna resposta em json.
-	* @return string json
+	* Verify if session is valid and active (user logged). Print JSON return as response.
+	* @return void
 	*/
 	public function check_session()
 	{
 		$json = array('check_session' => $this->access->check_session());
 		echo json_encode($json);
 	}
+
+	/**
+	* change_language()
+	* Change current language on session.
+	* @param string language 	// en_US, pt_BR, es_ES ...
+	* @return string json
+	*/
+	public function change_language($language = '')
+	{
+		$this->session->set_userdata('language', $language);
+		echo json_encode(array('return' => true));
+	}
+
+	/**
+	* build_translation_file()
+	* This is a very useful action. It catch all lang() function calls from
+	* every file on entire project and build a language file containing all
+	* translatable indexes. 
+	*
+	* BE CAREFUL: THIS FUNCTION ERASE ALL CONTENT OF LANGUAGE FILES.
+	*
+	* @return object
+	*/
+	/*
+	public function build_translation_file()
+	{
+		set_time_limit(0);
+
+		$this->load->helper('file');
+
+		$lang_calls = array();
+		$lang_indexes = array();
+
+		// First foreach all project files
+		foreach(get_filenames('application', true) as $key => $file) {
+			
+			// get content of current file
+			$content = read_file($file);
+
+			// match any call of lang()
+			if(preg_match_all('/lang[ ]*[(][ ]*[\'"][^\'")]*[\'"][ ]*[)]/i', $content, $matches))
+			{
+
+				// For every match, put inside array of indexes and indexes per file
+				foreach($matches[0] as $key => $match) {
+
+					// Translatable array
+					$lang_indexes[] = $match;
+
+					// List every call per file
+					$lang_calls[str_replace(getcwd() . '/', '', $file)][] = $match;
+				
+				}
+
+			}
+		}
+
+		// Remove duplicate keys
+		$lang_indexes = array_unique($lang_indexes);
+
+		// Order indexes
+		natsort($lang_indexes);
+
+		// Content of new file
+		$before = '';
+		$content = "<?php\n\n// Application language indexes";
+
+		// Now put in the new file the array of translatable indexes
+		foreach ($lang_indexes as $key => $match) {
+
+			$match = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $match), ') ');
+			$content .= "\n" . '$lang[' . $match . '] = ' . $match . ';';
+
+		}
+
+		// Now insert on translate file all calls grouped by file, just for reading
+		foreach ($lang_calls as $file => $matches) {
+			
+			if($file != $before)
+				$content .= "\n\n// File " . $file;
+
+			foreach ($matches as $key => $match) {
+
+				$match = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $match), ') ');
+
+				$content .= "\n" . '// -> $lang[' . $match . '] = ' . $match . ';';
+			}
+		}
+
+		// create files
+		$languages = array('pt_BR', 'en_US');
+
+		foreach($languages as $language)
+			file_put_contents('application/language/' . $language . '/app_lang.php', $content);
+	}
+	*/
 }

@@ -4,7 +4,7 @@
 *
 * Controller App_Module_Maker
 * 
-* Módulo construtor de módulos internos.
+* Application module maker. Build other modules with this module.
 *
 * @since 	15/10/2012
 *
@@ -14,8 +14,7 @@ class App_Module_Maker extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -75,8 +74,8 @@ class App_Module_Maker extends ACME_Module_Controller {
 			$controller = strtolower($this->input->post('controller'));
 
 			// Check if module already exist
-			//if( count($this->db->get_where('acm_module', array('controller' => $controller))->row_array(0)) > 0 )
-			//	redirect('app_module_maker/new_module');
+			if( count($this->db->get_where('acm_module', array('controller' => $controller))->row_array(0)) > 0 )
+				redirect('app_module_maker/new_module');
 
 			// get table name
 			$table = $this->input->post('table_name');

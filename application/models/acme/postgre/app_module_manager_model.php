@@ -4,7 +4,7 @@
 *
 * Model App_Module_Manager_Model
 *
-* Camada model do modulo app_module_manager.
+* Database layer for the controller app_module_manager.
 * 
 * @since 	03/11/2012
 *
@@ -14,8 +14,7 @@ class App_Module_Manager_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -24,7 +23,7 @@ class App_Module_Manager_Model extends CI_Model {
 
 	/**
 	* get_form_fields()
-	* Retorna dados de campos de um formulario, com ligação dos campos de determinada tabela.
+	* Returns fields form data. Used on config page.
 	* @param int id_form
 	* @param string table
 	* @return array fields

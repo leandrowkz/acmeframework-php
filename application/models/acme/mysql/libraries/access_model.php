@@ -4,7 +4,7 @@
 *
 * Model Access_Model
 *
-* Camada model para a biblioteca Access.
+* Database layer for the library access.
 * 
 * @since 	24/10/2012
 *
@@ -14,8 +14,7 @@ class Access_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -24,7 +23,7 @@ class Access_Model extends CI_Model {
 	
 	/**
 	* validate_login()
-	* Validate an application user by email and pass. Return the database array register for 
+	* Validates an application user by email and pass. Return the database array register for 
 	* this user or an empty array.
 	* @param string email
 	* @param string pass
@@ -57,8 +56,8 @@ class Access_Model extends CI_Model {
 
 	/**
 	* get_user_permission()
-	* Retorna contador de permissoes de usuario conforme parametros encaminhados. 
-	* Caso COUNT(*) > 0 então usuário possui a permissão testada.
+	* Returns a permission counter for a given user, permission and module. 
+	* If COUNT(*) > 0 then user has the forwarded permission.
 	* @param string module
 	* @param string permission
 	* @param integer id_user

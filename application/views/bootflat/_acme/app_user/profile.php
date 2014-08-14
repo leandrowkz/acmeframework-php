@@ -27,7 +27,7 @@
                 $id_user = get_value($user, 'id_user');
                 $url_img = get_value($user, 'url_img');
 
-                // Ajusta thumb
+                // Adjust thumb
                 if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
                     $url_img = tag_replace($url_img);
                 else
@@ -41,9 +41,9 @@
             </div>
             
             <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
-            	<a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Editar perfil') ?></a>
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Alterar imagem')?></a>
-                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Alterar senha') ?></a>
+            	<a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Edit profile') ?></a>
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Change image')?></a>
+                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Change password') ?></a>
             </div>
 
         </div>
@@ -54,21 +54,21 @@
 
         <div class="row" id="user-profile-name">
             <div class="col-sm-12">
-                <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
+                <h1 style="margin-top: 0"><?php echo get_value($user, 'name') ?></h1>
             </div>
         </div>
         
         <div class="row">
             <div class="col-sm-12 text-top" id="user-profile-badges">
-                <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
+                <div style="vertical-align: top; display: inline-block; margin-top:-1px">
+                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
                     <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
                     <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
                     <?php } ?>
                 </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
+                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
             </div>
         </div>
 
@@ -77,21 +77,21 @@
 
             <div class="col-sm-12 user-info">
                 
-                <h4><?php echo lang('Perfil') ?></h4>
+                <h4><?php echo lang('Profile') ?></h4>
                 <div style="line-height:25px">
                     <span class="cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Email') ?>"><i class="fa fa-envelope fa-fw"></i> <?php echo get_value($user, 'email') ?></span><br />
-                    <span class="cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('URL inicial') ?>"><i class="fa fa-home fa-fw"></i> <?php echo get_value($user, 'url_default') ?></span><br />
-                    <span class="cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Idioma de acesso') ?>">
+                    <span class="cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Default page / URL') ?>"><i class="fa fa-home fa-fw"></i> <?php echo get_value($user, 'url_default') ?></span><br />
+                    <span class="cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Default language') ?>">
                     	<i class="fa fa-font fa-fw"></i> 
                     	<?php 
     						switch(strtolower(get_value($user, 'lang_default'))) {
     							case 'en_us':
-    								echo lang('Inglês (Estados Unidos)');
+    								echo lang('English');
     							break;
     							
     							case 'pt_br':
     							default:
-    								echo lang('Português (Brasil)');
+    								echo lang('Brazilian Portuguese');
     							break;
     						} 
     					?>
@@ -102,13 +102,13 @@
 
         <div class="row" style="margin-top:20px">
             <div class="col-sm-12">
-                <h4><?php echo lang('Descrição') ?></h4>
+                <h4><?php echo lang('Description') ?></h4>
                 <p>
                 	<?php 
                 	if(get_value($user, 'description') != '') {
                 		echo get_value($user, 'description');
                 	} else { 
-                		echo '<em class="text-muted">' . lang('Nenhuma descrição disponível') . '</em>'; 
+                		echo '<em class="text-muted">' . lang('There is no description') . '</em>'; 
                 	}
                 ?>
                 </p>
@@ -117,7 +117,7 @@
 
         <div class="row" style="margin-top:20px">
             <div class="col-sm-12">
-                <h4><?php echo lang('Histórico de acesso') ?></h4>
+                <h4><?php echo lang('Access history') ?></h4>
                 <div id="morris-area-chart"></div>
             </div>
         </div>

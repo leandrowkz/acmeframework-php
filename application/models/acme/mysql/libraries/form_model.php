@@ -4,7 +4,7 @@
 *
 * Model Form_Model
 *
-* Camada model para a biblioteca Form.
+* Database layer for the library form.
 * 
 * @since 	24/10/2012
 *
@@ -14,9 +14,7 @@ class Form_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe. Chama o construtor pai, que abre uma conexão com
-	* o banco de dados, automaticamente.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -25,9 +23,9 @@ class Form_Model extends CI_Model {
 	
 	/**
 	* get_field_meta_data()
-	* Retorna meta-dados de um campo de nome e tabela encaminhados.
-	* @param int id_form
+	* Returns a field meta-data according with the given table and field.
 	* @param string table
+	* @param string column
 	* @return array fields
 	*/
 	public function get_field_meta_data($table = '', $column_name = '')

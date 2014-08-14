@@ -48,14 +48,12 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$tnsname = '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
-			(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XE)))';
-
-$db['default']['hostname'] = $tnsname;
-$db['default']['username'] = 'tapmanager';
-$db['default']['password'] = 'tapmanager';
-$db['default']['database'] = '';
-$db['default']['dbdriver'] = 'oci8';
+$db['default']['hostname'] = '<DB_HOST>';
+$db['default']['port']     = '<DB_PORT>';
+$db['default']['username'] = '<DB_USER>';
+$db['default']['password'] = '<DB_PASS>';
+$db['default']['database'] = '<DB_DATABASE>';
+$db['default']['dbdriver'] = '<DB_DRIVER>';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
@@ -66,7 +64,6 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */

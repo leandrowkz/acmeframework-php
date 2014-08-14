@@ -17,7 +17,7 @@
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-arrow-circle-left"></i> 
-						<span><?php echo lang('Voltar') ?></span>
+						<span><?php echo lang('Back') ?></span>
 					</div>
 				</a>
 
@@ -35,7 +35,7 @@
 
 		<div class="col-sm-12">
 		
-		<?php echo message('warning', lang('Warning!'), lang('The following register will be deleted. If you are right about this, click on OK button.')) ?>
+		<?php echo message('warning', lang('Warning!'), lang('The following record will be deleted. If you are right about this, click on OK button.')) ?>
 		
 		</div>
 

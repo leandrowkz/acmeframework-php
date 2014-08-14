@@ -4,7 +4,7 @@
 *
 * Library Template
 *
-* Biblioteca de funções relacionadas ao uso do template da aplicação.
+* Gathers methods related with application template.
 * 
 * @since 	10/09/2012
 *
@@ -16,8 +16,7 @@ class Template {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -26,7 +25,7 @@ class Template {
 	
 	/**
 	* load_page()
-	* Carrega página de view.
+	* Loads a view script based on current template.
 	* @param string page
 	* @param array vars
 	* @param boolean return_html
@@ -48,9 +47,9 @@ class Template {
 
 	/**
 	* load_html_component()
-	* Carrega componente html de nome encaminhado. Espera-se que exista um diretorio, arquivo e 
-	* função de mesmo nome do que encaminhado. O segundo parametro é um array de parametros que 
-	* serão encaminhados à função.
+	* Loads a HTML component, located at 
+	* application/views/TEMPLATE/_includes/html_components/$component/$component.php
+	* The second parameter is all variables must be available inside this component.
 	* @param string component
 	* @param array params
 	* @return string html_menu
@@ -64,8 +63,8 @@ class Template {
 	
 	/**
 	* load_js_file()
-	* Carrega um arquivo js, retornando tag script. O nome do arquivo encaminhado como parametro
-	* não deve conter a extensão do arquivo.
+	* Returns the HTML of tag <script src="$file"> according the forwarded file. It is
+	* necessary only the file name. 
 	* @param string file
 	* @return string html
 	*/
@@ -76,8 +75,8 @@ class Template {
 	
 	/**
 	* load_css_file()
-	* Carrega um arquivo css, retornando tag <link...>. O nome do arquivo encaminhado como parametro
-	* pode não conter a extensão do arquivo.
+	* Returns the HTML of tag <link href="$file"> according the forwarded file. It is
+	* necessary only the file name.
 	* @param string file
 	* @return string html
 	*/
@@ -88,8 +87,8 @@ class Template {
 	
 	/**
 	* load_menu()
-	* Carrega menu da aplicação. O menu é um componente html de mesmo nome, localizado em
-	* views/TEMPLATE-ATUAL/_includes/html_components/menu/menu.php.
+	* Loads the application menu. The app menu is an HTML component placed at
+	* application/views/TEMPLATE/_includes/html_components/menu/menu.php.
 	* @return string html_menu
 	*/
 	public function load_menu()
@@ -99,14 +98,16 @@ class Template {
 	
 	/**
 	* load_user_info()
-	* Carrega componente html de informacoes do usuario, como imagem, login, email, etc.
+	* Loads the user info HTML component. This component is placed at
+	* application/views/TEMPLATE/_includes/html_components/user_info/user_info.php
+	* and is composed by name, email, language, group, etc.
 	* @return string user_info
 	*/
 	public function load_user_info()
 	{
 		$this->CI->load->library('session');
 				
-		// info do usuario vem da sessão
+		// user info comes from session
 		$args['id_user'] = $this->CI->session->userdata('id_user');
 		$args['login'] = $this->CI->session->userdata('login');
 		$args['email'] = $this->CI->session->userdata('email');
@@ -119,21 +120,21 @@ class Template {
 
 	/**
 	* load_logo_area()
-	* Carrega componente html do logotipo da aplicação. O link do logo redireciona para a página 
-	* inicial do usuário.
+	* Loads the application logo area. The logo area is an HTML component placed at
+	* application/views/TEMPLATE/_includes/html_components/logo_area/log_area.php and 
+	* represents the application brand.
 	* @return string html_logo
 	*/
 	public function load_logo_area()
 	{
 		$args['url'] = $this->CI->session->userdata('url_default');
 		
-		// Retorna o html do componente logo
 		return $this->load_html_component('logo_area', $args);
 	}
 
 	/**
 	* app_settings_inputs()
-	* Retorna configurações da aplicação em formato de input tipo hidden.
+	* Returns a set of HTML hidden inputs, each one for each app setting as APP_NAME, TEMPLATE, etc.
 	* @return string html_inputs
 	*/
 	public function app_settings_inputs()
@@ -141,24 +142,24 @@ class Template {
 		$return = '';
 		$escape = array();
 
-		// Retorno só cria variáveis fora do escape
+		// Just creates the input if it is safe or is not an object
 		foreach($this->CI->config->config['app_settings'] as $attribute => $value)
 			if(!is_object($value))
 				$return .= (!in_array($attribute, $escape) || !$protected_mode) ? "<input type=\"hidden\" name=\"$attribute\" id=\"$attribute\" value=\"" . tag_replace($value) . "\" />\n" : '';
 		
-		// Retorno
+		// Returns
 		return $return;
 	}
 	
 	/**
 	* message()
-	* Retorna o componente html mensagem, que é montado conforme parametros encaminhados.
-	* @param string tipo
-	* @param string titulo
-	* @param string descricao
+	* Returns the HTML of a message according with forwarded parameters.
+	* @param string type 	// danger|error, warning, info, success, note, primary, default
+	* @param string title
+	* @param string description
 	* @param boolean close
 	* @param string style
-	* @return string html_message
+	* @return string html
 	*/
 	public function message($type = 'info', $title = '', $description = '', $close = false, $style = '')
 	{
@@ -173,7 +174,7 @@ class Template {
 
 	/**
 	* image()
-	* Return the HTML component image, which is responsible for building an img tag, also checking if
+	* Returns the HTML component image, which is responsible for building an img tag, also checking if
 	* the given value is a font-awesome icon.
 	* @param string url_img
 	* @return string html
@@ -185,7 +186,7 @@ class Template {
 	
 	/**
 	* get_array_menus()
-	* Return application menus (located in database) in array/tree format.
+	* Returns all application menus in array/tree format (comes from table acm_menu).
 	* @return string group [optional]
 	* @return array menus
 	*/
@@ -202,8 +203,8 @@ class Template {
 
 	/**
 	* menus_to_tree()
-	* Recebe um conjunto de dados de array organizados por ordem de parent e os organiza
-	* em formato de árvore (utilizado para construção de menus).
+	* Receives an array resultset from database and convert it on a tree format (used
+	* to build application menu).
 	* @param array menus
 	* @return array menus_tree
 	*/

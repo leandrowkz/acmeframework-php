@@ -4,7 +4,7 @@
 *
 * Model App_User_Model
 *
-* Camada model do modulo app_user.
+* Database layer for the controller app_user.
 * 
 * @since 	03/11/2012
 *
@@ -14,8 +14,7 @@ class App_User_Model extends CI_Model {
 		
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -41,7 +40,7 @@ class App_User_Model extends CI_Model {
 
 	/**
 	* get_user()
-	* Retorna an array data of user of id refered.
+	* Returns an user array data according with the given id.
 	* @param int id_user
 	* @return array user
 	*/
@@ -64,7 +63,7 @@ class App_User_Model extends CI_Model {
 	
 	/**
 	* get_permissions()
-	* Return an array of permissions to user of refered id.
+	* Returns an array of permissions from referenced user id.
 	* @param int id_user
 	* @return array permissions
 	*/

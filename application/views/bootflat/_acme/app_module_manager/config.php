@@ -18,7 +18,7 @@
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-arrow-circle-left"></i> 
-						<span><?php echo lang('Voltar') ?></span>
+						<span><?php echo lang('Back') ?></span>
 					</div>
 				</a>
 
@@ -43,7 +43,7 @@
 				<span><?php echo image(get_value($module, 'url_img')) ?></span>
 				
 				<a href="<?php echo URL_ROOT ?>/app_module_manager/edit/<?php echo get_value($module, 'id_module')?>" class="btn btn-xs btn-primary">
-					<span><?php echo lang('Editar módulo')?></span>
+					<span><?php echo lang('Edit module')?></span>
 					<i class="fa fa-arrow-circle-right fa-fw"></i>
 				</a>
 
@@ -52,39 +52,39 @@
 			<hr style="margin: 10px 0 20px 0" />
 
 			<div class="form-group">
-				<label><?php echo lang('Descrição') ?></label>
+				<label><?php echo lang('Description') ?></label>
 				<p>
 	            <?php 
 	            	if(get_value($module, 'description') != '') {
 	            		echo get_value($module, 'description');
 	            	} else { 
-	            		echo '<em class="text-muted">' . lang('Nenhuma descrição disponível') . '</em>'; 
+	            		echo '<em class="text-muted">' . lang('Module with no description') . '</em>'; 
 	            	}
 	            ?>
 	            </p>
         	</div>
 
 	        <div class="form-group">
-	            <label><?php echo lang('Tabela') ?></label>
+	            <label><?php echo lang('Table') ?></label>
 				<div>
 				<?php 
 	            	if(get_value($module, 'table_name') != '') {
 	            		echo get_value($module, 'table_name');
 	            	} else { 
-	            		echo '<em class="text-muted">' . lang('Módulo sem tabela-alvo') . '</em>'; 
+	            		echo '<em class="text-muted">' . lang('Module with no table') . '</em>'; 
 	            	}
 	            ?>
 				</div>
 	        </div>
 
 	        <div class="form-group">
-	            <label><?php echo lang('SQL de listagem') ?></label>
+	            <label><?php echo lang('SQL list') ?></label>
 	            <div>
 	            <?php 
 	            	if(get_value($module, 'sql_list') != '') {
 	            		echo '<pre>' . get_value($module, 'sql_list') . '</pre>';
 	            	} else { 
-	            		echo '<em class="text-muted">' . lang('Módulo sem SQL de listagem') . '</em>'; 
+	            		echo '<em class="text-muted">' . lang('Module with no query') . '</em>'; 
 	            	}
 	            ?>
 	           	</div>
@@ -95,7 +95,7 @@
         <div class="col-md-5 col-lg-5">
 
 	    	<div class="panel panel-info">
-	    		<div class="panel-heading"><?php echo lang('Arquivos do módulo (MVC)') ?></div>
+	    		<div class="panel-heading"><?php echo lang('Module files (MVC)') ?></div>
 	    		<div class="panel-body">
 	    			<div><i class="fa fa-file-text fa-fw"></i> controllers/<?php echo get_value($module, 'controller') ?>.php</div>
 					<div><i class="fa fa-file-text-o fa-fw"></i> models/<?php echo get_value($module, 'controller') ?>_model.php</div>
@@ -115,22 +115,22 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-pills">
-                <li class="active"><a href="#permissions-pills" id="permissions" data-toggle="tab"><?php echo lang('Permissões')?></a>
+                <li class="active"><a href="#permissions-pills" id="permissions" data-toggle="tab"><?php echo lang('Permissions')?></a>
                 </li>
                 <li class="dropdown">
                 	<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
-                    	<?php echo lang('Formulários') ?> <span class="caret"></span>
+                    	<?php echo lang('Forms') ?> <span class="caret"></span>
                   	</a>
                   	<ul class="dropdown-menu">
-                    	<li><a href="#form-insert-pills" id="form-insert" data-toggle="tab"><?php echo lang('Inserção') ?></a></li>
-                    	<li><a href="#form-update-pills" id="form-update" data-toggle="tab"><?php echo lang('Edição') ?></a></li>
-                    	<li><a href="#form-delete-pills" id="form-delete" data-toggle="tab"><?php echo lang('Remoção') ?></a></li>
-                    	<li><a href="#form-view-pills" id="form-view" data-toggle="tab"><?php echo lang('Visualização') ?></a></li>
+                    	<li><a href="#form-insert-pills" id="form-insert" data-toggle="tab"><?php echo lang('Insert') ?></a></li>
+                    	<li><a href="#form-update-pills" id="form-update" data-toggle="tab"><?php echo lang('Update') ?></a></li>
+                    	<li><a href="#form-delete-pills" id="form-delete" data-toggle="tab"><?php echo lang('Delete') ?></a></li>
+                    	<li><a href="#form-view-pills" id="form-view" data-toggle="tab"><?php echo lang('View') ?></a></li>
                   	</ul>
                 </li>
                 <li><a href="#menus-pills" id="menus" data-toggle="tab"><?php echo lang('Menus')?></a>
                 </li>
-                <li><a href="#actions-pills" id="actions" data-toggle="tab"><?php echo lang('Ações')?></a>
+                <li><a href="#actions-pills" id="actions" data-toggle="tab"><?php echo lang('Actions')?></a>
                 </li>
             </ul>
 

@@ -70,39 +70,40 @@
         
         </div>
         <!-- /#page-wrapper -->
+        
     </div>
     <!-- /#wrapper -->
 
     <div class="loading-layer"></div>
     <div class="loading-box"><h4><i class="fa fa-fw fa-spinner fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
-<script>
-    
-    // Check session expires callback
-    $.check_session = function() {
+    <script>
         
-        $.ajax({
-            url: $('#URL_ROOT').val() + '/app_access/check_session/',
-            context: document.body,
-            dataType : 'json',
-            cache: false,
-            type: 'POST',
-            complete : function (data) {
-                json = $.parseJSON(data.responseText);
-                if( json.check_session === false ) {
-                    $.redirect( $("#URL_ROOT").val() );
+        // Check session expires callback
+        $.check_session = function() {
+            
+            $.ajax({
+                url: $('#URL_ROOT').val() + '/app_access/check_session/',
+                context: document.body,
+                dataType : 'json',
+                cache: false,
+                type: 'POST',
+                complete : function (data) {
+                    json = $.parseJSON(data.responseText);
+                    if( json.check_session === false ) {
+                        $.redirect( $("#URL_ROOT").val() );
+                    }
                 }
-            }
-        });
-    };
+            });
+        };
 
-    // Run at once
-    $.check_session();
+        // Run at once
+        $.check_session();
 
-    // Run every 3 minutes
-    setInterval(function () { $.check_session(); }, 180000);
+        // Run every 3 minutes
+        setInterval(function () { $.check_session(); }, 180000);
 
-</script>
+    </script>
 
 </body>
 

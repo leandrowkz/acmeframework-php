@@ -77,10 +77,10 @@
 			            </a>
 
 						<?php foreach($modules as $module) { ?>
-			        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Clique para ir') ?>">
+			        	<a href="<?php echo URL_ROOT ?>/<?php echo get_value($module, 'controller')?>" class="list-group-item" title="<?php echo lang('Click to go') ?>">
 			        		<span class="pull-right"><i class="fa fa-arrow-circle-right fa-fw"></i></span>
-			            	<h5 class="list-group-item-heading"><?php echo get_value($module, 'label') ?></h5>
-			            	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
+			            	<h5 class="list-group-item-heading"><?php echo lang(get_value($module, 'label')) ?></h5>
+			            	<p class="list-group-item-text"><?php echo lang(get_value($module, 'description')) ?></p>
 			            </a>
 			            <?php } ?>
 

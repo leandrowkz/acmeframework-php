@@ -1,15 +1,13 @@
 <?php
 /**
 * --------------------------------------------------------------------------------------------------
-*
+* 
 * Library Tag
 *
-* Library of functions related to application tag manipulation. An application tag is a tag that
-* contains a constant value, for example:
+* Gathers methods related with application tags.
 *
-*		The tag {URL_ROOT} when replaced will contain the constant value of URL_ROOT.
-*
-* This is very useful in cases when you have to save this mutable values on database.
+* An app tag is every tag as {URL_ROOT} or {URL_IMG} inside a text. You can replace this tags by
+* the corresponding value, in this case, URL_ROOT and URL_IMG constant values. 
 * 
 * @since 	24/10/2012
 *
@@ -21,13 +19,17 @@ class Tag {
 	
 	/**
 	* __construct()
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct () {}
 	
 	/**
 	* tag_replace()
-	* Replace all tag ocurrences for their respective values inside a string.
+	* Replaces all tag ocurrences by their respective values inside a string.
+	*
+	* Example:
+	*			tag_replace('{URL_ROOT}/app_dashboard') => URL_ROOT constant value + /app_dashboard
+	*
 	* @param string string
 	* @return mixed result
 	*/
@@ -66,8 +68,20 @@ class Tag {
 	
 	/**
 	* array_tag_replace()
-	* Replaces one tag with name {NUMBER OR COLUMN_NAME} by the value of an array followed
-	* $arr_data['NUMBER OR COLUMN_NAME'].
+	* Replaces an specific tag as {NUMBER OR COLUMN_NAME} by the equivalent value inside an array.
+	* 
+	* Example:
+	*
+	*			$param_1 = String 'http://foobar.com/form/edit/{0}';
+	*
+	*			$param_2 = Array (
+	*							 id    => 1, 
+	*							 label => my_label, 
+	* 							 email => some@some.com
+	*							  );
+	*
+	*			echo array_tag_replace($param_1, $param_2); // will reproduce http://foobar.com/form/edit/1
+	*
 	* @param string value
 	* @param array arr_data 
 	* @return string new_string

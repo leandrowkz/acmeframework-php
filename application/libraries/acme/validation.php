@@ -4,7 +4,7 @@
 *
 * Library Validation
 *
-* Biblioteca de funções relacionadas a validações de formatos e tipos de dados em geral.
+* Gathers methods related with general validations.
 * 
 * @since 	10/09/2012
 *
@@ -16,16 +16,15 @@ class Validation {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
 	}
-	
+
 	/**
 	* is_date_format()
-	* Valida se um valor encaminhado está no formato de data DD/MM/AAAA.
+	* Checks if the given value is on format DD/MM/YYYY.
 	* @param string value
 	* @return boolean valid
 	*/
@@ -40,10 +39,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_date_format_db()
-	* Valida se um valor encaminhado está no formato de data de banco de dados, ou AAAA-MM-DD.
+	* Checks if the given value is on format YYYY-MM-DD.
 	* @param string value
 	* @return boolean valid
 	*/
@@ -58,10 +57,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_class_name()
-	* Valida se um valor encaminhado é uma string válida para nome de classe.
+	* Checks if the given value is a valid class name.
 	* @param string name
 	* @return boolean valid
 	*/
@@ -76,10 +75,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_variable_name()
-	* Valida se um valor encaminhado é uma string válida para nome de variável.
+	* Checks if the given value is a valid variable name.
 	* @param string name
 	* @return boolean valid
 	*/
@@ -93,11 +92,11 @@ class Validation {
 			}
 		}
 		return false;
-	}
-	
+	}	
+		
 	/**
 	* is_double_()
-	* Valida se um número encaminhado é double em seu formato, ou não.
+	* Checks if the given value is a valid double.
 	* @param double number
 	* @return boolean valid
 	*/
@@ -112,10 +111,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_float_()
-	* Valida se um número encaminhado é float em seu formato, ou não.
+	* Checks if the given value is a valid float.
 	* @param double number
 	* @return boolean valid
 	*/
@@ -130,10 +129,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_currency()
-	* Valida se um número encaminhado está em formato moeda, com base na localização atual.
+	* Checks if the given value is a valid currency value.
 	* @param double number
 	* @return boolean valid
 	*/
@@ -148,10 +147,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_integer_()
-	* Verifica se um valor encaminhado é unicamente inteiro.
+	* Checks if the given value is a valid integer.
 	* @param int number
 	* @return boolean Valid
 	*/
@@ -166,10 +165,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_alfa()
-	* Valida uma sequencia de caracteres, especificando se estes são alfa-numéricos ou não. Aceita espaço.
+	* Checks if the given value is a valid alfa numeric value.
 	* @param string word
 	* @return boolean valid
 	*/
@@ -184,48 +183,10 @@ class Validation {
 		}
 		return false;
 	}
-	
-	/**
-	* is_letter_number()
-	* Valida uma sequencia de caracteres, especificando se estes são alfa-numéricos ou não. Não 
-	* Aceita espaço.
-	* @param string word
-	* @return boolean valid
-	*/
-	public function is_letter_number($word = null)
-	{
-		if(!is_null($word))
-		{
-			if(preg_match("/^[a-zA-Z0-9]+$/", $word))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	* is_letter_number_chr_specials()
-	* Valida uma sequencia de caracteres, verificando se ela é composta de letras, numeros ou 
-	* caracteres especiais (sem espaço).
-	* @param string word
-	* @return boolean valid
-	*/
-	public function is_letter_number_chr_specials($word = null)
-	{
-		if(!is_null($word))
-		{
-			if(preg_match("/^[0-9a-zA-Z\.\_]+$/", $word))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
 	/**
 	* is_letter()
-	* Valida se em uma string existem apenas letras e espaço.
+	* Checks if the given value is only letters value.
 	* @param string word
 	* @return boolean valid
 	*/
@@ -240,29 +201,29 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_equal()
-	* Verifica se valor Um é igual a valor Dois.
-	* @param mutable valor_one
-	* @param mutable valor_two
+	* Checks if the given parameters match.
+	* @param mutable value_one
+	* @param mutable value_two
 	* @return boolean valid
 	*/
-	public function is_equal($valor_one = null, $valor_two = null)
+	public function is_equal($value_one = null, $value_two = null)
 	{
-		if(!is_null($valor_one) && !is_null($valor_two))
+		if(!is_null($value_one) && !is_null($value_two))
 		{
-			if($valor_one == $valor_two)
+			if($value_one == $value_two)
 			{
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_email()
-	* Valida se o conjunto de caracteres encaminhado é um email válido ou não
+	* Checks if the given value is a valid email.
 	* @param string email
 	* @return boolean valid
 	*/
@@ -270,7 +231,7 @@ class Validation {
 	{
 		if(!is_null($email))
 		{
-			// RegExp valida monte de emails separados por ';'
+			// regex below validates a bunch of emails separated by semicolon
 			// /^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$/
 			if(preg_match("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,6}(\.[a-zA-Z]{2,6})?$/", $email))
 			{
@@ -279,10 +240,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_ip_v4()
-	* Valida se uma sequencia string é um número de IP versão 4 verdadeiro.
+	* Checks if the given value is a valid ip v4 address.
 	* @param string ip
 	* @return boolean valid
 	*/
@@ -297,29 +258,10 @@ class Validation {
 		}
 		return false;
 	}
-	
-	/**
-	* is_url()
-	* Valida urls.
-	* ATENÇÃO! Esta função não está completamente funcional, pois não abrange todos os tipos de URLs. (BETA)
-	* @param string url
-	* @return boolean valid
-	*/
-	public function is_url($url = null)
-	{
-		if(!is_null($url))
-		{
-			if(preg_match("/^(([\w]+:)?\/\/)?(([\d\w]|%[a-fA-f\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&amp;?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?$/", $url))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-    
+
 	/**
 	* is_roman()
-	* Verifica se uma sequência de caracteres é um número romano válido ou não.
+	* Checks if the given value is a valid roman number.
 	* @param string number
 	* @return boolean valid
 	*/
@@ -334,10 +276,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_empty()
-	* Valida se o valor encaminhado é vazio.
+	* Checks if the given value is empty even if was an empty string.
 	* @param mutable value
 	* @return boolean valid
 	*/
@@ -352,25 +294,27 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* length()
-	* Verifica se uma sequencia encaminhada está entre o tamanho inicial e final.
-	* Exemplo:
-	* -> length('abc',0,3)  == TRUE
-	* -> length('1274',0,3) == FALSE
+	* Checks if the given value length is between $ini and $end.
+	*
+	* Example:
+	* 			length('abc',0,3)  == TRUE
+	* 			length('1274',0,3) == FALSE
+	*
 	* @param mixed value
-	* @param int length_ini
-	* @param int length_end
+	* @param int ini
+	* @param int end
 	* @return boolean valid
 	*/
-	public function length($value = null, $length_ini = null, $length_end = null)
+	public function length($value = null, $ini = null, $end = null)
 	{
-		if(!is_null($value) && !is_null($length_ini) && !is_null($length_end))
+		if(!is_null($value) && !is_null($ini) && !is_null($end))
 		{
-			if($this->is_integer($length_ini) && $this->is_integer($length_end))
+			if($this->is_integer($ini) && $this->is_integer($end))
 			{
-				if((strlen($value) >= $length_ini) && (strlen($value) <= $length_end))
+				if((strlen($value) >= $ini) && (strlen($value) <= $end))
 				{
 					return true;
 				}
@@ -378,13 +322,15 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* min_length()
-	* Verifica se uma sequencia encaminhada está até o máximo do tamanho permitido.
-	* Exemplo:
-	* -> min_length('abc', 3) == TRUE
-	* -> min_length('1274',3) == FALSE
+	* Checks if the given value length is until $length.
+	*
+	* Example:
+	* 			min_length('abc', 3) == TRUE
+	* 			min_length('1274',3) == FALSE
+	*
 	* @param mixed value
 	* @param integer length
 	* @return boolean valid
@@ -403,13 +349,15 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* max_length()
-	* Verifica se uma sequencia encaminhada é menor que um máximo permitido.
-	* Exemplo:
-	* -> maxLength('abc', 2) == FALSE
-	* -> maxLength('1274',3) == TRUE
+	* Checks if the given value length is more than $length.
+	*
+	* Example:
+	* 			maxLength('abc', 2) == FALSE
+	* 			maxLength('1274',3) == TRUE
+	*
 	* @param mixed value
 	* @param integer length
 	* @return boolean valid
@@ -428,25 +376,27 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* between()
-	* Verifica se o valor de um número encaminhado está entre um valor inicial e final.
-	* Exemplo:
-	* -> between('127558',1,10000000) == TRUE
-	* -> between('1274',0,3) == FALSE
+	* Checks if the given value is between $ini and $end.
+	* 
+	* Example:
+	* 			between('99',0,100) == TRUE
+	* 			between('10',0,3) == FALSE
+	*
 	* @param integer number
-	* @param integer length_ini
-	* @param integer length_end
+	* @param integer ini
+	* @param integer end
 	* @return boolean valid
 	*/
-	public function between($number = null, $length_ini = null, $length_end = null)
+	public function between($number = null, $ini = null, $end = null)
 	{
-		if(!is_null($number) && !is_null($length_ini) && !is_null($length_end))
+		if(!is_null($number) && !is_null($ini) && !is_null($end))
 		{
-			if($this->is_integer($length_ini) && $this->is_integer($length_end))
+			if($this->is_integer($ini) && $this->is_integer($end))
 			{
-				if(($number >= $length_ini) && ($number <= $length_end))
+				if(($number >= $ini) && ($number <= $end))
 				{
 					return true;
 				}
@@ -454,10 +404,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_hexa()
-	* Valida se uma sequencia encaminhada é um valor hexadecimal válido.
+	* Checks if the given value is a hexadecimal.
 	* @param string hexa
 	* @return boolean valid
 	*/
@@ -472,10 +422,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_special_char()
-	* Valida se a sequencia encaminhada é composta somente de valores de caracteres especiais.
+	* Checks if the given value is only special chars.
 	* @param string word
 	* @return boolean valid
 	*/
@@ -490,10 +440,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_hexa_color()
-	* Valida se a sequencia encaminhada é uma cor hexadecimal válida.
+	* Checks if the given value is a valid hexadecimal color.
 	* @param string hexa
 	* @return boolean valid
 	*/
@@ -508,10 +458,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_cpf()
-	* Valida se um número encaminhado é um cpf válido ou não. Somente NÚMEROS SÃO ACEITOS.
+	* Checks if the given value is a valid cpf number.
 	* @param integer cpf
 	* @return boolean valid
 	*/
@@ -573,10 +523,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_cnpj()
-	* Valida se um número encaminhado é um cnpj válido ou não. Somente NÚMEROS SÃO ACEITOS.
+	* Checks if the given value is a valid cnpj number.
 	* @param integer cnpj
 	* @return boolean is_valid
 	*/
@@ -620,10 +570,10 @@ class Validation {
 		}
 		return false;
 	}
-	
+
 	/**
 	* is_ssn()
-	* Valida se um número encaminhado é um ssn (social security number) válido ou não.
+	* Checks if the given value is a valid ssn number.
 	* @param string ssn
 	* @return boolean valid
 	*/
@@ -880,4 +830,5 @@ class Validation {
 		}
 		return false;
 	}
+
 }

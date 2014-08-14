@@ -4,12 +4,12 @@
 -- -------------------------------------------------- */
 CREATE TABLE acm_user_group 
 (	
-	id_user_group INT NOT NULL AUTO_INCREMENT, 
+	id_user_group SERIAL NOT NULL, 
 	name VARCHAR(100) NOT NULL, 
 	description TEXT,
 	PRIMARY KEY (id_user_group),
-	UNIQUE KEY acm_user_group_id_user_group_UNIQUE (id_user_group)
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_user_group_id_user_group_UNIQUE UNIQUE (id_user_group)
+);
 
 
 <<|SEPARATOR|>>
@@ -18,20 +18,19 @@ CREATE TABLE acm_user_group
 -- -------------------------------------------------- */
 CREATE TABLE acm_user 
 (	
-	id_user INT NOT NULL AUTO_INCREMENT, 
-	id_user_group INT NOT NULL, 
+	id_user SERIAL NOT NULL, 
+	id_user_group INTEGER NOT NULL, 
 	name VARCHAR(250) NOT NULL,  
 	email VARCHAR(250) NOT NULL, 
 	password TEXT NOT NULL, 
 	description TEXT, 
-	dtt_inative DATETIME, 
-	log_dtt_ins DATETIME DEFAULT CURRENT_TIMESTAMP,
+	dtt_inative TIMESTAMP, 
+	log_dtt_ins TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id_user),
-	UNIQUE KEY acm_user_id_user_UNIQUE (id_user),
-	UNIQUE KEY acm_user_email_UNIQUE (email),
-	KEY FK_acm_user_id_user_group (id_user_group),
-	CONSTRAINT FK_acm_user_acm_user_group FOREIGN KEY (id_user_group) REFERENCES acm_user_group (id_user_group) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_user_id_user_UNIQUE UNIQUE(id_user),
+	CONSTRAINT acm_user_email_UNIQUE UNIQUE(email),
+	CONSTRAINT FK_acm_user_acm_user_group FOREIGN KEY (id_user_group) REFERENCES acm_user_group (id_user_group) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -40,8 +39,8 @@ CREATE TABLE acm_user
 -- -------------------------------------------------- */
 CREATE TABLE acm_log 
 (	
-	id_log INT NOT NULL AUTO_INCREMENT, 
-	id_user INT, 
+	id_log SERIAL NOT NULL, 
+	id_user INTEGER, 
 	table_name VARCHAR(50), 
 	action VARCHAR(50), 
 	log_description TEXT, 
@@ -53,12 +52,11 @@ CREATE TABLE acm_log
 	device_version VARCHAR(100), 
 	platform VARCHAR(100), 
 	ip_address VARCHAR(20), 
-	log_dtt_ins DATETIME DEFAULT CURRENT_TIMESTAMP,
+	log_dtt_ins TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id_log),
-	UNIQUE KEY acm_log_id_log_UNIQUE (id_log),
-	KEY FK_acm_log_id_user (id_user),
-	CONSTRAINT FK_acm_log_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_log_id_log_UNIQUE UNIQUE (id_log),
+	CONSTRAINT FK_acm_log_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -67,8 +65,8 @@ CREATE TABLE acm_log
 -- -------------------------------------------------- */
 CREATE TABLE acm_log_error 
 (	
-	id_log_error INT NOT NULL AUTO_INCREMENT, 
-	id_user INT NULL, 
+	id_log_error SERIAL NOT NULL, 
+	id_user INTEGER NULL, 
 	error_type VARCHAR(50), 
 	header TEXT, 
 	message TEXT, 
@@ -81,12 +79,11 @@ CREATE TABLE acm_log_error
 	device_version VARCHAR(100), 
 	platform VARCHAR(100), 
 	ip_address VARCHAR(20), 
-	log_dtt_ins DATETIME DEFAULT CURRENT_TIMESTAMP,
+	log_dtt_ins TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id_log_error),
-	UNIQUE KEY acm_log_error_id_log_error_UNIQUE (id_log_error),
-	KEY FK_acm_log_error_id_user (id_user),
-	CONSTRAINT FK_acm_log_error_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_log_error_id_log_error_UNIQUE UNIQUE (id_log_error),
+	CONSTRAINT FK_acm_log_error_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -95,21 +92,19 @@ CREATE TABLE acm_log_error
 -- -------------------------------------------------- */
 CREATE TABLE acm_menu 
 (	
-	id_menu INT NOT NULL AUTO_INCREMENT, 
-	id_menu_parent INT, 
-	id_user_group INT NOT NULL, 
+	id_menu SERIAL NOT NULL, 
+	id_menu_parent INTEGER, 
+	id_user_group INTEGER NOT NULL, 
 	label VARCHAR(250), 
 	link TEXT, 
 	target VARCHAR(50),  
 	url_img TEXT, 
-	order_ INT,
+	order_ INTEGER,
 	PRIMARY KEY (id_menu),
-	UNIQUE KEY acm_menu_id_menu_UNIQUE (id_menu),
-	KEY FK_acm_menu_id_menu_parent (id_menu_parent),
-	KEY FK_acm_menu_id_user_group (id_user_group),
-	CONSTRAINT FK_acm_menu_acm_menu FOREIGN KEY (id_menu_parent) REFERENCES acm_menu (id_menu) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	CONSTRAINT FK_acm_menu_acm_user_group FOREIGN KEY (id_user_group) REFERENCES acm_user_group (id_user_group) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_menu_id_menu_UNIQUE UNIQUE (id_menu),
+	CONSTRAINT FK_acm_menu_acm_menu FOREIGN KEY (id_menu_parent) REFERENCES acm_menu (id_menu) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION,
+	CONSTRAINT FK_acm_menu_acm_user_group FOREIGN KEY (id_user_group) REFERENCES acm_user_group (id_user_group) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -118,7 +113,7 @@ CREATE TABLE acm_menu
 -- -------------------------------------------------- */
 CREATE TABLE acm_module 
 (	
-	id_module INT NOT NULL AUTO_INCREMENT, 
+	id_module SERIAL NOT NULL, 
 	def_file TEXT, 
 	table_name VARCHAR(50), 
 	controller VARCHAR(50) NOT NULL, 
@@ -126,11 +121,11 @@ CREATE TABLE acm_module
 	sql_list TEXT, 
 	url_img TEXT, 
 	description TEXT,
-	log_dtt_ins DATETIME DEFAULT CURRENT_TIMESTAMP,
+	log_dtt_ins TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id_module),
-	UNIQUE KEY acm_module_id_module_UNIQUE (id_module),
-	UNIQUE KEY acm_module_controller_UNIQUE (controller)
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_module_id_module_UNIQUE UNIQUE (id_module),
+	CONSTRAINT acm_module_controller_UNIQUE UNIQUE (controller)
+);
 
 
 <<|SEPARATOR|>>
@@ -139,18 +134,17 @@ CREATE TABLE acm_module
 -- -------------------------------------------------- */
 CREATE TABLE acm_module_action 
 (	
-	id_module_action INT NOT NULL AUTO_INCREMENT,  
-	id_module INT NOT NULL, 
+	id_module_action SERIAL NOT NULL,  
+	id_module INTEGER NOT NULL, 
 	label VARCHAR(250), 
 	link TEXT, 
 	target VARCHAR(50),  
 	url_img TEXT, 
-	order_ INT,
+	order_ INTEGER,
 	PRIMARY KEY (id_module_action),
-	UNIQUE KEY acm_module_action_id_module_action_UNIQUE (id_module_action),
-	KEY FK_acm_module_action_id_module (id_module),
-	CONSTRAINT FK_acm_module_action_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_module_action_id_module_action_UNIQUE UNIQUE (id_module_action),
+	CONSTRAINT FK_acm_module_action_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -159,18 +153,17 @@ CREATE TABLE acm_module_action
 -- -------------------------------------------------- */
 CREATE TABLE acm_module_form 
 (	
-	id_module_form INT NOT NULL AUTO_INCREMENT, 
-	id_module INT NOT NULL, 
+	id_module_form SERIAL NOT NULL, 
+	id_module INTEGER NOT NULL, 
 	operation VARCHAR(45), 
 	action VARCHAR(250), 
 	method VARCHAR(20), 
 	enctype VARCHAR(50), 
-	dtt_inative DATETIME,
+	dtt_inative TIMESTAMP,
 	PRIMARY KEY (id_module_form),
-	UNIQUE KEY acm_module_form_id_module_form_UNIQUE (id_module_form),
-	KEY FK_acm_module_form_id_module (id_module),
-	CONSTRAINT FK_acm_module_form_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_module_form_id_module_form_UNIQUE UNIQUE (id_module_form),
+	CONSTRAINT FK_acm_module_form_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -179,28 +172,35 @@ CREATE TABLE acm_module_form
 -- -------------------------------------------------- */
 CREATE TABLE acm_module_form_field 
 (	
-	id_module_form_field INT NOT NULL AUTO_INCREMENT, 
-	id_module_form INT NOT NULL, 
-	table_column VARCHAR(50) COMMENT 'Column name which the field represents on module table.', 
-	type VARCHAR(50) COMMENT 'input, textarea, file, checkbox, radio, select.', 
+	id_module_form_field SERIAL NOT NULL, 
+	id_module_form INTEGER NOT NULL, 
+	table_column VARCHAR(50), 
+	type VARCHAR(50), 
 	label VARCHAR(100), 
 	description TEXT, 
 	id_html VARCHAR(50), 
 	class_html VARCHAR(50), 
-	maxlength INT DEFAULT '50',
+	maxlength INTEGER DEFAULT '50',
 	options_json TEXT, 
 	options_sql TEXT, 
 	style TEXT, 
 	javascript TEXT, 
 	masks VARCHAR(100), 
 	validations VARCHAR(250), 
-	order_ INT DEFAULT '0', 
-	dtt_inative DATETIME,
+	order_ INTEGER DEFAULT '0', 
+	dtt_inative TIMESTAMP,
 	PRIMARY KEY (id_module_form_field),
-	UNIQUE KEY acm_module_form_field_id_module_form_field_UNIQUE (id_module_form_field),
-	KEY FK_acm_module_form_field_id_module_form (id_module_form),
-	CONSTRAINT FK_acm_module_form_field_acm_module_form FOREIGN KEY (id_module_form) REFERENCES acm_module_form (id_module_form) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_module_form_field_id_module_form_field_UNIQUE UNIQUE (id_module_form_field),
+	CONSTRAINT FK_acm_module_form_field_acm_module_form FOREIGN KEY (id_module_form) REFERENCES acm_module_form (id_module_form) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+
+<<|SEPARATOR|>>
+COMMENT ON COLUMN acm_module_form_field.table_column IS 'Column name which the field represents on module table.';
+
+
+<<|SEPARATOR|>>
+COMMENT ON COLUMN acm_module_form_field.type IS 'input, textarea, file, checkbox, radio, select.';
 
 
 <<|SEPARATOR|>>
@@ -209,18 +209,17 @@ CREATE TABLE acm_module_form_field
 -- -------------------------------------------------- */
 CREATE TABLE acm_module_menu 
 (	
-	id_module_menu INT NOT NULL AUTO_INCREMENT,  
-	id_module INT NOT NULL, 
+	id_module_menu SERIAL NOT NULL,  
+	id_module INTEGER NOT NULL, 
 	label VARCHAR(50), 
 	link TEXT, 
 	target VARCHAR(50),  
 	url_img TEXT, 
-	order_ INT,
+	order_ INTEGER,
 	PRIMARY KEY (id_module_menu),
-	UNIQUE KEY acm_module_menu_id_module_menu_UNIQUE (id_module_menu),
-	KEY FK_acm_module_menu_id_module (id_module),
-	CONSTRAINT FK_acm_module_menu_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_module_menu_id_module_menu_UNIQUE UNIQUE (id_module_menu),
+	CONSTRAINT FK_acm_module_menu_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -229,16 +228,15 @@ CREATE TABLE acm_module_menu
 -- -------------------------------------------------- */
 CREATE TABLE acm_module_permission 
 (	
-	id_module_permission INT NOT NULL AUTO_INCREMENT, 
-	id_module INT NOT NULL, 
+	id_module_permission SERIAL NOT NULL, 
+	id_module INTEGER NOT NULL, 
 	label VARCHAR(250), 
 	permission VARCHAR(50) NOT NULL, 
 	description TEXT,
 	PRIMARY KEY (id_module_permission),
-	UNIQUE KEY acm_module_permission_id_module_permission_UNIQUE (id_module_permission),
-	KEY FK_acm_module_permission_id_module (id_module),
-	CONSTRAINT FK_acm_module_permission_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_module_permission_id_module_permission_UNIQUE UNIQUE (id_module_permission),
+	CONSTRAINT FK_acm_module_permission_acm_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -247,17 +245,16 @@ CREATE TABLE acm_module_permission
 -- -------------------------------------------------- */
 CREATE TABLE acm_user_config 
 (	
-	id_user_config INT NOT NULL AUTO_INCREMENT, 
-	id_user INT NOT NULL, 
+	id_user_config SERIAL NOT NULL, 
+	id_user INTEGER NOT NULL, 
 	lang_default VARCHAR(10) DEFAULT 'en_US', 
 	url_img TEXT, 
 	url_img_large TEXT, 
 	url_default TEXT,
 	PRIMARY KEY (id_user_config),
-	UNIQUE KEY acm_user_config_id_user_config_UNIQUE (id_user_config),
-	KEY FK_acm_user_config_id_user (id_user),
-	CONSTRAINT FK_acm_user_config_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_user_config_id_user_config_UNIQUE UNIQUE (id_user_config),
+	CONSTRAINT FK_acm_user_config_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 
 
 <<|SEPARATOR|>>
@@ -266,16 +263,32 @@ CREATE TABLE acm_user_config
 -- -------------------------------------------------- */
 CREATE TABLE acm_user_permission 
 (	
-	id_user_permission INT NOT NULL AUTO_INCREMENT, 
-	id_user INT NOT NULL, 
-	id_module_permission INT NOT NULL,
+	id_user_permission SERIAL NOT NULL, 
+	id_user INTEGER NOT NULL, 
+	id_module_permission INTEGER NOT NULL,
 	PRIMARY KEY (id_user_permission),
-	UNIQUE KEY acm_user_permission_id_user_permission_UNIQUE (id_user_permission),
-	KEY FK_acm_user_permission_id_user (id_user),
-	KEY FK_acm_user_permission_id_module_permission (id_module_permission),
-	CONSTRAINT FK_acm_user_permission_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	CONSTRAINT FK_acm_user_permission_acm_module_permission FOREIGN KEY (id_module_permission) REFERENCES acm_module_permission (id_module_permission) ON DELETE NO ACTION ON UPDATE NO ACTION
-) Engine=InnoDB DEFAULT CHARSET=utf8;
+	CONSTRAINT acm_user_permission_id_user_permission_UNIQUE UNIQUE (id_user_permission),
+	CONSTRAINT FK_acm_user_permission_acm_user FOREIGN KEY (id_user) REFERENCES acm_user (id_user) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION,
+	CONSTRAINT FK_acm_user_permission_acm_module_permission FOREIGN KEY (id_module_permission) REFERENCES acm_module_permission (id_module_permission) MATCH SIMPLE ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+<<|SEPARATOR|>>
+/* -----------------------------------------------------
+--  DML for Sequences
+-- -------------------------------------------------- */
+ALTER SEQUENCE acm_log_error_id_log_error_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_log_id_log_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_menu_id_menu_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_action_id_module_action_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_form_field_id_module_form_field_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_form_id_module_form_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_id_module_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_menu_id_module_menu_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_module_permission_id_module_permission_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_config_id_user_config_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_group_id_user_group_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_id_user_seq RESTART WITH 300;<<|SEPARATOR|>>
+ALTER SEQUENCE acm_user_permission_id_user_permission_seq RESTART WITH 300;
 
 
 <<|SEPARATOR|>>

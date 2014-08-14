@@ -4,7 +4,7 @@
 * 
 * Controller App_Module_Manager
 * 
-* Gerenciador dos módulos da aplicação.
+* Application module manager. Manage all modules with this one.
 *
 * @since 	12/02/2013
 *
@@ -14,8 +14,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -24,23 +23,23 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	
 	/**
 	* index()
-	* Entrada do módulo.
+	* Module index. Show all application modules.
 	* @return void
 	*/
 	public function index()
 	{
 		$this->validate_permission('ENTER');
 		
-		// Módulos da app
+		// app modules
 		$args['modules'] = $this->db->from('acm_module')->order_by('label')->get()->result_array();
 		
-		// Carrega camada de visualização
+		// Load view
 		$this->template->load_page('_acme/app_module_manager/index', $args);
 	}
 
 	/**
 	* config()
-	* Configurações de módulo.
+	* Module config page.
 	* @param int id_module
 	* @return void
 	*/
@@ -48,20 +47,20 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	{
 		$this->validate_permission('CONFIG');
 		
-		// Dados do modulo
+		// module info
 		$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->row_array(0);
 		
-		// Check if module exist
+		// Basic check if module exist
 		if( count($module) <= 0 )
 			redirect('app_module_manager');
 		
-		// Carrega camada de visualização
+		// Load view
 		$this->template->load_page('_acme/app_module_manager/config', array('module' => $module));
 	}
 
 	/**
 	* edit()
-	* Tela de edição de dados de módulo. Processa tela de edição também.
+	* Edit module form page.
 	* @param int id_module
 	* @return void
 	*/
@@ -69,17 +68,17 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	{
 		$this->validate_permission('CONFIG');
 		
-		// Tela de edição
+		// Edit page
 		if( ! $process) {
 			
-			// Dados do modulo
+			// module info
 			$module = $this->db->from('acm_module')->where(array('id_module' => $id_module))->get()->row_array(0);
 
-			// Check if module exist
+			// basic check if module exist
 			if( count($module) <= 0 )
 				redirect('app_module_manager');
 
-			// Carrega camada de visualização
+			// Load view
 			$this->template->load_page('_acme/app_module_manager/edit', array('module' => $module));
 		} else {
 
@@ -100,8 +99,8 @@ class App_Module_Manager  extends ACME_Module_Controller {
 
 	/**
 	* load_area()
-	* Carrega especifica na tela de configuração de modulo.
-	* @param string area
+	* Load specific area as permissions, menus, forms, etc.
+	* @param string area 	// permissions, menus, actions, form-view, form-insert, form-update
 	* @param int id_module
 	* @return void
 	*/
@@ -109,7 +108,6 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	{
 		$this->validate_permission('CONFIG');
 
-		// Carrega tabela conforme parametro
 		switch(strtolower($area)) {
 
 			default:
@@ -150,7 +148,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 				// verify if form exist
 				$form = $this->db->get_where('acm_module_form', array('id_module' => $id_module, 'operation' => $operation))->row_array(0);
 
-				// attempt to create it, case not exist
+				// attempt to create it if does not exist
 				if( count($form) <= 0 ) {
 					$this->db->set('id_module', $id_module);
 					$this->db->set('operation', $operation);
@@ -195,7 +193,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	public function save_permission($operation = '')
 	{
 		if( ! $this->check_permission('CONFIG')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -236,7 +234,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	public function save_menu($operation = '')
 	{
 		if( ! $this->check_permission('CONFIG')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -299,7 +297,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	public function save_action($operation = '')
 	{
 		if( ! $this->check_permission('CONFIG')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -371,7 +369,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	public function save_form($operation = '')
 	{
 		if( ! $this->check_permission('CONFIG')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
@@ -436,7 +434,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 	public function save_form_field($operation = '')
 	{
 		if( ! $this->check_permission('CONFIG')) {
-			echo json_encode(array('return' => false, 'error' => lang('Ops! Você não tem permissão para fazer isso')));
+			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 

@@ -100,6 +100,31 @@ $.container_html = function () {
     }
 };
 
+/**
+* $.change_language()
+* Send an ajax call to controller app_access requesting to change language.
+* After complete, automatically reload page.
+* @param string language    // en_US, pt_BR, es_ES ...
+* @return void
+*/
+$.change_language = function (language) {
+
+    $.enable_loading();
+
+    $.ajax({
+        url: $('#URL_ROOT').val() + '/app_access/change_language/' + language,
+        context: document.body,
+        dataType : 'json',
+        cache: false,
+        type: 'POST',
+        complete : function (data) {
+            
+            window.location.reload();
+
+        }
+    });
+};
+
 
 
 

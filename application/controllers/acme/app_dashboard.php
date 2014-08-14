@@ -4,7 +4,7 @@
 *
 * Controller App_Dashboard
 * 
-* Dashboard padrão da aplicação. Por padrão, tela de entrada dos usuários do grupo ROOT.
+* Application default dashboard.
 *
 * @since	15/10/2012
 *
@@ -14,8 +14,7 @@ class App_Dashboard extends ACME_Module_Controller {
 
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -24,7 +23,7 @@ class App_Dashboard extends ACME_Module_Controller {
 	
 	/**
 	* index()
-	* Tela de dashboard.
+	* Dashboard page.
 	* @return void
 	*/
 	public function index()

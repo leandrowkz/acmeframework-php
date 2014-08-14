@@ -4,7 +4,7 @@
 *
 * Library Log
 *
-* Biblioteca de funções relacionadas à manipulação de logs da aplicação.
+* Gathers methods related with application logs and error logs.
 * 
 * @since 	01/10/2012
 *
@@ -16,8 +16,7 @@ class Log {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -25,7 +24,7 @@ class Log {
 	
 	/**
 	* db_log()
-	* Salva um registro de log no banco de dados (tabela acm_log). 
+	* Saves a log on database (table acm_log).
 	* @param string text_log
 	* @param string action
 	* @param string table
@@ -53,13 +52,13 @@ class Log {
 		$log['platform'] = $this->CI->agent->platform();
 		$log['ip_address'] = $this->CI->input->ip_address();
 		
-		// Insere registro
+		// Insert record
 		$this->CI->db->insert('acm_log', $log);
 	}
 	
 	/**
 	* log_error()
-	* Salva um registro de log de erro no banco de dados (tabela acm_log_error). 
+	* Saves an error log on database (table acm_log_error). 
 	* @param string error_type
 	* @param string header
 	* @param string message
@@ -71,7 +70,7 @@ class Log {
 		$this->CI =& get_instance();
 		$this->CI->load->library('user_agent');
 		
-		// dados do log de erro
+		// Log data
 		$log['error_type'] = $error_type;
 		$log['header'] = $header;
 		$log['status_code'] = $status_code;
@@ -83,7 +82,7 @@ class Log {
 		$log['ip_address'] = $this->CI->input->ip_address();
 		$log['message'] = $message;
 
-		// Ajusta colunas
+		// Adjusts column
 		if($this->CI->session->userdata('id_user') != '' && $this->CI->session->userdata('id_user') != 0)
 			$log['id_user'] = $this->CI->session->userdata('id_user');
 		
@@ -93,7 +92,7 @@ class Log {
 			$log['additional_data'] = $vars;
 		}
 
-		// Insere registro
+		// Insert record
 		$this->CI->db->insert('acm_log_error', $log);
 	}
 }

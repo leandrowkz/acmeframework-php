@@ -4,7 +4,7 @@
 *
 * Template_Model
 *
-* Camada model para a biblioteca Template.
+* Database layer for the library template.
 * 
 * @since 	24/10/2012
 *
@@ -14,8 +14,7 @@ class Template_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -24,7 +23,7 @@ class Template_Model extends CI_Model {
 	
 	/**
 	* get_menus()
-	* Retorna o conjunto de menus do sistema com base no grupo de usuario informado.
+	* Returns all available application menus for an user according with its group.
 	* @param string user_group
 	* @return array menus
 	*/

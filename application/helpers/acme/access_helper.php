@@ -1,60 +1,72 @@
 <?php
 /**
-* -------------------------------------------------------------------------------------------------
-* Access Helper
+* --------------------------------------------------------------------------------------------------
+* 
+* Helper Access
 *
-* Centraliza funções relativas ao controle de acesso da aplicação, como validação de sessão e 
-* permissões.
+* Gathers functions related with application access. 
 *
-* A chamada das funções contidas neste arquivo ajudante são alias para os métodos de mesmo nome
-* localizados na respectiva biblioteca (Access). Sendo assim, as instruções abaixo retornam o mesmo
-* resultado esperado:
+* These functions are aliases to the same method names of access library.
 *
-* @example	
-*		example_function(); // função localizada neste arquivo
-* 		$this->access->example_function();
+* @example	// Function of this helper	
+*			example_function();
+*
+*			// Equivalent call
+* 			$this->access->example_function();
 * 
 * @since 	15/07/2013
 *
-* -------------------------------------------------------------------------------------------------
+* --------------------------------------------------------------------------------------------------
 */
 
 /**
 * validate_session()
-* Valida a sessão. Retorna true caso logado, redireciona para pagina inicial caso nao logado.
+* Validates the session. Returns true if user is logged or redirect to login page if it does not.
 * @return mixed boolean
 */
 function validate_session()
 {
-	$CI =& get_instance();
+	$CI = get_instance();
 	return $CI->access->validate_session();
 }
 
 /**
-* browser_rank()
-* Retorna lista de browsers que acessaram o sistema e a porcentagem de acesso de cada um.
-* Utilizado no dashboard do sistema.
-* @return array browsers
+* check_session()
+* Validates the session. Returns true true or false if user is logged or not.
+* @return mixed boolean
 */
-function browser_rank()
+function check_session()
 {
-	$CI =& get_instance();
-	return $CI->access->browser_rank();
+	$CI = get_instance();
+	return $CI->access->check_session();
+}
+
+/**
+* check_permission()
+* Verifies a single permission for the forwarded module and user. Returns true or false
+* if user has this permission or not.
+* @param string module 		// controller name
+* @param string permission
+* @param integer id_user
+* @return boolean
+*/
+function check_permission($module = '', $permission = '', $id_user = 0)
+{
+	$CI = get_instance();
+	return $CI->access->check_permission($module, $permission, $id_user);
 }
 
 /**
 * validate_permission()
-* Valida uma permissão com base na permissao e modulo encaminhados (permissao do usuario logado
-* para o modulo encaminhado). Exibe página de erro de permissão ou booleano quando parametro
-* de teste de permissao é encaminhado.
-* @param string module
+* Verifies a single permission for the forwarded module and user. Returns true if user
+* has this permission, or load an error permission page if user has not.
+* @param string module 		// controller name
 * @param string permission
-* @param boolean exib_page
 * @param integer id_user
-* @return mixed has_permission
+* @return mixed boolean/redirect
 */
-function validate_permission($module = '', $permission = '', $exib_page = true, $id_user = 0)
+function validate_permission($module = '', $permission = '', $id_user = 0)
 {
-	$CI =& get_instance();
-	return $CI->access->validate_permission($module, $permission, $exib_page, $id_user);
+	$CI = get_instance();
+	return $CI->access->validate_permission($module, $permission, $id_user);
 }

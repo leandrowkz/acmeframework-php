@@ -153,12 +153,9 @@
 
 						<center>
 
-							<div class="step">
-								2
-								<h3 class="text-success" style="margin: -25px 0 0 30px"><i class="fa fa-fw fa-check-circle"></i></h3>
-							</div>
+							<div class="step done">2</div>
 
-							<div class="step-text"><?php echo lang('New application info') ?></div>
+							<div class="step-text done"><?php echo lang('New application info') ?></div>
 
 						</center>
 
@@ -168,9 +165,9 @@
 
 						<center>
 
-							<div class="step done">3</div>
+							<div class="step">3</div>
 
-							<div class="step-text done"><?php echo lang('Summary') ?></div>
+							<div class="step-text"><?php echo lang('Summary') ?></div>
 
 						</center>
 
@@ -178,30 +175,134 @@
 
 				</div>
 
-				<div class="row" style="margin-top: 50px">
+				<div class="row" style="margin-top: 30px">
 
-					<div class="col-sm-12 text-center">
-						
-						<h3 class="text-success">
-							<span><?php echo lang('ACME Framework successfully installed') ?></span>
-							<i class="fa fa-fw fa-check-circle"></i>
-						</h3>
-			
-						<h3 style="margin-top: 30px"><?php echo lang('Application') ?> <strong><?php echo APP_NAME ?></strong> <?php echo lang('created with no errors.') ?></h3>
+					<?php if ($app_logo !== true) { ?>
+					<div class="row">
 
-						<a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-success" style="margin-top: 30px">
-							<?php echo lang('Go to login page') ?>
-							<i class="fa fa-fw fa-arrow-circle-right"></i>
-						</a>
+						<div class="col-sm-12">
 
-						<div style="margin: 20px 0 15px" class="text-muted"><?php echo lang('or') ?></div>
+							<?php echo message('danger', lang('Warning!'), lang('It was not possible upload your logo file: ') . $app_logo . '<br /><br />' . lang('Try to upload it again.'), true) ?>
 
-						<a href="http://www.acmeengine.org/docs" target="_blank">
-							<?php echo lang('Read ACME Framework docs') ?>
-							<i class="fa fa-fw fa-external-link"></i>
-						</a>
+						</div>
 
 					</div>
+					<?php } ?>
+
+					<div class="col-sm-6 col-md-6">
+						
+						<form action="<?php echo URL_ROOT ?>/app_installer/new_app_info/true" method="post" enctype="multipart/form-data">
+						
+							<input type="hidden" name="db_driver" value="<?php echo get_value($post, 'db_driver')?>" />
+							
+							<input type="hidden" name="db_host" value="<?php echo get_value($post, 'db_host')?>" />
+							
+							<input type="hidden" name="db_port" value="<?php echo get_value($post, 'db_port')?>" />
+							
+							<input type="hidden" name="db_user" value="<?php echo get_value($post, 'db_user')?>" />
+							
+							<input type="hidden" name="db_pass" value="<?php echo get_value($post, 'db_pass')?>" />
+							
+							<input type="hidden" name="db_database" value="<?php echo get_value($post, 'db_database')?>" />
+
+							<h3 style="margin: 0 0 30px 0"><?php echo lang('Application info') ?></h3>
+
+							<div class="form-group">
+				                <label>
+				                	<?php echo lang('Application name') ?>*
+				                </label>
+				                <input type="text" name="app_name" id="app_name" class="form-control validate[required]" autofocus value="<?php echo get_value($post, 'app_name') ?>" />
+				            </div>
+
+							<div class="form-group">
+				                <label>
+				                	<?php echo lang('Default language') ?>*
+				                </label>
+				                <select name="app_language" id="app_language" class="form-control validate[required]">
+				                	<option value="en_US" <?php echo get_value($post, 'app_language') == 'en_US' ? 'selected="selected"' : '' ?>><?php echo lang('English') ?></option>
+				                	<option value="pt_BR" <?php echo get_value($post, 'app_language') == 'pt_BR' ? 'selected="selected"' : '' ?>><?php echo lang('Brazilian Portuguese') ?></option>
+				                </select>
+				            </div>
+
+				            <div class="form-group">
+				                <label>
+				                	<?php echo lang('Application logo') ?>
+				                	<small class="text-muted">// <?php echo lang('PNG file with dimensions: 120 x 20') ?></small>
+				                </label>
+				                <input type="file" name="app_logo" id="app_logo" />
+				            </div>
+
+				            <h3 style="margin: 50px 0 30px 0">
+				            	<?php echo lang('User ROOT') ?>
+				            	<i class="fa fa-fw fa-info-circle" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('One single user with special permissions will be created with the following information') ?>"></i>
+				            </h3>
+
+				            <div class="form-group">
+				                <label>
+				                	<?php echo lang('Name') ?>*
+				                </label>
+				                <input type="text" name="user_name" id="user_name" class="form-control validate[required]" value="<?php echo get_value($post, 'user_name') ?>" />
+				            </div>
+
+				             <div class="form-group">
+				                <label>
+				                	<?php echo lang('Email') ?>*
+									<i class="fa fa-fw fa-info-circle" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('The new application will be accessible by using this email') ?>"></i>
+				                </label>
+				                <input type="text" name="email" id="email" class="form-control validate[required,custom[email]]" value="<?php echo get_value($post, 'email') ?>" />
+				            </div>
+
+				            <div class="row">
+
+				            	<div class="col-sm-6">
+
+						            <div class="form-group">
+						                <label>
+						                	<?php echo lang('Password') ?>*
+						                </label>
+						                <input type="password" name="user_pass" id="user_pass" class="form-control validate[required,minSize[6]]" value="<?php echo get_value($post, 'user_pass') ?>" />
+						            </div>
+
+						        </div>
+
+						        <div class="col-sm-6">
+
+						        	<div class="form-group">
+						                <label>
+						                	<?php echo lang('Confirm password') ?>*
+						                </label>
+						                <input type="password" name="pass_confirm" id="pass_confirm" class="form-control validate[required,minSize[6],equals[user_pass]]" value="<?php echo get_value($post, 'pass_confirm') ?>" />
+						            </div>
+
+						        </div>
+
+						    </div>
+
+						    <div class="row" style="margin-top: 20px">
+
+						    	<div class="col-sm-12">
+
+								    <button type="submit" class="btn btn-lg btn-primary">
+						    			<?php echo lang('Create application') ?> 
+						    			<i class="fa fa-fw fa-cogs"></i>
+						    		</button>
+
+						    		&nbsp;
+						    		<?php echo lang('or') ?>
+						    		&nbsp;
+
+						    		<a href="javascript:void(0)" class="btn btn-md btn-default back-step">
+						    			<?php echo lang('Back') ?> 
+						    			<i class="fa fa-fw fa-arrow-circle-left"></i>
+						    		</a>
+
+						    	</div>
+
+						    </div>
+
+				    	</form>
+
+				    </div>
 
 				</div>
 

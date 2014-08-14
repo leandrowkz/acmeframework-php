@@ -106,12 +106,12 @@
                     
                     <div class="inline user-email" style="word-break: break-all;"><?php echo $email ?></div>
 
-                    <div class="label label-info cursor-default user-group" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo $group ?></div>
+                    <div class="label label-info cursor-default user-group" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo $group ?></div>
                     
                     <?php if($active == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
                     <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
                     <?php } ?>
 
                 </div>
@@ -120,17 +120,17 @@
                     
                     <a href="<?php echo URL_ROOT ?>/app_user/edit/<?php echo $id_user ?>" class="btn btn-xs btn-primary" style="margin: 0 5px 5px 0">
                         <i class="fa fa-edit fa-fw"></i> 
-                        <?php echo lang('Editar') ?>
+                        <?php echo lang('Edit') ?>
                     </a>
 
                     <a href="<?php echo URL_ROOT ?>/app_user/permissions/<?php echo $id_user ?>" class="btn btn-xs btn-primary" style="margin: 0 5px 5px 0">
                         <i class="fa fa-shield fa-fw"></i> 
-                        <?php echo lang('Permissões') ?>
+                        <?php echo lang('Permissions') ?>
                     </a>
 
                     <a href="javascript:void(0)" id="<?php echo $id_user ?>" class="btn btn-xs btn-primary reset-pass" style="margin: 0 5px 5px 0">
                         <i class="fa fa-lock fa-fw"></i> 
-                        <?php echo lang('Resetar senha') ?>
+                        <?php echo lang('Reset password') ?>
                     </a>
 
                 </div>
@@ -192,7 +192,7 @@
         var id = $(this).attr('id');
         
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Um email indicando os passos para alteração da senha será encaminhado para o usuário selecionado. Você confirma esta ação ?') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('A email message containing all steps to reset password will be forwarded for the selected user. Are you sure to procced ?') ?>", function (result) {
 
             // Cancel
             if( ! result)
@@ -222,7 +222,7 @@
                     }
 
                     // Alert ok
-                    bootbox.alert('<?php echo lang('Feito! Email encaminhado para o usuário selecionado') ?>');
+                    bootbox.alert("<?php echo lang('Ok! The email message was forwarded to the selected user.') ?>");
                 }
             });
             

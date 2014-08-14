@@ -4,7 +4,7 @@
 *
 * Model Error_Model
 *
-* Camada model para a biblioteca Error.
+* Database layer for the library error.
 * 
 * @since 	24/10/2012
 *
@@ -14,8 +14,7 @@ class Error_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

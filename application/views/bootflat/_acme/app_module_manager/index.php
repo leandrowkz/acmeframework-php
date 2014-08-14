@@ -18,14 +18,14 @@
 					<i class="fa fa-align-justify hidden-lg hidden-md"></i> 
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-align-justify"></i> 
-						<span><?php echo lang('Ações') ?></span> 
+						<span><?php echo lang('Actions') ?></span> 
 						<span class="caret"></span>
 					</div>
 				</button>
 
 				<ul class="dropdown-menu">
 					
-					<li><a href="<?php echo URL_ROOT ?>/app_module_maker"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('Novo módulo')?></a></li>
+					<li><a href="<?php echo URL_ROOT ?>/app_module_maker"><i class="fa fa-plus-circle fa-fw"></i> <?php echo lang('New module')?></a></li>
 					
 					<?php 
                     foreach ($this->menus as $menu) { 
@@ -77,7 +77,7 @@
 
 						<?php foreach($modules as $module) { ?>
 					   	
-					   	<a href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module')?>" class="list-group-item" title="<?php echo lang('Configurações do módulo') ?>">
+					   	<a href="<?php echo URL_ROOT ?>/app_module_manager/config/<?php echo get_value($module, 'id_module')?>" class="list-group-item" title="<?php echo lang('Module configuration') ?>">
 
 					   		<div class="module-img inline top"><?php echo image(get_value($module, 'url_img')) ?></div>
 					   		
@@ -87,11 +87,11 @@
 						       	
 						       	<h5 class="list-group-item-heading">
 						       		
-						       		<?php echo get_value($module, 'label') ?>
+						       		<?php echo lang(get_value($module, 'label')) ?>
 
 						       	</h5>
 						      	
-						      	<p class="list-group-item-text"><?php echo get_value($module, 'description')?></p>
+						      	<p class="list-group-item-text"><?php echo lang(get_value($module, 'description'))?></p>
 
 					     	 </div>
 
@@ -133,7 +133,7 @@
 
 <script>
 
- 	// input de pesquisa
+ 	// search input
 	$("#search-module").keyup( function() {
 		
 		var exist = false;

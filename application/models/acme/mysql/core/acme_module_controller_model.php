@@ -14,7 +14,7 @@ class ACME_Module_Controller_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{
@@ -40,14 +40,14 @@ class ACME_Module_Controller_Model extends CI_Model {
 	
 	/**
 	* insert()
-	* Insere registro na tabela do modulo.
+	* Inserts a record in a given table.
 	* @param string table
 	* @param array data
 	* @return mixed result
 	*/
 	public function insert($table = '', $data = array())
 	{	
-		// Ajusta array dados
+		// Adjusts columns according with values
 		foreach($data as $column => $value)
 		{
 			if($value == '')
@@ -67,7 +67,7 @@ class ACME_Module_Controller_Model extends CI_Model {
 	
 	/**
 	* update()
-	* Altera registro(s) na tabela do modulo.
+	* Updates one record or more according with given parameters.
 	* @param string table
 	* @param array data
 	* @param mixed where (it can be array('id' => $id)... or string "id = 1")
@@ -75,7 +75,7 @@ class ACME_Module_Controller_Model extends CI_Model {
 	*/
 	public function update($table = '', $data = array(), $where = array())
 	{
-		// Ajusta array dados
+		// Adjusts columns according with values
 		foreach($data as $column => $value)
 		{
 			if($value == '')

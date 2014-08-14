@@ -4,7 +4,7 @@
 *
 * Controller ACME_Core_Controller
 * 
-* Framework core. Responsible for loading basic resources and configs for the application.
+* Framework core. It is responsible for loading basic resources and configs for the entire application.
 *
 * @since	13/08/2012
 *
@@ -12,24 +12,24 @@
 */
 class ACME_Core_Controller extends CI_Controller {
 	
-	public $acme_installed = true;	// define if acmeengine is installed
-	protected $acme_version = '2.0.0';	// current version of acmeengine
-	protected $app_config_file = 'app_settings';	// application config file
+	public $acme_installed = false; // defines if acme is installed
+	protected $acme_version = '2.1.7'; // current version of acme
+	protected $app_config_file = 'app_settings'; // application config file
 	
 	/**
 	* __construct()
-	* Loading generic resources for all application's controllers
+	* Class constructor. Loads general resources for all application controllers
 	* @return object
 	*/
 	public function __construct()
 	{
 		parent::__construct();
 
-		// acmeengine version
+		// acme version
 		if( ! defined('ACME_VERSION'))
 			define('ACME_VERSION', $this->acme_version);
 
-		// Load helpers
+		// Loads helpers
 		$this->load->helper('url_helper');
 		$this->load->helper('acme/access_helper');
 		$this->load->helper('acme/array_helper');
@@ -41,10 +41,10 @@ class ACME_Core_Controller extends CI_Controller {
 		$this->load->helper('acme/validation_helper');
 		$this->load->helper('acme/language');
 		
-		// Load application file settings
+		// Loads application file settings
 		$this->_load_app_settings();
 		
-		// Load some libraries
+		// Loads some libraries
 		$this->load->library('session');
 		$this->load->library('acme/template');
 		$this->load->library('acme/error');
@@ -55,13 +55,13 @@ class ACME_Core_Controller extends CI_Controller {
 		$this->load->library('acme/array_table');
 		$this->load->library('acme/validation');
 		
-		// Set default language for application
+		// Sets default language for application
 		$language = ($this->session->userdata('language') != '') ? $this->session->userdata('language') : LANGUAGE;
 		
-		// Load default language file (located at /application/lang)
+		// Loads default language file (located at /application/lang)
 		$this->lang->load('app', $language);
 		
-		// Load an instance of database connection only if acmeengine is installed
+		// Loads an instance of database connection only if acme is installed
 		if($this->acme_installed) 
 		{
 			$this->load->database();
@@ -76,8 +76,8 @@ class ACME_Core_Controller extends CI_Controller {
 
 	/**
 	* _load_app_settings()
-	* Carrega arquivo de configurações da aplicação. Para cada índice do array um atributo e
-	* constante de mesmo nome são definidos.
+	* Loads the app settings file. For each array $config index a constant by same 
+	* name is defined.
 	* @return void
 	*/
 	private function _load_app_settings()
@@ -94,7 +94,7 @@ class ACME_Core_Controller extends CI_Controller {
 			$this->{$key} = $val;
 		}
 
-		// Carrega informação DB_DRIVER
+		// Loads db driver info
 		include_once ('application/config/' . ENVIRONMENT . '/database.php');
 		
 		if(isset($db[$active_group]['dbdriver']) && !defined('DB_DRIVER')) 

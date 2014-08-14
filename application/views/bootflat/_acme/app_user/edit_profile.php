@@ -18,7 +18,7 @@
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i> 
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i> 
-                        <span><?php echo lang('Voltar') ?></span>
+                        <span><?php echo lang('Back') ?></span>
                     </div>
                 </a>
 
@@ -57,9 +57,9 @@
             </div>
             
             <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Editar perfil') ?></a>
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Alterar imagem')?></a>
-                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Alterar senha') ?></a>
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Edit profile') ?></a>
+                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app_user/edit_photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Change image')?></a>
+                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app_user/change_password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Change password') ?></a>
             </div>
 
         </div>
@@ -70,27 +70,27 @@
 
         <div class="row" id="user-profile-name">
             <div class="col-sm-12">
-                <h1 style="margin:0 0 10px 0"><?php echo get_value($user, 'name') ?></h1>
+                <h1 style="margin-top: 0"><?php echo get_value($user, 'name') ?></h1>
             </div>
         </div>
         
         <div class="row" style="margin-bottom: 30px ">
             <div class="col-sm-12 text-top" id="user-profile-badges">
                 <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Grupo') ?>"><?php echo get_value($user, 'user_group') ?></div>
+                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
                     <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Ativo') ?></div>
+                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
                     <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inativo') ?></div>
+                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
                     <?php } ?>
                 </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Membro desde:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
+                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
             </div>
         </div>
 
         <form role="form" action="<?php echo URL_ROOT ?>/app_user/edit_profile/<?php echo $id_user ?>/true" method="post">
             
-            <h3 style="margin: 0 0 30px 0"><?php echo lang('Editar perfil') ?></h3>
+            <h3 style="margin: 0 0 30px 0"><?php echo lang('Edit profile') ?></h3>
             
             <input type="hidden" name="id_user" id="id_user" value="<?php echo $id_user ?>" />
 
@@ -100,26 +100,26 @@
 
                 <div class="col-md-7 col-lg-5 col-xs-12 user-info">
                             
-                    <label><?php echo lang('Nome')?>*</label>
+                    <label><?php echo lang('Email')?></label>
+                    <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Used to login on application') ?>"></i>
+                    <div class="form-group">
+                        <strong><?php echo get_value($user, 'email') ?></strong>
+                    </div>
+
+                    <label><?php echo lang('Name')?>*</label>
                     <div class="form-group">
                         <input class="form-control validate[required]" value="<?php echo get_value($user, 'name') ?>" name="name" id="name" autofocus>
                     </div>
-                    
-                    <label><?php echo lang('Email')?>*</label>
-                    <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Utilizado para acessar a aplicação') ?>"></i>
-                    <div class="form-group">
-                        <input class="form-control validate[required,custom[email,funcCall[validate_email_custom]]]" value="<?php echo get_value($user, 'email') ?>" name="email" id="email">
-                    </div>
 
-                    <label><?php echo lang('Idioma')?>*</label>
+                    <label><?php echo lang('Default language')?>*</label>
                     <div class="form-group">
                         <select class="form-control validate[required]" name="lang_default" id="lang_default">
-                            <option value="pt_BR" <?php echo (get_value($user, 'lang_default') == 'pt_BR') ? 'selected="selected"' : ''; ?>><?php echo lang('Português (Brasil)')?></option>
-                            <option value="en_US" <?php echo (get_value($user, 'lang_default') == 'en_US') ? 'selected="selected"' : ''; ?>><?php echo lang('Inglês (Estados Unidos)')?></option>
+                            <option value="en_US" <?php echo (get_value($user, 'lang_default') == 'en_US') ? 'selected="selected"' : ''; ?>><?php echo lang('English')?></option>
+                            <option value="pt_BR" <?php echo (get_value($user, 'lang_default') == 'pt_BR') ? 'selected="selected"' : ''; ?>><?php echo lang('Brazilian Portuguese')?></option>
                         </select>
                     </div>
                     
-                    <label><?php echo lang('Descrição')?></label>
+                    <label><?php echo lang('Description')?></label>
                     <div class="form-group">
                         <textarea class="form-control" name="description" id="description"><?php echo get_value($user, 'description') ?></textarea>
                     </div>
@@ -130,8 +130,8 @@
 
             <div class="row bottom-group-buttons">
                 <div class="col-sm-12">
-                    <input class="btn btn-primary" type="submit" value="<?php echo lang('Salvar') ?>" />
-                    <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><?php echo lang('Cancelar') ?></a>
+                    <input class="btn btn-primary" type="submit" value="<?php echo lang('Save') ?>" />
+                    <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app_user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
                 </div>
             </div>
 
@@ -146,43 +146,17 @@
 <script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
 
 <script>
+    
     // tooltips
     $('body').tooltip({ selector: "[data-toggle=tooltip]" });
 
-    // Validação de form
+    // form validation
     $("form").validationEngine('attach', {promptPosition : "bottomRight"});
 
-    // Validação de form tem que funcionar no resize
+    // reposition form validation on window resize
     $( window ).resize( function () {
         $("form").validationEngine('updatePromptsPosition');
     });
-
-    // custom validation for email
-    var validate_email_custom = function(field, rules, i, options) {
-
-        var exist = false;
-        
-        if(field.val() != $('#email-callback').val())
-            $.ajax({
-                
-                url: $('#URL_ROOT').val() + '/app_user/check_email/',
-                context: document.body,
-                cache: false,
-                async: false,
-                data: { 'email' : field.val() },
-                type: 'POST',
-                success: function(data){
-
-                    json = $.parseJSON(data);
-                    
-                    if(json.return == true)
-                        exist = true;
-                }
-            });
-        
-        if( exist )
-            return "<?php echo lang('Endereço de email já existe') ?>";
-    }
 
 </script>
 

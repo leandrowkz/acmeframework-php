@@ -4,7 +4,7 @@
 *
 * Model Tag_Model
 *
-* Camada model para a biblioteca Tag.
+* Database layer for the library tag.
 * 
 * @since 	24/10/2012
 *
@@ -14,8 +14,7 @@ class Tag_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

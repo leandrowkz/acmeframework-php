@@ -4,7 +4,7 @@
 *
 * Model App_Dashboard_Model
 *
-* Camada model do modulo app_dashboard.
+* Database layer for the controller app_dashboard.
 * 
 * @since	03/11/2012
 *
@@ -14,8 +14,7 @@ class App_Dashboard_Model extends CI_Model {
 	
 	/**
 	* __construct()
-	* Construtor de classe.
-	* @return object
+	* Class constructor.
 	*/
 	public function __construct()
 	{

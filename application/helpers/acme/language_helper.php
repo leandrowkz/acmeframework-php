@@ -1,21 +1,20 @@
 <?php
 /**
-* -------------------------------------------------------------------------------------------------
-* Language Helper
-*
-* Centraliza funções de linguagem da aplicação, que estarão disponíveis em todo controlador
-* derivado de Acme_Core_Controller.
+* --------------------------------------------------------------------------------------------------
 * 
-* @since		03/10/2012
-* @location		acme.helpers.language
+* Helper Language
 *
-* -------------------------------------------------------------------------------------------------
+* Gathers functions related with application language. 
+* 
+* @since 	15/07/2013
+*
+* --------------------------------------------------------------------------------------------------
 */
 
 /**
 * lang()
-* Traduz um indice localizado no array $lang do arquivo de linguagem carregado por ultimo.
-* Este arquivo está localizado em application/language/LANGUAGE_ATUAL_SESSION/acme_global_lang.php
+* Translates an index located on array $lang inside of file application/language/LANGUAGE/app_lang.php
+* If the key does not have a translation then this function returns the key.
 * @param string key
 * @param string $lang['key']
 */
