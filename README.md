@@ -4,8 +4,11 @@ For a complete documentation in english and portuguese, visit http://acmeframewo
 
 ACME Framework is a CodeIgniter powerful PHP pre-application that after installed on your server become an awesome single new application with a lot of features.
 
-### Demo:
+### Demo
 Visit http://demo.acmeframework.org
+
+### Download
+For download, please visit http://www.acmeframework.org/download
 
 ### Global features
 - Support for MySQL, PostgreSQL and Oracle databases
