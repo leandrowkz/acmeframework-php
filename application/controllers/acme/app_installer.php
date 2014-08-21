@@ -422,6 +422,9 @@ class App_Installer extends ACME_Core_Controller {
 
 				// Load dbforge to construct a new database
 				$this->load->dbforge();
+
+				// Sanytize db name
+				$db_database = $this->db->protect_identifiers($db_database);
 				
 				// Try to create database
 				$this->dbforge->create_database($db_database);
@@ -451,7 +454,6 @@ class App_Installer extends ACME_Core_Controller {
 		// After create database, set values for ROOT user
 		$user['email'] = xss_clean( get_value($post, 'email') );
 		$user['password'] = md5( xss_clean( get_value($post, 'user_pass') ) );
-		$user['name'] = xss_clean( get_value($post, 'user_name') );
 		$user['name'] = xss_clean( get_value($post, 'user_name') );
 
 		// Update user
