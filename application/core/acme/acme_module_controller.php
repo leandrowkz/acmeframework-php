@@ -130,7 +130,6 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			// Build html table
 			$table = $this->array_table->get_instance();
 			$table->set_id( uniqid() );
-			$table->set_items_per_page(100);
 			$table->set_data($resultset);
 			
 			// Add to each row of this table all actions of this module
@@ -237,7 +236,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			$this->acme_module_controller_model->insert($this->table_name, $data);
 
 			// Log insert record
-			$this->log->db_log('Inserção de registro', 'insert', $this->table_name, $data);
+			$this->log->db_log(lang('Record insert'), 'insert', $this->table_name, $data);
 		}
 		
 		redirect($this->controller);
@@ -270,7 +269,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			$this->acme_module_controller_model->update($this->table_name, $data, $where);
 			
 			// Log update record
-			$this->log->db_log('Edição de registro', 'update', $this->table_name, array_merge(array('new_data' => $data), array('old_data' => $old_data)));
+			$this->log->db_log(lang('Record update'), 'update', $this->table_name, array_merge(array('new_data' => $data), array('old_data' => $old_data)));
 		}
 		
 		redirect($this->controller);
@@ -297,7 +296,7 @@ class ACME_Module_Controller extends ACME_Core_Controller {
 			$old_data = $this->db->get_where($this->table_name, array($pk => $pk_value))->row_array(0);
 			
 			// log delete
-			$this->log->db_log('Deleção de registro', 'delete', $this->table_name, $old_data);
+			$this->log->db_log(lang('Record delete'), 'delete', $this->table_name, $old_data);
 
 			// Removes
 			$this->db->delete($this->table_name, array($pk => $pk_value));

@@ -53,7 +53,7 @@
                 
                 <ul class="nav navbar-nav">
                     
-                    <li><a href="http://www.acmeengine.org/docs" target="_blank"><i class="fa fa-fw fa-question-circle"></i> <?php echo lang('Help') ?></a></li>
+                    <li><a href="http://www.acmeframework.org/docs" target="_blank"><i class="fa fa-fw fa-question-circle"></i> <?php echo lang('Help') ?></a></li>
 
                     <li class="dropdown">
 						<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
@@ -432,7 +432,7 @@
     <!-- /#wrapper -->
 
     <div class="loading-layer"></div>
-    <div class="loading-box"><h4><i class="fa fa-fw fa-spinner fa-spin"></i> <?php echo lang('Loading')?></h4></div>
+    <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
     <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
 	<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>

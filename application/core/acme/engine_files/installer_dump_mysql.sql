@@ -289,7 +289,7 @@ INSERT INTO acm_user_group VALUES (1,'ROOT','Users with application super privil
 /* -----------------------------------------------------
 --  INSERTS for Table acm_user
 -- -------------------------------------------------- */
-INSERT INTO acm_user VALUES (1,1,'ACME Engine','leandro.w3c@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,CURRENT_TIMESTAMP);
+INSERT INTO acm_user VALUES (1,1,'ACME','leandro.w3c@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,CURRENT_TIMESTAMP);
 
 
 <<|SEPARATOR|>>
