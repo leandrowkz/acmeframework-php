@@ -75,7 +75,7 @@
     <!-- /#wrapper -->
 
     <div class="loading-layer"></div>
-    <div class="loading-box"><h4><i class="fa fa-fw fa-spinner fa-spin"></i> <?php echo lang('Loading')?></h4></div>
+    <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
     <script>
         

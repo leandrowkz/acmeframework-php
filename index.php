@@ -195,22 +195,6 @@ if (defined('ENVIRONMENT'))
 
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
-
-/*
- *---------------------------------------------------------------
- * LOAD CORE CLASSES
- *---------------------------------------------------------------
- *
- * Include padrão de classes do Core do sistema. Carrega classes primordiais para o funcionamento geral
- * da aplicação, como núcleo do Acme Engine.
- */
- /*
-include_once('system/core/Controller.php');
-include_once('application/core/acme_core.php');
-include_once('application/core/acme_base_module.php');
-include_once('application/core/acme_engine.php');
-*/
-
 	
 /*
  * --------------------------------------------------------------------

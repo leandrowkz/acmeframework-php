@@ -1,6 +1,6 @@
 /**
 * $.redirect()
-* Redireciona página para url encaminhada.
+* Redirects the page to the given URL.
 * @param string url
 * @return void
 */
@@ -10,7 +10,7 @@ $.redirect = function (url) {
 
 /**
 * $.enable_loading()
-* Show loading layer.
+* Shows the loading layer. Recommended for ajax calls.
 * @return void
 */
 $.enable_loading = function() {
@@ -20,7 +20,7 @@ $.enable_loading = function() {
 
 /**
 * $.disable_loading()
-* Hide loading layer.
+* Hides the loading layer.
 * @return void
 */
 $.disable_loading = function () {
@@ -29,8 +29,8 @@ $.disable_loading = function () {
 };
 
 /**
-* $.disable_loading()
-* Create a cookie.
+* $.create_cookie()
+* Creates a cookie.
 * @param string name
 * @param mixed value
 * @param int days
@@ -51,7 +51,7 @@ $.create_cookie = function (name, value, days) {
 
 /**
 * $.read_cookie()
-* Return a cookie value.
+* Returns a cookie value.
 * @param string name
 * @return mixed value
 */
@@ -77,7 +77,7 @@ $.erase_cookie = function(name) {
 
 /**
 * $.container_html()
-* Put all app content inside a html container.
+* Puts all app content inside a html container.
 * @return void
 */
 $.container_html = function () {
@@ -103,7 +103,7 @@ $.container_html = function () {
 /**
 * $.change_language()
 * Send an ajax call to controller app_access requesting to change language.
-* After complete, automatically reload page.
+* After complete, automatically reloads page.
 * @param string language    // en_US, pt_BR, es_ES ...
 * @return void
 */

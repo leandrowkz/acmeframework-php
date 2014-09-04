@@ -1,4 +1,3 @@
-
 <div class="module-header">
 
 	<div class="row">
