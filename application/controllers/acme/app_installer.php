@@ -185,10 +185,10 @@ class App_Installer extends ACME_Core_Controller {
 	private function _check_path_permissions()
 	{
 		if ( is_writable('application/core/acme/acme_core_controller.php') 
-			 && is_writable('application/config/development/app_settings.php')
-			 && is_writable('application/config/development/database.php')
-			 && is_writable('application/config/production/app_settings.php')
-			 && is_writable('application/config/production/database.php')
+			 && is_readable('application/core/acme/engine_files/installer_app_settings.php')
+			 && is_readable('application/core/acme/engine_files/installer_database.php')
+			 && is_writable('application/config/development')
+			 && is_writable('application/config/production')
 			 && is_readable('application/core/acme/engine_files')
 		   )
 			return true;
