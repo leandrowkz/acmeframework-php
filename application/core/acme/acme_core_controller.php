@@ -82,9 +82,29 @@ class ACME_Core_Controller extends CI_Controller {
 	*/
 	private function _load_app_settings()
 	{
-		$this->config->load( $this->app_config_file, true );
+
+		// Loads properly file if ACME is installed
+		if($this->acme_installed) {
+
+			// loads app_settings file
+			$this->config->load( $this->app_config_file, true );
+
+			// Loads db driver info
+			include_once ('application/config/' . ENVIRONMENT . '/database.php');
+			
+			// creates a constant
+			if(isset($db[$active_group]['dbdriver']) && !defined('DB_DRIVER')) 
+				define('DB_DRIVER', $db[$active_group]['dbdriver']);
+
+			// Sets properly config
+			$config = $this->config->config['app_settings'];
+		} else {
+
+			// Loads the installer_app_settings file
+			include_once ('application/core/acme/engine_files/installer_app_settings.php');
+		}
 		
-		foreach($this->config->config['app_settings'] as $key => $val)
+		foreach($config as $key => $val)
 		{
 			if(!is_array($val))
 			{
@@ -94,10 +114,5 @@ class ACME_Core_Controller extends CI_Controller {
 			$this->{$key} = $val;
 		}
 
-		// Loads db driver info
-		include_once ('application/config/' . ENVIRONMENT . '/database.php');
-		
-		if(isset($db[$active_group]['dbdriver']) && !defined('DB_DRIVER')) 
-			define('DB_DRIVER', $db[$active_group]['dbdriver']);
 	}
 }

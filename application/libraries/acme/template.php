@@ -142,8 +142,17 @@ class Template {
 		$return = '';
 		$escape = array();
 
+		// Gets a single controller
+		$CI = get_instance();
+
+		// Loads properly configs
+		if($CI->acme_installed)
+			$config = $this->CI->config->config['app_settings'];
+		else
+			require ('application/core/acme/engine_files/installer_app_settings.php');
+
 		// Just creates the input if it is safe or is not an object
-		foreach($this->CI->config->config['app_settings'] as $attribute => $value)
+		foreach($config as $attribute => $value)
 			if(!is_object($value))
 				$return .= (!in_array($attribute, $escape) || !$protected_mode) ? "<input type=\"hidden\" name=\"$attribute\" id=\"$attribute\" value=\"" . tag_replace($value) . "\" />\n" : '';
 		

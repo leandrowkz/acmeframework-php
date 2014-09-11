@@ -317,19 +317,19 @@ class App_Installer extends ACME_Core_Controller {
 	*/
 	private function _install_acme_framework($post = array())
 	{
-		// Get app_settings content
+		// Gets app_settings content
 		$config = file_get_contents('application/core/acme/engine_files/installer_app_settings.php');
 		
-		// Replace app_settings values
-		$config = str_replace('<APP_NAME>', get_value($post, 'app_name'), $config);
-		$config = str_replace('<LANGUAGE>', get_value($post, 'app_language'), $config);
+		// Replaces app_settings values
+		$config = str_replace('$config[\'APP_NAME\'] = \'ACME Framework\';', '$config[\'APP_NAME\'] = \'' . get_value($post, 'app_name') . '\';', $config);
+		$config = str_replace('$config[\'LANGUAGE\'] = \'en_US\';', '$config[\'LANGUAGE\'] = \'' . get_value($post, 'app_language') . '\';', $config);
 
-		// Set new content for valid app_settings file
+		// Sets new content for valid app_settings file
 		file_put_contents('application/config/development/app_settings.php', $config);
 		file_put_contents('application/config/production/app_settings.php', $config);
 		
-		// Get database settings file content
-		$database = file_get_contents('application/config/development/database.php');
+		// Gets database settings file content
+		$database = file_get_contents('application/core/acme/engine_files/installer_database.php');
 
 		// Values for database
 		$db_driver = get_value($post, 'db_driver');
@@ -339,7 +339,7 @@ class App_Installer extends ACME_Core_Controller {
 		$db_pass = get_value($post, 'db_pass');
 		$db_database = get_value($post, 'db_database');
 
-		// Build specific string connection for oci8
+		// Builds specific string connection for oci8
 		if ( strtolower($db_driver) == 'oci8') {
 
 			$db_host = "(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = $db_host)(PORT = $db_port)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = $db_database)))";
@@ -350,7 +350,7 @@ class App_Installer extends ACME_Core_Controller {
 		// Specific driver for postgre
 		$db_file_driver = strtolower($db_driver) == 'pgsql' ? 'postgre' : $db_driver;
 
-		// Recplae database settings values
+		// Recplas database settings values
 		$database = str_replace('<DB_DRIVER>', $db_file_driver, $database);
 		$database = str_replace('<DB_HOST>', $db_host, $database);
 		$database = str_replace('<DB_PORT>', $db_port, $database);
@@ -358,11 +358,11 @@ class App_Installer extends ACME_Core_Controller {
 		$database = str_replace('<DB_PASS>', $db_pass, $database);
 		$database = str_replace('<DB_DATABASE>', $db_database, $database);
 
-		// Set new content for database settings
+		// Sets new content for database settings
 		file_put_contents('application/config/development/database.php', $database);
 		file_put_contents('application/config/production/database.php', $database);
 
-		// Install database
+		// Installs database
 		$this->_install_database($db_driver, $post);
 
 		// And the last thing...
