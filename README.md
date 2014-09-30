@@ -1,4 +1,4 @@
-# ACME Framework v2.2.10
+# ACME Framework v2.2.11
 
 For a complete documentation in english and portuguese, visit http://www.acmeframework.org
 
