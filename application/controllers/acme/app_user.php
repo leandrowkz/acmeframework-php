@@ -183,11 +183,16 @@ class App_User extends ACME_Module_Controller {
 			$this->db->set('description', $this->input->post('description'));
 			$this->db->set('password', $this->input->post('password'));
 
-			// Basic check for status
-			if($this->input->post('status') == '')
-				$this->db->set('dtt_inative', date('Y-m-d'));
-			else
-				$this->db->set('dtt_inative', 'NULL', false);
+			// Checks if user is ROOT (you cannot disable it)
+			if ( (integer) $id_user != 1 ) {
+
+				// Basic check for status
+				if($this->input->post('status') == '')
+					$this->db->set('dtt_inative', date('Y-m-d'));
+				else
+					$this->db->set('dtt_inative', 'NULL', false);
+
+			}
 
 			// where conditions
 			$this->db->where(array('id_user' => $id_user));
@@ -263,8 +268,32 @@ class App_User extends ACME_Module_Controller {
 			return;
 		}
 
-		$data['id_user'] = $this->input->post('id_user');
-		$data['id_module_permission'] = $this->input->post('id_module_permission');
+		$id_user = $this->input->post('id_user');
+		$id_module_permission = $this->input->post('id_module_permission');
+
+		// Prevents user from uncheck some important permissions
+		// ENTER users, manage PERMISSIONS
+		if( (integer) $id_user == 1 ) {
+
+			// Gets permission data
+			$permission = $this->db->from('acm_module_permission mp')
+								   ->join('acm_module m', 'm.id_module = mp.id_module')
+								   ->where( array('id_module_permission' => $id_module_permission) )
+								   ->get()
+								   ->row_array(0);
+
+			if( ( get_value($permission, 'permission') == 'ENTER' 
+				|| get_value($permission, 'permission') == 'PERMISSION_MANAGER' )
+				&& get_value($permission, 'controller') == 'app_user' ) {
+
+				echo json_encode( array('return' => false, 'error' => lang('Ops! You cannot disable this permission. For security reasons this permission must be always activated for this user.')) );
+				return;
+			}
+		}
+
+		// Formats data
+		$data['id_user'] = $id_user;
+		$data['id_module_permission'] = $id_module_permission;
 
 		// always delete permission to save another
 		$this->db->delete('acm_user_permission', $data);

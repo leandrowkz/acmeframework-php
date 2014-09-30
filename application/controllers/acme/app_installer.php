@@ -20,11 +20,11 @@ class App_Installer extends ACME_Core_Controller {
 	{
 		parent::__construct();
 
-		// Set language setting
+		// Sets language setting
 		if ( $this->session->userdata('language') == '')
 			$this->session->set_userdata('language', LANGUAGE);
 
-		// Set url_default setting
+		// Sets url_default setting
 		if ( $this->session->userdata('url_default') == '')
 			$this->session->set_userdata('url_default', 'http://www.acmeframework.org');
 
@@ -32,16 +32,16 @@ class App_Installer extends ACME_Core_Controller {
 	
 	/**
 	* index()
-	* Redirect to step one of installation.
+	* Redirects to step one of installation.
 	* @return void
 	*/
 	public function index()
 	{
-		// Check if acme is already installed
+		// Checks if acme is already installed
 		if ( $this->acme_installed )
 			redirect('app_access');
 		
-		// Redirect to step one
+		// Redirects to step one
 		redirect('app_installer/system_requirements');
 	}
 
@@ -52,7 +52,7 @@ class App_Installer extends ACME_Core_Controller {
 	*/
 	public function system_requirements()
 	{
-		// Check if acme is already installed
+		// Checks if acme is already installed
 		if ( $this->acme_installed )
 			redirect('app_access');
 
@@ -73,7 +73,7 @@ class App_Installer extends ACME_Core_Controller {
 		// Form data for database
 		$args['params'] = $this->input->post();
 
-		// Load view
+		// Loads view
 		$this->template->load_page('_acme/app_installer/system_requirements', $args, false, false);
 	}
 
@@ -85,7 +85,7 @@ class App_Installer extends ACME_Core_Controller {
 	*/
 	public function new_app_info($process = false)
 	{
-		// Check if acme is already installed
+		// Checks if acme is already installed
 		if ( $this->acme_installed )
 			redirect('app_access');
 
@@ -109,18 +109,18 @@ class App_Installer extends ACME_Core_Controller {
 		// Dummy logo var
 		$args['app_logo'] = true;
 
-		// procced only with no errors
+		// procceds only with no errors
 		if( ! $path_permissions || ! $php_version || ! $php_database_extension || $database_server !== true)
 			redirect('app_installer');
 
-		// Just load page
+		// Just loads page
 		if( ! $process)
 			$this->template->load_page('_acme/app_installer/new_app_info', $args, false, false);
 		
-		// install acme framework - create new application
+		// installs acme framework - create new application
 		else {
 
-			// Try to upload logo
+			// Tries to upload logo
 			if( isset($_FILES['app_logo']['name']) ) {
 
 				if($_FILES['app_logo']['name'] != '') {
@@ -131,29 +131,29 @@ class App_Installer extends ACME_Core_Controller {
 					$config['upload_path'] = PATH_IMG;
 					$config['allowed_types'] = 'png';
 					$config['max_size']	= '2000';
-					$config['max_width']  = '120';
-					$config['max_height']  = '20';
+					$config['max_width']  = '500';
+					$config['max_height']  = '150';
 					$this->load->library('upload', $config);
 
-					// Try to upload logo
+					// Tries to upload logo
 					$args['app_logo'] = $this->upload->do_upload('app_logo') ? true : $this->upload->display_errors('<span>','</span>');
 			 	}
 			}
 
-			// Check if there is errors on logo
+			// Checks if there is errors on logo
 			if ( $args['app_logo'] !== true )
 				$this->template->load_page('_acme/app_installer/new_app_info', $args, false, false);
 
-			// Procced with installation!
+			// Procceds with installation!
 			else {
 
-				// install acme framework
+				// installs acme framework
 				$this->_install_acme_framework($this->input->post());
 
-				// Set session var saying that app was created
+				// Sets session var saying that app was created
 				$this->session->set_userdata('installed', true);
 
-				// Redirect to summary page
+				// Redirects to summary page
 				redirect('app_installer/summary');
 			}
 		}
@@ -175,7 +175,7 @@ class App_Installer extends ACME_Core_Controller {
 
 	/**
 	* _check_path_permissions()
-	* Check permissions for needed paths:
+	* Checks permissions for needed paths:
 	* 	-> application/controllers
 	* 	-> application/models
 	* 	-> application/views
@@ -198,7 +198,7 @@ class App_Installer extends ACME_Core_Controller {
 
 	/**
 	* _check_php_version()
-	* Check minor php version needed.
+	* Checks minor php version needed.
 	* @return boolean
 	*/
 	private function _check_php_version()
@@ -208,7 +208,7 @@ class App_Installer extends ACME_Core_Controller {
 
 	/**
 	* _check_php_database_extension()
-	* Check if exist PHP connector extension for the given selected database.
+	* Checks if exist PHP connector extension for the given selected database.
 	* @param string db_driver
 	* @return boolean
 	*/
@@ -219,7 +219,7 @@ class App_Installer extends ACME_Core_Controller {
 
 	/**
 	* _check_database_server()
-	* Check if exist a database server running on the given db_params. Return
+	* Checks if exist a database server running on the given db_params. Return
 	* true in case of success otherwise return the message of error.
 	* @param string db_driver	// mysql, pgsql, oci8
 	* @param string db_host
@@ -234,7 +234,7 @@ class App_Installer extends ACME_Core_Controller {
 		if ($db_driver == '' || $db_host == '' || $db_port == '' || $db_user == '' || $db_database == '')
 			return lang('You must set all database settings');
 
-		// check dbdriver
+		// checks dbdriver
 		switch (strtolower($db_driver)) {
 
 			// MySQL driver
@@ -248,12 +248,12 @@ class App_Installer extends ACME_Core_Controller {
 					return lang('Error connecting on MySQL server: ') . mysqli_connect_error();
 
 				/*
-				// Check if given user has all neccessary permissions / grants
+				// Checks if given user has all neccessary permissions / grants
 				@mysqli_select_db($link, 'mysql');
 				$result = @mysqli_query($link, "SELECT user, select_priv, insert_priv, create_priv FROM mysql.user WHERE host = '$db_host' AND user = '$db_user'");
 				$result = @mysqli_fetch_assoc($result);
 
-				// Check privilegies
+				// Checks privilegies
 				if ( strtolower(get_value($result, 'select_priv')) != 'y' )
 					return lang('User doesn\'t has permissions for query (SELECT)');
 				
@@ -264,14 +264,14 @@ class App_Installer extends ACME_Core_Controller {
 					return lang('User doesn\'t has permissions for create tables or schemas (CREATE)');
 				*/
 
-				// Check if schema already exist
+				// Checks if schema already exist
 				$result = @mysqli_query($link, "SELECT count(*) AS COUNT_DATABASE FROM information_schema.schemata where schema_name = '$db_database'");
 				$result = @mysqli_fetch_assoc($result);
 					
 				if( get_value($result, 'COUNT_DATABASE') > 0 )
 					return lang('Schema already exist:') . ' <u>' . $db_database . '</u> ';
 
-				// close connection
+				// closes connection
 				@mysqli_close($link);
 
 				// There is no errors, you can procced :)
@@ -290,14 +290,14 @@ class App_Installer extends ACME_Core_Controller {
 				if( ! $link)
 					return lang('Error connecting on PostgreSQL server: unable to connect with the given parameters');
 
-				// Check if schema already exist
+				// Checks if schema already exist
 				$result = pg_query($link, "SELECT count(*) AS COUNT_DATABASE FROM pg_catalog.pg_database WHERE lower(datname) = lower('$db_database')");
 				$result = pg_fetch_assoc($result);
 					
 				if( get_value($result, 'COUNT_DATABASE') > 0 )
 					return lang('Schema already exist:') . ' <u>' . $db_database . '</u> ';
 
-				// close connection
+				// closes connection
 				@pg_close($link);
 
 				// There is no errors, you can procced :)
@@ -311,7 +311,7 @@ class App_Installer extends ACME_Core_Controller {
 	
 	/**
 	* _install_acme_framework()
-	* Receive a POST data and install acme fmk, creating a new application.
+	* Receives a POST data and install acme fmk, creating the new application.
 	* @param array post
 	* @return void
 	*/
@@ -350,7 +350,7 @@ class App_Installer extends ACME_Core_Controller {
 		// Specific driver for postgre
 		$db_file_driver = strtolower($db_driver) == 'pgsql' ? 'postgre' : $db_driver;
 
-		// Recplas database settings values
+		// Replaces database settings values
 		$database = str_replace('<DB_DRIVER>', $db_file_driver, $database);
 		$database = str_replace('<DB_HOST>', $db_host, $database);
 		$database = str_replace('<DB_PORT>', $db_port, $database);
@@ -366,7 +366,7 @@ class App_Installer extends ACME_Core_Controller {
 		$this->_install_database($db_driver, $post);
 
 		// And the last thing...
-		// Change core file, set acme to installed
+		// Changes core file, set acme to installed
 		$core = file_get_contents('application/core/acme/acme_core_controller.php');
 		$core = str_replace('$acme_installed = false;', '$acme_installed = true;', $core);
 		file_put_contents('application/core/acme/acme_core_controller.php', $core);
@@ -375,7 +375,7 @@ class App_Installer extends ACME_Core_Controller {
 
 	/**
 	* _install_database()
-	* Install database stuffs (create table and stuffs) for the given driver.
+	* Installs database stuffs (create table and stuffs) for the given driver.
 	* @param string db_driver
 	* @param array post
 	* @return void
@@ -385,10 +385,10 @@ class App_Installer extends ACME_Core_Controller {
 		// Script name (for database)
 		$script = file_get_contents('application/core/acme/engine_files/installer_dump_' . strtolower( $db_driver ) . '.sql');
 
-		// Separe all statements
+		// Separes all statements
 		$statements = explode('<<|SEPARATOR|>>', $script);
 
-		// Unload object db if exist, to create it again
+		// Unloads object db if exist, to create it again
 		if ( isset($this->db) )
 			unset($this->db);
 
@@ -407,7 +407,7 @@ class App_Installer extends ACME_Core_Controller {
 				$db_pass = get_value($post, 'db_pass');
 				$db_database = get_value($post, 'db_database');
 
-				// Open mannually database connection
+				// Opens mannually database connection
 				$db = array(
 					'hostname' => $db_host,
 					'port'     => $db_port,
@@ -417,30 +417,30 @@ class App_Installer extends ACME_Core_Controller {
 					'database' => ''
 				);
 
-				// Load connection with the given values
+				// Loads connection with the given values
 				$this->load->database($db);
 
-				// Load dbforge to construct a new database
+				// Loads dbforge to construct a new database
 				$this->load->dbforge();
 
-				// Sanytize db name
+				// Sanytizes db name
 				$db_database = $this->db->protect_identifiers($db_database);
 				
-				// Try to create database
+				// Tries to create database
 				$this->dbforge->create_database($db_database);
 
-				// Close to procced with other queries
+				// Closes to procced with other queries
 				unset($this->db);
 
-				// Now connect with database settings file and recently created database
+				// Now connects with database settings file and recently created database
 				$this->load->database();
 
 				foreach($statements as $sql) {
 					
-					// Prepare statement
+					// Prepares statement
 					$sql = trim($sql, " \t\n\r\0\x0B");
 
-					// Run query
+					// Runs query
 					$this->db->query($sql);
 				}
 
@@ -451,22 +451,22 @@ class App_Installer extends ACME_Core_Controller {
 		// Auxiliar helper for security on database
 		$this->load->helper('security');
 
-		// After create database, set values for ROOT user
+		// After create database, sets values for ROOT user
 		$user['email'] = xss_clean( get_value($post, 'email') );
 		$user['password'] = md5( xss_clean( get_value($post, 'user_pass') ) );
 		$user['name'] = xss_clean( get_value($post, 'user_name') );
 
-		// Update user
+		// Updates user
 		$this->db->update('acm_user', $user, array('id_user' => 1));
 
-		// Update user language
+		// Updates user language
 		$user_config['lang_default'] = xss_clean( get_value ($post, 'app_language') );
 		$this->db->update('acm_user_config', $user_config, array('id_user' => 1));
 	}
 
 	/**
 	* change_language()
-	* Change current language on session.
+	* Changes current language on session.
 	* @param string language 	// en_US, pt_BR, es_ES ...
 	* @return string json
 	*/

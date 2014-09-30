@@ -84,6 +84,7 @@ $lang['Delete form'] = 'Delete form';
 $lang['Description'] = 'Description';
 $lang['Different browsers'] = 'Different browsers';
 $lang['Different devices'] = 'Different devices';
+$lang['Don\'t worry, this problem was already forwarded to correction.'] = 'Don\'t worry, this problem was already forwarded to correction.';
 $lang['Edit'] = 'Edit';
 $lang['Edit action'] = 'Edit action';
 $lang['Edit field'] = 'Edit field';
@@ -120,6 +121,7 @@ $lang['File successfully sent.'] = 'File successfully sent.';
 $lang['Fill settings for driver'] = 'Fill settings for driver';
 $lang['For Oracle connections use the service name, XE for example'] = 'For Oracle connections use the service name, XE for example';
 $lang['For fields Select, Checkbox and Radio'] = 'For fields Select, Checkbox and Radio';
+$lang['For security reasons this user always must be activated.'] = 'For security reasons this user always must be activated.';
 $lang['Forgot your password ?'] = 'Forgot your password ?';
 $lang['Form URL'] = 'Form URL';
 $lang['Form fields'] = 'Form fields';
@@ -215,6 +217,8 @@ $lang['Ops! It was not possible to send the email message'] = 'Ops! It was not p
 $lang['Ops! It was not possible to send the email message. Check the email settings and try again.'] = 'Ops! It was not possible to send the email message. Check the email settings and try again.';
 $lang['Ops! There are users in this group.'] = 'Ops! There are users in this group.';
 $lang['Ops! There is no users registered with this email address'] = 'Ops! There is no users registered with this email address';
+$lang['Ops! You cannot delete this permission. For security reasons this permission must be always enabled.'] = 'Ops! You cannot delete this permission. For security reasons this permission must be always enabled.';
+$lang['Ops! You cannot disable this permission. For security reasons this permission must be always activated for this user.'] = 'Ops! You cannot disable this permission. For security reasons this permission must be always activated for this user.';
 $lang['Ops! You do not have permission for that'] = 'Ops! You do not have permission for that';
 $lang['Ops! You do not have permission to do that.'] = 'Ops! You do not have permission to do that.';
 $lang['Order'] = 'Order';
@@ -405,6 +409,7 @@ $lang['was created with no errors.'] = 'was created with no errors.';
 // -> $lang['Ops! You do not have permission to do that.'] = 'Ops! You do not have permission to do that.';
 // -> $lang['Ops! You do not have permission to do that.'] = 'Ops! You do not have permission to do that.';
 // -> $lang['Ops! You do not have permission to do that.'] = 'Ops! You do not have permission to do that.';
+// -> $lang['Ops! You cannot delete this permission. For security reasons this permission must be always enabled.'] = 'Ops! You cannot delete this permission. For security reasons this permission must be always enabled.';
 
 // File application/controllers/acme/app_user.php
 // -> $lang['Ops! You do not have permission to do that.'] = 'Ops! You do not have permission to do that.';
@@ -414,6 +419,7 @@ $lang['was created with no errors.'] = 'was created with no errors.';
 // -> $lang['Reset password'] = 'Reset password';
 // -> $lang['Ops! It was not possible to send the email message. Check the email settings and try again.'] = 'Ops! It was not possible to send the email message. Check the email settings and try again.';
 // -> $lang['Reset password request'] = 'Reset password request';
+// -> $lang['Ops! You cannot disable this permission. For security reasons this permission must be always activated for this user.'] = 'Ops! You cannot disable this permission. For security reasons this permission must be always activated for this user.';
 
 // File application/core/acme/acme_module_controller.php
 // -> $lang['Module not found'] = 'Module not found';
@@ -1188,6 +1194,7 @@ $lang['was created with no errors.'] = 'was created with no errors.';
 // -> $lang['This email already exist'] = 'This email already exist';
 // -> $lang['Active user'] = 'Active user';
 // -> $lang['Inactive user'] = 'Inactive user';
+// -> $lang['For security reasons this user always must be activated.'] = 'For security reasons this user always must be activated.';
 
 // File application/views/bootflat/_acme/app_user/edit_photo.php
 // -> $lang['Profile'] = 'Profile';
@@ -1338,6 +1345,7 @@ $lang['was created with no errors.'] = 'was created with no errors.';
 // -> $lang['Ops! A database error'] = 'Ops! A database error';
 // -> $lang['Tecnical details'] = 'Tecnical details';
 // -> $lang['Initial page'] = 'Initial page';
+// -> $lang['Don\'t worry, this problem was already forwarded to correction.'] = 'Don\'t worry, this problem was already forwarded to correction.';
 
 // File application/views/bootflat/_errors/error_general.php
 // -> $lang['Ops! An error was found'] = 'Ops! An error was found';
