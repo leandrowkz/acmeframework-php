@@ -70,6 +70,7 @@ class App_User_Model extends CI_Model {
 	public function get_permissions($id_user = 0)
 	{
 		$sql = "SELECT m.id_module,
+					   m.controller,
 					   m.label as module,
 					   m.description as module_description,
 					   mp.id_module_permission,

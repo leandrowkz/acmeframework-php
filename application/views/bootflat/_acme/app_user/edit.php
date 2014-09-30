@@ -45,12 +45,32 @@
 
 					$label = get_value($user, 'dtt_inative') != '' ? lang('Inactive user') : lang('Active user');
 
-					$checked = get_value($user, 'dtt_inative') != '' ? '' : 'checked="checked"';
+					$checked = get_value($user, 'dtt_inative') != '' ? '' : ' checked="checked"';
+
+					$disabled = (integer) get_value($user, 'id_user') == 1 ? ' disabled="disabled"' : '';
 
 					?>
-	                <span style="width: 50px"><strong><?php echo $label ?></strong></span>
+	                <span style="width: 50px">
+	                	
+	                	<strong>
+	                		
+	                		<?php if ( (integer) get_value($user, 'id_user') == 1) { ?>
+							
+							<span class="text-muted">
+
+								<?php echo $label; ?>
+
+								<i class="fa fa-fw fa-question-circle" data-toggle="tooltip" data-placement="right" title="<?php echo lang('For security reasons this user always must be activated.') ?>"></i>
+
+							</span>
+	                		
+	                		<?php } else { echo $label; } ?>
+
+	                	</strong>
+
+	                </span>
 			        <label class="toggle">
-			            <input type="checkbox" class="user-status" name="status" value="Y" <?php echo $checked ?> />
+			            <input type="checkbox" class="user-status" name="status" value="Y" <?php echo $checked . $disabled ?> />
 			            <span class="handle"></span>
 			        </label>
 	            </div>
@@ -116,7 +136,7 @@
 <script>
 
     // tooltips
-    $('body').tooltip( { selector: "[data-toggle=tooltip]" } );
+    $('body').tooltip( { selector: "[data-toggle=tooltip]", container: 'body' } );
 	
 	// Set form validations
     $('form').validationEngine('attach', { promptPosition : "bottomRight" });

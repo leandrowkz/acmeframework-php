@@ -214,9 +214,30 @@ class App_Module_Manager  extends ACME_Module_Controller {
 
 			break;
 
-			case 'delete';
-				$this->db->delete('acm_user_permission', array('id_module_permission' => $this->input->post('id_module_permission')));
-				$this->db->delete('acm_module_permission', array('id_module_permission' => $this->input->post('id_module_permission')));
+			case 'delete':
+
+				$id_module_permission = $this->input->post('id_module_permission');
+
+				// Prevents user from delete some important permissions
+				// ENTER users, manage PERMISSIONS
+				// Gets permission data
+				$permission = $this->db->from('acm_module_permission mp')
+									   ->join('acm_module m', 'm.id_module = mp.id_module')
+									   ->where( array('id_module_permission' => $id_module_permission) )
+									   ->get()
+									   ->row_array(0);
+
+				if( ( get_value($permission, 'permission') == 'ENTER' 
+					|| get_value($permission, 'permission') == 'PERMISSION_MANAGER' )
+					&& get_value($permission, 'controller') == 'app_user' ) {
+
+					echo json_encode( array('return' => false, 'error' => lang('Ops! You cannot delete this permission. For security reasons this permission must be always enabled.')) );
+					return;
+				}
+
+				$this->db->delete('acm_user_permission', array('id_module_permission' => $id_module_permission) );
+				$this->db->delete('acm_module_permission', array('id_module_permission' => $id_module_permission) );
+
 			break;
 		}
 
@@ -278,7 +299,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 
 			break;
 
-			case 'delete';
+			case 'delete':
 				$this->db->delete('acm_module_menu', array('id_module_menu' => $this->input->post('id_module_menu')));
 			break;
 		}
@@ -349,7 +370,7 @@ class App_Module_Manager  extends ACME_Module_Controller {
 
 			break;
 
-			case 'delete';
+			case 'delete':
 				$this->db->delete('acm_module_action', array('id_module_action' => $this->input->post('id_module_action')));
 			break;
 		}
