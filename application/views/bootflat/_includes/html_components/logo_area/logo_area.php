@@ -14,7 +14,7 @@
 * --------------------------------------------------------------------------------------------------
 */
 ?>
-<?php if( ! file_exists(URL_IMG . '/logo.png') ) { ?>
+<?php if( ! file_exists(PATH_IMG . '/logo.png') ) { ?>
 	<div class="navbar-brand"><a href="<?php echo $url ?>"><?php echo APP_NAME ?></a></div>
 <?php } else { ?>
 	<div class="navbar-brand"><a href="<?php echo $url ?>"><img src="<?php echo  URL_IMG ?>/logo.png" /></a></div>
