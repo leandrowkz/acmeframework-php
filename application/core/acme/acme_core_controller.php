@@ -13,7 +13,7 @@
 class ACME_Core_Controller extends CI_Controller {
 	
 	public $acme_installed = false; // defines if acme is installed
-	protected $acme_version = '2.2.11'; // current version of acme
+	protected $acme_version = '2.2.12'; // current version of acme
 	protected $app_config_file = 'app_settings'; // application config file
 	
 	/**
