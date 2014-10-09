@@ -11,6 +11,15 @@
 * --------------------------------------------------------------------------------------------------
 */
 class App_Module_Manager  extends ACME_Module_Controller {
+
+	// This attribute prevents these permissions to be deleted
+	private $protected_permissions = array(
+		
+		'app_user' => array('ENTER', 'PERMISSION_MANAGER'),
+		
+		'app_module_manager' => array('ENTER', 'CONFIG')
+									 
+	);
 	
 	/**
 	* __construct()
@@ -227,12 +236,18 @@ class App_Module_Manager  extends ACME_Module_Controller {
 									   ->get()
 									   ->row_array(0);
 
-				if( ( get_value($permission, 'permission') == 'ENTER' 
-					|| get_value($permission, 'permission') == 'PERMISSION_MANAGER' )
-					&& get_value($permission, 'controller') == 'app_user' ) {
+				$module = get_value($permission, 'controller');
+				$permission_name = get_value($permission, 'permission');
+				$protected_permissions = $this->protected_permissions;
 
-					echo json_encode( array('return' => false, 'error' => lang('Ops! You cannot delete this permission. For security reasons this permission must be always enabled.')) );
-					return;
+				// Tests if module has protected permissions
+				if ( array_key_exists( $module, $protected_permissions) ) {
+
+					if ( in_array( $permission_name, $protected_permissions[$module] ) ) {
+						
+						echo json_encode( array('return' => false, 'error' => lang('Ops! You cannot delete this permission. For security reasons this permission must be always enabled.')) );
+						return;
+					}
 				}
 
 				$this->db->delete('acm_user_permission', array('id_module_permission' => $id_module_permission) );

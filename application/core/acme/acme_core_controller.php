@@ -12,8 +12,8 @@
 */
 class ACME_Core_Controller extends CI_Controller {
 	
-	public $acme_installed = false; // defines if acme is installed
-	protected $acme_version = '2.2.12'; // current version of acme
+	public $acme_installed; // defines if acme is installed
+	protected $acme_version = '2.3.12'; // current version of acme
 	protected $app_config_file = 'app_settings'; // application config file
 	
 	/**
@@ -26,10 +26,13 @@ class ACME_Core_Controller extends CI_Controller {
 		parent::__construct();
 
 		// acme version
-		if( ! defined('ACME_VERSION'))
+		if ( ! defined('ACME_VERSION') )
 			define('ACME_VERSION', $this->acme_version);
 
-		// Loads helpers
+		// Define if acme is installed or not
+		$this->acme_installed = $this->_is_acme_installed();
+
+		// Load helpers - needed on load app settings
 		$this->load->helper('url_helper');
 		$this->load->helper('acme/access_helper');
 		$this->load->helper('acme/array_helper');
@@ -40,11 +43,14 @@ class ACME_Core_Controller extends CI_Controller {
 		$this->load->helper('acme/template_helper');
 		$this->load->helper('acme/validation_helper');
 		$this->load->helper('acme/language');
-		
-		// Loads application file settings
+
+		// Load an instance of database connection only if acme is installed
+		$this->_load_database_connection();
+
+		// Load application file settings
 		$this->_load_app_settings();
 		
-		// Loads some libraries
+		// Load some libraries
 		$this->load->library('session');
 		$this->load->library('acme/template');
 		$this->load->library('acme/error');
@@ -55,23 +61,11 @@ class ACME_Core_Controller extends CI_Controller {
 		$this->load->library('acme/array_table');
 		$this->load->library('acme/validation');
 		
-		// Sets default language for application
+		// Set default language for application
 		$language = ($this->session->userdata('language') != '') ? $this->session->userdata('language') : LANGUAGE;
 		
-		// Loads default language file (located at /application/lang)
+		// Load default language file (located at /application/lang)
 		$this->lang->load('app', $language);
-		
-		// Loads an instance of database connection only if acme is installed
-		if($this->acme_installed) 
-		{
-			$this->load->database();
-			
-			// If the type connection is ORACLE so disable the escape identifiers
-			if(strtolower($this->db->dbdriver) == 'oci8') {
-				$this->db->_protect_identifiers = false;
-				$this->db->_escape_char = '';
-			}
-		}
 	}
 
 	/**
@@ -84,35 +78,74 @@ class ACME_Core_Controller extends CI_Controller {
 	{
 
 		// Loads properly file if ACME is installed
-		if($this->acme_installed) {
+		if( $this->acme_installed ) {
 
 			// loads app_settings file
 			$this->config->load( $this->app_config_file, true );
 
-			// Loads db driver info
-			include_once ('application/config/' . ENVIRONMENT . '/database.php');
-			
-			// creates a constant
-			if(isset($db[$active_group]['dbdriver']) && !defined('DB_DRIVER')) 
-				define('DB_DRIVER', $db[$active_group]['dbdriver']);
+			// Sets configs will be readed
+			$config = $this->config->config [ $this->app_config_file ];
+		} 
 
-			// Sets properly config
-			$config = $this->config->config['app_settings'];
-		} else {
-
-			// Loads the installer_app_settings file
+		// Loads the installer_app_settings file
+		else
 			include_once ('application/core/acme/engine_files/installer_app_settings.php');
-		}
 		
+		// DB_DRIVER constant - used for loading ACME models
+		if ( ! defined('DB_DRIVER') ) {
+
+			$db_driver = $this->acme_installed ? $this->db->dbdriver : '';
+
+			// Creates a PHP constant
+			define('DB_DRIVER', $db_driver);
+		}
+
+		// Now for each config it creates a PHP constant of same name
+		// and creates an attribute that is going to be accessible on
+		// every controller
 		foreach($config as $key => $val)
 		{
-			if(!is_array($val))
-			{
-				if(!defined($key))
+			if ( ! is_array($val) )
+				if ( ! defined($key) )
 					define($key, $val);
-			}	
+
 			$this->{$key} = $val;
 		}
 
+	}
+
+	/**
+	* _load_database_connection()
+	* Loads a database connection checking if acme is properly installed.
+	* @return void
+	*/
+	private function _load_database_connection()
+	{
+		if ( $this->acme_installed ) {
+			
+			$this->load->database();
+			
+			// If the type connection is ORACLE so disable the escape identifiers
+			if ( strtolower($this->db->dbdriver) == 'oci8' ) {
+				$this->db->_protect_identifiers = false;
+				$this->db->_escape_char = '';
+			}
+		}
+	}
+
+	/**
+	* _is_acme_installed()
+	* Checks if acme framework is already installed or not. Returns true or false.
+	* @return boolean
+	*/
+	private function _is_acme_installed()
+	{
+		// To determine if acme is installed or not, we have to verify if
+		// app_settings.php and database.php files exist on config directory
+		if ( file_exists('application/config/' . ENVIRONMENT . '/' . $this->app_config_file . '.php') 
+			 && file_exists('application/config/' . ENVIRONMENT . '/database.php') )
+			return true;
+		else 
+			return false;
 	}
 }
