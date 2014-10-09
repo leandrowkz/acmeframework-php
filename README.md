@@ -1,4 +1,4 @@
-# ACME Framework v2.2.12
+# ACME Framework v2.3.12
 
 For a complete documentation in english and portuguese, visit http://www.acmeframework.org
 
@@ -8,7 +8,7 @@ ACME Framework is a CodeIgniter powerful PHP pre-application that after installe
 Visit http://demo.acmeframework.org
 
 ### Download
-For download, please visit http://www.acmeframework.org
+To download, please visit http://www.acmeframework.org
 
 ### Global features
 - Support for MySQL, PostgreSQL and Oracle databases
