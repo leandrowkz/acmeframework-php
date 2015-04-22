@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteRule !\.(js|ico|txt|jpg|gif|png|css|ttf|otf|woff|eot|svg|pdf|htm)$ index.php
+RewriteRule !\.(js|ico|txt|jpg|gif|png|css|ttf|otf|woff|eot|svg|pdf|htm|xml)$ index.php
 #RewriteEngine on
 #RewriteCond $1 !^(index\.php|images|robots\.txt)
 #RewriteRule ^(.*)$ index.php/$1 [L]
