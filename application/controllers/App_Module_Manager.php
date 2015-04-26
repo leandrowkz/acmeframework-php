@@ -183,7 +183,7 @@ class App_Module_Manager  extends ACME_Controller {
 		$args['id_module'] = $id_module;
 
 		// Load view layer
-		$this->template->load_view( $this->controller . '/area_' . strtolower($area), $args, false, false);
+		$this->template->load_view( $this->controller . '/area-' . strtolower($area), $args, false, false);
 	}
 
 	/**

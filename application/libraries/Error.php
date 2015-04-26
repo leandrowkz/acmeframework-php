@@ -36,13 +36,29 @@ class Error {
 	 */
     public function show_error($header = '', $message = '', $template = 'error-general', $status_code = 500, $log_error = true)
     {
+        // Adjust template
+        $template = str_replace('_', '-', $template);
+
 		// Log error on database
-		if($log_error)
+		if ($log_error)
 			$this->CI->logger->log_error($template, $header, $message, $status_code);
 
 		// Load view
 		echo $this->CI->template->load_view('errors/html/' . $template, array('header' => $header, 'message' => $message), true, false);
 		exit;
+    }
+
+    /**
+     * Shows an exception page according with given Exception object.
+     *
+     * @param Exception $exception
+     * @return void
+     */
+    public function show_exception(Exception $exception)
+    {
+        $this->CI =& get_instance();
+        echo $this->CI->template->load_view('errors/html/error-exception', array('exception' => $exception), true, false);
+        exit;
     }
 
     /**
@@ -57,8 +73,6 @@ class Error {
      */
 	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0, $log_error = true)
 	{
-		$this->CI =& get_instance();
-
 		// Resolve severity
 		$severity = ( ! isset($this->levels[$severity])) ? $severity : $this->levels[$severity];
 
@@ -69,19 +83,6 @@ class Error {
 		// Load view box (process is not interrupted)
 		echo $this->CI->template->load_view('errors/html/error-php', array('severity' => $severity, 'message' => $message, 'filepath' => $filepath, 'line' => $line), true, false);
 	}
-
-	/**
-	 * Shows an exception page containing the forwarded message.
-	 *
-	 * @param string message
-	 * @return void
-	 */
-    public function show_exception_page($message = '')
-    {
-		$this->CI =& get_instance();
-		echo $this->CI->template->load_view('errors/html/exception-page', array('message' => $message), true, false);
-		exit;
-    }
 
 	/**
 	 * Shows a 404 error page.

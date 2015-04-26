@@ -35,6 +35,18 @@ function show_error_($header = '', $message = '', $template = 'error_general', $
 }
 
 /**
+ * Shows an exception page according with given Exception object.
+ *
+ * @param Exception $exception
+ * @return void
+ */
+function show_exception_(Exception $exception)
+{
+    $CI =& get_instance();
+    $CI->error->show_exception($exception);
+}
+
+/**
  * Shows a HTML box containing a PHP error. The page proccess is not interrupted.
  *
  * @param string severity
@@ -48,18 +60,6 @@ function show_php_error($severity = '', $message = '', $filepath = '', $line = 0
 {
 	$CI =& get_instance();
 	$CI->error->show_php_error($severity, $message, $filepath, $line, $log_error);
-}
-
-/**
- * Shows an exception page containing the forwarded message.
- *
- * @param string message
- * @return void
- */
-function show_exception_page($message = '')
-{
-	$CI =& get_instance();
-	$CI->error->show_exception_page($message);
 }
 
 /**

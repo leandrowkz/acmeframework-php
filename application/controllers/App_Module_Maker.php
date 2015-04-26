@@ -41,7 +41,7 @@ class App_Module_Maker extends ACME_Controller {
 	{
 		$this->validate_permission('CREATE_MODULE');
 
-		$path_permissions = $this->_check_path_permissions();
+		$path_permissions = $this->_check_permissions();
 
 		$timezone = $this->_check_timezone();
 
@@ -67,7 +67,7 @@ class App_Module_Maker extends ACME_Controller {
 			set_time_limit(0);
 
 			// Controller used as a key
-			$controller = strtolower($this->input->post('controller'));
+			$controller = $this->input->post('controller');
 
 			// Check if module already exist
 			if( count($this->db->get_where('acm_module', array('controller' => $controller))->row_array(0)) > 0 )
@@ -151,7 +151,11 @@ class App_Module_Maker extends ACME_Controller {
 					// And also for each form we have to create menus, permissions and actions
 					$data['id_module'] = $id_module;
 					$data['label'] = lang(ucwords($operation));
-					$data['link'] = $operation == 'insert' ? '{URL_ROOT}/' . $controller . '/form/' . $operation : '{URL_ROOT}/' . $controller . '/form/' . $operation . '/{0}';
+					$data['link'] = '{URL_ROOT}/' . str_replace('_', '-', strtolower( $controller ));
+
+					// If operation is update, delete or view then add first column (usually is ID)
+					if ($operation != 'insert')
+						$data['link'] .= '/{0}';
 
 					// Now permission
 					$permission['id_module'] = $id_module;
@@ -185,7 +189,7 @@ class App_Module_Maker extends ACME_Controller {
 
 			// Now create menus for application for all groups matched
 			$groups = $this->input->post('menu_groups') == '' ? array() : $this->input->post('menu_groups');
-			$menu['link'] = '{URL_ROOT}/' . $controller;
+			$menu['link'] = '{URL_ROOT}/' . str_replace('_', '-', strtolower( $controller ));
 			foreach ($groups as $group)
 			{
 				$menu['id_user_group'] = $group;
@@ -196,7 +200,7 @@ class App_Module_Maker extends ACME_Controller {
 
 			// And finally, create all files needed
 			// Controller
-			$file_controller = file_get_contents('application/core/engine-files/maker_template_controller.php');
+			$file_controller = file_get_contents('application/core/engine-files/Maker_Template_Controller.php');
 			$file_controller = str_replace('<CLASS_NAME>', $controller, $file_controller);
 			$file_controller = str_replace('<DESCRIPTION>', $this->input->post('description'), $file_controller);
 			$file_controller = str_replace('<CREATION_DATE>', date('d/m/Y'), $file_controller);
@@ -204,12 +208,12 @@ class App_Module_Maker extends ACME_Controller {
 			file_put_contents('application/controllers/' . $controller . '.php', $file_controller);
 
 			// Model
-			$file_model = file_get_contents('application/core/engine-files/maker_template_model.php');
+			$file_model = file_get_contents('application/core/engine-files/Maker_Template_Model.php');
 			$file_model = str_replace('<CLASS_NAME>', $controller, $file_model);
 			$file_model = str_replace('<DESCRIPTION>', $this->input->post('description'), $file_model);
 			$file_model = str_replace('<CREATION_DATE>', date('d/m/Y'), $file_model);
 			$file_model = str_replace('<AUTHOR>', $this->session->userdata('email'), $file_model);
-			file_put_contents('application/models/' . $controller . '_model.php', $file_model);
+			file_put_contents('application/models/' . $controller . '_Model.php', $file_model);
 
 			// View
 			@mkdir('application/views/' . TEMPLATE . '/' . $controller);
@@ -243,22 +247,24 @@ class App_Module_Maker extends ACME_Controller {
 	}
 
 	/**
-	 * Check permissions for needed paths:
+	 * Check permissions for needed paths and files:
 	 * 		=> application/controllers
 	 * 		=> application/models
 	 * 		=> application/views
+	 * 		=> application/core/engine-files/Maker_Template_Controller.php
+	 * 		=> application/core/engine-files/Maker_Template_Model.php
 	 *
 	 * Returns true or false in case of doesnt has permissions for write.
 	 *
 	 * @return boolean has-permissions
 	 */
-	private function _check_path_permissions()
+	private function _check_permissions()
 	{
 		if ( is_writable('application/controllers')
 			 && is_writable('application/models')
 			 && is_writable('application/views')
-			 && is_readable('application/core/engine-files/maker_template_model.php')
-			 && is_readable('application/core/engine-files/maker_template_controller.php')
+			 && is_readable('application/core/engine-files/Maker_Template_Model.php')
+			 && is_readable('application/core/engine-files/Maker_Template_Controller.php')
 		   )
 			return true;
 		else

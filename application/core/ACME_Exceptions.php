@@ -45,6 +45,31 @@ class ACME_Exceptions extends CI_Exceptions {
 	}
 
 	/**
+	 * Map and handle general exceptions.
+	 *
+	 * @param Exception $exception
+	 * @return void
+	 */
+	public function show_exception(Exception $exception)
+	{
+		//print_r($exception);
+
+		$this->CI =& get_instance();
+
+		// print_r($this->CI);
+		// die;
+
+		// Check if acme is installed so doesnt log on database
+		if ( $this->CI->acme_installed && is_object($this->CI->db) )
+			$log_db = $this->CI->db->database != '' ? true : false;
+		else
+			$log_db = false;
+
+		// Show exception page
+		$this->CI->error->show_exception( $exception );
+	}
+
+	/**
 	 * Map and handle application php errors.
 	 *
 	 * @param string severity
@@ -55,6 +80,8 @@ class ACME_Exceptions extends CI_Exceptions {
 	 */
 	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0)
 	{
+		print_r($message);
+		die;
 		$this->CI =& get_instance();
 
 		// Check if ACME is installed so doesnt log on database

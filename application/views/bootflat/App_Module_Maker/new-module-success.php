@@ -105,7 +105,7 @@
 	    		<div class="panel-heading"><?php echo lang('Files that were created')?>:</div>
 	    		<div class="panel-body">
 	    			<div><i class="fa fa-file-text fa-fw"></i> application/controllers/<strong><?php echo get_value($module, 'controller') ?>.php</strong></div>
-					<div><i class="fa fa-file-text-o fa-fw"></i> application/models/<strong><?php echo get_value($module, 'controller') ?>_model.php</strong></div>
+					<div><i class="fa fa-file-text-o fa-fw"></i> application/models/<strong><?php echo get_value($module, 'controller') ?>_Model.php</strong></div>
 					<div><i class="fa fa-folder-o fa-fw"></i> application/views/<?php echo TEMPLATE ?>/<strong><?php echo get_value($module, 'controller') ?></strong></div>
 	    		</div>
 	    	</div>

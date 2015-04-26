@@ -1,18 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Model <CLASS_NAME>_Model
+ * Model Fancy_Module_Model
  *
- * <DESCRIPTION>
+ * 
  *
  *
  * AUTOMATICALLY GENERATED WITH MODULE MAKER (APP_MODULE_MAKER)
  *
- * @author 	<AUTHOR>
- * @since 	<CREATION_DATE>
+ * @author 	leandrowkz@gmail.com
+ * @since 	24/04/2015
  * --------------------------------------------------------------------------------------------------
  */
-class <CLASS_NAME>_Model extends CI_Model {
+class Fancy_Module_Model extends CI_Model {
 
 	/**
 	* __construct()
@@ -26,7 +26,7 @@ class <CLASS_NAME>_Model extends CI_Model {
 	/**
 	* example()
 	* Model example method. When some controller invoke by the call
-	* $this-><CLASS_NAME>_Model->example(), this method will be triggered.
+	* $this->Fancy_Module_Model->example(), this method will be triggered.
 	* @return void
 	*/
 	public function example()

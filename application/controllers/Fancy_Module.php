@@ -1,18 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller <CLASS_NAME>
+ * Controller Fancy_Module
  *
- * <DESCRIPTION>
+ * 
  *
  *
  * AUTOMATICALLY GENERATED WITH MODULE MAKER (APP_MODULE_MAKER)
  *
- * @author 	<AUTHOR>
- * @since 	<CREATION_DATE>
+ * @author 	leandrowkz@gmail.com
+ * @since 	24/04/2015
  * --------------------------------------------------------------------------------------------------
  */
-class <CLASS_NAME> extends ACME_Controller {
+class Fancy_Module extends ACME_Controller {
 
 	/**
 	 * Class constructor.
@@ -34,7 +34,7 @@ class <CLASS_NAME> extends ACME_Controller {
 	}
 
 	/**
-	 * Example method of this controller. When an URL like <CLASS_NAME>/example
+	 * Example method of this controller. When an URL like Fancy_Module/example
 	 * is called then this method is triggered.
 	 *
 	 * @return void

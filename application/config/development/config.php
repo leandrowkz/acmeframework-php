@@ -358,7 +358,7 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = 'application/cache';
+$config['sess_save_path'] = FCPATH . 'application/sessions';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -509,9 +509,12 @@ $config['proxy_ips'] = '';
 | folders.
 |
 */
-function __autoload($class = '')
+function acme_autoload_classes ($class = '')
 {
     // ACME Core
     if ( file_exists(APPPATH . 'core/' . $class . '.php') )
         include_once APPPATH . 'core/' . $class . '.php';
 }
+
+// Register callback
+spl_autoload_register('acme_autoload_classes');

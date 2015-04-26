@@ -96,7 +96,7 @@
 	            <div class="form-group">
 	                <label><?php echo lang('Default page / URL') ?>*</label>
 	               	<i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('After login on application the user will be redirected to this page') ?>"></i>
-	                <input type="text" id="url_default" name="url_default" class="form-control validate[required]" value="{URL_ROOT}/app_dashboard" />
+	                <input type="text" id="url_default" name="url_default" class="form-control validate[required]" value="{URL_ROOT}/app-dashboard" />
 	            </div>
 
 				<div class="row bottom-group-buttons">

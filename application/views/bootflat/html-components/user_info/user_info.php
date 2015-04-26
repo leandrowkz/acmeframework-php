@@ -29,7 +29,7 @@ $lang = $this->session->userdata('language');
 $first_name = get_value(explode(' ', $user_name), '0');
 
 // Image adjustment (in case that image doesnt exist)
-$user_img = ( ! file_exists(PATH_UPLOAD . '/user_photos/' . basename($user_img)) || basename($user_img) == '') ? URL_IMG . '/user-unknown.png' : $user_img;
+$user_img = ( ! file_exists(PATH_UPLOAD . '/user-photos/' . basename($user_img)) || basename($user_img) == '') ? URL_IMG . '/user-unknown.png' : $user_img;
 
 ?>
 

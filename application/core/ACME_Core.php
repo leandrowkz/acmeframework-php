@@ -44,8 +44,10 @@ class ACME_Core extends CI_Controller {
 		// Define if acme is installed or not
 		$this->acme_installed = $this->_is_acme_installed();
 
-		// Load helpers - needed on load app settings
+		// Load CI native helper
 		$this->load->helper('Url');
+
+		// Load ACME helpers
 		$this->load->helper('Access');
 		$this->load->helper('Array');
 		$this->load->helper('Error');
@@ -59,16 +61,18 @@ class ACME_Core extends CI_Controller {
 		// Load application file settings
 		$this->_load_app_settings();
 
-		// Load some libraries
-		$this->load->library('Session', '', 'session');
+		// Load ACME libraries
 		$this->load->library('Template', '', 'template');
-		$this->load->library('Error', '', 'error');
 		$this->load->library('Logger', '', 'logger');
+		$this->load->library('Error', '', 'error');
 		$this->load->library('Access', '', 'access');
 		$this->load->library('Array_Table', '', 'array_table');
 		$this->load->library('Form', '', 'form');
 		$this->load->library('Tag', '', 'tag');
 		$this->load->library('Validation', '', 'validation');
+
+		// Load native libraries
+		$this->load->library('Session', '', 'session');
 
 		// Set default language for application
 		$language = ($this->session->userdata('language') != '') ? $this->session->userdata('language') : LANGUAGE;

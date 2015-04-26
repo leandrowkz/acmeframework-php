@@ -171,14 +171,9 @@ class ACME_Controller extends ACME_Core {
 	private function _load_database_connection()
 	{
 		if ( $this->acme_installed ) {
-			// Load a single database connection
-			$this->load->database();
 
-			// If the type connection is ORACLE so disable the escape identifiers
-			if ( strtolower($this->db->dbdriver) == 'oci8' ) {
-				$this->db->_protect_identifiers = false;
-				$this->db->_escape_char = '';
-			}
+			// Load a single database connection
+			@$this->load->database();
 
 			// DB_DRIVER constant
 			if ( ! defined('DB_DRIVER') ) {
@@ -187,6 +182,12 @@ class ACME_Controller extends ACME_Core {
 
 				// Creates a PHP constant
 				define('DB_DRIVER', $db_driver);
+			}
+
+			// If the type connection is ORACLE so disable the escape identifiers
+			if ( strtolower(DB_DRIVER) == 'oci8' ) {
+				$this->db->_protect_identifiers = false;
+				$this->db->_escape_char = '';
 			}
 		}
 	}
@@ -246,7 +247,7 @@ class ACME_Controller extends ACME_Core {
 		}
 
 		// Load view
-		$this->template->load_view('_acme/acme_module_controller/index', $args);
+		$this->template->load_view('App_Module_Manager/ACME_Controller/index', $args);
 	}
 
 	/**
@@ -265,7 +266,7 @@ class ACME_Controller extends ACME_Core {
 		$operation = strtolower($operation);
 
 		// get pk name
-		$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+		$pk = $this->acme_controller_model->get_pk_name($this->table_name);
 
 		// Form data
 		$form = $this->db->get_where('acm_module_form', array('id_module' => $this->id_module, 'operation' => $operation))->row_array(0);
@@ -304,7 +305,7 @@ class ACME_Controller extends ACME_Core {
 		$args['pk_value'] = $pk_value;
 
 		// Load view
-		$this->template->load_view('_acme/acme_module_controller/form_' . $operation, $args);
+		$this->template->load_view('App_Module_Manager/ACME_Controller/form-' . $operation, $args);
 	}
 
 	/**
@@ -336,7 +337,7 @@ class ACME_Controller extends ACME_Core {
 			$data = get_value($post, $this->table_name);
 
 			// Insert data by the auxiliar model
-			$this->acme_module_controller_model->insert($this->table_name, $data);
+			$this->acme_controller_model->insert($this->table_name, $data);
 
 			// Log insert record
 			$this->logger->db_log(lang('Record insert'), 'insert', $this->table_name, $data);
@@ -359,7 +360,7 @@ class ACME_Controller extends ACME_Core {
 			$data = get_value($post, $this->table_name);
 
 			// get pk name and value
-			$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+			$pk = $this->acme_controller_model->get_pk_name($this->table_name);
 			$pk_value = $this->input->post('pk_value');
 
 			// old data to log it
@@ -369,7 +370,7 @@ class ACME_Controller extends ACME_Core {
 			$where[$pk] = $pk_value;
 
 			// Update data by the auxiliar model
-			$this->acme_module_controller_model->update($this->table_name, $data, $where);
+			$this->acme_controller_model->update($this->table_name, $data, $where);
 
 			// Log update record
 			$this->logger->db_log(lang('Record update'), 'update', $this->table_name, array_merge(array('new_data' => $data), array('old_data' => $old_data)));
@@ -388,11 +389,8 @@ class ACME_Controller extends ACME_Core {
 	{
 		if(count($post) > 0) {
 
-			// load correct model
-			$this->load->model('core/acme_module_controller_model');
-
 			// get pk name and value
-			$pk = $this->acme_module_controller_model->get_pk_name($this->table_name);
+			$pk = $this->acme_controller_model->get_pk_name($this->table_name);
 			$pk_value = $this->input->post('pk_value');
 
 			// old data to log

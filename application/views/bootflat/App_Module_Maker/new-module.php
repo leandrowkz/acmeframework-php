@@ -57,13 +57,13 @@
 		<div class="col-sm-12">
 			<?php
 			echo message('error', '',
-			lang('Check write permissions for the following paths and files before you continue') . '
+			lang('Check write permissions for the following paths and files before you continue') . ':
 			<br />
-			<strong>> application/controllers</strong><br />
-			<strong>> application/models</strong><br />
-			<strong>> application/views</strong><br />
-			<strong>> application/core/acme/engine_files/maker_template_controller.php</strong><br />
-			<strong>> application/core/acme/engine_files/maker_template_model.php</strong><br />
+			<strong>&bull; application/controllers</strong><br />
+			<strong>&bull; application/models</strong><br />
+			<strong>&bull; application/views</strong><br />
+			<strong>&bull; application/core/engine-files/Maker_Template_Controller.php</strong><br />
+			<strong>&bull; application/core/engine-files/Maker_Template_Model.php</strong><br />
 			'); ?>
 		</div>
 	</div>
@@ -199,7 +199,7 @@
 
 <script>
 
-    // tooltips
+    // Tooltips
     $('body').tooltip( { selector: "[data-toggle=tooltip]" } );
 
     // Set validations to all forms
@@ -222,13 +222,13 @@
 
     var groups = <?php echo $groups ?>;
 
-    // tags input
+    // Tags input
     $('input#menu_groups').magicSuggest({
     	allowFreeEntries : false,
     	data : groups
     });
 
-    // ichecks
+    // Ichecks
     $('input[type="checkbox"]').iCheck({
     	checkboxClass: 'icheckbox_flat-red',
     	radioClass: 'iradio_flat-red'
@@ -239,8 +239,8 @@
     $('form input, form button, form textarea, form select').attr('disabled', true);
    	<?php } ?>
 
-   	// custom validation for controller name
-   	// this function trigger an ajax that check if module already exist
+   	// Custom validation for controller name
+   	// This function trigger an ajax that check if module already exist
     var validate_controller_custom = function(field, rules, i, options) {
 
         var exist = false;

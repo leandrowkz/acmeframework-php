@@ -1,32 +1,67 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
+<!DOCTYPE html>
+<html>
 
-<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+<head>
 
-<h4>An uncaught Exception was encountered</h4>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<p>Type: <?php echo get_class($exception); ?></p>
-<p>Message: <?php echo $message; ?></p>
-<p>Filename: <?php echo $exception->getFile(); ?></p>
-<p>Line Number: <?php echo $exception->getLine(); ?></p>
+    <title><?php echo APP_NAME ?></title>
+    <!-- Core CSS - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-<?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE): ?>
+    <!-- App CSS - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
+    <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
 
-	<p>Backtrace:</p>
-	<?php foreach ($exception->getTrace() as $error): ?>
+	<style>
+		h1, h3, h4 { margin: 0 0 20px; }
+		h5 { margin: 0 0 5px; }
+		.panel-body {
+			padding:25px;
 
-		<?php if (isset($error['file']) && strpos($error['file'], realpath(BASEPATH)) !== 0): ?>
+       	}
+	</style>
 
-			<p style="margin-left:10px">
-			File: <?php echo $error['file']; ?><br />
-			Line: <?php echo $error['line']; ?><br />
-			Function: <?php echo $error['function']; ?>
-			</p>
-		<?php endif ?>
+</head>
 
-	<?php endforeach ?>
+<body style="margin:30px">
 
-<?php endif ?>
+	<div class="panel panel-default panel-body" style="border: 1px solid #eee">
 
-</div>
+		<h3 class="hidden-lg hidden-md"><?php echo lang('An error has been occurred.')?></h3>
+		<h1 class="hidden-xs hidden-sm"><?php echo lang('An error has been occurred.')?></h1>
+		<div class="text-danger" style="margin-bottom:20px">
+            <h4><?php echo lang('Type') ?>: <?php echo get_class($exception); ?></h4>
+            <h4><?php echo lang('Message') ?>: <?php echo $exception->getMessage(); ?></h4>
+            <h4><?php echo lang('Filename') ?>: <?php echo $exception->getFile(); ?></h4>
+            <h4><?php echo lang('Line Number') ?>: <?php echo $exception->getLine(); ?></h4>
+		</div>
+
+        <!--
+        <php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE): ?>
+            <p>Backtrace:</p>
+            <php foreach ($exception->getTrace() as $error): ?>
+
+                <php if (isset($error['file']) && strpos($error['file'], realpath(BASEPATH)) !== 0): ?>
+
+                    <p style="margin-left:10px">
+                    File: <php echo $error['file']; ?><br />
+                    Line: <php echo $error['line']; ?><br />
+                    Function: <php echo $error['function']; ?>
+                    </p>
+                <php endif ?>
+
+            <php endforeach ?>
+
+        <php endif ?>
+        -->
+
+		<?php $url = $this->session->userdata('url_default') ? $this->session->userdata('url_default') : URL_ROOT; ?>
+		<a href="<?php echo $url ?>" class="btn btn-success btn-lg"><?php echo lang('Initial page')?> <i class="fa fa-arrow-circle-right fa-fw"></i></a>
+
+	</div>
+
+</body>
