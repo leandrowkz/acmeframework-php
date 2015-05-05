@@ -53,7 +53,7 @@ class Form {
 			$field['value'] = get_value($values, get_value($field, 'table_column'));
 
 			// add field
-			array_push($html_fields, $this->CI->template->load_html_component('module_form_field', array('field' => $field)));
+			array_push($html_fields, $this->CI->template->load_html_component('module-form-field', array('field' => $field)));
 
 		}
 
@@ -388,7 +388,7 @@ class Form {
 	private function _get_field_meta_data($table = '', $column_name = '')
 	{
 		// Loads database layer
-		$this->load->database();
+		$this->CI->load->database();
 
 		// Builds query according with driver
 		switch(strtolower(DB_DRIVER))
@@ -466,6 +466,6 @@ class Form {
 		}
 
 		// Return field metadata array
-		return $this->db->query($sql)->row_array(0);
+		return $this->CI->db->query($sql)->row_array(0);
 	}
 }

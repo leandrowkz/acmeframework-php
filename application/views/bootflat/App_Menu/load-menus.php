@@ -135,8 +135,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-        			</form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
 
             </div>
@@ -239,8 +238,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-                    </form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
 
             </div>

@@ -145,41 +145,35 @@
 	            </h3>
 
 				<div class="form-group">
-	                <label>
-	                	<?php echo lang('Enable the following forms to the new module') ?>
-	                </label>
+
+                    <label style="margin-bottom: 15px;"><?php echo lang('Enable the following forms to the new module') ?></label>
+
 	                <div class="checkbox">
-			            <label>
-			                <input type="checkbox" name="forms[]" id="form-insert" value="insert" />
-			                <span>INSERT</span>
-			            </label>
+		                <input type="checkbox" name="forms[]" id="form-insert" value="insert" />
+                        <label for="form-insert">INSERT</label>
 			        </div>
+
 			        <div class="checkbox">
-			            <label>
-			                <input type="checkbox" name="forms[]" id="form-update" value="update" />
-			                <span>UPDATE</span>
-			            </label>
+                        <input type="checkbox" name="forms[]" id="form-update" value="update" />
+                        <label for="form-update">UPDATE</label>
 			        </div>
+
 			        <div class="checkbox">
-			            <label>
-			                <input type="checkbox" name="forms[]" id="form-delete" value="delete" />
-			                <span>DELETE</span>
-			            </label>
+                        <input type="checkbox" name="forms[]" id="form-delete" value="delete" />
+		                <label for="form-delete">DELETE</label>
 			        </div>
+
 			        <div class="checkbox">
-			            <label>
-			                <input type="checkbox" name="forms[]" id="form-view" value="view" />
-			                <span>VIEW</span>
-			            </label>
+                        <input type="checkbox" name="forms[]" id="form-view" value="view" />
+			            <label for="form-view">VIEW</label>
 			        </div>
+
 	            </div>
 
-				<div class="row bottom-group-buttons">
-		            <div class="col-sm-12">
-		                <input class="btn btn-primary" type="submit" value="<?php echo lang('Create') ?>" />
-		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-module-manager"><?php echo lang('Cancel') ?></a>
-		            </div>
-		        </div>
+				<div class="form-footer">
+                    <button class="btn btn-success" type="submit"><?php echo lang('Create module') ?> <i class="fa fa-fw fa-cogs"></i></button>
+                    <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-module-manager"><?php echo lang('Cancel') ?></a>
+                </div>
 
 			</form>
 
@@ -189,20 +183,16 @@
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/magicsuggest/magicsuggest.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/magicsuggest/magicsuggest-min.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
 <script>
 
+    // ========
     // Tooltips
+    // ========
     $('body').tooltip( { selector: "[data-toggle=tooltip]" } );
 
+    // ============================
     // Set validations to all forms
+    // ============================
     $('form').validationEngine('attach', {
 
         promptPosition : "bottomRight",
@@ -215,26 +205,26 @@
         }
     });
 
+    // ===============================
     // Reposition the alerts from form
+    // ===============================
     $( window ).resize( function () {
         $("form").validationEngine('updatePromptsPosition');
     });
 
     var groups = <?php echo $groups ?>;
 
+    // ==========
     // Tags input
+    // ==========
     $('input#menu_groups').magicSuggest({
     	allowFreeEntries : false,
     	data : groups
     });
 
-    // Ichecks
-    $('input[type="checkbox"]').iCheck({
-    	checkboxClass: 'icheckbox_flat-red',
-    	radioClass: 'iradio_flat-red'
-    });
-
+    // ================================================
     // Disable all fields in case of needed permissions
+    // ================================================
     <?php if ( ! $path_permissions || ! $timezone) {?>
     $('form input, form button, form textarea, form select').attr('disabled', true);
    	<?php } ?>
@@ -263,7 +253,7 @@
         });
 
         if( exist )
-            return "<?php echo lang('A module with this controller already exist') ?>";
+            return "* <?php echo lang('A module with this controller already exist') ?>";
     };
 
 </script>

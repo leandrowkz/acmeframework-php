@@ -1,124 +1,139 @@
 
-<h4 style="margin-top: 20px"><?php echo lang('Update form') ?></h4>
+<div style="margin: 30px 0 0 2px">
 
-<?php if(get_value($module, 'table_name') != '') { ?>
+    <h4 style="margin-left: 1px"><?php echo lang('Form UPDATE') ?></h4>
 
-<div style="margin: 20px 0">
+    <?php if(get_value($module, 'table_name') != '') { ?>
 
-    <div class="inline" style="width: 150px"><label><?php echo lang('Status') ?></label></div>
+    <div class="well">
 
-    <div class="inline activate-form">
+        <div style="margin: 0 0 20px">
 
-        <?php
-        if( get_value($form, 'dtt_inative') == '' ) {
-            $checked = 'checked="checked"';
-            $status = 'ON';
-        } else {
-            $checked = '';
-            $status = 'OFF';
-        }
-        ?>
+            <div class="inline" style="width: 150px"><label><?php echo lang('Status') ?></label></div>
 
-        <span style="width: 35px"><strong><?php echo $status ?></strong></span>
+            <div class="inline activate-form">
 
-        <label class="toggle" style="position: absolute;margin: -22px 0 0 38px">
-            <input type="checkbox" class="enable-form" <?php echo $checked ?> />
-            <span class="handle"></span>
-        </label>
+                <?php
+                if( get_value($form, 'dtt_inative') == '' ) {
+                    $checked = 'checked="checked"';
+                    $status = 'ON';
+                } else {
+                    $checked = '';
+                    $status = 'OFF';
+                }
+                ?>
 
-    </div>
+                <span style="width: 35px" class="inline"><strong><?php echo $status ?></strong></span>
 
-</div>
+                <label class="toggle inline">
+                    <input type="checkbox" class="enable-form" <?php echo $checked ?> />
+                    <span class="handle"></span>
+                </label>
 
-<div style="margin: 20px 0">
-
-    <div class="inline" style="width: 150px">
-        <label><?php echo lang('Linked action') ?> </label>
-        <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Linked action on module list that points to this form') ?>"></i>
-    </div>
-
-    <div class="inline activate-action">
-
-        <?php
-        if( count($action) > 0 ) {
-            $checked = 'checked="checked"';
-            $status = 'ON';
-        } else {
-            $checked = '';
-            $status = 'OFF';
-        }
-        ?>
-
-        <span style="width: 35px"><strong><?php echo $status ?></strong></span>
-
-        <label class="toggle" style="position: absolute;margin: -22px 0 0 38px">
-            <input type="checkbox" class="enable-action" <?php echo $checked ?> />
-            <span class="handle"></span>
-        </label>
-
-    </div>
-
-</div>
-
-<div style="margin: 20px 0">
-
-    <div class="inline" style="width: 150px"><label><?php echo lang('Form URL') ?></label></div>
-    <div class="inline">
-        <span>{URL_ROOT}/<?php echo get_value($module, 'controller') ?>/form/update </span>
-        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-edit-form"><?php echo lang('Edit form') ?></button>
-    </div>
-
-</div>
-
-<!-- module data modal form -->
-<form id="edit-form">
-
-    <div class="modal fade" id="modal-edit-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit form')?></h4>
-                </div>
-                <div class="modal-body">
-
-                    <input type="hidden" class="id_module_form" value="<?php echo get_value($form, 'id_module_form') ?>" />
-
-                    <div class="form-group">
-                        <label><?php echo lang('Action') ?></label>
-                        <input type="text" class="form-control action" value="<?php echo get_value($form, 'action') ?>" />
-                    </div>
-
-                    <div class="form-group">
-                        <label><?php echo lang('Method') ?></label>
-                        <input type="text" class="form-control method" value="<?php echo get_value($form, 'method') ?>" />
-                    </div>
-
-                    <div class="form-group">
-                        <label><?php echo lang('Enctype') ?></label>
-                        <input type="text" class="form-control enctype" value="<?php echo get_value($form, 'enctype') ?>" />
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-
-                </div>
             </div>
-            <!-- /.modal-content -->
+
         </div>
-        <!-- /.modal-dialog -->
+
+        <div style="margin: 0 0 20px">
+
+            <div class="inline" style="width: 150px">
+                <label><?php echo lang('Linked action') ?> </label>
+                <i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Linked action on module list that points to this form') ?>"></i>
+            </div>
+
+            <div class="inline activate-action">
+
+                <?php
+                if( count($action) > 0 ) {
+                    $checked = 'checked="checked"';
+                    $status = 'ON';
+                } else {
+                    $checked = '';
+                    $status = 'OFF';
+                }
+                ?>
+
+                <span style="width: 35px" class="inline"><strong><?php echo $status ?></strong></span>
+
+                <label class="toggle inline">
+                    <input type="checkbox" class="enable-form" <?php echo $checked ?> />
+                    <span class="handle"></span>
+                </label>
+
+            </div>
+
+        </div>
+
+        <div style="margin: 0">
+
+            <div class="inline" style="width: 150px"><label><?php echo lang('Form URL') ?></label></div>
+
+            <div class="inline">
+
+                <span>{URL_ROOT}/<?php echo get_value($module, 'controller') ?>/form/update </span>
+
+                &nbsp;
+
+                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modal-edit-form">
+                    <?php echo lang('Edit form') ?>
+                    <i class="fa fa-fw fa-edit"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Module data modal form -->
+        <form id="edit-form">
+
+            <div class="modal fade" id="modal-edit-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel"><?php echo lang('Edit form')?></h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="hidden" class="id_module_form" value="<?php echo get_value($form, 'id_module_form') ?>" />
+
+                            <div class="form-group">
+                                <label><?php echo lang('Action') ?></label>
+                                <input type="text" class="form-control action" value="<?php echo get_value($form, 'action') ?>" />
+                            </div>
+
+                            <div class="form-group">
+                                <label><?php echo lang('Method') ?></label>
+                                <input type="text" class="form-control method" value="<?php echo get_value($form, 'method') ?>" />
+                            </div>
+
+                            <div class="form-group">
+                                <label><?php echo lang('Enctype') ?></label>
+                                <input type="text" class="form-control enctype" value="<?php echo get_value($form, 'enctype') ?>" />
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
+                            <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+        </form>
+
     </div>
 
-</form>
+</div>
 
-<h4 style="margin-top: 40px"><?php echo lang('Form fields') ?></h4>
+<h4 style="margin: 30px 0 15px 2px"><?php echo lang('Form fields') ?></h4>
 
 <div class="table-responsive">
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="table-fields-update">
 
         <thead>
             <tr>
@@ -134,7 +149,7 @@
 
             <?php
             $i = 0;
-            foreach($fields as $field) {
+            foreach($fields as $field) :
                 $id_field = get_value($field, 'id_module_form_field');
                 $dtt_inative = get_value($field, 'dtt_inative');
             ?>
@@ -142,7 +157,7 @@
                 <td>
                     <input type="hidden" class="column_name" value="<?php echo get_value($field, 'column_name') ?>" />
                     <?php if($id_field != '') {?>
-                    <a href="javascript:void(0)" title="<?php echo lang('Edit') ?>" data-toggle="modal" data-target="#modal-edit-field-<?php echo $i ?>"><?php echo get_value($field, 'column_name') ?></a>
+                    <a href="javascript:void(0)" class="text-bold" title="<?php echo lang('Edit') ?>" data-toggle="modal" data-target="#modal-edit-field-<?php echo $i ?>"><?php echo get_value($field, 'column_name') ?></a>
                     <?php } else { echo get_value($field, 'column_name'); } ?>
                     <?php if(get_value($field, 'column_key') == 'PRI') { ?>
                     <i class="fa fa-key fa-fw text-warning" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Primary key') ?>"></i>
@@ -151,9 +166,14 @@
                 <td><?php echo get_value($field, 'label') ?></td>
                 <td><?php echo get_value($field, 'type')?></td>
                 <td style="width: 01%"><?php echo get_value($field, 'order_') ?></td>
-                <td style="width: 01%"><input type="checkbox" class="enable-field" id="<?php echo $i ?>" <?php echo ($dtt_inative == '' && $id_field != '') ? 'checked="checked"' : ''; ?> /></td>
+                <td style="width: 01%">
+                    <div class="checkbox">
+                        <input type="checkbox" class="enable-field" id="field-<?php echo $i ?>" <?php echo ($dtt_inative == '' && $id_field != '') ? 'checked="checked"' : ''; ?> />
+                        <label for="field-<?php echo $i ?>"></label>
+                    </div>
+                </td>
             </tr>
-            <?php $i++; } ?>
+            <?php $i++; endforeach; ?>
 
         </tbody>
 
@@ -161,7 +181,7 @@
 
 </div>
 
-<!-- modals to edit fields -->
+<!-- Modals to edit fields -->
 <?php
 $i = 0;
 foreach($fields as $field) {
@@ -377,10 +397,8 @@ foreach($fields as $field) {
 
                 </div>
                 <div class="modal-footer">
-
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -392,35 +410,52 @@ foreach($fields as $field) {
 <?php $i++; } ?>
 
 <?php } else { ?>
-<p class="text-muted"><em><?php echo lang('Módule with no table') ?></em></p>
+<div class="well" style="margin-top: 30px;"><span class="text-muted text-italic"><?php echo lang('There is no table for this module') ?></span></div>
 <?php } ?>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/meiomask/meiomask.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+<!-- DataTables Plugin -->
+<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
+<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
+
+<style>
+
+    #table-fields-update { margin: 0 !important ;}
+
+</style>
 
 <script>
 
-    // =====
-    // masks
-    // =====
+    // ========
+    // Meiomask
+    // ========
     $('input[type=text]').setMask();
 
     // ========
-    // tooltips
+    // Tooltips
     // ========
     $('div, table').tooltip( { selector: "[data-toggle=tooltip]" } );
 
     // ======================
-    // cancel original submit
+    // Cancel original submit
     // ======================
     $('form').submit(function () {
         return false;
     });
 
+    // ==========
+    // DataTables
+    // ==========
+    $('#table-fields-update').dataTable({
+        info : false,
+        paging: false,
+        searching : false,
+        aaSorting: [],
+        columnDefs: [ { "orderable": false, "targets": [4] } ]
+    });
+
     // =============================
-    // submit callback (update form)
+    // Submit callback (update form)
     // =============================
     $.edit_form_submit_callback = function (form, status) {
 
@@ -428,7 +463,7 @@ foreach($fields as $field) {
         if( ! status)
             return false;
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -454,7 +489,7 @@ foreach($fields as $field) {
     };
 
     // ==============================
-    // submit callback (update field)
+    // Submit callback (update field)
     // ==============================
     $.edit_field_submit_callback = function (form, status) {
 
@@ -462,7 +497,7 @@ foreach($fields as $field) {
         if( ! status)
             return false;
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -499,7 +534,7 @@ foreach($fields as $field) {
     };
 
     // =======================================================================
-    // callback ajax complete (after enable field, enable form, enable action)
+    // Callback ajax complete (after enable field, enable form, enable action)
     // =======================================================================
     $.callbak_enable_response_complete = function (response) {
         // Parse json to check errors
@@ -507,17 +542,17 @@ foreach($fields as $field) {
 
         // Check return
         if( ! json.return) {
-            // close modal and alert
+            // Close modal and alert
             bootbox.alert(json.error);
             return false;
         }
 
-        // reload area, this function comes from config.php
+        // Reload area, this function comes from config.php
         $.load_area('form-update');
     };
 
     // ====================================================
-    // callback ajax complete (after edit field, edit form)
+    // Callback ajax complete (after edit field, edit form)
     // ====================================================
     $.callbak_edit_response_complete = function (response, form) {
         // Parse json to check errors
@@ -525,34 +560,34 @@ foreach($fields as $field) {
 
         // Check return
         if( ! json.return) {
-            // close modal and alert
+            // Close modal and alert
             form.find('.modal-footer button').click();
             bootbox.alert(json.error);
             return false;
         }
 
-        // close modal
+        // Close modal
         form.find('.modal-footer button').click();
 
 
         // Trigger event to close modal (load area again)
         form.find('.modal').on('hidden.bs.modal', function () {
 
-            // reload area, this function comes from config.php
+            // Reload area, this function comes from config.php
             $.load_area('form-update');
 
         });
     };
 
     // ===================================
-    // click enable action checkbox toggle
+    // Click enable action checkbox toggle
     // ===================================
     $('.enable-action').click( function () {
 
-        // get operation
+        // Get operation
         var oper = $(this).is(':checked') ? 'enable-action-form-update' : 'disable-action-form-update';
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -572,14 +607,14 @@ foreach($fields as $field) {
     });
 
     // =================================
-    // click enable form checkbox toggle
+    // Click enable form checkbox toggle
     // =================================
     $('.enable-form').click( function () {
 
-        // get operation
+        // Get operation
         var oper = $(this).is(':checked') ? 'enable' : 'disable';
 
-        // ajax to save this fucking shit
+        // Ajax to save this fucking shit
         $.enable_loading();
 
         $.ajax({
@@ -599,17 +634,17 @@ foreach($fields as $field) {
     });
 
     // ===========================
-    // click enable field checkbox
+    // Click enable field checkbox
     // ===========================
     $('.enable-field').click( function () {
 
-        // get id
-        var id = $(this).attr('id');
+        // Get id
+        var id = $(this).attr('id').replace('field-', '');
 
-        // get operation
+        // Get operation
         var oper = $(this).is(':checked') ? 'enable' : 'disable';
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -632,29 +667,25 @@ foreach($fields as $field) {
     });
 
     // ==========================
-    // validation form edit modal
+    // Validation form edit modal
     // ==========================
     $('form#edit-form').validationEngine('attach', {
-
         promptPosition : "bottomRight",
         scroll: false,
         onValidationComplete: function (form, status) { $.edit_form_submit_callback(form, status); }
-
     });
 
     // ===========================
-    // validation field edit modal
+    // Validation field edit modal
     // ===========================
     $('form.edit-field').validationEngine('attach', {
-
         promptPosition : "bottomRight",
         scroll: false,
         onValidationComplete: function (form, status) { $.edit_field_submit_callback(form, status); }
-
     });
 
     // ========================================================================
-    // click to collapse field additional properties, js, masks and validations
+    // Click to collapse field additional properties, js, masks and validations
     // ========================================================================
     $('h4.ap-opener, h4.js-opener').click( function () {
 
@@ -673,34 +704,28 @@ foreach($fields as $field) {
     });
 
     // ============
-    // popover json
+    // Popover json
     // ============
     $('.popover-json').popover( {
-
         html: true,
         content: function () { return $(".list-json").html(); }
-
     });
 
     // =============
-    // popover masks
+    // Popover masks
     // =============
     $('.popover-masks').popover( {
-
         html: true,
         content: function () { return $(".list-masks").html(); }
-
     });
 
     // ===================
-    // popover validations
+    // Popover validations
     // ===================
     $('.popover-validations').popover( {
-
         html: true,
         content: function () { return $(".list-validations").html(); },
         placement: 'left'
-
     });
 
 </script>

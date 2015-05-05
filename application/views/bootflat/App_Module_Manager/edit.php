@@ -14,7 +14,7 @@
 
 			<div class="pull-right clearfix">
 
-				<a href="<?php echo URL_ROOT ?>/app-module-manager/config/<?php echo get_value($module, 'id_module')?>" class="pull-right clearfix btn btn-primary">
+				<a href="<?php echo URL_ROOT ?>/app-module-manager/config/<?php echo get_value($module, 'id_module')?>" class="pull-right clearfix btn btn-default">
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i>
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-arrow-circle-left"></i>
@@ -65,11 +65,9 @@
 	                <textarea name="sql_list" id="sql_list" class="form-control" style="height: 180px"><?php echo get_value($module, 'sql_list') ?></textarea>
 	            </div>
 
-				<div class="row bottom-group-buttons">
-		            <div class="col-sm-12">
-		                <input class="btn btn-primary" type="submit" value="<?php echo lang('Save') ?>" />
-		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-module-manager/config/<?php echo get_value($module, 'id_module') ?>"><?php echo lang('Cancel') ?></a>
-		            </div>
+		        <div class="form-footer">
+	                <button class="btn btn-success" type="submit"><?php echo lang('Save') ?> <i class="fa fa-fw fa-check-circle"></i></button>
+	                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-module-manager/config/<?php echo get_value($module, 'id_module') ?>"><?php echo lang('Cancel') ?></a>
 		        </div>
 
 			</form>
@@ -80,16 +78,16 @@
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
 <script>
 
+	// ====================
 	// Set form validations
+	// ====================
     $('form').validationEngine('attach', { promptPosition : "bottomRight" });
 
+    // ===============================
     // Reposition the alerts from form
+    // ===============================
     $( window ).resize( function () {
         $("form").validationEngine('updatePromptsPosition');
     });

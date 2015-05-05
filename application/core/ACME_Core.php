@@ -77,6 +77,9 @@ class ACME_Core extends CI_Controller {
 		// Set default language for application
 		$language = ($this->session->userdata('language') != '') ? $this->session->userdata('language') : LANGUAGE;
 
+		// Set language on session
+		$this->session->set_userdata('language', $language);
+
 		// Load default language file (located at /application/lang)
 		$this->lang->load('app', $language);
 	}

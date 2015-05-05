@@ -1,34 +1,30 @@
 <?php
 /**
-* --------------------------------------------------------------------------------------------------
-*
-* menu.php
-*
-* This HTML component build the application menu.
-*
-* It is loaded by the call $this->template->load_menu();
-*
-* The menu structure is:
-*
-* 		$menus[0] = array(
-*			[id_menu] => 2
-*			[id_menu_parent] => 0
-*			[id_user_group] => 1
-*			[label] =>
-*			[link] => {URL_ROOT}/app-dashboard
-*			[target] =>
-*			[url_img] => <i class="fa fa-fw fa-home"></i>
-*			[order_] => 10
-*			[children] => Array
-*				(
-*				)
-*		)
-*
-* @param    array $menus
-* @since    28/06/2013
-*
-* --------------------------------------------------------------------------------------------------
-*/
+ * --------------------------------------------------------------------------------------------------
+ * HTML Component menu.php
+ *
+ * This HTML component build the application menu.
+ *
+ * It is loaded by the call $this->template->load_menu();
+ *
+ * The menu structure is:
+ *
+ * $menus[0] = array(
+ * 		[id_menu] => 2
+ * 		[id_menu_parent] => 0
+ * 		[id_user_group] => 1
+ * 		[label] =>
+ * 		[link] => {URL_ROOT}/app-dashboard
+ * 		[target] =>
+ * 		[url_img] => <i class="fa fa-fw fa-home"></i>
+ * 		[order_] => 10
+ * 		[children] => Array ( . . . )
+ * )
+ *
+ * @param    array $menus
+ * @since    28/06/2013
+ * --------------------------------------------------------------------------------------------------
+ */
 ?>
 
 <?php
@@ -78,5 +74,4 @@ function build_menu ($menus = array()) {
 }
 
 build_menu($menus);
-
 ?>

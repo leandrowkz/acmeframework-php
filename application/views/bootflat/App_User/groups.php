@@ -14,7 +14,7 @@
 
             <div class="btn-group pull-right clearfix">
 
-                <a href="<?php echo URL_ROOT ?>/app-user" class="pull-right clearfix btn btn-primary">
+                <a href="<?php echo URL_ROOT ?>/app-user" class="pull-right clearfix btn btn-default">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i>
@@ -32,28 +32,11 @@
 
 <div class="module-body">
 
-    <div class="row" style="margin-bottom: 15px">
-
-        <div class="col-sm-6 col-lg-5">
-
-            <div class="input-group" style="margin-bottom: 15px">
-                <input type="text" id="search-groups" class="form-control input-md" placeholder="<?php echo lang('Search groups') ?>" autofocus>
-                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
-            </div>
-
-        </div>
-
-        <div class="col-sm-6 col-lg-7">
-
-            <button class="btn btn-md btn-success pull-right" style="margin: 0 0 20px 0" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
-
-        </div>
-
-    </div>
+    <button class="btn btn-md btn-success btn-new" data-toggle="modal" data-target="#modal-new-group"><?php echo lang('New group') ?> <i class="fa fa-plus-circle"></i></button>
 
     <div class="table-responsive">
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="table-groups">
 
             <thead>
                 <tr>
@@ -69,11 +52,9 @@
 
                 <tr class="group">
 
-                    <td>
-                        <a data-toggle="modal" data-target="#modal-<?php echo get_value($group, 'id_user_group') ?>" href="#" class="label label-info group-name" data-placement="right" data-original-title="<?php echo lang('Click to edit') ?>"><?php echo get_value($group, 'name')?></a>
-                    </td>
+                    <td><a href="javascript:void(0)" class="text-bold" data-toggle="modal" data-target="#modal-<?php echo get_value($group, 'id_user_group') ?>" data-placement="right" data-original-title="<?php echo lang('Click to edit') ?>"><?php echo get_value($group, 'name')?></a></td>
                     <td class="group-description"><?php echo get_value($group, 'description') ?></td>
-                    <td class="text-right" style="width: 01%"><a href="javascript:void(0)" id="<?php echo get_value($group, 'id_user_group') ?>"><i class="fa fa-times fa-fw" data-placement="left" data-original-title="<?php echo lang('Remove') ?>"></i></a></td>
+                    <td class="text-right" style="width: 01%"><a href="javascript:void(0)" id="<?php echo get_value($group, 'id_user_group') ?>"><i class="fa fa-trash fa-fw" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('Remove') ?>"></i></a></td>
 
                 </tr>
 
@@ -87,7 +68,7 @@
 
 </div>
 
-<!-- now, modal groups -->
+<!-- Modal groups -->
 <?php
 foreach($groups as $group) {
 $id_group = get_value($group, 'id_user_group');
@@ -117,8 +98,7 @@ $id_group = get_value($group, 'id_user_group');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-                    </form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -128,7 +108,7 @@ $id_group = get_value($group, 'id_user_group');
 </form>
 <?php } ?>
 
-<!-- modal to new group -->
+<!-- Modal to new group -->
 <form action="<?php echo URL_ROOT ?>/app-user/save-group/insert" method="post" id="new-group">
     <div class="modal fade" id="modal-new-group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -152,8 +132,7 @@ $id_group = get_value($group, 'id_user_group');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-                    </form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -162,64 +141,48 @@ $id_group = get_value($group, 'id_user_group');
     </div>
 </form>
 
-<style>
-    .label { font-size: 100%; }
-</style>
+<!-- DataTables Plugin -->
+<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
+<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+<style>
+    .module-body .btn-new { margin: 0 0 30px; }
+</style>
 
 <script>
     // ========
-    // tooltips
+    // Tooltips
     // ========
-    $('a.group-name, i').tooltip();
+    $('body').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    });
 
-    // =================
-    // input de pesquisa
-    // =================
-    $("#search-groups").keyup( function() {
-
-        var exist = false;
-
-        if($("#search-groups").val().length > 2) {
-
-            $('.group').each( function() {
-                $(this).hide();
-            });
-
-            var search = $("#search-groups").val().toLowerCase();
-
-            $('.group-name, .group-description').each( function(index) {
-
-                var text = $(this).html().toLowerCase();
-
-                if(text.indexOf(search) != -1) {
-                    exist = true;
-                    $(this).closest('.group').show();
-                }
-            });
-
-            if(exist == false)
-                return;
-
-        } else if($("#search-groups").val().length <= 2 || $("#search-groups").val().length == '') {
-            $('.group').each(function(index) {
-                $(this).show();
-            });
-        }
+    // ==========
+    // DataTables
+    // ==========
+    $('#table-groups').dataTable({
+        language: {
+            search: '<span class="input-group-addon input-md"><i class="fa fa-search fa-fw" data-original-title="" title=""></i></span>',
+            lengthMenu:     "_MENU_ &nbsp;<?php echo lang('Entries')?>",
+            info:           "<small class=\"text-muted\"><?php echo lang('Showing') ?> _START_ <?php echo lang('to') ?> _END_ <?php echo lang('of') ?> _TOTAL_ <?php echo lang('entries') ?></small>",
+            infoEmpty:      "<small class=\"text-muted\"><?php echo lang('Showing') ?> 0 entries</small>",
+            infoFiltered:   "<small class=\"text-muted\">(<?php echo lang('filtered from') ?> _MAX_ <?php echo lang('total entries') ?>)",
+        },
+        order: [[ 0, "asc" ]],
+        columnDefs: [ { "orderable": false, "targets": [2] } ]
     });
 
     // ======================
-    // cancel original submit
+    // Cancel original submit
     // ======================
     $('form').submit(function () {
         return false;
     });
 
     // =======================
-    // insert, update callback
+    // Insert, update callback
     // =======================
     $.submit_callback = function (form, status) {
 
@@ -227,10 +190,10 @@ $id_group = get_value($group, 'id_user_group');
         if( ! status)
             return false;
 
-        // get id
+        // Get id
         var id = form.attr('id');
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -259,13 +222,13 @@ $id_group = get_value($group, 'id_user_group');
                     return false;
                 }
 
-                // close modal
+                // Close modal
                 form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load page again)
                 form.find('.modal').on('hidden.bs.modal', function () {
 
-                    // reload page
+                    // Reload page
                     window.location.reload();
 
                 });
@@ -277,21 +240,21 @@ $id_group = get_value($group, 'id_user_group');
     };
 
     // ===============
-    // remove callback
+    // Remove callback
     // ===============
     $('td.text-right a').click( function () {
 
-        // get id
+        // Get id
         var id = $(this).attr('id');
 
-        // Confirm this shit
+        // Confirm
         bootbox.confirm("<?php echo lang('Are you sure to remove the selected group ?') ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
-            // ajax to remove this fucking shit
+            // Ajax to remove this
             $.enable_loading();
 
             $.ajax({
@@ -310,7 +273,7 @@ $id_group = get_value($group, 'id_user_group');
 
                     // Check return
                     if( ! json.return) {
-                        // close modal and alert
+                        // Close modal and alert
                         bootbox.alert(json.error);
                         return false;
                     }
@@ -319,9 +282,7 @@ $id_group = get_value($group, 'id_user_group');
                     window.location.reload();
                 }
             });
-
         });
-
     });
 
     // ============================
@@ -332,10 +293,11 @@ $id_group = get_value($group, 'id_user_group');
         promptPosition : "bottomRight",
         scroll: false,
         onValidationComplete: function (form, status) { $.submit_callback(form, status); }
-
     });
 
+    // ===============================
     // Reposition the alerts from form
+    // ===============================
     $( window ).resize( function () {
         $("form").validationEngine('updatePromptsPosition');
     });

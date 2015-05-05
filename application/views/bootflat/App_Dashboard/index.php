@@ -61,7 +61,7 @@
 				<div class="panel-heading">
 	                <i class="fa fa-cubes"></i>
 	                <h1 class="pull-right"><?php echo count($modules) ?></h1>
-	                <div class="text-right"style="margin-top:5px"><?php echo lang('Application modules')?></div>
+	                <div class="text-right text-bold"style="margin-top:5px"><?php echo lang('Application modules')?></div>
 	            </div>
 
 				<div class="panel-body panel-body-modules">
@@ -110,7 +110,7 @@
 			            <div class="panel-heading">
 			                <i class="fa fa-bug"></i>
 			                <h1 class="pull-right" id="count-errors"><?php echo $total_errors ?></h1>
-			                <div class="text-right"style="margin-top:5px"><?php echo lang('Errors found')?></div>
+			                <div class="text-right text-bold"style="margin-top:5px"><?php echo lang('Errors found')?></div>
 			            </div>
 
 			            <div class="panel-body panel-body-errors">
@@ -342,7 +342,7 @@
 			            <div class="panel-heading">
 			                <i class="fa fa-compass"></i>
 			                <h1 class="pull-right"><?php echo $total_browsers ?></h1>
-			                <div class="text-right" style="margin-top:5px"><?php echo lang('Different browsers')?></div>
+			                <div class="text-right text-bold" style="margin-top:5px"><?php echo lang('Different browsers')?></div>
 			            </div>
 
 			            <div class="panel-body panel-body-modules">
@@ -426,7 +426,7 @@
 			            <div class="panel-heading">
 			                <i class="fa fa-tablet"></i>
 			                <h1 class="pull-right"><?php echo $total_devices ?></h1>
-			                <div class="text-right" style="margin-top:5px"><?php echo lang('Different devices')?></div>
+			                <div class="text-right text-bold" style="margin-top:5px"><?php echo lang('Different devices')?></div>
 			            </div>
 
 			            <div class="panel-body">

@@ -114,7 +114,7 @@ class Template {
 		$args['user_group'] = $this->CI->session->userdata('user_group');
 		$args['user_img'] = $this->CI->session->userdata('user_img');
 
-		return $this->load_html_component('user_info', $args);
+		return $this->load_html_component('user-info', $args);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Template {
 	public function load_logo_area()
 	{
 		$args['url'] = $this->CI->session->userdata('url_default');
-		return $this->load_html_component('logo_area', $args);
+		return $this->load_html_component('logo-area', $args);
 	}
 
 	/**

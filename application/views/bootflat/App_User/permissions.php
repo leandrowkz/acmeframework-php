@@ -14,7 +14,7 @@
 
             <div class="pull-right clearfix">
 
-                <a href="<?php echo URL_ROOT ?>/app-user" class="pull-right clearfix btn btn-primary">
+                <a href="<?php echo URL_ROOT ?>/app-user" class="pull-right clearfix btn btn-default">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i>
@@ -97,12 +97,14 @@
         <?php } ?>
 
         <div class="checkbox">
-            <label>
-                <input type="checkbox" id="<?php echo get_value($permission, 'id_module_permission') ?>" <?php echo (get_value($permission, 'has_permission') == 'Y') ? 'checked="checked"' : ''; ?>> <?php echo get_value($permission, 'permission') ?> <span class="text-muted">// <?php echo get_value($permission, 'permission_description') ?></span>
-                <?php if(get_value($permission, 'permission_observation') != '') { ?>
-                <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo get_value($permission, 'permission_observation') ?>"></i>
-                <?php } ?>
+            <input type="checkbox" id="<?php echo get_value($permission, 'id_module_permission') ?>" <?php echo (get_value($permission, 'has_permission') == 'Y') ? 'checked="checked"' : ''; ?>>
+            <label for="<?php echo get_value($permission, 'id_module_permission') ?>">
+                <span><?php echo get_value($permission, 'permission') ?></span>
+                <span class="text-muted">// <?php echo get_value($permission, 'permission_description') ?></span>
             </label>
+            <?php if(get_value($permission, 'permission_observation') != '') { ?>
+            <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo get_value($permission, 'permission_observation') ?>"></i>
+            <?php } ?>
         </div>
 
         <?php
@@ -115,31 +117,25 @@
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
-
-<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>
-
 <script>
 
-    // ichecks
-    $('input[type="checkbox"]').iCheck({
-        checkboxClass: 'icheckbox_flat-red',
-        radioClass: 'iradio_flat-red'
-    });
-
-    // tooltips
+    // ========
+    // Tooltips
+    // ========
     $('body').tooltip({ selector: "[data-toggle=tooltip]" });
 
-    // click enable field checkbox
-    $('input[type=checkbox]').on('ifChecked ifUnchecked', function () {
+    // ===========================
+    // Click enable field checkbox
+    // ===========================
+    $('input[type="checkbox"]').on('click', function () {
 
-        // get id
+        // Get id
         var id = $(this).attr('id');
 
-        // get operation
+        // Get operation
         var oper = $(this).is(':checked') ? 'enable' : 'disable';
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -160,7 +156,7 @@
 
                 // Check return
                 if( ! json.return) {
-                    // close modal and alert
+                    // Close modal and alert
                     bootbox.alert(json.error);
                     return false;
                 }

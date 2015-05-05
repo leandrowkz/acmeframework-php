@@ -1,4 +1,4 @@
-# ACME Framework v2.3.12
+# ACME Framework v3.0.0
 
 For a complete documentation in english and portuguese, visit http://www.acmeframework.org
 
@@ -38,7 +38,6 @@ ACME Framework is also builded and uses some of the better technologies.
 - Nestable (js - latest release)
 - ValidationEngine (js - 2.6.2)
 
-
 ### Requirements
 - PHP 5.3.5+
 - MySQL 5.0+, PostgreSQL 9.0+ or Oracle 10G+
@@ -47,7 +46,4 @@ ACME Framework is also builded and uses some of the better technologies.
 
 ### LICENSE
 
-Basicly, ACME Framework is FREE. 
-
-It is developed under de Creative Commons Attribution 3.0 Unported. See more on http://creativecommons.org/licenses/by/3.0/
-
+ACME Framework is an opensource project developed under MIT LICENSE.

@@ -3,61 +3,49 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title><?php echo APP_NAME ?></title>
 
     <!-- Core Scripts - Include with every page -->
-    <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
-    <script src="<?php echo URL_JS ?>/bootstrap.js"></script>
-    <script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
+    <script src="<?php echo URL_JS ?>/jquery-2.1.3.min.js"></script>
+    <script src="<?php echo URL_CSS ?>/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?php echo URL_JS ?>/bootbox/bootbox.min.js"></script>
 
     <!-- App Scripts - Include with every page -->
     <script src="<?php echo URL_JS ?>/app-functions.js"></script>
 
-    <!-- Core CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- CSS Assets - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/bootflat/css/bootflat.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
+    <!-- CSS Plugins -->
 
-    <style>
-        img#logo {
-            max-width: 200px;
-        }
+    <!-- CSS Template - Include with every page -->
+    <link href="<?php echo URL_TEMPLATE ?>/styles.css" rel="stylesheet" type="text/css" />
 
-        @media(min-width:768px) {
-            .login-panel {
-                margin-top: 30%;
-            }
-        }
+    <style type="text/css">
 
-        .fullscreen_bg {
-            position: fixed;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background-size: cover;
-            background-position: 50% 50%;
-        }
+        .login-panel { margin-top: 30%; }
+        .login-panel .btn-lg { font-weight: bold; font-size: 22px; }
+        .login-panel .panel-heading { border-bottom: none; color: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+        .login-panel .panel-heading h3 { margin: 15px 0; }
+
     </style>
+
 </head>
 
 <body>
-
-<div id="fullscreen_bg" class="fullscreen_bg">
 
     <div class="container">
 
         <div class="row">
 
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
 
-                <div class="login-panel panel panel-default" style="border: 1px solid #eee">
+                <div class="panel panel-primary login-panel">
 
-                    <div class="panel-body" style="padding:25px;">
-
+                    <div class="panel-heading">
                         <div class="text-center" style="margin-bottom:25px">
                             <?php if( file_exists(PATH_IMG . '/logo.png')){ ?>
                                 <img src="<?php echo URL_IMG ?>/logo.png" id="logo" />
@@ -65,26 +53,27 @@
                                 <h3><?php echo APP_NAME ?></h3>
                             <?php } ?>
                         </div>
+                    </div>
+
+                    <div class="panel-body" style="padding:25px;">
 
                         <form role="form" action="<?php echo URL_ROOT ?>/app-login/login-process" method="post">
-                            <fieldset>
 
-                                <div class="form-group<?php echo ($bool_email_error === true) ? ' has-error' : ''; ?>">
-                                    <input class="form-control" placeholder="<?php echo lang('Email')?>" value="<?php echo $email_user; ?>" name="email" id="email" autofocus>
-                                    <?php if ($email_msg_error != '') { echo '<div class="text-danger" style="margin-top:3px">' . $email_msg_error . '</div>'; } ?>
-                                </div>
+                            <div class="form-group<?php echo ($bool_email_error === true) ? ' has-error' : ''; ?>">
+                                <input class="form-control" placeholder="<?php echo lang('Email')?>" value="<?php echo $email_user; ?>" name="email" id="email" autofocus>
+                                <?php if ($email_msg_error != '') { echo '<div class="text-danger" style="margin-top:3px">' . $email_msg_error . '</div>'; } ?>
+                            </div>
 
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="<?php echo lang('Password') ?>" name="pass" id="pass" type="password" value="">
-                                </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="<?php echo lang('Password') ?>" name="pass" id="pass" type="password" value="">
+                            </div>
 
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('Enter')?>" />
-                                </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-default btn-block"><?php echo lang('Enter')?> <i class="fa fa-fw fa-sign-in"></i></button>
+                            </div>
 
-                                <div class="text-center"><a href="<?php echo URL_ROOT ?>/app-login/forgot-password"><?php echo lang('Forgot your password ?')?></a></div>
+                            <div class="text-center text-bold"><a href="<?php echo URL_ROOT ?>/app-login/forgot-password"><?php echo lang('Forgot your password ?')?></a></div>
 
-                            </fieldset>
                         </form>
 
                     </div>
@@ -97,7 +86,6 @@
 
     </div>
 
-</div>
-
 </body>
+
 </html>

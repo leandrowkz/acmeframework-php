@@ -1,10 +1,11 @@
 
-<button class="btn btn-sm btn-success" style="margin: 20px 0" data-toggle="modal" data-target="#modal-new-permission"><?php echo lang('New permission') ?> <i class="fa fa-plus-circle"></i></button>
+<button class="btn btn-sm btn-success" style="margin: 30px 0 0" data-toggle="modal" data-target="#modal-new-permission"><?php echo lang('New permission') ?> <i class="fa fa-plus-circle"></i></button>
 
 <?php if( count($permissions) > 0 ) { ?>
-<div class="table-responsive" style="margin-top: -10px">
 
-    <table class="table table-bordered">
+<div class="table-responsive">
+
+    <table class="table table-bordered" id="table-permissions">
 
         <thead>
             <tr>
@@ -17,20 +18,23 @@
         <tbody>
 
            	<?php
-           	foreach($permissions as $permission) {
+           	foreach($permissions as $permission) :
            	$id_permission = get_value($permission, 'id_module_permission');
            	?>
           	<tr id="tr-<?php echo $id_permission ?>">
                 <td>
-                	<a data-toggle="modal" data-target="#modal-<?php echo $id_permission ?>" href="#"><?php echo get_value($permission, 'permission')?></a>
+                	<a href="javascript:void(0)" class="text-bold" data-toggle="modal" data-target="#modal-<?php echo $id_permission ?>"><?php echo get_value($permission, 'permission')?></a>
                 	<?php if(get_value($permission, 'description') != '') { ?>
                 	<i class="fa fa-question-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo get_value($permission, 'description') ?>"></i>
                 	<?php } ?>
                	</td>
                 <td class="lbl"><?php echo get_value($permission, 'label')?></td>
-                <td class="text-right" style="width: 01%" title="<?php echo lang('Remove')?>"><a href="javascript:void(0)" id="<?php echo $id_permission ?>"><i class="fa fa-times fa-fw"></i></a></td>
+                <td class="text-right" style="width: 01%">
+                    <a href="javascript:void(0)" id="<?php echo $id_permission ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('Remove')?>"><i class="fa fa-trash fa-fw"></i></a>
+                </td>
             </tr>
-            <?php } ?>
+
+            <?php endforeach; ?>
 
 	    </tbody>
 
@@ -38,10 +42,10 @@
 
 </div>
 <?php } else { ?>
-<p class="text-muted"><em><?php echo lang('There is no permissions for this module') ?></em></p>
+<div class="well" style="margin-top: 30px;"><span class="text-muted text-italic"><?php echo lang('There is no permissions for this module') ?></span></div>
 <?php } ?>
 
-<!-- now, modal permissions -->
+<!-- Modal permissions -->
 <?php
 foreach($permissions as $permission) {
 $id_permission = get_value($permission, 'id_module_permission');
@@ -77,8 +81,7 @@ $id_permission = get_value($permission, 'id_module_permission');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-        			</form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -88,7 +91,7 @@ $id_permission = get_value($permission, 'id_module_permission');
 </form>
 <?php } ?>
 
-<!-- modal to new permission -->
+<!-- Modal to new permission -->
 <form action="<?php echo URL_ROOT ?>/app-module-manager/save-permission/insert" method="post" id="new-permission">
     <div class="modal fade" id="modal-new-permission" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -119,8 +122,7 @@ $id_permission = get_value($permission, 'id_module_permission');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-                    </form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -129,29 +131,41 @@ $id_permission = get_value($permission, 'id_module_permission');
     </div>
 </form>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+<!-- DataTables Plugin -->
+<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
+<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
 
 <script>
 
 	// ========
-    // tooltips
+    // Tooltips
     // ========
     $('table').tooltip({
         selector: "[data-toggle=tooltip]",
         container: "body"
     });
 
+    // ==========
+    // DataTables
+    // ==========
+    $('#table-permissions').dataTable({
+        info : false,
+        paging: false,
+        searching : false,
+        order: [[ 0, "asc" ]],
+        columnDefs: [ { "orderable": false, "targets": [2] } ]
+    });
+
     // ======================
-    // cancel original submit
+    // Cancel original submit
     // ======================
     $('form').submit(function () {
         return false;
     });
 
     // =======================
-    // insert, update callback
+    // Insert, update callback
     // =======================
     $.submit_callback = function (form, status) {
 
@@ -159,10 +173,10 @@ $id_permission = get_value($permission, 'id_module_permission');
     	if( ! status)
     		return false;
 
-        // get id
+        // Get id
         var id = form.attr('id');
 
-		// ajax to save this fucking shit
+		// Ajax to save this
 		$.enable_loading();
 
     	$.ajax({
@@ -193,13 +207,13 @@ $id_permission = get_value($permission, 'id_module_permission');
             		return false;
             	}
 
-                // close modal
+                // Close modal
                 form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load area again)
                 form.find('.modal').on('hidden.bs.modal', function () {
 
-                    // reload area, this function comes from config.php
+                    // Reload area, this function comes from config.php
                     $.load_area('permissions');
 
                 });
@@ -211,21 +225,21 @@ $id_permission = get_value($permission, 'id_module_permission');
     };
 
     // ===============
-    // remove callback
+    // Remove callback
     // ===============
     $('td.text-right a').click( function () {
 
-        // get id
+        // Get id
         var id = $(this).attr('id');
 
         // Confirm this shit
-        bootbox.confirm("<?php echo lang('Are you sure to remove the selected module permission ?') ?>", function (result) {
+        bootbox.confirm("<?php echo lang('Are you sure to remove the selected module permission?') ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
-            // ajax to remove this fucking shit
+            // Ajax to remove this
             $.enable_loading();
 
             $.ajax({
@@ -250,7 +264,6 @@ $id_permission = get_value($permission, 'id_module_permission');
                     }
 
                     // Reload area
-                    // this function comes from config.php
                     $.load_area('permissions');
                 }
             });
@@ -267,7 +280,6 @@ $id_permission = get_value($permission, 'id_module_permission');
         promptPosition : "bottomRight",
         scroll: false,
         onValidationComplete: function (form, status) { $.submit_callback(form, status); }
-
     });
 
 </script>

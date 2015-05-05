@@ -2,10 +2,10 @@
 /* -----------------------------------------------------
 --  DDL for Table acm_user_group
 ----------------------------------------------------- */
-CREATE TABLE acm_user_group 
-(	
-	id_user_group NUMBER(10,0) NOT NULL, 
-	name VARCHAR2(100 CHAR) NOT NULL, 
+CREATE TABLE acm_user_group
+(
+	id_user_group NUMBER(10,0) NOT NULL,
+	name VARCHAR2(100 CHAR) NOT NULL,
 	description VARCHAR2(2000 CHAR)
 );
 
@@ -54,15 +54,15 @@ ALTER TRIGGER tgr_acm_user_group ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_user
 ----------------------------------------------------- */
-CREATE TABLE acm_user 
-(	
-	id_user NUMBER(10,0) NOT NULL, 
-	id_user_group NUMBER(10,0) NOT NULL, 
-	name VARCHAR2(250 CHAR) NOT NULL,  
-	email VARCHAR2(250 CHAR) NOT NULL, 
-	password VARCHAR2(2000 CHAR) NOT NULL, 
-	description VARCHAR2(2000 CHAR), 
-	dtt_inative DATE, 
+CREATE TABLE acm_user
+(
+	id_user NUMBER(10,0) NOT NULL,
+	id_user_group NUMBER(10,0) NOT NULL,
+	name VARCHAR2(250 CHAR) NOT NULL,
+	email VARCHAR2(250 CHAR) NOT NULL,
+	password VARCHAR2(2000 CHAR) NOT NULL,
+	description VARCHAR2(2000 CHAR),
+	dtt_inative DATE,
 	log_dtt_ins DATE DEFAULT SYSDATE
 );
 
@@ -131,21 +131,21 @@ ALTER TRIGGER tgr_acm_user ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_log
 ----------------------------------------------------- */
-CREATE TABLE acm_log 
-(	
-	id_log NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0), 
-	table_name VARCHAR2(50 CHAR), 
-	action VARCHAR2(50 CHAR), 
-	log_description VARCHAR2(2000 CHAR), 
-	additional_data VARCHAR2(2000 CHAR), 
-	user_agent VARCHAR2(2000 CHAR), 
-	browser_name VARCHAR2(50 CHAR), 
-	browser_version VARCHAR2(50 CHAR), 
-	device_name VARCHAR2(100 CHAR), 
-	device_version VARCHAR2(100 CHAR), 
-	platform VARCHAR2(100 CHAR), 
-	ip_address VARCHAR2(20 CHAR), 
+CREATE TABLE acm_log
+(
+	id_log NUMBER(10,0) NOT NULL,
+	id_user NUMBER(10,0),
+	table_name VARCHAR2(50 CHAR),
+	action VARCHAR2(50 CHAR),
+	log_description VARCHAR2(2000 CHAR),
+	additional_data VARCHAR2(2000 CHAR),
+	user_agent VARCHAR2(2000 CHAR),
+	browser_name VARCHAR2(50 CHAR),
+	browser_version VARCHAR2(50 CHAR),
+	device_name VARCHAR2(100 CHAR),
+	device_version VARCHAR2(100 CHAR),
+	platform VARCHAR2(100 CHAR),
+	ip_address VARCHAR2(20 CHAR),
 	log_dtt_ins DATE DEFAULT SYSDATE
 );
 
@@ -208,22 +208,22 @@ ALTER TRIGGER tgr_acm_log ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_log_error
 ----------------------------------------------------- */
-CREATE TABLE acm_log_error 
-(	
-	id_log_error NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0) NULL, 
-	error_type VARCHAR2(50 CHAR), 
-	header VARCHAR2(2000 CHAR), 
-	message VARCHAR2(2000 CHAR), 
+CREATE TABLE acm_log_error
+(
+	id_log_error NUMBER(10,0) NOT NULL,
+	id_user NUMBER(10,0) NULL,
+	error_type VARCHAR2(50 CHAR),
+	header VARCHAR2(2000 CHAR),
+	message VARCHAR2(2000 CHAR),
 	status_code VARCHAR2(10 CHAR),
-	additional_data VARCHAR2(2000 CHAR), 
-	user_agent VARCHAR2(2000 CHAR), 
-	browser_name VARCHAR2(50 CHAR), 
-	browser_version VARCHAR2(50 CHAR), 
-	device_name VARCHAR2(100 CHAR), 
-	device_version VARCHAR2(100 CHAR), 
-	platform VARCHAR2(100 CHAR), 
-	ip_address VARCHAR2(20 CHAR), 
+	additional_data VARCHAR2(2000 CHAR),
+	user_agent VARCHAR2(2000 CHAR),
+	browser_name VARCHAR2(50 CHAR),
+	browser_version VARCHAR2(50 CHAR),
+	device_name VARCHAR2(100 CHAR),
+	device_version VARCHAR2(100 CHAR),
+	platform VARCHAR2(100 CHAR),
+	ip_address VARCHAR2(20 CHAR),
 	log_dtt_ins DATE DEFAULT SYSDATE
 );
 
@@ -286,15 +286,15 @@ ALTER TRIGGER tgr_acm_log_error ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_menu
 ----------------------------------------------------- */
-CREATE TABLE acm_menu 
-(	
-	id_menu NUMBER(10,0) NOT NULL, 
-	id_menu_parent NUMBER(10,0), 
-	id_user_group NUMBER(10,0) NOT NULL, 
-	label VARCHAR2(250 CHAR), 
-	link VARCHAR2(2000 CHAR), 
-	target VARCHAR2(50 CHAR),  
-	url_img VARCHAR2(2000 CHAR), 
+CREATE TABLE acm_menu
+(
+	id_menu NUMBER(10,0) NOT NULL,
+	id_menu_parent NUMBER(10,0),
+	id_user_group NUMBER(10,0) NOT NULL,
+	label VARCHAR2(250 CHAR),
+	link VARCHAR2(2000 CHAR),
+	target VARCHAR2(50 CHAR),
+	url_img VARCHAR2(2000 CHAR),
 	order_ NUMBER(10,0)
 );
 
@@ -365,15 +365,15 @@ ALTER TRIGGER tgr_acm_menu ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_module
 ----------------------------------------------------- */
-CREATE TABLE acm_module 
-(	
-	id_module NUMBER(10,0) NOT NULL, 
-	def_file VARCHAR2(2000 CHAR), 
-	table_name VARCHAR2(50 CHAR), 
-	controller VARCHAR2(50 CHAR) NOT NULL, 
-	label VARCHAR2(250 CHAR) NOT NULL,  
-	sql_list VARCHAR2(2000 CHAR), 
-	url_img VARCHAR2(2000 CHAR), 
+CREATE TABLE acm_module
+(
+	id_module NUMBER(10,0) NOT NULL,
+	def_file VARCHAR2(2000 CHAR),
+	table_name VARCHAR2(50 CHAR),
+	controller VARCHAR2(50 CHAR) NOT NULL,
+	label VARCHAR2(250 CHAR) NOT NULL,
+	sql_list VARCHAR2(2000 CHAR),
+	url_img VARCHAR2(2000 CHAR),
 	description VARCHAR2(2000 CHAR),
 	log_dtt_ins DATE DEFAULT SYSDATE
 );
@@ -423,14 +423,14 @@ ALTER TRIGGER tgr_acm_module ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_module_action
 ----------------------------------------------------- */
-CREATE TABLE acm_module_action 
-(	
-	id_module_action NUMBER(10,0) NOT NULL, 
-	id_module NUMBER(10,0) NOT NULL, 
-	label VARCHAR2(250 CHAR), 
-	link VARCHAR2(2000 CHAR), 
-	target VARCHAR2(50 CHAR),  
-	url_img VARCHAR2(2000 CHAR), 
+CREATE TABLE acm_module_action
+(
+	id_module_action NUMBER(10,0) NOT NULL,
+	id_module NUMBER(10,0) NOT NULL,
+	label VARCHAR2(250 CHAR),
+	link VARCHAR2(2000 CHAR),
+	target VARCHAR2(50 CHAR),
+	url_img VARCHAR2(2000 CHAR),
 	order_ NUMBER(10,0)
 );
 
@@ -493,14 +493,14 @@ ALTER TRIGGER tgr_acm_module_action ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_module_form
 ----------------------------------------------------- */
-CREATE TABLE acm_module_form 
-(	
-	id_module_form NUMBER(10,0) NOT NULL, 
-	id_module NUMBER(10,0) NOT NULL, 
-	operation VARCHAR2(45 CHAR), 
-	action VARCHAR2(250 CHAR), 
-	method VARCHAR2(20 CHAR), 
-	enctype VARCHAR2(50 CHAR), 
+CREATE TABLE acm_module_form
+(
+	id_module_form NUMBER(10,0) NOT NULL,
+	id_module NUMBER(10,0) NOT NULL,
+	operation VARCHAR2(45 CHAR),
+	action VARCHAR2(250 CHAR),
+	method VARCHAR2(20 CHAR),
+	enctype VARCHAR2(50 CHAR),
 	dtt_inative DATE
 );
 
@@ -563,24 +563,24 @@ ALTER TRIGGER tgr_acm_module_form ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_module_form_field
 ----------------------------------------------------- */
-CREATE TABLE acm_module_form_field 
-(	
-	id_module_form_field NUMBER(10,0) NOT NULL, 
-	id_module_form NUMBER(10,0) NOT NULL, 
-	table_column VARCHAR2(50 CHAR), 
-	type VARCHAR2(50 CHAR), 
-	label VARCHAR2(100 CHAR), 
-	description VARCHAR2(2000 CHAR), 
-	id_html VARCHAR2(50 CHAR), 
-	class_html VARCHAR2(50 CHAR), 
+CREATE TABLE acm_module_form_field
+(
+	id_module_form_field NUMBER(10,0) NOT NULL,
+	id_module_form NUMBER(10,0) NOT NULL,
+	table_column VARCHAR2(50 CHAR),
+	type VARCHAR2(50 CHAR),
+	label VARCHAR2(100 CHAR),
+	description VARCHAR2(2000 CHAR),
+	id_html VARCHAR2(50 CHAR),
+	class_html VARCHAR2(50 CHAR),
 	maxlength NUMBER(10,0) DEFAULT '50',
-	options_json VARCHAR2(2000 CHAR), 
-	options_sql VARCHAR2(2000 CHAR), 
-	style VARCHAR2(2000 CHAR), 
-	javascript VARCHAR2(2000 CHAR), 
-	masks VARCHAR2(100 CHAR), 
-	validations VARCHAR2(250 CHAR), 
-	order_ NUMBER(10,0) DEFAULT '0', 
+	options_json VARCHAR2(2000 CHAR),
+	options_sql VARCHAR2(2000 CHAR),
+	style VARCHAR2(2000 CHAR),
+	javascript VARCHAR2(2000 CHAR),
+	masks VARCHAR2(100 CHAR),
+	validations VARCHAR2(250 CHAR),
+	order_ NUMBER(10,0) DEFAULT '0',
 	dtt_inative DATE
 );
 
@@ -650,14 +650,14 @@ ALTER TRIGGER tgr_acm_module_form_field ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_module_menu
 ----------------------------------------------------- */
-CREATE TABLE acm_module_menu 
-(	
-	id_module_menu NUMBER(10,0) NOT NULL,  
-	id_module NUMBER(10,0) NOT NULL, 
-	label VARCHAR2(50 CHAR), 
-	link VARCHAR2(2000 CHAR), 
-	target VARCHAR2(50 CHAR),  
-	url_img VARCHAR2(2000 CHAR), 
+CREATE TABLE acm_module_menu
+(
+	id_module_menu NUMBER(10,0) NOT NULL,
+	id_module NUMBER(10,0) NOT NULL,
+	label VARCHAR2(50 CHAR),
+	link VARCHAR2(2000 CHAR),
+	target VARCHAR2(50 CHAR),
+	url_img VARCHAR2(2000 CHAR),
 	order_ NUMBER(10,0)
 );
 
@@ -690,7 +690,7 @@ ALTER TABLE acm_module_menu ADD CONSTRAINT pk_acm_module_menu PRIMARY KEY (id_mo
 ALTER TABLE acm_module_menu ADD CONSTRAINT fk_amm_id_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) ENABLE;
 
 
-<<|SEPARATOR|>>	
+<<|SEPARATOR|>>
 ----------------------------------------------------- */
 --  Sequence for AUTO_INCREMENT
 ----------------------------------------------------- */
@@ -720,12 +720,12 @@ ALTER TRIGGER tgr_acm_module_menu ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_module_permission
 ----------------------------------------------------- */
-CREATE TABLE acm_module_permission 
-(	
-	id_module_permission NUMBER(10,0) NOT NULL, 
-	id_module NUMBER(10,0) NOT NULL, 
-	label VARCHAR2(250 CHAR), 
-	permission VARCHAR2(50 CHAR) NOT NULL, 
+CREATE TABLE acm_module_permission
+(
+	id_module_permission NUMBER(10,0) NOT NULL,
+	id_module NUMBER(10,0) NOT NULL,
+	label VARCHAR2(250 CHAR),
+	permission VARCHAR2(50 CHAR) NOT NULL,
 	description VARCHAR2(2000 CHAR)
 );
 
@@ -758,7 +758,7 @@ ALTER TABLE acm_module_permission ADD CONSTRAINT pk_acm_module_permission PRIMAR
 ALTER TABLE acm_module_permission ADD CONSTRAINT fk_amp_id_module FOREIGN KEY (id_module) REFERENCES acm_module (id_module) ENABLE;
 
 
-<<|SEPARATOR|>>	
+<<|SEPARATOR|>>
 ----------------------------------------------------- */
 --  Sequence for AUTO_INCREMENT
 ----------------------------------------------------- */
@@ -788,13 +788,13 @@ ALTER TRIGGER tgr_acm_module_permission ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_user_config
 ----------------------------------------------------- */
-CREATE TABLE acm_user_config 
-(	
-	id_user_config NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0) NOT NULL, 
-	lang_default VARCHAR2(10 CHAR) DEFAULT 'en_US', 
-	url_img VARCHAR2(2000 CHAR), 
-	url_img_large VARCHAR2(2000 CHAR), 
+CREATE TABLE acm_user_config
+(
+	id_user_config NUMBER(10,0) NOT NULL,
+	id_user NUMBER(10,0) NOT NULL,
+	lang_default VARCHAR2(10 CHAR) DEFAULT 'en_US',
+	url_img VARCHAR2(2000 CHAR),
+	url_img_large VARCHAR2(2000 CHAR),
 	url_default VARCHAR2(2000 CHAR)
 );
 
@@ -857,10 +857,10 @@ ALTER TRIGGER tgr_acm_user_config ENABLE;
 /* -----------------------------------------------------
 --  DDL for Table acm_user_permission
 ----------------------------------------------------- */
-CREATE TABLE acm_user_permission 
-(	
-	id_user_permission NUMBER(10,0) NOT NULL, 
-	id_user NUMBER(10,0) NOT NULL, 
+CREATE TABLE acm_user_permission
+(
+	id_user_permission NUMBER(10,0) NOT NULL,
+	id_user NUMBER(10,0) NOT NULL,
 	id_module_permission NUMBER(10,0) NOT NULL
 );
 
@@ -952,28 +952,28 @@ INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app_dashbo
 /* -----------------------------------------------------
 --  INSERTS for Table acm_menu
 ----------------------------------------------------- */
-INSERT INTO acm_menu VALUES (2,NULL,1,NULL,'{URL_ROOT}/app_dashboard',NULL,'<i class="fa fa-fw fa-home"></i>',10);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (2,NULL,1,NULL,'{URL_ROOT}/app-dashboard',NULL,'<i class="fa fa-fw fa-home"></i>',10);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (1,NULL,1,'System',NULL,NULL,'<i class="fa fa-fw fa-cog"></i>',20);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (3,1,1,'Modules',NULL,NULL,'<i class="fa fa-fw fa-cube"></i>',30);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (4,3,1,'Administration','{URL_ROOT}/app_module_manager/',NULL,'<i class="fa fa-fw fa-cubes"></i>',40);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (5,3,1,'Module maker','{URL_ROOT}/app_module_maker/',NULL,'<i class="fa fa-fw fa-flask"></i>',50);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (6,1,1,'Settings','{URL_ROOT}/app_config/',NULL,'<i class="fa fa-fw fa-cogs"></i>',60);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (7,1,1,'Logs','{URL_ROOT}/app_log/',NULL,'<i class="fa fa-fw fa-tags"></i>',70);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (8,1,1,'Menus','{URL_ROOT}/app_menu/',NULL,'<i class="fa fa-fw fa-tasks"></i>',80);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (9,1,1,'Users','{URL_ROOT}/app_user/',NULL,'<i class="fa fa-fw fa-users"></i>',90);
+INSERT INTO acm_menu VALUES (4,3,1,'Administration','{URL_ROOT}/app-module-manager/',NULL,'<i class="fa fa-fw fa-cubes"></i>',40);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (5,3,1,'Module maker','{URL_ROOT}/app-module-maker/',NULL,'<i class="fa fa-fw fa-flask"></i>',50);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (6,1,1,'Settings','{URL_ROOT}/app-config/',NULL,'<i class="fa fa-fw fa-cogs"></i>',60);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (7,1,1,'Logs','{URL_ROOT}/app-log/',NULL,'<i class="fa fa-fw fa-tags"></i>',70);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (8,1,1,'Menus','{URL_ROOT}/app-menu/',NULL,'<i class="fa fa-fw fa-tasks"></i>',80);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (9,1,1,'Users','{URL_ROOT}/app-user/',NULL,'<i class="fa fa-fw fa-users"></i>',90);
 
 
 <<|SEPARATOR|>>
 /* -----------------------------------------------------
 --  INSERTS for Table acm_module
 ----------------------------------------------------- */
-INSERT INTO acm_module VALUES (1,NULL,'acm_module','app_module_manager','Administration',NULL,'<i class="fa fa-fw fa-cubes"></i>','Application modules',SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (2,NULL,NULL,'app_module_maker','Module maker',NULL,'<i class="fa fa-fw fa-flask"></i>','Create new modules',SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (3,NULL,'acm_user','app_user','Users',NULL,'<i class="fa fa-fw fa-users"></i>','Manage groups and users',SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (5,NULL,NULL,'app_dashboard','Dashboard',NULL,'<i class="fa fa-fw fa-home"></i>','General statistics',SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (6,NULL,'acm_log','app_log','Application logs',NULL,'<i class="fa fa-fw fa-tags"></i>','Activities and errors',SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (7,NULL,'acm_menu','app_menu','Menus',NULL,'<i class="fa fa-fw fa-tasks"></i>','Manage application menus',SYSDATE);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (15,NULL,NULL,'app_config','Settings',NULL,'<i class="fa fa-fw fa-cogs"></i>','See settings and session',SYSDATE);
+INSERT INTO acm_module VALUES (1,NULL,'acm_module','App_Module_Manager','Administration',NULL,'<i class="fa fa-fw fa-cubes"></i>','Application modules',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (2,NULL,NULL,'App_Module_Maker','Module maker',NULL,'<i class="fa fa-fw fa-flask"></i>','Create new modules',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (3,NULL,'acm_user','App_User','Users',NULL,'<i class="fa fa-fw fa-users"></i>','Manage groups and users',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (5,NULL,NULL,'App_Dashboard','Dashboard',NULL,'<i class="fa fa-fw fa-home"></i>','General statistics',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (6,NULL,'acm_log','App_Log','Application logs',NULL,'<i class="fa fa-fw fa-tags"></i>','Activities and errors',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (7,NULL,'acm_menu','App_Menu','Menus',NULL,'<i class="fa fa-fw fa-tasks"></i>','Manage application menus',SYSDATE);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (15,NULL,NULL,'App_Config','Settings',NULL,'<i class="fa fa-fw fa-cogs"></i>','See settings and session',SYSDATE);
 
 
 <<|SEPARATOR|>>

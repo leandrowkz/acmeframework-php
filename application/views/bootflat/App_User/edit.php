@@ -14,7 +14,7 @@
 
 			<div class="pull-right clearfix">
 
-				<a href="<?php echo URL_ROOT ?>/app-user" class="pull-right clearfix btn btn-primary">
+				<a href="<?php echo URL_ROOT ?>/app-user" class="pull-right clearfix btn btn-default">
 					<i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i>
 					<div class="hidden-xs hidden-sm">
 						<i class="fa fa-arrow-circle-left"></i>
@@ -69,6 +69,7 @@
 	                	</strong>
 
 	                </span>
+	                &nbsp;
 			        <label class="toggle">
 			            <input type="checkbox" class="user-status" name="status" value="Y" <?php echo $checked . $disabled ?> />
 			            <span class="handle"></span>
@@ -114,11 +115,9 @@
 	                <input type="text" id="url_default" name="url_default" class="form-control validate[required]" value="<?php echo get_value($user, 'url_default') ?>" />
 	            </div>
 
-				<div class="row bottom-group-buttons">
-		            <div class="col-sm-12">
-		                <input class="btn btn-primary" type="submit" value="<?php echo lang('Save') ?>" />
-		                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user"><?php echo lang('Cancel') ?></a>
-		            </div>
+				<div class="form-footer">
+	                <button class="btn btn-success" type="submit"><?php echo lang('Save') ?> <i class="fa fa-fw fa-check-circle"></i></button>
+	                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user"><?php echo lang('Cancel') ?></a>
 		        </div>
 
 			</form>
@@ -129,24 +128,28 @@
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
 <script>
 
-    // tooltips
+	// ========
+    // Tooltips
+    // ========
     $('body').tooltip( { selector: "[data-toggle=tooltip]", container: 'body' } );
 
+    // ====================
 	// Set form validations
+	// ====================
     $('form').validationEngine('attach', { promptPosition : "bottomRight" });
 
+    // ===============================
     // Reposition the alerts from form
+    // ===============================
     $( window ).resize( function () {
         $("form").validationEngine('updatePromptsPosition');
     });
 
+    // ===========================
     // Custom validation for email
+    // ===========================
     var validate_email_custom = function(field, rules, i, options) {
 
 	    var exist = false;
@@ -173,13 +176,12 @@
 	        return "<?php echo lang('This email already exist') ?>";
     }
 
+    // ===========
     // User status
+    // ===========
     $('.user-status').on('click', function() {
-
     	var label = $(this).is(':checked') ? "<?php echo lang('Active user') ?>" : "<?php echo lang('Inactive user') ?>";
-
     	$(this).closest('div').find('span strong').html(label);
-
     });
 
 </script>

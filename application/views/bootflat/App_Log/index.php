@@ -20,10 +20,10 @@
 
             <div class="btn-group pull-right clearfix">
 
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-align-justify hidden-lg hidden-md"></i>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-server hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
-                        <i class="fa fa-align-justify"></i>
+                        <i class="fa fa-fw fa-cogs"></i>
                         <span><?php echo lang('Actions') ?></span>
                         <span class="caret"></span>
                     </div>
@@ -35,7 +35,7 @@
                     <li><a href="javascript:void(0)" class="remove-all"><i class="fa fa-fw fa-warning"></i> <?php echo lang('Remove all errors')?></a></li>
 
                     <?php
-                    foreach ($this->menus as $menu) {
+                    foreach ($this->menus as $menu) :
 
                     // build link
                     $link = tag_replace(get_value($menu, 'link'));
@@ -45,7 +45,8 @@
 
                     ?>
                     <li><a href="<?php echo $link ?>" <?php echo $target ?>><?php echo $img . ' ' . $label ?></a></li>
-                    <?php } ?>
+
+                    <?php endforeach; ?>
 
                 </ul>
 
@@ -61,56 +62,58 @@
 
     <div class="table-responsive">
 
-        <div class="dataTables_wrapper form-inline" role="grid">
+        <table class="table table-bordered no-footer" id="table-logs">
 
-            <table class="table table-bordered dataTable no-footer" id="table-logs">
+            <thead>
 
-                <thead>
+                <tr class="row">
 
-                    <tr class="row">
+                    <th><?php echo lang('Description') ?></th>
+                    <th><?php echo lang('Log type') ?></th>
+                    <th><?php echo lang('By user') ?></th>
+                    <th><?php echo lang('Date') ?></th>
+                    <th></th>
 
-                        <th><?php echo lang('Log Type') ?></th>
-                        <th><?php echo lang('By user') ?></th>
-                        <th><?php echo lang('Description') ?></th>
-                        <th><?php echo lang('Date') ?></th>
-                        <th></th>
+                </tr>
 
-                    </tr>
+            </thead>
 
-                </thead>
+            <tbody>
 
-                <tbody>
+            <?php foreach($logs as $log) : ?>
 
-                <?php foreach($logs as $log) { ?>
+                <?php $label = get_value($log, 'log_type') == 'error' ? 'danger' : 'info'; ?>
 
-                    <?php $label = get_value($log, 'log_type') == 'error' ? 'danger' : 'info'; ?>
+                <tr class="row">
 
-                    <tr class="row">
-
-                        <td>
-                            <a data-toggle="modal" data-target="#modal-<?php echo get_value($log, 'log_type') ?>-<?php echo get_value($log, 'id_log') ?>" class="label label-<?php echo $label?> cursor-pointer log-type" data-placement="right" data-original-title="<?php echo lang('Click to see details') ?>"><?php echo lang(ucwords(get_value($log, 'log_type')))?></a>
+                    <td>
+                        <strong>
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-<?php echo get_value($log, 'log_type') ?>-<?php echo get_value($log, 'id_log') ?>">
+                            <?php echo get_value($log, 'log_description') ?>
+                        </a>
+                        </strong>
+                    </td>
+                    <td><span class="label label-<?php echo $label?> log-type"><?php echo lang(ucwords(get_value($log, 'log_type')))?></span></td>
+                    <td><?php echo get_value($log, 'email') ?></td>
+                    <td><?php echo get_value($log, 'log_dtt_ins') ?></td>
+                    <td class="text-right" style="width: 01%">
+                        <a href="javascript:void(0)" class="remove-log" type="<?php echo get_value($log, 'log_type') ?>" id="<?php echo get_value($log, 'id_log') ?>"><i class="fa fa-trash fa-fw" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('Remove') ?>"></i></a>
                         </td>
-                        <td><?php echo get_value($log, 'email') ?></td>
-                        <td><?php echo get_value($log, 'log_description') ?></td>
-                        <td><?php echo get_value($log, 'log_dtt_ins') ?></td>
-                        <td class="text-right" style="width: 01%"><a href="javascript:void(0)" class="remove-log" type="<?php echo get_value($log, 'log_type') ?>" id="<?php echo get_value($log, 'id_log') ?>"><i class="fa fa-times fa-fw" data-placement="left" data-original-title="<?php echo lang('Remove') ?>"></i></a></td>
 
-                    </tr>
+                </tr>
 
-                <?php } ?>
+            <?php endforeach; ?>
 
-                </tbody>
+            </tbody>
 
-            </table>
-
-        </div>
+        </table>
 
     </div>
 
 </div>
 
 <!-- now, modal logs -->
-<?php foreach($logs as $log) { ?>
+<?php foreach($logs as $log) : ?>
 <div class="modal fade" id="modal-<?php echo get_value($log, 'log_type')?>-<?php echo get_value($log, 'id_log') ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <div class="modal-dialog">
@@ -151,21 +154,21 @@
 
                 <div class="form-group" style="margin-bottom: 10px">
 
-                    <div class="label label-modal label-<?php echo $label ?>" data-placement="bottom" data-original-title="<?php echo lang('Log type')?>"><?php echo lang(ucwords(get_value($log, 'log_type'))) ?></div>
+                    <div class="label label-modal label-<?php echo $label ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('Log type')?>"><?php echo lang(ucwords(get_value($log, 'log_type'))) ?></div>
 
-                    <div class="label label-modal label-<?php echo $label ?>" data-placement="bottom" data-original-title="<?php echo lang(ucwords(get_value($log, 'log_type'))) . ' ' . lang('type')?>"><?php echo lang($type) ?></div>
+                    <div class="label label-modal label-<?php echo $label ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang(ucwords(get_value($log, 'log_type'))) . ' ' . lang('type')?>"><?php echo lang($type) ?></div>
 
-                    <div class="label label-modal label-primary" data-placement="bottom" data-original-title="<?php echo lang('User that triggered this log')?>">
+                    <div class="label label-modal label-primary" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User that triggered this log')?>">
                         <i class="fa fa-fw fa-user"></i>
                         <?php echo get_value($log, 'email') ?>
                     </div>
 
-                    <div class="label label-modal label-normal" data-placement="bottom" data-original-title="<?php echo lang('Log date')?>">
+                    <div class="label label-modal label-normal" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('Log date')?>">
                         <i class="fa fa-fw fa-calendar"></i>
                         <?php echo get_value($log, 'log_dtt_ins') ?>
                     </div>
 
-                    <div class="label label-modal label-normal" data-placement="bottom" data-original-title="<?php echo get_value($log, 'device_name') . ' ' . get_value($log, 'device_version') . ' ' . get_value($log, 'platform') ?>">
+                    <div class="label label-modal label-normal" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo get_value($log, 'device_name') . ' ' . get_value($log, 'device_version') . ' ' . get_value($log, 'platform') ?>">
                         <i class="fa fa-fw fa-desktop"></i>
                     </div>
 
@@ -181,7 +184,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label><?php echo lang('Error message') ?></label>
+                    <label><?php echo lang('Message') ?></label>
                     <div><?php echo get_value($log, 'message') ?></div>
                 </div>
 
@@ -231,19 +234,14 @@
     <!-- /.modal-dialog -->
 
 </div>
-<?php } ?>
+<?php endforeach; ?>
 
-<link type="text/css" rel="stylesheet" href="<?php echo URL_CSS ?>/plugins/dataTables/dataTables.bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!-- DataTables Plugin -->
+<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
+<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
 
 <style>
-    a.log-type:hover {
-        color: #fff;
-    }
 
     div.label-modal {
         font-size: 100%;
@@ -253,42 +251,51 @@
         padding: 7px;
     }
 
-    .form-group div {
-        word-break: break-all
-    }
+    .form-group div { word-break: break-all }
 
 </style>
 
 <script>
     // ========
-    // tooltips
+    // Tooltips
     // ========
-    $('a.log-type, i, .label-modal').tooltip();
+    $('body').tooltip({
+        selector: '[data-toggle=tooltip]',
+        container: 'body'
+    });
 
-    // =========
-    // dataTable
-    // =========
+    // ==========
+    // DataTables
+    // ==========
     $('#table-logs').dataTable({
-        'ordering' : false
+        language: {
+            search: '<span class="input-group-addon input-md"><i class="fa fa-search fa-fw" data-original-title="" title=""></i></span>',
+            lengthMenu:     "_MENU_ &nbsp;<?php echo lang('Entries')?>",
+            info:           "<small class=\"text-muted\"><?php echo lang('Showing') ?> _START_ <?php echo lang('to') ?> _END_ <?php echo lang('of') ?> _TOTAL_ <?php echo lang('entries') ?></small>",
+            infoEmpty:      "<small class=\"text-muted\"><?php echo lang('Showing') ?> 0 entries</small>",
+            infoFiltered:   "<small class=\"text-muted\">(<?php echo lang('filtered from') ?> _MAX_ <?php echo lang('total entries') ?>)",
+        },
+        order: [[ 0, "asc" ]],
+        columnDefs: [ { "orderable": false, "targets": [4] } ]
     });
 
     // ===============
-    // remove callback
+    // Remove callback
     // ===============
     $('#table-logs').on('click', '.remove-log', function () {
 
-        // get id
+        // Get log id
         var id = $(this).attr('id');
         var type = $(this).attr('type');
 
-        // Confirm this shit
+        // Confirm
         bootbox.confirm("<?php echo lang('Are you sure to remove the selected log ?') ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
-            // ajax to remove this fucking shit
+            // Ajax to remove this fucking shit
             $.enable_loading();
 
             $.ajax({
@@ -308,7 +315,7 @@
 
                         $.disable_loading();
 
-                        // close modal and alert
+                        // Close modal and alert
                         bootbox.alert(json.error);
                         return false;
                     }
@@ -317,27 +324,25 @@
                     window.location.reload();
                 }
             });
-
         });
-
     });
 
     // ==============================
-    // remove all log errors callback
+    // Remove all log errors callback
     // ==============================
     $('.remove-all').click( function () {
 
-        // get id
+        // Get log type
         var type = 'error';
 
-        // Confirm this shit
+        // Confirm
         bootbox.confirm("<?php echo addslashes(str_replace("\n", '', message('warning', lang('Warning!'), lang('All error logs will be deleted. Are you sure to remove all error logs ?')))) ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
-            // ajax to remove this fucking shit
+            // Ajax to remove this fucking shit
             $.enable_loading();
 
             $.ajax({
@@ -358,7 +363,7 @@
 
                         $.disable_loading();
 
-                        // close modal and alert
+                        // Close modal and alert
                         bootbox.alert(json.error);
                         return false;
                     }
@@ -367,9 +372,7 @@
                     window.location.reload();
                 }
             });
-
         });
-
     });
 
 </script>

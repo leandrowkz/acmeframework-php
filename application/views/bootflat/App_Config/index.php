@@ -56,9 +56,9 @@
 
         <div class="col-sm-7 col-lg-7">
 
-            <div class="input-group" style="margin-bottom: 15px">
-                <input type="text" id="search-input" class="form-control input-md" placeholder="<?php echo lang('Search settings') ?>" autofocus>
-                <span class="input-group-addon input-sm"><i class="fa fa-search fa-fw"></i></span>
+            <div class="input-group" style="margin-bottom: 30px">
+                <span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+                <input id="search-module" type="search" class="form-control" placeholder="<?php echo lang('Search settings') ?>" autofocus="autofocus" />
             </div>
 
             <div class="list-group">
@@ -71,7 +71,7 @@
                     </h5>
                     <div class="list-group-item-text">
                         <div><?php echo ACME_VERSION ?></div>
-                        <div class="text-muted"><small><?php echo lang('File')?>: application/core/ACME_Controller.php</small></div>
+                        <div class="text-muted"><small><?php echo lang('File')?>: application/core/ACME_Core.php</small></div>
                     </div>
                 </a>
 
@@ -710,43 +710,21 @@
 
 <style>
 
-    .list-group-item {
-        cursor: default;
-    }
-
-    .list-group-item-heading {
-        margin-bottom: 5px
-    }
-
-    .list-group-item-text {
-        word-break: break-all;
-    }
-
-    .list-group-item-text .text-muted {
-        margin-top: 5px;
-        word-break: break-all;
-    }
-
-    .list-group-item-heading .label {
-        font-size: 100%;
-    }
-
-    .list-group-item h1 {
-        font-size: 40px;
-        margin: -2px 10px 17px -5px;
-    }
-
-    .panel-body > div {
-        word-break: break-all;
-    }
+    .list-group-item { cursor: default; }
+    .list-group-item-heading { margin-bottom: 5px }
+    .list-group-item-text { word-break: break-all; }
+    .list-group-item-text .text-muted { margin-top: 5px; word-break: break-all; }
+    .list-group-item-heading .label { font-size: 100%; }
+    .list-group-item h1 { font-size: 40px; margin: -2px 10px 17px -5px; }
+    .panel-body > div { word-break: break-all; }
 
 </style>
 
 <script>
 
-    // ===========
-    // popovers :)
-    // ===========
+    // ========
+    // Popovers
+    // ========
     $('.list-group-item').popover( {
         trigger : 'hover',
         title :  '<?php echo lang('Example of use') ?>:',
@@ -758,10 +736,10 @@
         }
     });
 
-    // ======
-    // search
-    // ======
-    $("#search-input").keyup( function() {
+    // =============
+    // Module search
+    // =============
+    $("#search-module").keyup( function() {
 
         var exist = false;
 

@@ -185,7 +185,7 @@ class Array_Table {
 	 */
 	public function process()
 	{
-		$this->html = $this->CI->template->load_html_component('generic_table', array('array_table' => $this));
+		$this->html = $this->CI->template->load_html_component('generic-table', array('array_table' => $this));
 	}
 
     /**

@@ -1,10 +1,11 @@
 
-<button class="btn btn-sm btn-success" data-toggle="modal" style="margin: 20px 0" data-target="#modal-new-action"><?php echo lang('New action') ?> <i class="fa fa-plus-circle"></i></button>
+<button class="btn btn-sm btn-success" data-toggle="modal" style="margin: 30px 0 0" data-target="#modal-new-action"><?php echo lang('New action') ?> <i class="fa fa-plus-circle"></i></button>
 
 <?php if( count($actions) > 0 ) { ?>
-<div class="table-responsive" style="margin-top: -10px">
 
-    <table class="table table-bordered">
+<div class="table-responsive">
+
+    <table class="table table-bordered" id="table-actions">
 
         <thead>
             <tr>
@@ -18,16 +19,19 @@
         <tbody>
 
             <?php
-            foreach($actions as $action) {
+            foreach($actions as $action) :
             $id_action = get_value($action, 'id_module_action');
             ?>
             <tr id="tr-<?php echo $id_action ?>">
-                <td><a data-toggle="modal" data-target="#modal-<?php echo $id_action ?>" href="#"><?php echo get_value($action, 'label')?></a></td>
+                <td><a href="javascript:void(0)" class="text-bold" data-toggle="modal" data-target="#modal-<?php echo $id_action ?>"><?php echo get_value($action, 'label')?></a></td>
                 <td class="link"><?php echo get_value($action, 'link')?></td>
                 <td style="width: 01%"><?php echo get_value($action, 'order_')?></td>
-                <td class="text-right" style="width: 01%" title="<?php echo lang('Remove')?>"><a href="javascript:void(0)" id="<?php echo $id_action ?>"><i class="fa fa-times fa-fw"></i></a></td>
+                <td class="text-right" style="width: 01%">
+                    <a href="javascript:void(0)" id="<?php echo $id_action ?>" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('Remove')?>"><i class="fa fa-trash fa-fw"></i></a>
+                </td>
             </tr>
-            <?php } ?>
+
+            <?php endforeach; ?>
 
         </tbody>
 
@@ -35,7 +39,7 @@
 
 </div>
 <?php } else { ?>
-<p class="text-muted"><em><?php echo lang('There is no actions for this module') ?></em></p>
+<div class="well" style="margin-top: 30px;"><span class="text-muted text-italic"><?php echo lang('There is no actions for this module') ?></span></div>
 <?php } ?>
 
 <!-- now, modal actions -->
@@ -105,8 +109,7 @@ $id_action = get_value($action, 'id_module_action');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-                    </form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -116,7 +119,7 @@ $id_action = get_value($action, 'id_module_action');
 </form>
 <?php } ?>
 
-<!-- modal to new action -->
+<!-- Modal to new action -->
 <form action="<?php echo URL_ROOT ?>/app-module-manager/save-action/insert" method="post" id="new-action">
     <div class="modal fade" id="modal-new-action" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -179,8 +182,7 @@ $id_action = get_value($action, 'id_module_action');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close') ?></button>
-                    <input type="submit" class="btn btn-primary" value="<?php echo lang('Save') ?>" />
-                    </form>
+                    <input type="submit" class="btn btn-success" value="<?php echo lang('Save') ?>" />
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -189,34 +191,46 @@ $id_action = get_value($action, 'id_module_action');
     </div>
 </form>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/meiomask/meiomask.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+<!-- DataTables Plugin -->
+<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
+<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
 
 <script>
 
-    // =====
-    // masks
-    // =====
+    // ========
+    // Meiomask
+    // ========
     $('input[type=text]').setMask();
 
     // ========
-    // tooltips
+    // Tooltips
     // ========
     $('table').tooltip({
-        selector: "[data-toggle=tooltip]"
+        selector: "[data-toggle=tooltip]",
+        container: "body"
     });
 
     // ========
-    // popovers
+    // Popovers
     // ========
     $('.modal').popover({
         selector: "[data-toggle=popover]"
     });
 
+    // ==========
+    // DataTables
+    // ==========
+    $('#table-actions').dataTable({
+        info : false,
+        paging: false,
+        searching : false,
+        order: [[ 0, "asc" ]],
+        columnDefs: [ { "orderable": false, "targets": [3] } ]
+    });
+
     // ============================
-    // insert, edit action callback
+    // Insert, edit action callback
     // ============================
     $.submit_callback = function (form, status) {
 
@@ -224,10 +238,10 @@ $id_action = get_value($action, 'id_module_action');
         if( ! status)
             return false;
 
-        // get id
+        // Get id
         var id = form.attr('id');
 
-        // ajax to save this fucking shit
+        // Ajax to save this
         $.enable_loading();
 
         $.ajax({
@@ -254,19 +268,19 @@ $id_action = get_value($action, 'id_module_action');
 
                 // Check return
                 if( ! json.return) {
-                    // close modal and alert
+                    // Close modal and alert
                     form.find('.modal-footer button').click();
                     bootbox.alert(json.error);
                     return false;
                 }
 
-                // close modal
+                // Close modal
                 form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load area again)
                 form.find('.modal').on('hidden.bs.modal', function () {
 
-                    // reload area, this function comes from config.php
+                    // Reload area, this function comes from config.php
                     $.load_area('actions');
 
                 });
@@ -278,21 +292,21 @@ $id_action = get_value($action, 'id_module_action');
     };
 
     // ======================
-    // remove action callback
+    // Remove action callback
     // ======================
     $('td.text-right a').click( function () {
 
-        // get id
+        // Get id
         var id = $(this).attr('id');
 
-        // Confirm this shit
+        // Confirm
         bootbox.confirm("<?php echo lang('Are you sure to remove the selected action ?') ?>", function (result) {
 
             // Cancel
             if( ! result)
                 return;
 
-            // ajax to remove this fucking shit
+            // Ajax to remove this
             $.enable_loading();
 
             $.ajax({
@@ -309,13 +323,13 @@ $id_action = get_value($action, 'id_module_action');
 
                     // Check return
                     if( ! json.return) {
-                        // close modal and alert
+                        // Close modal and alert
                         bootbox.alert(json.error);
                         return false;
                     }
 
                     // Reload area
-                    // this function comes from config.php
+                    // This function comes from config.php
                     $.load_area('actions');
 
                     $.disable_loading();
@@ -327,7 +341,7 @@ $id_action = get_value($action, 'id_module_action');
     });
 
     // ======================
-    // cancel original submit
+    // Cancel original submit
     // ======================
     $('form').submit(function () {
         return false;
@@ -337,11 +351,9 @@ $id_action = get_value($action, 'id_module_action');
     // Set validations to all forms
     // ============================
     $('form').validationEngine('attach', {
-
         promptPosition : "bottomRight",
         scroll: false,
         onValidationComplete: function (form, status) { $.submit_callback(form, status); }
-
     });
 
 </script>

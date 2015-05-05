@@ -238,7 +238,7 @@ class ACME_Controller extends ACME_Core {
 
 			// Add to each row of this table all actions of this module
 			foreach($this->actions as $action)
-				$table->add_column($this->template->load_html_component('module_action', array('action' => $action)));
+				$table->add_column($this->template->load_html_component('module-action', array('action' => $action)));
 
 			// Html table
 			$args['module_table'] = $table->get_html();

@@ -163,7 +163,7 @@ class App_Module_Manager  extends ACME_Controller {
 				// Get fields
 				$id_form = get_value($form, 'id_module_form');
 				$table = get_value($module, 'table_name');
-				$fields = $this->App_Module_Manager_Model->get_form_fields($id_form, $table);
+				$fields = $this->app_module_manager_model->get_form_fields($id_form, $table);
 
 				// Menu/action that points to form
 				if ($operation == 'insert')
