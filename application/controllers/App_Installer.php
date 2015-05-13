@@ -51,8 +51,8 @@ class App_Installer extends ACME_Controller {
 	public function index()
 	{
 		// Checks if acme is already installed
-		if ( $this->acme_installed )
-			redirect('app-login');
+		//if ( $this->acme_installed )
+			// redirect('app-login');
 
 		// Redirects to step one
 		redirect('app-installer/system-requirements');
@@ -66,8 +66,8 @@ class App_Installer extends ACME_Controller {
 	public function system_requirements()
 	{
 		// Checks if acme is already installed
-		if ( $this->acme_installed )
-			redirect('app-login');
+		// if ( $this->acme_installed )
+			// redirect('app-login');
 
 		// Database settings
 		$db_driver = $this->input->post('db_driver');
@@ -319,6 +319,24 @@ class App_Installer extends ACME_Controller {
 
 			break;
 
+			// Oracle driver
+			case 'oci8':
+
+				// Mannually open a link with oci8
+				$link = @oci_connect($db_user, $db_pass, $db_host . ':' . $db_port . '/' . $db_database);
+
+				// If there is an error opening the link
+				if( ! $link)
+					return lang('Error connecting on Oracle server: unable to connect with the given parameters');
+
+				// Closes connection
+				@oci_close($link);
+
+				// There is no errors, you can procced :)
+				return true;
+
+			break;
+
 		}
 
 	}
@@ -355,7 +373,6 @@ class App_Installer extends ACME_Controller {
 
 		// Builds specific string connection for oci8
 		if ( strtolower($db_driver) == 'oci8') {
-
 			$db_host = "(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = $db_host)(PORT = $db_port)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = $db_database)))";
 			$db_port = '';
 			$db_database = '';
@@ -401,49 +418,16 @@ class App_Installer extends ACME_Controller {
 		if ( isset($this->db) )
 			unset($this->db);
 
+		// Connect with database settings file
+		$this->load->database();
+
+		// Run all queries depending on database driver
 		switch(strtolower($db_driver))
 		{
-
 			// MySQL or PostgreSQL
 			case 'mysql':
 			case 'mysqli':
 			case 'pgsql':
-
-				// Values for database
-				$db_driver = strtolower($post['db_driver']) == 'pgsql' ? 'postgre' : $post['db_driver'];
-				$db_host = $post['db_host'];
-				$db_port = $post['db_port'];
-				$db_user = $post['db_user'];
-				$db_pass = $post['db_pass'];
-				$db_database = $post['db_database'];
-
-				// Opens mannually database connection
-				$db = array(
-					'hostname' => $db_host,
-					'port'     => $db_port,
-					'username' => $db_user,
-					'password' => $db_pass,
-					'dbdriver' => $db_driver,
-					'database' => $db_database
-				);
-
-				// Loads connection with the given values
-				// $this->load->database($db);
-
-				// Loads dbforge to construct a new database
-				// $this->load->dbforge();
-
-				// Sanytizes db name
-				// $db_database = $this->db->protect_identifiers($db_database);
-
-				// Tries to create database
-				// $this->dbforge->create_database($db_database);
-
-				// Closes to procced with other queries
-				// unset($this->db);
-
-				// Now connects with database settings file and recently created database
-				$this->load->database();
 
 				// Execute all sql-file statements
 				foreach($statements as $sql) {
@@ -453,6 +437,35 @@ class App_Installer extends ACME_Controller {
 
 					// Runs query
 					$this->db->query($sql);
+				}
+
+			break;
+
+			// Oracle databases
+			case 'oci8':
+
+				// If the type connection is ORACLE then disable the escape identifiers
+				// We do this by reflecting object because the DB_Driver class does not
+				// has any setter or getter for this attribute
+				$db  = new ReflectionObject($this->db);
+
+				// Set properly value for _escape_char
+				$_escape_char = $db->getProperty('_escape_char');
+				$_escape_char->setAccessible(TRUE);
+				$_escape_char->setValue($this->db, '');
+
+				foreach($statements as $sql) {
+
+					// Prepares statement
+					$sql = trim($sql, " \t\n\r\0\x0B");
+
+					if(stristr($sql, "CREATE OR REPLACE TRIGGER") === false)
+						$sql = trim($sql, ';');
+
+					// Run query - if driver is oci8 then protect query execution
+					// this is necessary because oracle CREATE statements generates
+					// erros on ocifetchinfo()
+					@$this->db->query($sql);
 				}
 
 			break;

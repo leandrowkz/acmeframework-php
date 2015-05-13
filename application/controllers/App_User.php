@@ -350,7 +350,6 @@ class App_User extends ACME_Controller {
 
 			// Update user
 			$user['name'] = $this->input->post('name');
-			$user['email'] = $this->input->post('email');
 			$user['description'] = $this->input->post('description');
 			$this->db->update('acm_user', $user, array('id_user' => $id_user ));
 

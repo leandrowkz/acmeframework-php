@@ -34,6 +34,9 @@ class App_Login extends ACME_Controller {
 	{
 		parent::__construct();
 
+		// Set controller link
+		$this->controller_link = strtolower(str_replace('_', '-', $this->controller));
+
 		// Check if ACME Framework is already installed
 		if ( ! $this->acme_installed )
 			redirect('app-installer');
@@ -157,18 +160,18 @@ class App_Login extends ACME_Controller {
 			$this->template->load_view($this->controller . '/forgot-password', array(), false, false);
 		else {
 
-			// collect email and validation
+			// Collect email and validation
 			$email = $this->input->post('email');
 			$validate = $this->input->post('validate_human');
 
-			// check consistency
+			// Check consistency
 			if($email == '' || $validate == '')
-				redirect($this->controller_name . '/forgot-password');
+				redirect($this->controller_link . '/forgot-password');
 
-			// try to find user data
+			// Try to find user data
 			$user = $this->db->get_where('acm_user', array('email' => $email))->row_array(0);
 
-			// user doesnt exist
+			// User doesnt exist
 			if( count($user) <= 0 )
 				$this->template->load_view($this->controller . '/forgot-password', array('error' => lang('Ops! There is no users registered with this email address')), false, false);
 
@@ -178,10 +181,10 @@ class App_Login extends ACME_Controller {
 				$args['id_user'] = get_value($user, 'id_user');
 				$args['key_access'] = md5(uniqid());
 
-				// collect email body msg
+				// Collect email body msg
 				$body_msg = $this->template->load_view('App_User/email-reset-password', $args, true, false);
 
-				// now try to send email
+				// Now try to send email
 				$this->load->library('email');
 				$this->email->clear();
 			    $this->email->to(get_value($user, 'email'));
@@ -189,17 +192,23 @@ class App_Login extends ACME_Controller {
 			    $this->email->subject(lang('Reset password'));
 			    $this->email->message($body_msg);
 
-			    if( ! @$this->email->send() )
-					$this->template->load_view($this->controller . '/forgot-password', array('error' => lang('Ops! It was not possible to send the email message')), false, false);
-				else {
+			    if( ! @$this->email->send() ) {
+			    	print_r($this->email->print_debugger());
 
-					// log asking for reset pass
+			    	die;
+					$this->template->load_view($this->controller . '/forgot-password', array('error' => lang('Ops! It has been not possible to send the email message. Please try it again later.')), false, false);
+
+
+
+				} else {
+
+					// Log asking for reset pass
 					$data['id_user'] = $args['id_user'];
 					$data['key_access'] = $args['key_access'];
 
 					$this->logger->db_log(lang('Reset password request'), 'reset_password', '', $data);
 
-					// load page success!
+					// Load page success!
 					$this->template->load_view($this->controller . '/forgot-password', array('success' => lang('OK! One message containing all steps to reset your password was forwarded to ') . $email), false, false);
 
 				}
@@ -219,7 +228,7 @@ class App_Login extends ACME_Controller {
 	public function reset_password($id_user = 0, $key_access = '', $process = false)
 	{
 		if($id_user == '' || $key_access == '')
-			redirect($this->controller_name);
+			redirect($this->controller_link);
 
 		// Var to check if exist any valid log
 		$valid = false;
@@ -242,7 +251,7 @@ class App_Login extends ACME_Controller {
 
 		// Well, this is not a valid token or this reset already used
 		if( ! $valid)
-			redirect( $this->controller_name );
+			redirect( $this->controller_link );
 
 		// This is not a process action
 		if( ! $process)
@@ -255,7 +264,7 @@ class App_Login extends ACME_Controller {
 
 			// Bad passwords
 			if($password == '' || $p_repeat == '' || $password != $p_repeat)
-				redirect($this->controller_name);
+				redirect($this->controller_link);
 
 			// Update user data
 			$this->db->update('acm_user', array('password' => md5($password)), array('id_user' => $id_user));

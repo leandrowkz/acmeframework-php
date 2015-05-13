@@ -151,7 +151,7 @@ class App_Module_Maker extends ACME_Controller {
 					// And also for each form we have to create menus, permissions and actions
 					$data['id_module'] = $id_module;
 					$data['label'] = lang(ucwords($operation));
-					$data['link'] = '{URL_ROOT}/' . str_replace('_', '-', strtolower( $controller ));
+					$data['link'] = '{URL_ROOT}/' . str_replace('_', '-', strtolower( $controller )) . '/form/' . $operation;
 
 					// If operation is update, delete or view then add first column (usually is ID)
 					if ($operation != 'insert')

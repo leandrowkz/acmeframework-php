@@ -2,19 +2,19 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="col-xs-10 col-sm-10">
             <h1>
                 <?php echo lang('Profile') ?>
-                <span><i class="fa fa-fw fa-user"></i></span>
+                <i class="fa fa-fw fa-user"></i>
                 <small>// <?php echo lang('User information') ?></small>
             </h1>
         </div>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-2 col-sm-2">
 
             <div class="pull-right clearfix">
 
-                <a href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-primary">
+                <a href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-default">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i>
@@ -32,110 +32,130 @@
 
 <div class="module-body">
 
-    <div class="user-profile-sidebar">
+    <div class="row">
 
-        <div class="row">
+        <div class="col-sm-3 user-data">
 
-            <div class="col-xs-6 col-sm-6 col-md-12 text-center">
+            <?php
 
-                <?php
+            $id_user = get_value($user, 'id_user');
+            $url_img = get_value($user, 'url_img');
+            $url_img_large = tag_replace(get_value($user, 'url_img_large'));
 
-                $id_user = get_value($user, 'id_user');
-                $url_img = get_value($user, 'url_img');
-                $url_img_large = tag_replace(get_value($user, 'url_img_large'));
+            // Adjust thumb
+            if (basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
+                $url_img = tag_replace($url_img);
+            else
+                $url_img = URL_IMG . '/user-unknown.png';
 
-                // Adjust thumb
-                if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
-                    $url_img = tag_replace($url_img);
-                else
-                    $url_img = URL_IMG . '/user-unknown.png';
-                ?>
+            ?>
 
-                <a href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>">
-                    <img class="img-circular user-profile-img" src="<?php echo $url_img ?>" />
-                </a>
-
+            <div class="text-center user-img">
+                <img src="<?php echo $url_img ?>" class="img-circle img-responsive" />
             </div>
 
-            <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app-user/edit-profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Edit profile') ?></a>
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app-user/edit-photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Change image')?></a>
-                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Change password') ?></a>
-            </div>
+            <h4 class="text-center name">
+
+                <div><i class="fa fa-fw fa-envelope-o"></i> <?php echo get_value($user, 'email') ?></div>
+
+            </h4>
+
+            <a href="<?php echo URL_ROOT ?>/app-user/edit-profile/<?php echo $id_user ?>" class="btn btn-md btn-primary btn-block"><?php echo lang('Edit profile') ?> <i class="fa fa-fw fa-edit"></i></a>
+
+            <a href="<?php echo URL_ROOT ?>/app-user/edit-photo/<?php echo $id_user ?>" class="btn btn-md btn-primary btn-block"><?php echo lang('Change photo') ?> <i class="fa fa-fw fa-picture-o"></i></a>
+
+            <a href="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>" class="btn btn-md btn-warning btn-block"><?php echo lang('Change password') ?> <i class="fa fa-fw fa-unlock-alt"></i></a>
 
         </div>
 
-    </div>
+        <div class="col-sm-9 user-profile">
 
-    <div class="user-profile-main-content">
+            <h2><?php echo get_value($user, 'name') ?></h2>
 
-        <div class="row" id="user-profile-name">
-            <div class="col-sm-12">
-                <h1 style="margin-top: 0"><?php echo get_value($user, 'name') ?></h1>
-            </div>
-        </div>
+            <span class="label label-info cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User group') ?>">
+                <i class="fa fa-fw fa-group"></i>
+                <?php echo get_value($user, 'user_group') ?>
+            </span>
 
-        <div class="row">
-            <div class="col-sm-12 text-top" id="user-profile-badges">
-                <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
-                    <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
-                    <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
-                    <?php } ?>
-                </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
-            </div>
-        </div>
+            &nbsp;
 
-        <h3 style="margin: 30px 0 30px 0"><?php echo lang('Change image')?></h3>
+            <?php if (get_value($user, 'active') == 'Y') : ?>
 
-        <div class="row" style="margin-top:20px">
+            <span class="label label-success cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User status') ?>">
+                <i class="fa fa-fw fa-check-circle"></i>
+                <?php echo lang('Active') ?>
+            </span>
 
-            <?php $file_exists = file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img_large)) && basename($url_img_large) != '' ? true : false; ?>
-            <?php if($file_exists) {?>
-            <div class="col-sm-8 col-xs-12 text-center">
-                <div>
-                <img src="<?php echo $url_img_large ?>" class="img-responsive" id="img-user" style="margin-bottom:15px" />
-                </div>
-            </div>
-            <?php } ?>
+            <?php else : ?>
 
-            <div class="col-sm-<?php echo ($file_exists) ? '4' : '12'; ?> col-xs-12 text-center">
+            <span class="label label-danger cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User status') ?>">
+                <i class="fa fa-fw fa-minus-circle "></i>
+                <?php echo lang('Inactive') ?>
+            </span>
 
+            <?php endif ?>
+
+            <div class="row" style="margin-top:20px">
+
+                <?php $file_exists = file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img_large)) && basename($url_img_large) != '' ? true : false; ?>
                 <?php if($file_exists) {?>
-                <button class="btn btn-primary btn-block" onclick="make_thumbnail()"><?php echo lang('Cut and save')?></button>
-                <p class="lead" style="margin:10px 0 20px 0"><?php echo lang('or') ?></p>
+                <div class="col-sm-8 col-xs-12 text-center">
+                    <div>
+                    <img src="<?php echo $url_img_large ?>" class="img-responsive" id="img-user" style="margin-bottom:15px" />
+                    </div>
+                </div>
                 <?php } ?>
 
-                <form action="<?php echo URL_ROOT ?>/app-user/upload-photo/<?php echo $id_user ?>" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
+                <div class="col-sm-<?php echo ($file_exists) ? '4' : '12'; ?> col-xs-12 text-center">
 
-                    <div class="fallback text-center">
-                        <input class="btn btn-default btn-xs text-center" name="file" id="file" type="file" />
-                        <a class="btn btn-default btn-lg" href="javascript:void(0)" onclick="send_file_fallback()"><?php echo lang('Send') ?></a>
+                    <?php if ($file_exists) : ?>
+
+                    <button class="btn btn-success btn-block cut-and-save"><?php echo lang('Cut and save')?> <i class="fa fa-fw fa-crop"></i></button>
+
+                    <h4 style="margin: 30px 0"><?php echo lang('or') ?></h4>
+
+                    <?php endif ?>
+
+                    <form action="<?php echo URL_ROOT ?>/app-user/upload-photo/<?php echo $id_user ?>" enctype="multipart/form-data" method="post" class="dropzone" id="sendFile">
+
+                        <div class="fallback text-center">
+                            <input class="btn btn-default btn-xs text-center" name="file" id="file" type="file" />
+                            <a class="btn btn-default btn-lg" href="javascript:void(0)" class="send-file-fallback"><?php echo lang('Send') ?></a>
+                        </div>
+
+                    </form>
+
+                    <iframe name="iframe-fallback" id="iframe-fallback" style="display:none"></iframe>
+
+                    <div id="msg-return-container" class="text-left" style="margin-top:15px"></div>
+                    <div id="msg-template-error" style="display:none"><?php echo message('danger', 'Ops!', '<span id="msg-content"></span>', true); ?></div>
+                    <div id="msg-template-success" style="display:none"><?php echo message('success', lang('OK!'), '<span id="msg-content"></span>', true); ?></div>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+
+                <div class="col-sm-12">
+
+                    <div class="form-footer">
+
+                        <?php if ($file_exists) : ?>
+
+                        <button class="btn btn-success cut-and-save"><?php echo lang('Cut and save') ?> <i class="fa fa-fw fa-crop"></i></button>
+
+                        <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
+
+                        <?php else : ?>
+
+                        <a class="btn btn-default" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Back') ?></a>
+
+                        <?php endif ?>
+
                     </div>
 
-                </form>
+                </div>
 
-                <iframe name="iframe-fallback" id="iframe-fallback" style="display:none"></iframe>
-
-                <div id="msg-return-container" class="text-left" style="margin-top:15px"></div>
-                <div id="msg-template-error" style="display:none"><?php echo message('danger', 'Ops!', '<span id="msg-content"></span>', true); ?></div>
-                <div id="msg-template-success" style="display:none"><?php echo message('success', lang('OK!'), '<span id="msg-content"></span>', true); ?></div>
-            </div>
-
-        </div>
-
-        <div class="row bottom-group-buttons">
-
-            <div class="col-sm-12">
-                <?php if($file_exists) { ?>
-                <button class="btn btn-primary" onclick="make_thumbnail()"><?php echo lang('Cut and save') ?></button>
-                <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
-                <?php } else { ?>
-                <a class="btn btn-primary" style="margin-top:5px" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><i class="fa fa-arrow-circle-left fa-fw"></i> <?php echo lang('Back') ?></a>
-                <?php } ?>
             </div>
 
         </div>
@@ -144,33 +164,74 @@
 
 </div>
 
-<script src="<?php echo URL_JS ?>/plugins/dropzone/dropzone.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/imgareaselect/jquery.imgareaselect.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/imgareaselect/jquery.imgareaselect.pack.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/dropzone/dropzone.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/imgareaselect/imgareaselect-default.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/imgareaselect/imgareaselect-animated.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/imgareaselect/imgareaselect-deprecated.css" />
+<!-- Dropzone Plugin -->
+<script src="<?php echo URL_JS ?>/dropzone/dropzone.js"></script>
+<link  href="<?php echo URL_JS ?>/dropzone/dropzone.css" rel="stylesheet" type="text/css" />
+
+<!-- IMGAreaselect Plugin -->
+<script src="<?php echo URL_JS ?>/imgareaselect/scripts/jquery.imgareaselect.min.js"></script>
+<link href="<?php echo URL_JS ?>/imgareaselect/css/imgareaselect-default.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo URL_JS ?>/imgareaselect/css/imgareaselect-animated.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo URL_JS ?>/imgareaselect/css/imgareaselect-deprecated.css" rel="stylesheet" type="text/css" />
+
+<style>
+
+    .user-data { margin-top: 0px; }
+    .user-data > a.btn { margin-bottom: 15px; }
+    .user-data > div { padding: 0 0 15px; text-align: center; }
+    .user-data img {
+        margin: 0 auto;
+        text-align: center;
+        border: 5px solid #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        width: 170px !important;
+    }
+    .user-data .name {
+        font-size: 14px;
+        line-height: 35px;
+        margin-bottom: 15px;
+        color: #888;
+    }
+    .user-data .name > div { margin-bottom: 5px; }
+    .user-data .name small { color: #aaa; word-break: break-all; }
+    .user-data h4 { margin-bottom: 0; }
+
+    .user-profile h2 { margin-left: -1px; }
+    .user-profile .label { margin-bottom: 20px; font-size: 12px !important; padding: 5px}
+    .user-profile .label:last-child { margin-right: 10px; }
+
+</style>
 
 <script>
-    // Some configs
-    var max_upload_size = 4; // MB
 
-    // tooltips
-    $('.user-profile-main-content').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
+    // ========
+    // Tooltips
+    // ========
+    $('body').tooltip({
+        selector: '[data-toggle=tooltip]',
+        container: 'body'
     });
 
-    <?php if($file_exists) { ?>
+    // ============
+    // Some configs
+    // ============
+    var max_upload_size = 4; // MB
 
-    // for loading selection
+    <?php if ($file_exists) : ?>
+
+    // =====================
+    // For loading selection
+    // =====================
     var px2 = ($('#img-user').width() < 150) ? $('#img-user').width() : 150;
     var py2 = ($('#img-user').height() < 150) ? $('#img-user').height() : 150;
 
-    // instantiate the crop
-    var api = $('#img-user').imgAreaSelect({ instance : true });
-    api.setOptions({
+    // ===================
+    // Initialize the crop
+    // ===================
+    var crop = $('#img-user').imgAreaSelect({ instance : true });
+
+    // Set options for crop
+    crop.setOptions({
         aspectRatio: '1:1',
         handles: true,
         fadeSpeed: 200,
@@ -180,29 +241,40 @@
         y1 : 0,
         y2 : py2
     });
-    api.update();
 
+    // Update crop
+    crop.update();
+
+    // =======================
+    // Re-enable crop function
+    // =======================
+    $.reenable_crop = function () {
+        crop.setOptions({ hide : true });
+        crop.update();
+
+        crop.setOptions({ disable : true });
+        crop.update();
+
+        crop.setOptions({ enable : true });
+        crop.update();
+    };
+
+    // ===============================
     // Re-enable crop on window resize
+    // ===============================
     $( window ).resize(function () {
-
-        api.setOptions({ hide : true });
-        api.update();
-
-        api.setOptions({ disable : true });
-        api.update();
-
-        api.setOptions({ enable : true });
-        api.update();
-
+        $.reenable_crop();
     });
 
+    // ===================
     // Button cut and save
-    function make_thumbnail() {
+    // ===================
+    $.make_thumbnail = function() {
 
-        // actual selection (x1, y1, ...)
-        selection = api.getSelection();
+        // Actual selection (x1, y1, ...)
+        selection = crop.getSelection();
 
-        if(!selection.width || !selection.height) {
+        if ( ! selection.width || ! selection.height) {
             bootbox.alert("<?php echo lang('To cut the image, select an area of current image.')?>");
             return;
         }
@@ -225,21 +297,27 @@
             cache: false,
             type: 'POST',
             success: function(data) {
-
                 $.redirect( $('#URL_ROOT').val() + '/app-user/profile/<?php echo $id_user ?>' );
-
             },
             complete : function () {
-
                 $.disable_loading();
-
             }
         });
-    }
-    <?php } ?>
+    };
 
-    // dropzone (upload)
+    // ========================
+    // Trigger for cut and save
+    // ========================
+    $('.cut-and-save').on('click', function() {
+        $.make_thumbnail();
+    });
+    <?php endif ?>
+
+    // =================
+    // Dropzone (upload)
+    // =================
     Dropzone.options.sendFile = {
+
         init: function() {
 
             this.on("error", function(file, errorMessage) {
@@ -249,31 +327,23 @@
 
             this.on("success", function(file, response) {
 
-                <?php if(!$file_exists) { ?>
+                <?php if ( ! $file_exists) : ?>
                 window.location.reload();
                 return;
-                <?php } ?>
+                <?php endif ?>
 
-                // add success message
+                // Add success message
                 $("#msg-template-success #msg-content").html("<?php echo lang('File successfully sent.')?>");
                 $("#msg-return-container").html($("#msg-template-success").html());
 
                 // Change img on the fly
                 $("#img-user").attr("src", "<?php echo URL_UPLOAD . '/' . $this->photos_dir ?>/" + response);
 
-                // Reset crop api
-                api.setOptions({ hide : true });
-                api.update();
-
-                api.setOptions({ disable : true });
-                api.update();
-
-                api.setOptions({ enable : true });
-                api.update();
+                // Reset crop crop
+                $.reenable_crop();
 
                 // And then remove all thumbs
                 this.removeAllFiles();
-
             });
 
             this.on("sending", function(file) {
@@ -285,19 +355,21 @@
 
         addRemoveLinks : true,
 
-        dictDefaultMessage : '<div class="cursor-pointer"><i class="fa fa-cloud-upload fa-fw" style="font-size:70px;margin:0"></i><div class="lead" style="margin:0"><?php echo lang('Send an image')?></div><div><?php echo lang('Click or drop on this area')?></div></div>',
+        dictDefaultMessage : '<div class="cursor-pointer"><i class="fa fa-cloud-upload fa-fw" style="font-size:70px;margin:0"></i><div class="lead text-bold" style="margin:0"><?php echo lang('Send an image')?></div><div><?php echo lang('Click or drop on this area')?></div></div>',
 
         dictRemoveFile : "<?php echo lang('Remove')?>",
 
-        paramName : "file",
+        paramName : 'file',
 
         forceFallback : false
     };
 
+    // ==============================================
     // Fallback function to send file (cross-browser)
-    function send_file_fallback() {
+    // ==============================================
+    $.send_file_fallback = function() {
 
-        // change form target
+        // Change form target
         $('form#sendFile').attr('target', 'iframe-fallback').submit();
 
         // Get initial text:
@@ -305,7 +377,7 @@
         var previous = $("#iframe-fallback").contents().find("body");
 
         // Create a function for what to do if there is a change:
-        $check = function() {
+        $.check = function() {
 
             if ($("#iframe-fallback").contents().find("body") != previous && changed == false) {
 
@@ -323,31 +395,30 @@
                     // change image on the fly
                     $("#img-user").attr("src", "<?php echo URL_UPLOAD . '/' . $this->photos_dir ?>/" + $("#iframe-fallback").contents().find("body").html());
 
-                    // Reset crop api
-                    api.setOptions({ hide : true });
-                    api.update();
-
-                    api.setOptions({ disable : true });
-                    api.update();
-
-                    api.setOptions({ enable : true });
-                    api.update();
+                    // Reset crop crop
+                    $.reenable_crop();
                 }
 
                 changed = true;
-
             }
 
             // Store what contents are for later comparison
             previous = $("#iframe-fallback").contents().find("body");
-
         }
-
         // Right click work around is to check every Xs
-        setInterval(function() { $check(); }, 500);
+        setInterval(function() { $.check(); }, 500);
     }
 
-    // listener do input file (prevent to upload large files)
+    // ==============================
+    // Trigger for send file fallback
+    // ==============================
+    $('.send-file-fallback').on('click', function() {
+        $.send_file_fallback();
+    });
+
+    // ======================================================
+    // Listener do input file (prevent to upload large files)
+    // ======================================================
     $('#file').change(function() {
 
         var file = this.files[0];
@@ -360,142 +431,4 @@
             $(this).val('');
         }
     });
-
 </script>
-
-<style>
-    #user-profile-badges {
-        line-height:30px;
-    }
-
-    .user-profile-actions {
-        margin-top: 20px;
-    }
-
-    .user-profile-actions a {
-        margin-bottom: 10px !important;
-    }
-
-    .user-profile-img {
-        width: 140px;
-        height: 140px;
-        background-size: cover;
-        border-radius: 100px;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-    }
-
-    .user-profile-sidebar {
-        width:150px;
-        position:absolute;
-    }
-
-    .user-profile-main-content {
-        margin-left:180px;
-    }
-
-    /* Mobile devices */
-    @media(max-width: 768px){
-
-        #user-profile-name h1 {
-            text-align: center;
-            font-size:30px;
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name a {
-            display:none;
-        }
-
-        #user-profile-badges {
-            text-align:center;
-        }
-
-        .user-profile-sidebar {
-            width:100%;
-            position:relative;
-        }
-
-        .user-profile-main-content {
-            margin-left:0;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 120px;
-            width: 120px;
-        }
-
-        .list-user-info {
-            margin: 2px 0 0 105px !important
-        }
-    }
-
-    /* Mobile portrait */
-    @media(max-width: 480px){
-        .user-profile-sidebar {
-            width:100%;
-        }
-
-        .dropdown-user {
-            left:0;
-            margin-right:-25px !important;
-        }
-
-        #user-profile-name h1 {
-            text-align: center;
-            font-size:30px;
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name button {
-            display:none;
-        }
-
-        #user-profile-badges {
-            text-align:center;
-        }
-
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 110px;
-            width: 110px;
-        }
-    }
-
-    /* Tablet and large desktops */
-    @media(min-width: 768px) and (max-width: 991px) {
-        .user-profile-sidebar {
-            width:100%;
-            position:relative;
-        }
-
-        .user-profile-main-content {
-            margin-left:0;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 120px;
-            width: 120px;
-        }
-
-        #user-profile-name h1  {
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name button {
-            margin: 35px 0 0 0 !important;
-        }
-    }
-<style>

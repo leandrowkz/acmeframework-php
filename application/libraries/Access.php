@@ -140,7 +140,7 @@ class Access {
 
 		// Gets user permissions as array
 		$data = $this->CI->db->query($sql)->row_array(0);
-		$data = isset($data['permission']) ? $data['permission'] : 0;
+		$data = get_value($data, 'permission') != '' ? get_value($data, 'permission') : 0;
 
 		// Adjusts return
 		return ($data > 0) ? true : false;

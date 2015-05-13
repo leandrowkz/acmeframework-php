@@ -191,11 +191,6 @@ $id_menu = get_value($menu, 'id_module_menu');
     </div>
 </form>
 
-<!-- DataTables Plugin -->
-<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
-<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
-
 <script>
 
     // ========

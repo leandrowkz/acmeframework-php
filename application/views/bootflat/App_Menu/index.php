@@ -2,7 +2,7 @@
 
 	<div class="row">
 
-		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+		<div class="col-xs-10 col-sm-10">
 			<h1>
 				<?php echo lang($this->label) ?>
 				<span><?php echo image($this->url_img) ?></span>
@@ -12,14 +12,14 @@
 
 		<?php if ( count($this->menus) > 0 ) {?>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-2 col-sm-2">
 
             <div class="btn-group pull-right clearfix">
 
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-align-justify hidden-lg hidden-md"></i>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-fw fa-cogs hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
-                        <i class="fa fa-align-justify"></i>
+                        <i class="fa fa-fw fa-cogs"></i>
                         <span><?php echo lang('Actions') ?></span>
                         <span class="caret"></span>
                     </div>
@@ -88,7 +88,9 @@
 
 <script>
 
-	// Load all menus based on current group
+	// =====================================
+    // Load all menus based on current group
+    // =====================================
 	$.load_menus = function(group) {
 
 		$.enable_loading();
@@ -111,12 +113,16 @@
 
 	};
 
- 	// Select change value
+ 	// ===================
+    // Select change value
+    // ===================
 	$("#select-groups").change( function() {
 		$.load_menus( $(this).val() );
 	});
 
-	// After load page
+	// ===============
+    // After load page
+    // ===============
 	$.load_menus($("#select-groups").val());
 
 </script>

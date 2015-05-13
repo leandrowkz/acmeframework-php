@@ -2,7 +2,7 @@
 
 	<div class="row">
 
-		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+		<div class="col-xs-10 col-sm-10">
 			<h1>
 				<?php echo lang($this->label) ?>
 				<span><?php echo image($this->url_img) ?></span>
@@ -12,14 +12,14 @@
 
 		<?php if ( count($this->menus) > 0 ) {?>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-2 col-sm-2">
 
             <div class="btn-group pull-right clearfix">
 
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-align-justify hidden-lg hidden-md"></i>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-fw fa-cogs hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
-                        <i class="fa fa-align-justify"></i>
+                        <i class="fa fa-fw fa-cogs"></i>
                         <span><?php echo lang('Actions') ?></span>
                         <span class="caret"></span>
                     </div>
@@ -149,23 +149,31 @@
                     <label style="margin-bottom: 15px;"><?php echo lang('Enable the following forms to the new module') ?></label>
 
 	                <div class="checkbox">
-		                <input type="checkbox" name="forms[]" id="form-insert" value="insert" />
-                        <label for="form-insert">INSERT</label>
+                        <label>
+                            <input type="checkbox" name="forms[]" id="form-insert" value="insert" />
+                            INSERT
+                        </label>
 			        </div>
 
 			        <div class="checkbox">
-                        <input type="checkbox" name="forms[]" id="form-update" value="update" />
-                        <label for="form-update">UPDATE</label>
+                        <label>
+                            <input type="checkbox" name="forms[]" id="form-update" value="update" />
+                            UPDATE
+                        </label>
 			        </div>
 
 			        <div class="checkbox">
-                        <input type="checkbox" name="forms[]" id="form-delete" value="delete" />
-		                <label for="form-delete">DELETE</label>
+                        <label>
+                            <input type="checkbox" name="forms[]" id="form-delete" value="delete" />
+                            DELETE
+                        </label>
 			        </div>
 
 			        <div class="checkbox">
-                        <input type="checkbox" name="forms[]" id="form-view" value="view" />
-			            <label for="form-view">VIEW</label>
+                        <label>
+                            <input type="checkbox" name="forms[]" id="form-view" value="view" />
+                            VIEW
+                        </label>
 			        </div>
 
 	            </div>

@@ -43,8 +43,11 @@ class Error {
 		if ($log_error)
 			$this->CI->logger->log_error($template, $header, $message, $status_code);
 
-		// Load view
-		echo $this->CI->template->load_view('errors/html/' . $template, array('header' => $header, 'message' => $message), true, false);
+		// Set properly error directory
+        $dir = is_cli() ? 'cli' : 'html';
+
+        // Load view
+        echo $this->CI->template->load_view('errors/' . $dir .  '/' . $template, array('header' => $header, 'message' => $message), true, false);
 		exit;
     }
 
@@ -57,7 +60,12 @@ class Error {
     public function show_exception(Exception $exception)
     {
         $this->CI =& get_instance();
-        echo $this->CI->template->load_view('errors/html/error-exception', array('exception' => $exception), true, false);
+
+        // Set properly error directory
+        $dir = is_cli() ? 'cli' : 'html';
+
+        // Load view
+        echo $this->CI->template->load_view('errors/' . $dir . '/error-exception', array('exception' => $exception), true, false);
         exit;
     }
 
@@ -77,11 +85,14 @@ class Error {
 		$severity = ( ! isset($this->levels[$severity])) ? $severity : $this->levels[$severity];
 
 		// Log error on database
-		if($log_error && is_object($this->CI->db))
-			$this->CI->logger->log_error('error_php', lang('PHP Error'), $message . " (filepath: " . $filepath . ", line: " . $line . ")", 500);
+		if ($log_error)
+			$this->CI->logger->log_error('error-php', lang('PHP Error'), $message . " (filepath: " . $filepath . ", line: " . $line . ")", 500);
+
+        // Set properly error directory
+        $dir = is_cli() ? 'cli' : 'html';
 
 		// Load view box (process is not interrupted)
-		echo $this->CI->template->load_view('errors/html/error-php', array('severity' => $severity, 'message' => $message, 'filepath' => $filepath, 'line' => $line), true, false);
+		echo $this->CI->template->load_view('errors/' . $dir . '/error-php', array('severity' => $severity, 'message' => $message, 'filepath' => $filepath, 'line' => $line), true, false);
 	}
 
 	/**
@@ -92,7 +103,12 @@ class Error {
 	public function show_404()
 	{
 		$this->CI =& get_instance();
-		echo $this->CI->template->load_view('errors/html/error-404', array(), true, false);
+
+        // Set properly error directory
+        $dir = is_cli() ? 'cli' : 'html';
+
+        // Load view
+		echo $this->CI->template->load_view('errors/' . $dir . '/error-404', array(), true, false);
 		exit;
 	}
 }

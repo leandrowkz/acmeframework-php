@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="col-xs-10 col-sm-10">
             <h1>
                 <?php echo lang($this->label) ?>
                 <span><?php echo image($this->url_img) ?></span>
@@ -10,7 +10,7 @@
             </h1>
         </div>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-2 col-sm-2">
 
             <div class="pull-right clearfix">
 
@@ -32,97 +32,148 @@
 
 <div class="module-body">
 
-    <div class="user-profile-sidebar">
+    <div class="row">
 
-        <div class="row">
+        <div class="col-sm-3 user-data">
 
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <?php
 
-                <?php
+            $id_user = get_value($user, 'id_user');
+            $url_img = get_value($user, 'url_img');
 
-                $id_user = get_value($user, 'id_user');
-                $url_img = get_value($user, 'url_img');
+            // Adjust thumb
+            if (basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
+                $url_img = tag_replace($url_img);
+            else
+                $url_img = URL_IMG . '/user-unknown.png';
 
-                // Adjust thumb
-                if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
-                    $url_img = tag_replace($url_img);
-                else
-                    $url_img = URL_IMG . '/user-unknown.png';
-                ?>
+            ?>
 
-                <img class="img-circular user-profile-img" src="<?php echo $url_img ?>" />
+            <div class="text-center user-img">
+                <img src="<?php echo $url_img ?>" class="img-circle img-responsive" />
+            </div>
+
+            <h4 class="text-center name">
+
+                <div><i class="fa fa-fw fa-envelope-o"></i> <?php echo get_value($user, 'email') ?></div>
+
+            </h4>
+
+            <a href="<?php echo URL_ROOT ?>/app-user" class="btn btn-md btn-default btn-block"><i class="fa fa-fw fa-arrow-circle-left"></i> <?php echo lang('Back') ?></a>
+
+        </div>
+
+        <div class="col-sm-9 user-profile">
+
+            <h2><?php echo get_value($user, 'name') ?></h2>
+
+            <span class="label label-info cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User group') ?>">
+                <i class="fa fa-fw fa-group"></i>
+                <?php echo get_value($user, 'user_group') ?>
+            </span>
+
+            &nbsp;
+
+            <?php if (get_value($user, 'active') == 'Y') : ?>
+
+            <span class="label label-success cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User status') ?>">
+                <i class="fa fa-fw fa-check-circle"></i>
+                <?php echo lang('Active') ?>
+            </span>
+
+            <?php else : ?>
+
+            <span class="label label-danger cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User status') ?>">
+                <i class="fa fa-fw fa-minus-circle "></i>
+                <?php echo lang('Inactive') ?>
+            </span>
+
+            <?php endif ?>
+
+            <h3>Permissions</h3>
+
+            <div class="permission" style="margin-bottom: 40px;">
+
+                <div class="well">
+
+                    <h4><?php echo get_value($permissions[0], 'module') ?></h4>
+
+                    <?php
+                    $i = 0;
+                    $module = '';
+                    foreach ($permissions as $permission) :
+                    ?>
+
+                    <?php if ($module != get_value($permission, 'module') && $i > 0) : ?>
+                    </div>
+                    <div class="permission" style="margin-bottom: 40px;">
+                        <div class="well">
+                        <h4><?php echo get_value($permission, 'module') ?></h4>
+                    <?php endif ?>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="<?php echo get_value($permission, 'id_module_permission') ?>" <?php echo (get_value($permission, 'has_permission') == 'Y') ? 'checked="checked"' : ''; ?>>
+                            <span><?php echo get_value($permission, 'permission') ?></span>
+                            <span class="text-muted">// <?php echo get_value($permission, 'permission_description') ?></span>
+                            <?php if(get_value($permission, 'permission_observation') != '') { ?>
+                            <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo get_value($permission, 'permission_observation') ?>"></i>
+                            <?php } ?>
+                        </label>
+                    </div>
+
+                    <?php
+                    $module = get_value($permission, 'module');
+                    $i++;
+                    endforeach;
+                    ?>
 
             </div>
 
-        </div>
-
-    </div>
-
-    <div class="user-profile-main-content">
-
-        <div class="row" id="user-profile-name">
-            <div class="col-sm-12">
-                <h1 style="margin-top:0"><?php echo get_value($user, 'name') ?></h1>
             </div>
-        </div>
-
-        <div class="row" style="margin-bottom: 30px ">
-            <div class="col-sm-12 text-top" id="user-profile-badges">
-                <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
-                    <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
-                    <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
-                    <?php } ?>
-                </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
             </div>
-        </div>
-
-        <h3 style="margin: 0 0 30px 0"><?php echo lang('Permissions') ?></h3>
-
-        <div class="permission" style="margin-bottom: 40px;">
-            <h4><?php echo get_value($permissions[0], 'module') ?></h4>
-        <?php
-        $i = 0;
-        $module = '';
-        foreach($permissions as $permission) {
-        ?>
-
-        <?php if($module != get_value($permission, 'module') && $i > 0) { ?>
-        </div>
-        <div class="permission" style="margin-bottom: 40px;">
-            <h4><?php echo get_value($permission, 'module') ?></h4>
-        <?php } ?>
-
-        <div class="checkbox">
-            <input type="checkbox" id="<?php echo get_value($permission, 'id_module_permission') ?>" <?php echo (get_value($permission, 'has_permission') == 'Y') ? 'checked="checked"' : ''; ?>>
-            <label for="<?php echo get_value($permission, 'id_module_permission') ?>">
-                <span><?php echo get_value($permission, 'permission') ?></span>
-                <span class="text-muted">// <?php echo get_value($permission, 'permission_description') ?></span>
-            </label>
-            <?php if(get_value($permission, 'permission_observation') != '') { ?>
-            <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo get_value($permission, 'permission_observation') ?>"></i>
-            <?php } ?>
-        </div>
-
-        <?php
-        $module = get_value($permission, 'module');
-        $i++;
-        }
-        ?>
 
     </div>
 
 </div>
+
+<style>
+
+    .user-data { margin-top: 0px; }
+    .user-data > a.btn { margin-bottom: 15px; }
+    .user-data > div { padding: 0 0 15px; text-align: center; }
+    .user-data img {
+        margin: 0 auto;
+        text-align: center;
+        border: 5px solid #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        width: 170px !important;
+    }
+    .user-data .name {
+        font-size: 14px;
+        line-height: 35px;
+        margin-bottom: 15px;
+        color: #888;
+    }
+    .user-data .name > div { margin-bottom: 5px; }
+    .user-data .name small { color: #aaa; word-break: break-all; }
+    .user-data h4 { margin-bottom: 0; }
+
+    .user-profile h2 { margin-left: -1px; }
+    .user-profile .label { margin-bottom: 20px; font-size: 12px !important; padding: 5px}
+    .user-profile .label:last-child { margin-right: 10px; }
+
+</style>
 
 <script>
 
     // ========
     // Tooltips
     // ========
-    $('body').tooltip({ selector: "[data-toggle=tooltip]" });
+    $('body').tooltip({
+        selector : '[data-toggle=tooltip]',
+        container : 'body'
+    });
 
     // ===========================
     // Click enable field checkbox
@@ -166,139 +217,3 @@
     });
 
 </script>
-
-<style>
-    #user-profile-badges {
-        line-height:30px;
-    }
-
-    .user-profile-actions {
-        margin-top: 20px;
-    }
-
-    .user-profile-actions a {
-        margin-bottom: 10px !important;
-    }
-
-    .user-profile-img {
-        width: 140px;
-        height: 140px;
-        background-size: cover;
-        border-radius: 100px;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-    }
-
-    .user-profile-sidebar {
-        width:150px;
-        position:absolute;
-    }
-
-    .user-profile-main-content {
-        margin-left:180px;
-    }
-
-    /* Mobile devices */
-    @media(max-width: 768px){
-
-        #user-profile-name h1 {
-            text-align: center;
-            font-size:30px;
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name a {
-            display:none;
-        }
-
-        #user-profile-badges {
-            text-align:center;
-        }
-
-        .user-profile-sidebar {
-            width:100%;
-            position:relative;
-        }
-
-        .user-profile-main-content {
-            margin-left:0;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 120px;
-            width: 120px;
-        }
-
-        .list-user-info {
-            margin: 2px 0 0 105px !important
-        }
-    }
-
-    /* Mobile portrait */
-    @media(max-width: 480px){
-        .user-profile-sidebar {
-            width:100%;
-        }
-
-        .dropdown-user {
-            left:0;
-            margin-right:-25px !important;
-        }
-
-        #user-profile-name h1 {
-            text-align: center;
-            font-size:30px;
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name button {
-            display:none;
-        }
-
-        #user-profile-badges {
-            text-align:center;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 110px;
-            width: 110px;
-        }
-    }
-
-    /* Tablet and large desktops */
-    @media(min-width: 768px) and (max-width: 991px) {
-        .user-profile-sidebar {
-            width:100%;
-            position:relative;
-        }
-
-        .user-profile-main-content {
-            margin-left:0;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 120px;
-            width: 120px;
-        }
-
-        #user-profile-name h1  {
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name button {
-            margin: 35px 0 0 0 !important;
-        }
-    }
-</style>

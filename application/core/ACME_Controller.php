@@ -134,24 +134,22 @@ class ACME_Controller extends ACME_Core {
 		// Try to locate the module on database
 		$module = $this->db->from('acm_module')
 						   ->where(array('controller' => $this->controller))
-						   ->get();
+						   ->get()
+						   ->row_array(0);
 
-		if( $module->num_rows() <= 0 ) {
+		if( count($module) <= 0 ) {
 			// There is no modules on database with this name
 			$this->error->show_error(lang('Module not found'), lang('It has been not possible to load the specified module. Make sure the class name is the same registered on database.') . ' Class: ' . $this->controller);
 			exit(0);
 		}
 
-		// Get module object
-		$module = $module->row();
-
 		// Set current object attributes values
-		$this->id_module = $module->id_module;
-		$this->label = lang($module->label);
-		$this->sql_list = $module->sql_list;
-		$this->url_img = tag_replace($module->url_img);
-		$this->description = $module->description;
-		$this->table_name = $module->table_name;
+		$this->id_module = get_value($module, 'id_module');
+		$this->label = lang(get_value($module, 'label'));
+		$this->sql_list = get_value($module, 'sql_list');
+		$this->url_img = tag_replace(get_value($module, 'url_img'));
+		$this->description = get_value($module, 'description');
+		$this->table_name = get_value($module, 'table_name');
 		$this->menus = $this->db->get_where('acm_module_menu', array('id_module' => $this->id_module))->result_array();
 		$this->actions = $this->db->get_where('acm_module_action', array('id_module' => $this->id_module))->result_array();
 
@@ -186,8 +184,16 @@ class ACME_Controller extends ACME_Core {
 
 			// If the type connection is ORACLE so disable the escape identifiers
 			if ( strtolower(DB_DRIVER) == 'oci8' ) {
-				$this->db->_protect_identifiers = false;
-				$this->db->_escape_char = '';
+
+				// If the type connection is ORACLE then disable the escape identifiers
+				// We do this by reflecting object because the DB_Driver class does not
+				// has any setter or getter for this attribute
+				$db  = new ReflectionObject($this->db);
+
+				// Set properly value for _escape_char
+				$_escape_char = $db->getProperty('_escape_char');
+				$_escape_char->setAccessible(TRUE);
+				$_escape_char->setValue($this->db, '');
 			}
 		}
 	}

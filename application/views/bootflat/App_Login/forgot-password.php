@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -31,6 +32,9 @@
     <link href="<?php echo URL_JS ?>/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
     <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
     <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+
+    <!-- Meiomask Plugin -->
+    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
 
     <!-- Plugins Section -->
 
@@ -92,10 +96,13 @@
 
                             <div class="form-group">
                                 <input class="form-control validate[required,custom[email]]" placeholder="<?php echo lang('Enter your email') ?>" type="email" name="email" id="email" autofocus>
+                            </div>
 
-                                <div class="checkbox" style="margin-top: 15px">
+                            <div class="form-group">
+                                <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="validate_human" name="validate_human" class="validate[required]"> <?php echo lang('I am a human being') ?>
+                                        <input type="checkbox" name="validate_human" id="validate-human" class="validate[required]" value="Y" />
+                                        <?php echo lang('I am human') ?>
                                     </label>
                                 </div>
                             </div>

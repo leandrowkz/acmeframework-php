@@ -12,10 +12,10 @@
 |
 */
 $config['protocol']     = 'smtp';
-$config['smtp_host']    = 'ssl://smtp.googlemail.com';
+$config['smtp_host']    = 'ssl://smtp.mailgun.org';
 $config['smtp_port']    = '465';
-$config['smtp_user']    = 'someemail@gmail.com';
-$config['smtp_pass']    = 'somepass';
+$config['smtp_user']    = 'postmaster@sandbox46a5ccffa9164f6889a7df7adc239548.mailgun.org';
+$config['smtp_pass']    = 'dc99f395324d904b22ce590015595d97';
 $config['mailtype']  	= 'html';
 $config['starttls']  	= true;
 $config['newline']   	= "\r\n";

@@ -44,7 +44,7 @@ p { line-height: 25px; }
 /* ======================== */
 .modal-footer button,
 .modal-footer input[type="submit"],
-.modal-footer .btn { margin-left: 10px !important; }
+.modal-footer .btn { margin-left: 15px !important; }
 .form-footer { border-top: 1px solid #ddd; padding-top: 30px; }
 .form-footer button,
 .form-footer input[type="submit"],
@@ -124,65 +124,14 @@ p { line-height: 25px; }
     line-height: 1.33;
 }
 
-/* Base for label styling */
-.checkbox [type="checkbox"]:not(:checked),
-.checkbox [type="checkbox"]:checked {
-    position: absolute;
-    visibility: hidden;
-    display: none;
+.checkbox label, .radio label { padding-left: 20px; min-height: 10px !important; }
+.checkbox input[type=checkbox],
+.checkbox-inline input[type=checkbox] {
+    margin-top: 3px;
 }
-.checkbox [type="checkbox"]:not(:checked) + label,
-.checkbox [type="checkbox"]:checked + label {
-    position: relative;
-    padding-left: 25px;
-    cursor: pointer;
-    min-height: 15px !important;
-    top: 0px;
-}
-/* checkbox aspect */
-.checkbox [type="checkbox"]:not(:checked) + label:before,
-.checkbox [type="checkbox"]:checked + label:before {
-    content: '\f096';
-    font-family: 'fontawesome';
-    position: absolute;
-    left: 0;
-    top: -2px;
-    height: 10px;
-    font-size: 18px;
-}
-/* checked mark aspect */
-.checkbox [type="checkbox"]:not(:checked) + label:after,
-.checkbox [type="checkbox"]:checked + label:after {
-    content: '\f14a';
-    color: #3bafda;
-    font-family: 'fontawesome';
-    position: absolute;
-    top: -3px;
-    left: 0px;
-    height: 10px;
-    font-size: 17px;
-    transition: all .3s;
-}
-/* checked mark aspect changes */
-.checkbox [type="checkbox"]:not(:checked) + label:after {
-    opacity: 0;
-    transform: scale(0);
-}
-.checkbox [type="checkbox"]:checked + label:after {
-    opacity: 1;
-    transform: scale(1);
-}
-/* Disabled checkbox */
-.checkbox [type="checkbox"]:disabled:not(:checked) + label:before,
-.checkbox [type="checkbox"]:disabled:checked + label:before {
-    opacity: 0.6;
-}
-.checkbox [type="checkbox"]:disabled:checked + label:after { opacity: 0.6; }
-.checkbox [type="checkbox"]:disabled + label { opacity: 0.6 }
-/* accessibility */
-.checkbox [type="checkbox"]:checked:focus + label:before,
-.checkbox [type="checkbox"]:not(:checked):focus + label:before {
-    border: 1px dotted blue;
+.radio input[type=radio],
+.radio-inline input[type=radio] {
+    margin-top: 2px;
 }
 
 
@@ -206,6 +155,7 @@ p { line-height: 25px; }
 .icon-invisible { visibility: hidden; }
 .inline { display: inline-block !important; }
 .top { vertical-align: top !important; }
+.panel-heading { font-weight: bold; }
 .panel, .list-group, .well { border-top: 1px solid #e8e8e8; }
 .cursor-default { cursor: default; }
 .cursor-pointer { cursor: pointer; }
@@ -322,6 +272,7 @@ p { line-height: 25px; }
     padding-top: 0;
     vertical-align: middle;
 }
+.navbar-collapse .navbar-nav .dropdown-menu li a  * { font-weight: bold !important; }
 .navbar-brand {
     min-height: 35px;
     height: 35px;
@@ -330,7 +281,7 @@ p { line-height: 25px; }
     line-height: 35px;
     vertical-align: middle;
 }
-.navbar-brand img { margin-top: -5px; max-height: 20px; }
+.navbar-brand img { margin-top: 6px; max-height: 20px; }
 .navbar-brand a { color: #fff; }
 .navbar { min-height: 35px; height : 35px; }
 .navbar-fixed-top .navbar-collapse { margin: 0 -45px 0 -30px !important; }

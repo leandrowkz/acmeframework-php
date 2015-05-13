@@ -34,11 +34,8 @@ class ACME_Exceptions extends CI_Exceptions {
 	{
 		$this->CI =& get_instance();
 
-		// Check if acme is installed so doesnt log on database
-		if ( $this->CI->acme_installed && is_object($this->CI->db) )
-			$log_db = $this->CI->db->database != '' ? true : false;
-		else
-			$log_db = false;
+		// Check if ACME is installed so doesnt log on database
+		$log_db = ( $this->CI->acme_installed && is_object($this->CI->db) );
 
 		// Show error msg
 		$this->CI->error->show_error($header, $message, $error_type, $status_code, $log_db);
@@ -52,18 +49,10 @@ class ACME_Exceptions extends CI_Exceptions {
 	 */
 	public function show_exception(Exception $exception)
 	{
-		//print_r($exception);
-
 		$this->CI =& get_instance();
 
-		// print_r($this->CI);
-		// die;
-
-		// Check if acme is installed so doesnt log on database
-		if ( $this->CI->acme_installed && is_object($this->CI->db) )
-			$log_db = $this->CI->db->database != '' ? true : false;
-		else
-			$log_db = false;
+		// Check if ACME is installed so doesnt log on database
+		$log_db = ( $this->CI->acme_installed && is_object($this->CI->db) );
 
 		// Show exception page
 		$this->CI->error->show_exception( $exception );
@@ -80,15 +69,10 @@ class ACME_Exceptions extends CI_Exceptions {
 	 */
 	public function show_php_error($severity = '', $message = '', $filepath = '', $line = 0)
 	{
-		print_r($message);
-		die;
 		$this->CI =& get_instance();
 
 		// Check if ACME is installed so doesnt log on database
-		if ( $this->CI->acme_installed && is_object($this->CI->db) )
-			$log_db = $this->CI->db->database != '' ? true : false;
-		else
-			$log_db = false;
+		$log_db = ( $this->CI->acme_installed && is_object($this->CI->db) );
 
 		// Show error msg
 		$this->CI->error->show_php_error($this->levels[$severity], $message, $filepath, $line, $log_db);

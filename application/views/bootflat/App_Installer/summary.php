@@ -1,29 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?php echo APP_NAME ?></title>
 
     <!-- Core Scripts - Include with every page -->
-    <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
-    <script src="<?php echo URL_JS ?>/bootstrap.js"></script>
-    <script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
+    <script src="<?php echo URL_JS ?>/jquery-2.1.3.min.js"></script>
+    <script src="<?php echo URL_CSS ?>/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- App Scripts - Include with every page -->
     <script src="<?php echo URL_JS ?>/app-functions.js"></script>
 
-    <!-- Core CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- CSS Assets - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/bootflat/css/bootflat.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
+    <!-- Plugins Section -->
+
+    <!-- Bootbox Plugin -->
+    <script src="<?php echo URL_JS ?>/bootbox/bootbox.min.js"></script>
+
+    <!-- MagicSuggest Plugin -->
+    <link href="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.js"></script>
+
+    <!-- ValidationEngine Plugin -->
+    <link href="<?php echo URL_JS ?>/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
+    <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+
+    <!-- Meiomask Plugin -->
+    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
+
+    <!-- Plugins Section -->
+
+    <!-- CSS Template - Override other styles -->
+    <link href="<?php echo URL_TEMPLATE ?>/styles.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -61,7 +76,7 @@
 
 							<?php
 
-							// get language
+							// Get language
 							$lang = $this->session->userdata('language');
 
 							// Write language name
@@ -81,19 +96,19 @@
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li>
-					        	<a href="javascript:void(0)" class="change-language" id="en_US">
-					        		<input type="radio" name="language" <?php echo $lang == 'en_US' ? 'checked="checked"' : ''; ?> />
-					        		<?php echo lang('English') ?>
-					        	</a>
-					        </li>
-					        <li>
-					            <a href="javascript:void(0)" class="change-language" id="pt_BR">
-					            	<input type="radio" name="language" <?php echo $lang == 'pt_BR' ? 'checked="checked"' : ''; ?> />
-					            	<?php echo lang('Brazilian Portuguese') ?>
-					            </a>
-					        </li>
-						</ul>
+                            <li>
+                                <a href="javascript:void(0)" class="change-language" id="en_US">
+                                    <i class="fa fa-fw text-danger <?php echo $lang == 'en_US' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+                                    <?php echo lang('English') ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="change-language" id="pt_BR">
+                                    <i class="fa fa-fw text-danger <?php echo $lang == 'pt_BR' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+                                    <?php echo lang('Brazilian Portuguese') ?>
+                                </a>
+                            </li>
+                        </ul>
 					</li>
 
                 </ul>
@@ -187,7 +202,7 @@
 							<i class="fa fa-fw fa-check-circle"></i>
 						</h3>
 
-						<h3 style="margin-top: 30px"><?php echo lang('Application') ?> <strong><?php echo APP_NAME ?></strong> <?php echo lang('created with no errors.') ?></h3>
+						<h4 style="margin-top: 30px"><?php echo lang('Application') ?> <strong><?php echo APP_NAME ?></strong> <?php echo lang('created with no errors.') ?></h4>
 
 						<a href="<?php echo URL_ROOT ?>" class="btn btn-lg btn-success" style="margin-top: 30px">
 							<?php echo lang('Go to login page') ?>

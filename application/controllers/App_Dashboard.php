@@ -50,21 +50,21 @@ class App_Dashboard extends ACME_Controller {
 
 		// Error tracker - general errors
 		$args['general_errors'] = $this->db->from('acm_log_error')
-										   ->where(array('error_type' => 'error_general'))
+										   ->where(array('error_type' => 'error-general'))
 								   	  	   ->order_by('log_dtt_ins desc')
 								   		   ->get()
 								   		   ->result_array();
 
 		// Error tracker - php errors
 		$args['php_errors'] = $this->db->from('acm_log_error')
-									   ->where(array('error_type' => 'error_php'))
+									   ->where(array('error_type' => 'error-php'))
 								   	   ->order_by('log_dtt_ins desc')
 									   ->get()
 							   		   ->result_array();
 
 		// Error tracker - db errors
 		$args['db_errors'] = $this->db->from('acm_log_error')
-									   ->where(array('error_type' => 'error_db'))
+									   ->where(array('error_type' => 'error-db'))
 								   	   ->order_by('log_dtt_ins desc')
 									   ->get()
 							   		   ->result_array();

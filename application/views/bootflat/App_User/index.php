@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="col-xs-10 col-sm-10">
             <h1>
                 <?php echo lang($this->label) ?>
                 <span><?php echo image($this->url_img) ?></span>
@@ -10,7 +10,7 @@
             </h1>
         </div>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-2 col-sm-2">
 
             <div class="btn-group pull-right clearfix">
 
@@ -148,11 +148,12 @@
 
     #table-users td { padding-top: 17px !important; }
     #table-users td:first-child img {
+
+        border: 2px solid #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         margin-top: -5px !important;
         width: 30px;
-        height: 30px;
-        background-size: cover;
-        border-radius: 100px;
+        border-radius: 100%;
         -webkit-border-radius: 100px;
         -moz-border-radius: 100px;
     }

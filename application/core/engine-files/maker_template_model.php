@@ -15,26 +15,23 @@
 class <CLASS_NAME>_Model extends CI_Model {
 
 	/**
-	* __construct()
-	* Class constructor.
-	*/
+	 * Class constructor.
+	 */
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
 	/**
-	* example()
-	* Model example method. When some controller invoke by the call
-	* $this-><CLASS_NAME>_Model->example(), this method will be triggered.
-	* @return void
-	*/
+	 * Model example method. When some controller invoke by the call
+	 * $this-><CLASS_NAME>_Model->example(), this method will be triggered.
+	 *
+	 * @return void
+	 */
 	public function example()
 	{
-		// How to manipulate queries
-		/*
-		$sql = "SELECT * FROM table";
-		$data = $this->db->query($sql)->result_array();
-		*/
+		// Below an example of how to manipulate queries
+		// $sql = "SELECT * FROM table";
+		// $data = $this->db->query($sql)->result_array();
 	}
 }

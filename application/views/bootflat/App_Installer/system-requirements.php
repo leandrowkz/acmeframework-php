@@ -1,29 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?php echo APP_NAME ?></title>
 
     <!-- Core Scripts - Include with every page -->
-    <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
-    <script src="<?php echo URL_JS ?>/bootstrap.js"></script>
-    <script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
+    <script src="<?php echo URL_JS ?>/jquery-2.1.3.min.js"></script>
+    <script src="<?php echo URL_CSS ?>/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- App Scripts - Include with every page -->
     <script src="<?php echo URL_JS ?>/app-functions.js"></script>
 
-    <!-- Core CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- CSS Assets - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/bootflat/css/bootflat.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
+    <!-- Plugins Section -->
+
+    <!-- Bootbox Plugin -->
+    <script src="<?php echo URL_JS ?>/bootbox/bootbox.min.js"></script>
+
+    <!-- MagicSuggest Plugin -->
+    <link href="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.js"></script>
+
+    <!-- ValidationEngine Plugin -->
+    <link href="<?php echo URL_JS ?>/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
+    <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+
+    <!-- Meiomask Plugin -->
+    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
+
+    <!-- Plugins Section -->
+
+    <!-- CSS Template - Override other styles -->
+    <link href="<?php echo URL_TEMPLATE ?>/styles.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -61,7 +76,7 @@
 
 							<?php
 
-							// get language
+							// Get language
 							$lang = $this->session->userdata('language');
 
 							// Write language name
@@ -83,14 +98,14 @@
 						<ul class="dropdown-menu">
 							<li>
 					        	<a href="javascript:void(0)" class="change-language" id="en_US">
-					        		<input type="radio" name="language" <?php echo $lang == 'en_US' ? 'checked="checked"' : ''; ?> />
-					        		<?php echo lang('English') ?>
+			        				<i class="fa fa-fw text-danger <?php echo $lang == 'en_US' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+			        				<?php echo lang('English') ?>
 					        	</a>
 					        </li>
 					        <li>
 					            <a href="javascript:void(0)" class="change-language" id="pt_BR">
-					            	<input type="radio" name="language" <?php echo $lang == 'pt_BR' ? 'checked="checked"' : ''; ?> />
-					            	<?php echo lang('Brazilian Portuguese') ?>
+					            	<i class="fa fa-fw text-danger <?php echo $lang == 'pt_BR' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+				            		<?php echo lang('Brazilian Portuguese') ?>
 					            </a>
 					        </li>
 						</ul>
@@ -194,8 +209,10 @@
 							?>
 
 							<li class="list-group-item">
-								<h3 class="pull-left <?php echo $class ?>"><i class="fa fa-fw <?php echo $img ?>"></i></h3>
-			    				<h5 class="list-group-item-heading"><?php echo lang('Path permissions') ?></h5>
+			    				<h5 class="list-group-item-heading">
+			    					<i class="fa fa-fw <?php echo $img ?> <?php echo $class ?>"></i>
+			    					<?php echo lang('Path permissions') ?>
+			    				</h5>
 			    				<div class="list-group-item-text">
 			    					<small class="text-muted"><?php echo $label ?></small>
 			    				</div>
@@ -209,8 +226,10 @@
 							?>
 
 			    			<li class="list-group-item">
-								<h3 class="pull-left <?php echo $class ?>"><i class="fa fa-fw <?php echo $img ?>"></i></h3>
-			    				<h5 class="list-group-item-heading"><?php echo lang('PHP 5.3.5 or superior') ?></h5>
+			    				<h5 class="list-group-item-heading">
+			    					<i class="fa fa-fw <?php echo $img ?> <?php echo $class ?>"></i>
+			    					<?php echo lang('PHP 5.3.5 or superior') ?>
+			    				</h5>
 			    				<div class="list-group-item-text">
 			    					<small class="text-muted"><?php echo $label ?></small>
 			    				</div>
@@ -220,38 +239,45 @@
 								if (get_value($params, 'db_driver') == '') {
 									$class = 'text-primary';
 									$img = 'fa-question-circle';
+									$label = lang('Select a database driver');
 								} else {
 									$class = $php_database_extension ? 'text-success' : 'text-danger';
 									$img = $php_database_extension ? 'fa-check-circle' : 'fa-exclamation-circle';
+									$label = $php_database_extension ? lang('Database driver') . ': ' . get_value($params, 'db_driver') : '<span class="text-danger">' . lang('PHP ' . get_value($params, 'db_driver') . ' extension not found') . '</span>';
 								}
 							?>
 
 			    			<li class="list-group-item">
-								<h3 class="pull-left <?php echo $class ?>"><i class="fa fa-fw <?php echo $img ?>"></i></h3>
-			    				<h5 class="list-group-item-heading"><?php echo lang('PHP database driver') ?></h5>
+
+			    				<h5 class="list-group-item-heading">
+			    					<i class="fa fa-fw <?php echo $img ?> <?php echo $class ?>"></i>
+			    					<?php echo lang('PHP database driver') ?>
+			    				</h5>
+
 			    				<div class="list-group-item-text">
+
+			    					<small class="text-muted"><?php echo $label ?></small>
 
 			    					<form action="<?php echo URL_ROOT ?>/app-installer/system-requirements" name="send_db_driver" class="send-db-driver" method="post">
 
-				    					<div class="checkbox" style="margin-top: 10px">
-								            <label>
-								                <input type="radio" name="db_driver" value="mysqli" <?php echo strtolower(get_value($params, 'db_driver')) == 'mysqli' ? 'checked="checked"' : ''; ?>> MySQL
+				    					<div class="radio" style="margin-top: 10px">
+							                <label>
+							                	<input type="radio" name="db_driver" value="mysqli" <?php echo strtolower(get_value($params, 'db_driver')) == 'mysqli' ? 'checked="checked"' : ''; ?> />
+								            	MySQL
 								            </label>
 								        </div>
 
-								        <div class="checkbox">
-								            <label>
-								                <input type="radio" name="db_driver" value="pgsql" <?php echo strtolower(get_value($params, 'db_driver')) == 'pgsql' ? 'checked="checked"' : ''; ?>> PostgreSQL
+								        <div class="radio">
+								        	<label>
+							                	<input type="radio" name="db_driver" value="pgsql" <?php echo strtolower(get_value($params, 'db_driver')) == 'pgsql' ? 'checked="checked"' : ''; ?> />
+								            	PostgreSQL
 								            </label>
 								        </div>
 
-								        <div class="checkbox">
-								            <label>
-								                <input type="radio" name="db_driver" value="oci8" <?php echo strtolower(get_value($params, 'db_driver')) == 'oci8' ? 'checked="checked"' : ''; ?>>
-								                Oracle
-								                <?php if (strtolower(get_value($params, 'db_driver')) == 'oci8' ) {?>
-								                <small class="oci8-description"><strong>// <?php echo lang('Buy ACME Framework for Oracle databases for only US$ 29,99') ?></strong> | <a href="http://www.acmeframework.org/oracle" target="_blank"><?php echo lang('See details') ?></a></small>
-								                <?php } ?>
+								        <div class="radio">
+							                <label>
+							                	<input type="radio" name="db_driver" value="oci8" <?php echo strtolower(get_value($params, 'db_driver')) == 'oci8' ? 'checked="checked"' : ''; ?> />
+								            	Oracle
 								            </label>
 								        </div>
 
@@ -261,7 +287,7 @@
 			    			</li>
 
 			    			<?php
-								if (get_value($params, 'db_driver') == '' || strtolower(get_value($params, 'db_driver')) == 'oci8' ) {
+								if (get_value($params, 'db_driver') == '' || ! $php_database_extension ) {
 									$class = 'text-primary';
 									$img = 'fa-question-circle';
 									$label = lang('Select a database driver first');
@@ -287,8 +313,10 @@
 							?>
 
 			    			<li class="list-group-item">
-								<h3 class="pull-left <?php echo $class ?>"><i class="fa fa-fw <?php echo $img ?>"></i></h3>
-			    				<h5 class="list-group-item-heading"><?php echo lang('Database server') ?></h5>
+			    				<h5 class="list-group-item-heading">
+			    					<i class="fa fa-fw <?php echo $img ?> <?php echo $class ?>"></i>
+			    					<?php echo lang('Database server') ?>
+			    				</h5>
 			    				<div class="list-group-item-text">
 
 			    					<small class="text-muted"><?php echo $label ?></small>
@@ -382,7 +410,7 @@
 			    		</ul>
 
 			    		<?php
-			    			// disable step button
+			    			// Disable step button
 			    			if( $path_permissions
 			    				&& $php_version
 			    				&& $php_database_extension
@@ -391,7 +419,7 @@
 			    				$label = '';
 			    			} else {
 			    				$disabled = 'disabled="disabled"';
-			    				$label = '<span class="text-muted">&nbsp;&nbsp;' . lang('You must solve all issues before continue') . '</span>';
+			    				$label = '<span class="text-muted">' . lang('You must solve all issues before continue') . '</span>';
 			    			}
 			    		?>
 
@@ -409,12 +437,16 @@
 
 							<input type="hidden" name="db_database" value="<?php echo get_value($params, 'db_database')?>" />
 
-				    		<button type="submit" class="btn btn-lg btn-primary" <?php echo $disabled ?>>
-				    			<?php echo lang('Continue') ?>
-				    			<i class="fa fa-fw fa-arrow-circle-right"></i>
-				    		</button>
+							<div class="form-footer" style="margin-top: 30px">
 
-			    			<?php echo $label ?>
+				    			<button type="submit" class="btn btn-lg btn-success" <?php echo $disabled ?>>
+					    			<?php echo lang('Continue') ?>
+					    			<i class="fa fa-fw fa-arrow-circle-right"></i>
+					    		</button>
+
+					    		<?php echo $label ?>
+
+					    	</div>
 
 						</form>
 
@@ -430,16 +462,64 @@
     </div>
     <!-- /#wrapper -->
 
+    <!-- Loading layer -->
     <div class="loading-layer"></div>
     <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
-	<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>
+    <style>
 
-	<script>
+		.list-group-item-heading { font-size: 16px; margin: 2px 0 4px 0px; }
+		.list-group-item-text { margin-left: 25px; }
+		.line-steps {
+			height: 7px;
+			background-color: #e8e8e8;
+			width: 100%;
+			margin: 30px 0 0 0;
+		}
+		.step {
+			line-height: 60px;
+			vertical-align: middle;
+			text-align: center;
+			height: 60px;
+			width: 60px;
+			background-color: #e8e8e8;
+			border-radius: 100%;
+			color: #999;
+			font-size: 20px;
+			font-weight: bold;
+			margin-top: -34px;
+		}
+		.step.done {
+			color: #fff;
+			background-color: #A0D468
+		}
+		.step-text {
+			margin: 10px 0 0 0;
+			color: #999;
+			font-size: 20px
+		}
+		.step-text.done {
+			color: inherit;
+			font-weight: bold;
+		}
+
+		/* Large desktops */
+		@media(min-width: 1170px) {
+		    .step-one {
+		    	padding-right: 130px;
+		    }
+
+		    .step-three {
+		    	padding-left: 130px;
+		    }
+		}
+
+    </style>
+
+    <script>
 
 		// =====================
-    	// toggle form db params
+    	// Toggle form db params
     	// =====================
     	$('.show-db-params').on('click', function() {
     		$('.db-params').toggleClass('hidden show');
@@ -451,38 +531,29 @@
     	$.container_html();
 
     	// ========
-    	// tooltips
+    	// Tooltips
     	// ========
-    	$('i[data-toggle="tooltip"]').tooltip({
+    	$('body').tooltip({
+    		selector : '[data-toggle="tooltip"]',
     		container : 'body'
     	});
 
-    	// =======
-    	// ichecks
-    	// =======
-	    $('input[type="radio"]').iCheck({
-	        checkboxClass: 'icheckbox_flat-red',
-	        radioClass: 'iradio_flat-red'
-	    });
-
 	    // =================
-	    // click field radio
+	    // Click field radio
 	    // =================
-	    $('input[type=radio]').on('ifChecked ifUnchecked', function () {
-
+	    $('input[type="radio"]').on('click', function () {
 	    	$('form.send-db-driver').submit();
 	    });
 
 	    // =================
-	    // language callback
+	    // Language callback
 	    // =================
 	    $('a.change-language').on('click', function () {
-
 	    	$.change_language_custom($(this).attr('id'));
 	    });
 
 	    // ======================
-	    // custom change language
+	    // Custom change language
 	    // ======================
 		$.change_language_custom = function (language) {
 
@@ -506,79 +577,7 @@
 
 	<style>
 
-		.form-group {
-			margin-bottom: 20px
-		}
 
-		h3.text-success {
-			color: #8CC152;
-		}
-
-		.list-group-item-heading {
-			font-size: 16px;
-			margin: 2px 0 4px 0px;
-		}
-
-		.list-group-item h3 {
-			font-size: 22px;
-			margin: -3px 3px 0 0;
-		}
-
-		.list-group-item h3 i {
-			margin: 0 0 0 -9px;
-		}
-
-		.list-group-item-text {
-			margin-left: 22px;
-		}
-
-		.line-steps {
-			height: 7px;
-			background-color: #e8e8e8;
-			width: 100%;
-			margin: 30px 0 0 0;
-		}
-
-		.step {
-			line-height: 60px;
-			vertical-align: middle;
-			text-align: center;
-			height: 60px;
-			width: 60px;
-			background-color: #e8e8e8;
-			border-radius: 100%;
-			color: #999;
-			font-size: 20px;
-			font-weight: bold;
-			margin-top: -34px;
-		}
-
-		.step.done {
-			color: #fff;
-			background-color: #A0D468
-		}
-
-		.step-text {
-			margin: 10px 0 0 0;
-			color: #999;
-			font-size: 20px
-		}
-
-		.step-text.done {
-			color: inherit;
-			font-weight: bold;
-		}
-
-		/* Large desktops */
-		@media(min-width: 1170px) {
-		    .step-one {
-		    	padding-right: 130px;
-		    }
-
-		    .step-three {
-		    	padding-left: 130px;
-		    }
-		}
 
 	</style>
 

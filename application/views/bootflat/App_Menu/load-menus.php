@@ -26,7 +26,7 @@
 
 				$html .= '<i class="text-success fa fa-fw fa-check-circle" style="display: none; margin-left: 5px"></i>';
 
-				$html .= '<a href="javascript:void(0)" class="menu-delete pull-right hidden"><i class="fa fa-times fa-fw"></i></a>';
+				$html .= '<a href="javascript:void(0)" class="menu-delete pull-right hidden"><i class="fa fa-trash fa-fw"></i></a>';
 
 			$html .= '</div>';
 
@@ -41,7 +41,7 @@
 	}
 ?>
 
-<!-- now, modal menus -->
+<!-- Now, modal menus -->
 <?php
 foreach($form_menus as $menu) {
 $id_menu = get_value($menu, 'id_menu');
@@ -149,7 +149,7 @@ $id_menu = get_value($menu, 'id_menu');
 </form>
 <?php } ?>
 
-<!-- modal to new menu -->
+<!-- Modal to new menu -->
 <form menu="<?php echo URL_ROOT ?>/app-menu/save/insert" method="post" id="new-menu">
 
     <div class="modal fade" id="modal-new-menu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -269,26 +269,20 @@ $id_menu = get_value($menu, 'id_menu');
     </div>
 </div>
 
-<link href="<?php echo URL_CSS ?>/plugins/nestable/nestable.css" rel="stylesheet" type="text/css" />
+<!-- Nestable Plugin -->
+<link href="<?php echo URL_JS ?>/nestable/nestable.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo URL_JS ?>/nestable/jquery.nestable.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
+<?php if ( count($menus) > 0 ) : ?>
 
-<script src="<?php echo URL_JS ?>/plugins/nestable/jquery.nestable.js"></script>
-
-<script src="<?php echo URL_JS ?>/plugins/meiomask/meiomask.js"></script>
-
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
-<?php if( count($menus) > 0 ) { ?>
 <div class="dd"><ol class="dd-list"><?php echo custom_menu_tree($menus); ?></ol></div>
-<?php } else { echo message('info', '', lang('There is no menu items for this group. Click on button New menu above to start adding a new menu.')); } ?>
+
+<?php else : echo message('info', '', lang('There is no menu items for this group. Click on button New menu above to start adding a new menu.')); endif; ?>
 
 <script>
 
     // ===========
-    // popovers :)
+    // Popovers :)
     // ===========
     $('.form-group i').popover( {
         trigger : 'hover',
@@ -303,35 +297,34 @@ $id_menu = get_value($menu, 'id_menu');
     });
 
 	// ==============
-    // nestable items
+    // Nestable items
     // ==============
     $('.dd').nestable({
 
         dropCallback: function(details) {
-
             $.reorder_menu(details.sourceId, details.destId, false);
         }
     });
 
 	// ======================
-	// show delete button 'x'
+	// Show delete button 'x'
 	// ======================
 	$('.dd3-content').on('mouseover mouseout', function() {
 		$(this).find('.menu-delete').toggleClass('show hidden');
 	});
 
 	// ====================================
-	// change current group for insert form
+	// Change current group for insert form
 	// ====================================
 	$('.btn-new-menu').on('click', function () {
 
-		// change label
+		// Change label
 		$('#new-menu .id_user_group').val( $('#select-groups').val() );
 		$('#new-menu .user-group-label').html( $('#select-groups option:selected').text() );
 
 		$.enable_loading();
 
-		// get all menus for this group
+		// Get all menus for this group
 		$.ajax({
             url: $('#URL_ROOT').val() + '/app-menu/group-menus-options/' + $('#select-groups').val(),
             context: document.body,
@@ -352,27 +345,27 @@ $id_menu = get_value($menu, 'id_menu');
 	                return false;
 	            }
 
-	            // set all parent menus options
+	            // Set all parent menus options
 	            $('#new-menu .id_menu_parent').html(json.options);
             }
         });
 	});
 
 	// ====================================
-	// change current group for update form
+	// Change current group for update form
 	// ====================================
 	$('.menu-label').on('click', function () {
 
-		// closest element (current form)
+		// Closest element (current form)
 		var id = $(this).closest('.dd3-item').attr('data-id');
 
-		// change label
+		// Change label
 		$('#modal-menu-' + id + ' .id_user_group').val( $('#select-groups').val() );
 		$('#modal-menu-' + id + ' .user-group-label').html( $('#select-groups option:selected').text() );
 
 		$.enable_loading();
 
-		// get all menus for this group
+		// Get all menus for this group
 		$.ajax({
             url: $('#URL_ROOT').val() + '/app-menu/group-menus-options/' + $('#select-groups').val(),
             context: document.body,
@@ -388,19 +381,19 @@ $id_menu = get_value($menu, 'id_menu');
 
 	            // Check return
 	            if( ! json.return) {
-	       	        // close modal and alert
+	       	        // Close modal and alert
 	                bootbox.alert(json.error);
 	                return false;
 	            }
 
-	            // set all parent menus options and change value
+	            // Set all parent menus options and change value
 	            $('#modal-menu-' + id + ' .id_menu_parent').html(json.options).val( $('#modal-menu-' + id + ' .id_menu_parent_tmp').val() );
             }
         });
 	});
 
 	// ==========================
-    // insert, edit menu callback
+    // Insert, edit menu callback
     // ==========================
     $.submit_callback = function (form, status) {
 
@@ -408,10 +401,10 @@ $id_menu = get_value($menu, 'id_menu');
     	if( ! status)
     		return false;
 
-        // get id
+        // Get id
         var id = form.attr('id');
 
-		// ajax to save this fucking shit
+		// Ajax to save this
 		$.enable_loading();
 
     	$.ajax({
@@ -439,19 +432,19 @@ $id_menu = get_value($menu, 'id_menu');
 
             	// Check return
             	if( ! json.return) {
-            		// close modal and alert
+            		// Close modal and alert
             		form.find('.modal-footer button').click();
             		bootbox.alert(json.error);
             		return false;
             	}
 
-	            // close modal
+	            // Close modal
 	            form.find('.modal-footer button').click();
 
                 // Trigger event to close modal (load area again)
                 form.find('.modal').on('hidden.bs.modal', function () {
 
-                    // load menus again :)
+                    // Load menus again :)
                     $.load_menus($('#select-groups').val());
 
                 });
@@ -463,14 +456,14 @@ $id_menu = get_value($menu, 'id_menu');
     };
 
     // ================
-    // reorder function
+    // Reorder function
     // ================
     $.reorder_menu = function(source, dest, recursion) {
 
         if ( ! recursion)
             $.enable_loading();
 
-        // calculate order properly
+        // Calculate order properly
         var order = $('#menu-item-' + source).prev().attr('order');
 
         if( isNaN(order) )
@@ -499,7 +492,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                     // Check return
                     if( ! json.return) {
-                        // close modal and alert
+                        // Close modal and alert
                         bootbox.alert(json.error);
                         return false;
                     }
@@ -523,11 +516,11 @@ $id_menu = get_value($menu, 'id_menu');
     };
 
     // ====================
-    // remove menu callback
+    // Remove menu callback
     // ====================
     $('.menu-delete').click( function () {
 
-        // get id
+        // Get id
         var id = $(this).closest('.dd3-item').attr('data-id');
 
         // Confirm this shit
@@ -537,7 +530,7 @@ $id_menu = get_value($menu, 'id_menu');
             if( ! result)
                 return;
 
-            // ajax to remove this fucking shit
+            // Ajax to remove this
             $.enable_loading();
 
             $.ajax({
@@ -556,7 +549,7 @@ $id_menu = get_value($menu, 'id_menu');
 
                     // Check return
                     if( ! json.return) {
-                        // close modal and alert
+                        // Close modal and alert
                         bootbox.alert(json.error);
                         return false;
                     }
@@ -571,7 +564,7 @@ $id_menu = get_value($menu, 'id_menu');
     });
 
     // ======================
-    // cancel original submit
+    // Cancel original submit
     // ======================
     $('form').submit(function () {
         return false;
@@ -581,11 +574,9 @@ $id_menu = get_value($menu, 'id_menu');
     // Set validations to all forms
     // ============================
     $('form').validationEngine('attach', {
-
         promptPosition : "bottomRight",
         scroll: false,
         onValidationComplete: function (form, status) { $.submit_callback(form, status); }
-
     });
 
 </script>

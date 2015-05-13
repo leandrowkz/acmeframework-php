@@ -2,19 +2,19 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="col-xs-10 col-sm-10">
             <h1>
                 <?php echo lang('Profile') ?>
-                <span><i class="fa fa-fw fa-user"></i></span>
+                <i class="fa fa-fw fa-user"></i>
                 <small>// <?php echo lang('User information') ?></small>
             </h1>
         </div>
 
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-2 col-sm-2">
 
             <div class="pull-right clearfix">
 
-                <a href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-primary">
+                <a href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo get_value($user, 'id_user') ?>" class="pull-right clearfix btn btn-default">
                     <i class="fa fa-arrow-circle-left hidden-lg hidden-md"></i>
                     <div class="hidden-xs hidden-sm">
                         <i class="fa fa-arrow-circle-left"></i>
@@ -32,266 +32,161 @@
 
 <div class="module-body">
 
-    <div class="user-profile-sidebar">
+    <div class="row">
 
-        <div class="row">
+        <div class="col-sm-3 user-data">
 
-            <div class="col-xs-6 col-sm-6 col-md-12 text-center">
+            <?php
 
-                <?php
+            $id_user = get_value($user, 'id_user');
+            $url_img = get_value($user, 'url_img');
 
-                $id_user = get_value($user, 'id_user');
-                $url_img = get_value($user, 'url_img');
+            // Adjust thumb
+            if (basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
+                $url_img = tag_replace($url_img);
+            else
+                $url_img = URL_IMG . '/user-unknown.png';
 
-                // Ajusta thumb
-                if(basename($url_img) != '' && file_exists(PATH_UPLOAD . '/' . $this->photos_dir . '/' . basename($url_img)))
-                    $url_img = tag_replace($url_img);
-                else
-                    $url_img = URL_IMG . '/user-unknown.png';
-                ?>
+            ?>
 
-                <a href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>">
-                    <img class="img-circular user-profile-img" src="<?php echo $url_img ?>" />
-                </a>
-
+            <div class="text-center user-img">
+                <img src="<?php echo $url_img ?>" class="img-circle img-responsive" />
             </div>
 
-            <div class="user-profile-actions col-xs-6 col-sm-6 col-md-12">
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app-user/edit-profile/<?php echo $id_user ?>"><i class="fa fa-edit fa-fw"></i> <?php echo lang('Edit profile') ?></a>
-                <a class="btn btn-sm btn-primary btn-block" href="<?php echo URL_ROOT ?>/app-user/edit-photo/<?php echo $id_user ?>"><i class="fa fa-picture-o fa-fw"></i> <?php echo lang('Change image')?></a>
-                <a class="btn btn-sm btn-warning btn-block" href="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>"><i class="fa fa-lock fa-fw"></i> <?php echo lang('Change password') ?></a>
-            </div>
+            <h4 class="text-center name">
+
+                <div><i class="fa fa-fw fa-envelope-o"></i> <?php echo get_value($user, 'email') ?></div>
+
+            </h4>
+
+            <a href="<?php echo URL_ROOT ?>/app-user/edit-profile/<?php echo $id_user ?>" class="btn btn-md btn-primary btn-block"><?php echo lang('Edit profile') ?> <i class="fa fa-fw fa-edit"></i></a>
+
+            <a href="<?php echo URL_ROOT ?>/app-user/edit-photo/<?php echo $id_user ?>" class="btn btn-md btn-primary btn-block"><?php echo lang('Change photo') ?> <i class="fa fa-fw fa-picture-o"></i></a>
+
+            <a href="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>" class="btn btn-md btn-warning btn-block"><?php echo lang('Change password') ?> <i class="fa fa-fw fa-unlock-alt"></i></a>
 
         </div>
 
-    </div>
+        <div class="col-sm-9 user-profile">
 
-    <div class="user-profile-main-content">
+            <h2><?php echo get_value($user, 'name') ?></h2>
 
-        <div class="row" id="user-profile-name">
-            <div class="col-sm-12">
-                <h1 style="margin-top: 0"><?php echo get_value($user, 'name') ?></h1>
-            </div>
-        </div>
+            <span class="label label-info cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User group') ?>">
+                <i class="fa fa-fw fa-group"></i>
+                <?php echo get_value($user, 'user_group') ?>
+            </span>
 
-        <div class="row" style="margin-bottom: 30px ">
-            <div class="col-sm-12 text-top" id="user-profile-badges">
-                <div style="vertical-align:top;display:inline-block;margin-top:-1px">
-                    <div class="label label-info cursor-default" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('Group') ?>"><?php echo get_value($user, 'user_group') ?></div>
-                    <?php if(get_value($user, 'active') == 'Y'){ ?>
-                    <div class="label label-success"><i class="fa fa-check-circle fa-fw"></i> <?php echo lang('Active') ?></div>
-                    <?php } else { ?>
-                    <div class="label label-danger"><i class="fa fa-minus-circle fa-fw"></i> <?php echo lang('Inactive') ?></div>
-                    <?php } ?>
-                </div>
-                <div style="display:inline-block;"><i class="fa fa-calendar fa-fw"></i> <?php echo lang('Member since:') . ' ' . get_value($user, 'log_dtt_ins') ?></div>
-            </div>
-        </div>
+            &nbsp;
 
-        <form role="form" action="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>/true" method="post">
+            <?php if (get_value($user, 'active') == 'Y') : ?>
 
-            <h3 style="margin: 0 0 30px 0"><?php echo lang('Change password') ?></h3>
+            <span class="label label-success cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User status') ?>">
+                <i class="fa fa-fw fa-check-circle"></i>
+                <?php echo lang('Active') ?>
+            </span>
 
-            <?php if($password_error) { ?>
-            <div class="row">
+            <?php else : ?>
 
-                <div class="col-sm-12">
+            <span class="label label-danger cursor-default inline" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo lang('User status') ?>">
+                <i class="fa fa-fw fa-minus-circle "></i>
+                <?php echo lang('Inactive') ?>
+            </span>
 
-                    <?php echo message('danger', '', lang('Your current password is not correct. Try again.'), true); ?>
+            <?php endif ?>
 
-                </div>
-
-            </div>
-            <?php } ?>
+            <br />
 
             <div class="row">
 
-                <div class="col-md-7 col-lg-5 col-xs-12 user-info">
+                <div class="col-sm-8 col-xs-12 user-info">
 
-                    <label><?php echo lang('Current password')?>*</label>
-                    <div class="form-group">
-                        <input type="password" class="form-control validate[required]" value="" name="old_pass" id="old_pass" autofocus>
-                    </div>
+                    <form role="form" action="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>/true" method="post">
 
-                    <label><?php echo lang('New password')?>*</label>
-                    <div class="form-group">
-                        <input type="password" class="form-control validate[required,minSize[6]]" name="new_pass" id="new_pass">
-                    </div>
+                        <?php
+                        if($password_error) :
+                            echo message('danger', '', lang('Your current password is not correct. Try again.'), true);
+                        endif;
+                        ?>
 
-                    <label><?php echo lang('Confirm password')?>*</label>
-                    <div class="form-group">
-                        <input type="password" class="form-control validate[required,minSize[6],equals[new_pass]]" name="cnf_pass" id="cnf_pass">
-                    </div>
+                        <div class="form-group">
+                            <label><?php echo lang('Current password')?>*</label>
+                            <input type="password" class="form-control validate[required]" value="" name="old_pass" id="old_pass" autofocus>
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php echo lang('New password')?>*</label>
+                            <input type="password" class="form-control validate[required,minSize[6]]" name="new_pass" id="new_pass">
+                        </div>
+
+                        <div class="form-group">
+                            <label><?php echo lang('Confirm password')?>*</label>
+                            <input type="password" class="form-control validate[required,minSize[6],equals[new_pass]]" name="cnf_pass" id="cnf_pass">
+                        </div>
+
+                        <div class="form-footer">
+                            <button class="btn btn-warning" type="submit"><?php echo lang('Change') ?> <i class="fa fa-fw fa-unlock-alt"></i></button>
+                            <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
+                        </div>
+
+                    </form>
 
                 </div>
 
             </div>
 
-            <div class="row bottom-group-buttons">
-                <div class="col-sm-12">
-                    <input class="btn btn-warning" type="submit" value="<?php echo lang('Change') ?>" />
-                    <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
-                </div>
-            </div>
-
-        </form>
+        </div>
 
     </div>
 
 </div>
 
-<link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+<style>
+
+    .user-data { margin-top: 0px; }
+    .user-data > a.btn { margin-bottom: 15px; }
+    .user-data > div { padding: 0 0 15px; text-align: center; }
+    .user-data img {
+        margin: 0 auto;
+        text-align: center;
+        border: 5px solid #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        width: 170px !important;
+    }
+    .user-data .name {
+        font-size: 14px;
+        line-height: 35px;
+        margin-bottom: 15px;
+        color: #888;
+    }
+    .user-data .name > div { margin-bottom: 5px; }
+    .user-data .name small { color: #aaa; word-break: break-all; }
+    .user-data h4 { margin-bottom: 0; }
+
+    .user-profile h2 { margin-left: -1px; }
+    .user-profile .label { margin-bottom: 20px; font-size: 12px !important; padding: 5px}
+    .user-profile .label:last-child { margin-right: 10px; }
+
+</style>
 
 <script>
 
-    // tooltips
-    $('body').tooltip({ selector: "[data-toggle=tooltip]" });
-
-    // form validation
-    $("form").validationEngine('attach', {promptPosition : "bottomRight"});
-
-    // reposition form validation on window resize
-    $( window ).resize( function () {
-        $("form").validationEngine('updatePromptsPosition');
+    // ========
+    // Tooltips
+    // ========
+    $('body').tooltip({
+        selector: '[data-toggle=tooltip]',
+        container: 'body'
     });
 
+    // ===============
+    // Form validation
+    // ===============
+    $('form').validationEngine('attach', {promptPosition : 'bottomRight'});
+
+    // ===========================================
+    // Reposition form validation on window resize
+    // ===========================================
+    $( window ).resize( function () {
+        $('form').validationEngine('updatePromptsPosition');
+    });
 </script>
-
-<style>
-    #user-profile-badges {
-        line-height:30px;
-    }
-
-    .user-profile-actions {
-        margin-top: 20px;
-    }
-
-    .user-profile-actions a {
-        margin-bottom: 10px !important;
-    }
-
-    .user-profile-img {
-        width: 140px;
-        height: 140px;
-        background-size: cover;
-        border-radius: 100px;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-    }
-
-    .user-profile-sidebar {
-        width:150px;
-        position:absolute;
-    }
-
-    .user-profile-main-content {
-        margin-left:180px;
-    }
-
-    /* Mobile devices */
-    @media(max-width: 768px){
-
-        #user-profile-name h1 {
-            text-align: center;
-            font-size:30px;
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name a {
-            display:none;
-        }
-
-        #user-profile-badges {
-            text-align:center;
-        }
-
-        .user-profile-sidebar {
-            width:100%;
-            position:relative;
-        }
-
-        .user-profile-main-content {
-            margin-left:0;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 120px;
-            width: 120px;
-        }
-
-        .list-user-info {
-            margin: 2px 0 0 105px !important
-        }
-    }
-
-    /* Mobile portrait */
-    @media(max-width: 480px){
-        .user-profile-sidebar {
-            width:100%;
-        }
-
-        .dropdown-user {
-            left:0;
-            margin-right:-25px !important;
-        }
-
-        #user-profile-name h1 {
-            text-align: center;
-            font-size:30px;
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name button {
-            display:none;
-        }
-
-        #user-profile-badges {
-            text-align:center;
-        }
-
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 110px;
-            width: 110px;
-        }
-    }
-
-    /* Tablet and large desktops */
-    @media(min-width: 768px) and (max-width: 991px) {
-        .user-profile-sidebar {
-            width:100%;
-            position:relative;
-        }
-
-        .user-profile-main-content {
-            margin-left:0;
-        }
-
-        .user-profile-actions {
-            margin-top:0;
-        }
-
-        .user-profile-sidebar img {
-            height: 120px;
-            width: 120px;
-        }
-
-        #user-profile-name h1  {
-            margin: 30px 0 0 0 !important;
-        }
-
-        #user-profile-name button {
-            margin: 35px 0 0 0 !important;
-        }
-    }
-<style>

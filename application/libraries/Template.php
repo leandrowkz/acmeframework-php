@@ -71,7 +71,7 @@ class Template {
 	 */
 	public function load_js_file($file = '')
 	{
-		return '<script src="' . URL_JS . '/' . $file . '"></script>' . "\n";
+		return '<script src="' . $file . '"></script>';
 	}
 
 	/**
@@ -83,7 +83,7 @@ class Template {
 	 */
 	public function load_css_file($file = '')
 	{
-		return '<link type="text/css" rel="stylesheet" href="' . URL_CSS . '/' . $file . '" />' . "\n";
+		return '<link href="' . $file . '" type="text/css" rel="stylesheet" />';
 	}
 
 	/**

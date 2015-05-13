@@ -166,15 +166,22 @@ class App_Module_Manager  extends ACME_Controller {
 				$fields = $this->app_module_manager_model->get_form_fields($id_form, $table);
 
 				// Menu/action that points to form
-				if ($operation == 'insert')
-					$args['menu'] = $this->db->get_where('acm_module_menu', "link LIKE '%/form/insert%' AND id_module = $id_module")->row_array(0);
-				else
-					$args['action'] = $this->db->get_where('acm_module_action', "link LIKE '%/form/$operation%' AND id_module = $id_module")->row_array(0);
+				if ($operation == 'insert') :
+					$args['pointer_label'] = 'menu';
+					$args['pointer'] = $this->db->get_where('acm_module_menu', "link LIKE '%/form/insert%' AND id_module = $id_module")->row_array(0);
+				else :
+					$args['pointer_label'] = 'action';
+					$args['pointer'] = $this->db->get_where('acm_module_action', "link LIKE '%/form/$operation%' AND id_module = $id_module")->row_array(0);
+				endif;
 
 				// Vars to view (only for forms)
 				$args['form'] = $form;
 				$args['fields'] = $fields;
 				$args['module'] = $module;
+				$args['operation'] = $operation;
+
+				// Adjust area (turn into 'forms')
+				$area = str_replace('-' . $operation, '', strtolower($area)) . 's';
 
 			break;
 		}

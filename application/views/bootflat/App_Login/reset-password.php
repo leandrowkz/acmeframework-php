@@ -32,6 +32,9 @@
     <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
     <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
 
+    <!-- Meiomask Plugin -->
+    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
+
     <!-- Plugins Section -->
 
     <!-- CSS Template - Override other styles -->
@@ -93,7 +96,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="<?php echo lang('OK, Change my password') ?>" />
+                                <button type="submit" class="btn btn-lg btn-primary btn-block"><?php echo lang('Change my password') ?> <i class="fa fa-fw fa-unlock-alt"></i></button>
                             </div>
 
                         </form>

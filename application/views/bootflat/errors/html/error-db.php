@@ -18,26 +18,6 @@
     <link href="<?php echo URL_CSS ?>/bootflat/css/bootflat.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo URL_CSS ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- Plugins Section -->
-
-    <!-- Bootbox Plugin -->
-    <script src="<?php echo URL_JS ?>/bootbox/bootbox.min.js"></script>
-
-    <!-- MagicSuggest Plugin -->
-    <link href="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.js"></script>
-
-    <!-- Icheck Plugin -->
-    <link href="<?php echo URL_JS ?>/icheck/skins/flat/red.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo URL_JS ?>/icheck/icheck.min.js"></script>
-
-    <!-- ValidationEngine Plugin -->
-    <link href="<?php echo URL_JS ?>/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
-    <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
-    <!-- Plugins Section -->
-
     <!-- CSS Template - Override other styles -->
     <link href="<?php echo URL_TEMPLATE ?>/styles.css" rel="stylesheet" type="text/css" />
 
@@ -45,7 +25,7 @@
         body { padding: 30px; }
         h1, h2, h3, h4 { margin: 0 0 20px; }
         h5 { margin: 0 0 5px; }
-        .panel-body { padding: 30px;}
+        .panel-body { padding: 30px; }
     </style>
 
 </head>
@@ -56,9 +36,9 @@
 
         <div class="panel-body">
 
-            <h3 class="hidden-lg hidden-md"><?php echo lang('Ops! A database error')?></h3>
-            <h2 class="hidden-xs hidden-sm"><?php echo lang('Ops! A database error')?></h2>
-            <h4><?php echo lang('Don\'t worry, this problem has been already forwarded to correction.')?></h4>
+            <h3 class="hidden-lg hidden-md"><?php echo lang('Database Error')?></h3>
+            <h2 class="hidden-xs hidden-sm"><?php echo lang('Database Error')?></h2>
+            <h4><?php echo lang('Do not worry, this problem has been already forwarded to correction.')?></h4>
 
             <?php if(ENVIRONMENT != 'production') : ?>
 
@@ -70,7 +50,7 @@
                         if($msg != '')
                             echo '<div>&bull;&nbsp;' . $msg . '</div>';
                 } else {
-                    echo '<div>> ' . $message . '</div>';
+                    echo '<div>&bull;&nbsp;' . $message . '</div>';
                 }
                 ?>
             </div>

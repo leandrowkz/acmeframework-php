@@ -1,29 +1,44 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><?php echo APP_NAME ?></title>
 
     <!-- Core Scripts - Include with every page -->
-    <script src="<?php echo URL_JS ?>/jquery-1.10.2.js"></script>
-    <script src="<?php echo URL_JS ?>/bootstrap.js"></script>
-    <script src="<?php echo URL_JS ?>/plugins/bootbox/bootbox.min.js"></script>
+    <script src="<?php echo URL_JS ?>/jquery-2.1.3.min.js"></script>
+    <script src="<?php echo URL_CSS ?>/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- App Scripts - Include with every page -->
     <script src="<?php echo URL_JS ?>/app-functions.js"></script>
 
-    <!-- Core CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- CSS Assets - Include with every page -->
+    <link href="<?php echo URL_CSS ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/bootflat/css/bootflat.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo URL_CSS ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- App CSS - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootflat.css" rel="stylesheet">
-    <link href="<?php echo URL_CSS ?>/app-styles.css" rel="stylesheet">
+    <!-- Plugins Section -->
+
+    <!-- Bootbox Plugin -->
+    <script src="<?php echo URL_JS ?>/bootbox/bootbox.min.js"></script>
+
+    <!-- MagicSuggest Plugin -->
+    <link href="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.js"></script>
+
+    <!-- ValidationEngine Plugin -->
+    <link href="<?php echo URL_JS ?>/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
+    <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+
+    <!-- Meiomask Plugin -->
+    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
+
+    <!-- Plugins Section -->
+
+    <!-- CSS Template - Override other styles -->
+    <link href="<?php echo URL_TEMPLATE ?>/styles.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -61,7 +76,7 @@
 
 							<?php
 
-							// get language
+							// Get language
 							$lang = $this->session->userdata('language');
 
 							// Write language name
@@ -81,19 +96,19 @@
 							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li>
-					        	<a href="javascript:void(0)" class="change-language" id="en_US">
-					        		<input type="radio" name="language" <?php echo $lang == 'en_US' ? 'checked="checked"' : ''; ?> />
-					        		<?php echo lang('English') ?>
-					        	</a>
-					        </li>
-					        <li>
-					            <a href="javascript:void(0)" class="change-language" id="pt_BR">
-					            	<input type="radio" name="language" <?php echo $lang == 'pt_BR' ? 'checked="checked"' : ''; ?> />
-					            	<?php echo lang('Brazilian Portuguese') ?>
-					            </a>
-					        </li>
-						</ul>
+                            <li>
+                                <a href="javascript:void(0)" class="change-language" id="en_US">
+                                    <i class="fa fa-fw text-danger <?php echo $lang == 'en_US' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+                                    <?php echo lang('English') ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="change-language" id="pt_BR">
+                                    <i class="fa fa-fw text-danger <?php echo $lang == 'pt_BR' ? 'fa-dot-circle-o' : 'fa-circle-o'; ?>"></i>
+                                    <?php echo lang('Brazilian Portuguese') ?>
+                                </a>
+                            </li>
+                        </ul>
 					</li>
 
                 </ul>
@@ -278,27 +293,24 @@
 
 						    </div>
 
-						    <div class="row" style="margin-top: 20px">
+						    <div class="form-footer">
 
-						    	<div class="col-sm-12">
+							    <button type="submit" class="btn btn-lg btn-success">
+					    			<?php echo lang('Create application') ?>
+					    			<i class="fa fa-fw fa-arrow-circle-right"></i>
+					    		</button>
 
-								    <button type="submit" class="btn btn-lg btn-primary">
-						    			<?php echo lang('Create application') ?>
-						    			<i class="fa fa-fw fa-cogs"></i>
-						    		</button>
+					    		<?php echo lang('or') ?>
 
-						    		&nbsp;
-						    		<?php echo lang('or') ?>
-						    		&nbsp;
+					    		&nbsp;
+					    		&nbsp;
 
-						    		<a href="javascript:void(0)" class="btn btn-md btn-default back-step">
-						    			<?php echo lang('Back') ?>
-						    			<i class="fa fa-fw fa-arrow-circle-left"></i>
-						    		</a>
+					    		<a href="javascript:void(0)" class="btn btn-md btn-default back-step">
+					    			<?php echo lang('Back') ?>
+					    			<i class="fa fa-fw fa-arrow-circle-left"></i>
+					    		</a>
 
-						    	</div>
-
-						    </div>
+				    		</div>
 
 				    	</form>
 
@@ -314,14 +326,59 @@
     </div>
     <!-- /#wrapper -->
 
+    <!-- Loading layer -->
     <div class="loading-layer"></div>
-	<div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
+    <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
-	<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>
-	<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-	<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
+	<style>
+
+		.list-group-item-heading { font-size: 16px; margin: 2px 0 4px 0px; }
+		.list-group-item-text { margin-left: 25px; }
+		.line-steps {
+			height: 7px;
+			background-color: #e8e8e8;
+			width: 100%;
+			margin: 30px 0 0 0;
+		}
+		.step {
+			line-height: 60px;
+			vertical-align: middle;
+			text-align: center;
+			height: 60px;
+			width: 60px;
+			background-color: #e8e8e8;
+			border-radius: 100%;
+			color: #999;
+			font-size: 20px;
+			font-weight: bold;
+			margin-top: -34px;
+		}
+		.step.done {
+			color: #fff;
+			background-color: #A0D468
+		}
+		.step-text {
+			margin: 10px 0 0 0;
+			color: #999;
+			font-size: 20px
+		}
+		.step-text.done {
+			color: inherit;
+			font-weight: bold;
+		}
+
+		/* Large desktops */
+		@media(min-width: 1170px) {
+		    .step-one {
+		    	padding-right: 130px;
+		    }
+
+		    .step-three {
+		    	padding-left: 130px;
+		    }
+		}
+
+    </style>
 
 	<script>
 
@@ -331,22 +388,15 @@
     	$.container_html();
 
     	// ========
-    	// tooltips
+    	// Tooltips
     	// ========
-    	$('i[data-toggle="tooltip"]').tooltip({
+    	$('body').tooltip({
+    		selector : '[data-toggle="tooltip"]',
     		container : 'body'
     	});
 
-    	// =======
-    	// ichecks
-    	// =======
-	    $('input[type="radio"]').iCheck({
-	        checkboxClass: 'icheckbox_flat-red',
-	        radioClass: 'iradio_flat-red'
-	    });
-
 	    // ==================================
-    	// change action and return to step 1
+    	// Change action and return to step 1
     	// ==================================
 	    $('.back-step').on('click', function () {
 
@@ -378,10 +428,9 @@
     	});
 
     	// =================
-	    // language callback
+	    // Language callback
 	    // =================
 	    $('a.change-language').on('click', function () {
-
 	    	$.change_language_custom($(this).attr('id'));
 	    });
 
@@ -407,84 +456,6 @@
 		};
 
 	</script>
-
-	<style>
-
-		.form-group {
-			margin-bottom: 20px
-		}
-
-		h3.text-success {
-			color: #8CC152;
-		}
-
-		.list-group-item-heading {
-			font-size: 16px;
-			margin: 2px 0 4px 0px;
-		}
-
-		.list-group-item h3 {
-			font-size: 22px;
-			margin: -3px 3px 0 0;
-		}
-
-		.list-group-item h3 i {
-			margin: 0 0 0 -9px;
-		}
-
-		.list-group-item-text {
-			margin-left: 22px;
-		}
-
-		.line-steps {
-			height: 7px;
-			background-color: #e8e8e8;
-			width: 100%;
-			margin: 30px 0 0 0;
-		}
-
-		.step {
-			line-height: 60px;
-			vertical-align: middle;
-			text-align: center;
-			height: 60px;
-			width: 60px;
-			background-color: #e8e8e8;
-			border-radius: 100%;
-			color: #999;
-			font-size: 20px;
-			font-weight: bold;
-			margin-top: -34px;
-		}
-
-		.step.done {
-			color: #fff;
-			background-color: #A0D468
-		}
-
-		.step-text {
-			margin: 10px 0 0 0;
-			color: #999;
-			font-size: 20px
-		}
-
-		.step-text.done {
-			color: inherit;
-			font-weight: bold;
-		}
-
-		/* Large desktops */
-		@media(min-width: 1170px) {
-		    .step-one {
-		    	padding-right: 130px;
-		    }
-
-		    .step-three {
-		    	padding-left: 130px;
-		    }
-		}
-
-	</style>
 
 </body>
 

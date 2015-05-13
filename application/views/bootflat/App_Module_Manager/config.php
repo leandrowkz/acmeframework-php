@@ -2,7 +2,7 @@
 
 	<div class="row">
 
-		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+		<div class="col-xs-10 col-sm-10">
 			<h1>
 				<?php echo lang($this->label) ?>
 				<span><?php echo image($this->url_img) ?></span>
@@ -10,7 +10,7 @@
 			</h1>
 		</div>
 
-		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+		<div class="col-xs-2 col-sm-2">
 
 			<div class="pull-right clearfix">
 
@@ -105,35 +105,39 @@
             <!-- Nav tabs -->
             <ul class="nav nav-pills inline" style="margin: 0 0 -10px 15px">
                 <li class="active">
-                    <a href="#permissions-pills" id="permissions" data-toggle="tab"><?php echo lang('Permissions')?> <i class="fa fa-fw fa-shield"></i></a>
+                    <a href="#pill-permissions" data-operation="permissions" data-toggle="tab"><?php echo lang('Permissions')?> <i class="fa fa-fw fa-shield"></i></a>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
                         <?php echo lang('Forms') ?> <i class="fa fa-fw fa-toggle-on"></i> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#form-insert-pills" id="form-insert" data-toggle="tab"><i class="fa fa-fw fa-plus-square"></i> <?php echo lang('Insert') ?></a></li>
-                        <li><a href="#form-update-pills" id="form-update" data-toggle="tab"><i class="fa fa-fw fa-pencil-square"></i> <?php echo lang('Update') ?></a></li>
-                        <li><a href="#form-delete-pills" id="form-delete" data-toggle="tab"><i class="fa fa-fw fa-minus-square"></i> <?php echo lang('Delete') ?></a></li>
-                        <li><a href="#form-view-pills" id="form-view" data-toggle="tab"><i class="fa fa-fw fa-binoculars"></i> <?php echo lang('View') ?></a></li>
+                        <li><a href="#pill-form-insert" data-operation="form-insert" data-toggle="tab"><i class="fa fa-fw fa-plus-square"></i> <?php echo lang('Insert') ?></a></li>
+                        <li><a href="#pill-form-update" data-operation="form-update" data-toggle="tab"><i class="fa fa-fw fa-pencil-square"></i> <?php echo lang('Update') ?></a></li>
+                        <li><a href="#pill-form-delete" data-operation="form-delete" data-toggle="tab"><i class="fa fa-fw fa-minus-square"></i> <?php echo lang('Delete') ?></a></li>
+                        <li><a href="#pill-form-view" data-operation="form-view" data-toggle="tab"><i class="fa fa-fw fa-binoculars"></i> <?php echo lang('View') ?></a></li>
                     </ul>
                 </li>
-                <li><a href="#menus-pills" id="menus" data-toggle="tab"><?php echo lang('Menus')?> <i class="fa fa-fw fa-tasks"></i></a></li>
-                <li><a href="#actions-pills" id="actions" data-toggle="tab"><?php echo lang('Actions')?> <i class="fa fa-fw fa-rocket"></i></a></li>
+                <li><a href="#pill-menus" data-operation="menus" data-toggle="tab"><?php echo lang('Menus')?> <i class="fa fa-fw fa-tasks"></i></a></li>
+                <li><a href="#pill-actions" data-operation="actions" data-toggle="tab"><?php echo lang('Actions')?> <i class="fa fa-fw fa-rocket"></i></a></li>
             </ul>
 
             <hr style="margin: 0;" />
 
             <!-- Tab panes -->
             <div class="tab-content" style="padding: 0">
-                <div class="tab-pane fade active in" id="permissions-pills"></div>
-                <div class="tab-pane fade" id="form-insert-pills"></div>
-                <div class="tab-pane fade" id="form-update-pills"></div>
-                <div class="tab-pane fade" id="form-delete-pills"></div>
-                <div class="tab-pane fade" id="form-view-pills"></div>
-                <div class="tab-pane fade" id="menus-pills"></div>
-                <div class="tab-pane fade" id="actions-pills"></div>
+                <div class="tab-pane fade active in" id="pill-permissions"></div>
+                <div class="tab-pane fade" id="pill-form-insert"></div>
+                <div class="tab-pane fade" id="pill-form-delete"></div>
+                <div class="tab-pane fade" id="pill-form-update"></div>
+                <div class="tab-pane fade" id="pill-form-view"></div>
+                <div class="tab-pane fade" id="pill-menus"></div>
+                <div class="tab-pane fade" id="pill-actions"></div>
             </div>
+
+            <!-- Aditional controls -->
+            <input type="hidden" id="id-form" value="" />
+            <input type="hidden" id="id-module" value="<?php echo get_value($module, 'id_module') ?>" />
 
 	    </div>
 
@@ -141,7 +145,20 @@
 
 </div>
 
+<!-- DataTables Plugin -->
+<script src="<?php echo URL_JS ?>/dataTables/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo URL_JS ?>/dataTables/js/dataTables.bootstrap.js"></script>
+<link href="<?php echo URL_JS ?>/dataTables/css/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
+
 <script>
+
+    // ========
+    // Tooltips
+    // ========
+    $('body').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container : 'body'
+    });
 
     // ======================
 	// Loading pills function
@@ -156,7 +173,8 @@
             cache: false,
             type: 'POST',
             complete : function (data) {
-                $('#' + param + '-pills').html(data.responseText);
+                console.log('#pill-' + param);
+                $('#pill-' + param).html(data.responseText);
                 $.disable_loading();
             }
         });
@@ -167,20 +185,20 @@
 	// Click on pills
     // ==============
 	$('.nav-pills li a').click(function () {
-		if($(this).attr('id') != undefined)
-			$.load_area($(this).attr('id'));
+        if ($(this).attr('data-operation') != undefined)
+		  $.load_area( $(this).attr('data-operation') );
 	});
 
-    // ==================================
-	// First load, yeah, its permissions!
-    // ==================================
+    // ======================
+	// First load Permissions
+    // ======================
 	$.load_area('permissions');
 
     // ===============================
 	// Reposition the alerts from form
     // ===============================
     $( window ).resize( function () {
-        $("form").validationEngine('updatePromptsPosition');
+        $('form').validationEngine('updatePromptsPosition');
     });
 
 </script>
