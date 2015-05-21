@@ -51,8 +51,8 @@ class App_Installer extends ACME_Controller {
 	public function index()
 	{
 		// Checks if acme is already installed
-		//if ( $this->acme_installed )
-			// redirect('app-login');
+		if ( $this->acme_installed )
+			redirect('app-login');
 
 		// Redirects to step one
 		redirect('app-installer/system-requirements');
@@ -66,8 +66,8 @@ class App_Installer extends ACME_Controller {
 	public function system_requirements()
 	{
 		// Checks if acme is already installed
-		// if ( $this->acme_installed )
-			// redirect('app-login');
+		if ( $this->acme_installed )
+			redirect('app-login');
 
 		// Database settings
 		$db_driver = $this->input->post('db_driver');
@@ -254,29 +254,12 @@ class App_Installer extends ACME_Controller {
 			case 'mysql':
 			case 'mysqli':
 
-				// mannually open a link with mysql
+				// Mannually open a link with mysql
 				$link = @mysqli_connect($db_host, $db_user, $db_pass, null, $db_port);
 
 				// If there is an error opening the link
 				if( ! $link)
 					return lang('Error connecting on MySQL server: ') . mysqli_connect_error();
-
-				/*
-				// Checks if given user has all neccessary permissions / grants
-				@mysqli_select_db($link, 'mysql');
-				$result = @mysqli_query($link, "SELECT user, select_priv, insert_priv, create_priv FROM mysql.user WHERE host = '$db_host' AND user = '$db_user'");
-				$result = @mysqli_fetch_assoc($result);
-
-				// Checks privilegies
-				if ( strtolower( $result['select_priv']) != 'y' )
-					return lang('User doesn\'t has permissions for query (SELECT)');
-
-				if ( strtolower( $result['insert_priv']) != 'y' )
-					return lang('User doesn\'t has permissions for insertion (INSERT)');
-
-				if(strtolower( $result['create_priv']) != 'y')
-					return lang('User doesn\'t has permissions for create tables or schemas (CREATE)');
-				*/
 
 				// Checks if schema already exist
 				$result = @mysqli_query($link, "SELECT count(*) AS COUNT_DATABASE FROM information_schema.schemata where schema_name = '$db_database'");
@@ -285,7 +268,7 @@ class App_Installer extends ACME_Controller {
 				if( $result['COUNT_DATABASE'] <= 0 )
 					return lang('Schema does not exist:') . ' <u>' . $db_database . '</u> ';
 
-				// closes connection
+				// Closes connection
 				@mysqli_close($link);
 
 				// There is no errors, you can procced :)
@@ -296,7 +279,7 @@ class App_Installer extends ACME_Controller {
 			// PostgreSQL driver
 			case 'pgsql':
 
-				// mannually open a link with pg
+				// Mannually open a link with pg
 				$connection = "host=$db_host port=$db_port user=$db_user password=$db_pass";
 				$link = @pg_connect($connection);
 
@@ -311,7 +294,7 @@ class App_Installer extends ACME_Controller {
 				if( $result['COUNT_DATABASE'] <= 0 )
 					return lang('Schema does not exist:') . ' <u>' . $db_database . '</u> ';
 
-				// closes connection
+				// Closes connection
 				@pg_close($link);
 
 				// There is no errors, you can procced :)
