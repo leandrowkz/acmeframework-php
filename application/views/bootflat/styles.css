@@ -35,6 +35,7 @@ body, html {
     color: #333;
 }
 h1, h2, h3, h4, h5, h6 { margin-top: 0; }
+h6 { line-height: 20px; }
 hr { border-top: 1px solid #ddd; }
 p { line-height: 25px; }
 

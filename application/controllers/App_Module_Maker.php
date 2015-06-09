@@ -70,7 +70,7 @@ class App_Module_Maker extends ACME_Controller {
 			$controller = $this->input->post('controller');
 
 			// Check if module already exist
-			if( count($this->db->get_where('acm_module', array('controller' => $controller))->row_array(0)) > 0 )
+			if ($this->_module_exists($controller))
 				redirect('app-module-maker/new-module');
 
 			// Get table name
@@ -85,7 +85,7 @@ class App_Module_Maker extends ACME_Controller {
 			$module['sql_list'] = $this->input->post('sql_list');
 			$module['url_img'] = $this->input->post('url_img');
 
-			$this->db->trans_start();
+			// $this->db->trans_start();
 
 			// Insert a module
 			$this->db->insert('acm_module', $module);
@@ -219,7 +219,7 @@ class App_Module_Maker extends ACME_Controller {
 			@mkdir('application/views/' . TEMPLATE . '/' . $controller);
 
 			// Complete all transaction
-			$this->db->trans_complete();
+			// $this->db->trans_complete();
 
 			// Build args for view
 			$args['module'] = $module;
@@ -238,12 +238,32 @@ class App_Module_Maker extends ACME_Controller {
 	 */
 	public function check_controller()
 	{
-		$controller = strtolower($this->input->post('controller'));
+		// The module with given controller name already exist?
+		echo json_encode(array('return' => $this->_module_exists($this->input->post('controller'))));
+	}
 
-		if( $this->db->get_where('acm_module', array('controller' => $controller))->num_rows() > 0)
-			echo json_encode(array('return' => true));
-		else
-			echo json_encode(array('return' => false));
+	/**
+	 * Check if a module exists according with give name. Returns boolean.
+	 *
+	 * @param string controller
+	 * @return boolean
+	 */
+	private function _module_exists($controller = '')
+	{
+		// Build query according with driver
+        switch (strtolower(DB_DRIVER))
+        {
+            // MySQL driver + PostgreSQL driver
+            case 'mysql':
+            case 'mysqli':
+            case 'postgre':
+            case 'oci8':
+                $sql = "SELECT COUNT(*) AS COUNT_MODULE FROM acm_module WHERE LOWER(controller) = LOWER('" . $controller . "')";
+            break;
+        }
+
+        // Module exists?
+        return get_value($this->db->query($sql)->row_array(0), 'count_module') >= 1 ? true : false;
 	}
 
 	/**

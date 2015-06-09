@@ -72,15 +72,23 @@ class ACME_Controller_Model extends CI_Model {
 	public function insert($table = '', $data = array())
 	{
 		// Adjusts columns according with values
-		foreach($data as $column => $value)
+		foreach ($data as $column => $value)
 		{
-			if($value == '')
+			if ($value == '')
 			{
 				$value = 'NULL';
 				$escape = false;
+			}
 
-			} else {
+			else {
 				$escape = true;
+
+				// Adjust date values for Oracle driver
+				if (is_date_format_db($value) && strtolower(DB_DRIVER) == 'oci8')
+				{
+					$escape = false;
+					$value = "TO_DATE('" . $value . "', 'yyyy-mm-dd')";
+				}
 			}
 
 			$this->db->set($column, $value, $escape);
@@ -106,9 +114,17 @@ class ACME_Controller_Model extends CI_Model {
 			{
 				$value = 'NULL';
 				$escape = false;
+			}
 
-			} else {
+			else {
 				$escape = true;
+
+				// Adjust date values for Oracle driver
+				if (is_date_format_db($value) && strtolower(DB_DRIVER) == 'oci8')
+				{
+					$escape = false;
+					$value = "TO_DATE('" . $value . "', 'yyyy-mm-dd')";
+				}
 			}
 
 			$this->db->set($column, $value, $escape);

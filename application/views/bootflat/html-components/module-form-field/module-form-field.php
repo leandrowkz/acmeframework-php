@@ -64,12 +64,6 @@ switch($type) {
 	case 'file':
 	case 'password':
 
-		// Ajusta valor caso tipo seja data
-		if(is_date_format_db($value)) {
-			$date = strtotime($value);
-			$value = date('d/m/Y', $date);
-		}
-
 		$value = 'value="' . $value . '"';
 		$html_field = "<input type=\"$type\" $name $id $class $maxlength $masks $style $javascript $value />";
 

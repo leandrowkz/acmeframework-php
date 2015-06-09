@@ -33,7 +33,7 @@
     <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
 
     <!-- Meiomask Plugin -->
-    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
+    <script src="<?php echo URL_JS ?>/jquery-meiomask/meiomask.js"></script>
 
     <!-- Plugins Section -->
 
@@ -44,6 +44,11 @@
 
 <body>
 
+    <!-- Loading layer -->
+    <div class="loading-layer"></div>
+    <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
+
+    <!-- Application constants hidden inputs -->
     <?php echo app_settings_inputs(); ?>
 
     <div class="wrapper">
@@ -83,10 +88,6 @@
         <div id="page-wrapper"> <?php echo $html ?> </div>
 
     </div>
-
-    <!-- Loading layer -->
-    <div class="loading-layer"></div>
-    <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
 
     <script>
 

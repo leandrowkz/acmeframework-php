@@ -109,7 +109,20 @@
                 },
 
                 "date": {
-                    "regex": /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/,
+                    //  Check if date is valid by leap year
+                    "func": function (field) {
+                       var pattern = new RegExp(/^(\d{4})[\/\-\.](0?[1-9]|1[012])[\/\-\.](0?[1-9]|[12][0-9]|3[01])$/);
+                       var match = pattern.exec(field.val());
+                       if (match == null)
+                           return false;
+
+                       var year = match[1];
+                       var month = match[2]*1;
+                       var day = match[3]*1;
+                       var date = new Date(year, month - 1, day); // because months starts from 0.
+
+                       return (date.getFullYear() == year && date.getMonth() == (month - 1) && date.getDate() == day);
+                    },
                     "alertText": "* Data inválida, deve ser no formato AAAA-MM-DD"
                 },
 

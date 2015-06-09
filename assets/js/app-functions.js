@@ -1,42 +1,43 @@
 /**
-* $.redirect()
-* Redirects the page to the given URL.
-* @param string url
-* @return void
-*/
+ * Redirects the page to the given URL.
+ *
+ * @param string url
+ * @return void
+ */
 $.redirect = function (url) {
     window.location.href = url;
 };
 
 /**
-* $.enable_loading()
-* Shows the loading layer. Recommended for ajax calls.
-* @return void
-*/
+ * Shows the loading layer. Recommended for ajax calls.
+ *
+ * @return void
+ */
 $.enable_loading = function() {
     $(".loading-layer").hide().show();
     $(".loading-box").hide().show();
 };
 
 /**
-* $.disable_loading()
-* Hides the loading layer.
-* @return void
-*/
+ * Hides the loading layer.
+ *
+ * @return void
+ */
 $.disable_loading = function () {
     $(".loading-layer").hide();
     $(".loading-box").hide();
 };
 
 /**
-* $.create_cookie()
-* Creates a cookie.
-* @param string name
-* @param mixed value
-* @param int days
-* @return void
-*/
+ * Creates a cookie.
+ *
+ * @param string name
+ * @param mixed value
+ * @param int days
+ * @return void
+ */
 $.create_cookie = function (name, value, days) {
+
     var expires;
 
     if (days) {
@@ -46,15 +47,16 @@ $.create_cookie = function (name, value, days) {
     } else {
         expires = "";
     }
+
     document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
 };
 
 /**
-* $.read_cookie()
-* Returns a cookie value.
-* @param string name
-* @return mixed value
-*/
+ * Returns a cookie value.
+ *
+ * @param string name
+ * @return mixed value
+ */
 $.read_cookie = function (name) {
     var nameEQ = escape(name) + "=";
     var ca = document.cookie.split(';');
@@ -67,60 +69,59 @@ $.read_cookie = function (name) {
 };
 
 /**
-* $.erase_cookie()
-* @param string name
-* @return void
-*/
+ * Erase a cookie.
+ *
+ * @param string name
+ * @return void
+ */
 $.erase_cookie = function(name) {
     $.create_cookie(name, "", -1);
 };
 
 /**
-* $.container_html()
-* Puts all app content inside a html container.
-* @return void
-*/
+ * Puts all app content inside a html container.
+ *
+ * @return void
+ */
 $.container_html = function () {
 
-    // put all content inside the container
-    if($('.module-header .container').length <= 0) {
+    // Put all content inside the container
+    if ($('.module-header .container').length <= 0) {
         $('.module-header').wrapInner('<div class="container"></div>');
         $('.module-body').wrapInner('<div class="container"></div>');
         $('.navbar-fixed-top').wrapInner('<div class="container"></div>');
-        
-        // set cookie for this shit (365 days)
+
+        // Set cookie for this shit (365 days)
         $.create_cookie('container-html', true, 365);
     } else {
         $('.module-header .container > *').unwrap();
         $('.module-body .container > *').unwrap();
         $('.navbar-fixed-top .container > *').unwrap();
-    
-        // destroy the cookie
+
+        // Destroy the cookie
         $.erase_cookie('container-html');
     }
 };
 
 /**
-* $.change_language()
-* Send an ajax call to controller app_access requesting to change language.
-* After complete, automatically reloads page.
-* @param string language    // en_US, pt_BR, es_ES ...
-* @return void
-*/
+ * Send an ajax call to controller app_access requesting to change language.
+ * After complete, automatically reloads page.
+ *
+ * @param string language    // en_US, pt_BR, es_ES ...
+ * @return void
+ */
 $.change_language = function (language) {
 
     $.enable_loading();
 
     $.ajax({
-        url: $('#URL_ROOT').val() + '/app_access/change_language/' + language,
+        url: $('#URL_ROOT').val() + '/app-login/change-language/' + language,
         context: document.body,
         dataType : 'json',
         cache: false,
         type: 'POST',
         complete : function (data) {
-            
             window.location.reload();
-
         }
     });
 };

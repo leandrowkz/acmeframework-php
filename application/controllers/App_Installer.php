@@ -265,7 +265,7 @@ class App_Installer extends ACME_Controller {
 				$result = @mysqli_query($link, "SELECT count(*) AS COUNT_DATABASE FROM information_schema.schemata where schema_name = '$db_database'");
 				$result = @mysqli_fetch_assoc($result);
 
-				if( $result['COUNT_DATABASE'] <= 0 )
+				if( get_value($result, 'COUNT_DATABASE') <= 0 )
 					return lang('Schema does not exist:') . ' <u>' . $db_database . '</u> ';
 
 				// Closes connection
@@ -291,7 +291,7 @@ class App_Installer extends ACME_Controller {
 				$result = pg_query($link, "SELECT count(*) AS COUNT_DATABASE FROM pg_catalog.pg_database WHERE lower(datname) = lower('$db_database')");
 				$result = pg_fetch_assoc($result);
 
-				if( $result['COUNT_DATABASE'] <= 0 )
+				if( get_value($result, 'COUNT_DATABASE') <= 0 )
 					return lang('Schema does not exist:') . ' <u>' . $db_database . '</u> ';
 
 				// Closes connection

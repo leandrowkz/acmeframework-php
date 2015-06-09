@@ -287,7 +287,7 @@ class App_Module_Manager  extends ACME_Controller {
 				$module = $this->db->get_where('acm_module', array('id_module' => $id_module))->row_array(0);
 
 				$data['id_module'] = $id_module;
-				$data['link'] = '{URL_ROOT}/' . get_value($module, 'controller') . '/form/insert';
+				$data['link'] = '{URL_ROOT}/' . str_replace('_', '-', strtolower( get_value($module, 'controller' ))) . '/form/insert';
 				$data['label'] = lang('Insert');
 				$data['order_'] = 10;
 				$this->db->insert('acm_module_menu', $data);
@@ -355,7 +355,7 @@ class App_Module_Manager  extends ACME_Controller {
 				$module = $this->db->get_where('acm_module', array('id_module' => $id_module))->row_array(0);
 
 				$data['id_module'] = $id_module;
-				$data['link'] = '{URL_ROOT}/' . get_value($module, 'controller') . '/form/' . $action . '/{0}';
+				$data['link'] = '{URL_ROOT}/' . str_replace('_', '-', strtolower( get_value($module, 'controller' ))) . '/form/' . $action . '/{0}';
 				$data['label'] = lang(ucwords($action));
 				$data['order_'] = 10;
 				$this->db->insert('acm_module_action', $data);
@@ -550,8 +550,25 @@ class App_Module_Manager  extends ACME_Controller {
 				$upd['masks'] = $this->input->post('masks');
 				$upd['validations'] = $this->input->post('validations');
 
+				// Adjust fields
+				foreach ($upd as $column => $value) {
+
+					if($value == '')
+					{
+						$value = 'NULL';
+						$escape = false;
+					}
+
+					else {
+						$escape = true;
+					}
+
+					$this->db->set($column, $value, $escape);
+				}
+
 				// Update it
-				$this->db->update('acm_module_form_field', $upd, array('id_module_form_field' => $this->input->post('id_module_form_field')));
+				$this->db->where(array('id_module_form_field' => $this->input->post('id_module_form_field')));
+				$this->db->update('acm_module_form_field');
 			break;
 
 		}

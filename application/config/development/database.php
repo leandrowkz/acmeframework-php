@@ -59,17 +59,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | the query builder class.
 */
 
-$active_group = 'default';
+$active_group = 'postgre';
 $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn'   => '',
-    'hostname' => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = xe)))',
+    'hostname' => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XE)))',
     'port'     => '',
-    'username' => 'acmeframework',
-    'password' => 'acmeframework',
+    'username' => 'acmeframework_1',
+    'password' => 'acme',
     'database' => '',
     'dbdriver' => 'oci8',
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
+);
+
+$db['postgre'] = array(
+    'dsn'   => '',
+    'hostname' => '127.0.0.1',
+    'port'     => '5432',
+    'username' => 'postgres',
+    'password' => 'postgres',
+    'database' => 'acme_01',
+    'dbdriver' => 'postgre',
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
+);
+
+$db['mysqli'] = array(
+    'dsn'   => '',
+    'hostname' => '127.0.0.1',
+    'port'     => '3306',
+    'username' => 'root',
+    'password' => 'mysql',
+    'database' => 'acmeframework-teste-01',
+    'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
     'db_debug' => TRUE,

@@ -88,19 +88,18 @@ $user_img = ( ! file_exists(PATH_UPLOAD . '/user-photos/' . basename($user_img))
 
 <script>
 
-    // bind container html click
+    // Bind container html click
     $('.change-language').on('click', function(e) {
-
         $.change_language($(this).attr('id'));
     });
 
-    // bind container html click
+    // Bind container html click
     $('.container-html').on('click', function(e) {
 
-        // prevent clicking
+        // Prevent clicking
         e.preventDefault();
 
-        // toggle container
+        // Toggle container
         $.container_html();
 
         // Build a pretty checkbox

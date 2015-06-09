@@ -938,14 +938,14 @@ INSERT INTO acm_user_group VALUES (1,'ROOT','Users with application super privil
 /* -----------------------------------------------------
 --  INSERTS for Table acm_user
 ----------------------------------------------------- */
-INSERT INTO acm_user VALUES (1,1,'ACME','leandro.w3c@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,SYSDATE);
+INSERT INTO acm_user VALUES (1,1,'ACME','leandrowkz@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,SYSDATE);
 
 
 <<|SEPARATOR|>>
 /* -----------------------------------------------------
 --  INSERTS for Table acm_user_config
 ----------------------------------------------------- */
-INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app_dashboard');
+INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app-dashboard');
 
 
 <<|SEPARATOR|>>

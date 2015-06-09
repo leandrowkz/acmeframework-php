@@ -96,4 +96,4 @@
     });
 </script>
 
-<?php } else { echo message('info', '', lang('There is no content for this query')); } ?>
+<?php } else { echo message('info', '', '<i class="fa fa-fw fa-info-circle"></i> ' . lang('There is no content for this query') . '.'); } ?>

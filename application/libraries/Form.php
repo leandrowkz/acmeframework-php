@@ -188,14 +188,25 @@ class Form {
 
 				// Custom regex
 				case 'email':
+				case 'fullname':
 				case 'phone':
+				case 'phone-us':
 				case 'url':
-				case 'number':
 				case 'integer':
+				case 'decimal':
 				case 'ipv4':
 				case 'date':
+				case 'date-us':
+				case 'cpf':
+				case 'cnpj':
+				case 'time':
+				case 'hour':
+				case 'credit-card':
+				case 'zip':
+				case 'cep':
 				case 'onlyNumberSp':
 				case 'onlyLetterSp':
+				case 'onlyLetterAccentSp':
 				case 'onlyLetterNumber':
 					$part_two .= $arr_validations[$i] . ',';
 				break;

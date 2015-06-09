@@ -70,7 +70,7 @@
 
             <div class="inline">
 
-                <span>{URL_ROOT}/<?php echo get_value($module, 'controller') ?>/form/<?php echo $operation ?> </span>
+                <span>{URL_ROOT}/<?php echo str_replace('_', '-', strtolower( get_value($module, 'controller' ))) ?>/form/<?php echo $operation ?> </span>
 
                 &nbsp;
 
@@ -335,22 +335,27 @@ foreach ($fields as $field) :
                                 <div class="form-group">
                                     <label><?php echo lang('Masks') ?></label>
                                     <i class="popover-masks fa fa-question-circle fa-fw cursor-pointer"></i>
+                                    <a href="https://github.com/fabiomcosta/jquery-meiomask" tabindex="-1" target="_blank" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('See Meiomask docs') ?>"><i class="fa fa-fw fa-book"></i></a>
                                     <textarea class="form-control masks"><?php echo get_value($field, 'masks') ?></textarea>
                                     <div class="list-masks hide">
+                                        <h6 class="text-bold"><?php echo lang("Enter masks separated by semicolon ';'") ?></h6>
+                                        <hr />
+                                        <div style="max-height: 170px; overflow-y: auto">
                                         <small>
-                                            <div><?php echo lang('Enter masks separated by semicolon') ?></div>
-                                            <div><strong>phone:</strong> (99) 9999.9999</div>
+                                            <div><strong>phone:</strong> (99) 99999-9999</div>
+                                            <div><strong>phone-us:</strong> (999) 999-9999</div>
                                             <div><strong>cpf:</strong> 999.999.999-99</div>
                                             <div><strong>cnpj:</strong> 99.999.999/9999-99</div>
-                                            <div><strong>date:</strong> 39/19/9999</div>
+                                            <div><strong>date:</strong> 9999-19-39</div>
+                                            <div><strong>date-us:</strong> 19/39/9999</div>
                                             <div><strong>cep:</strong> 99999-999</div>
-                                            <div><strong>hour:</strong> 29:59</div>
                                             <div><strong>time:</strong> 99:99</div>
-                                            <div><strong>cc (credit card):</strong> 9999 9999 9999 9999</div>
-                                            <div><strong>integer:</strong> 999999999999999999</div>
-                                            <div><strong>numeric:</strong> 99.999.999.999.999</div>
-                                            <div><strong>decimal:</strong> 99,999.999.999.999</div>
+                                            <div><strong>hour:</strong> 29:59</div>
+                                            <div><strong>credit-card:</strong> 9999 9999 9999 9999</div>
+                                            <div><strong>integer:</strong> 99999999999999999</div>
+                                            <div><strong>decimal:</strong> 999999999999999.99</div>
                                         </small>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -360,32 +365,50 @@ foreach ($fields as $field) :
 
                                 <div class="form-group">
                                     <label><?php echo lang('Validations') ?></label>
+
                                     <i class="popover-validations fa fa-question-circle fa-fw cursor-pointer"></i>
+                                    <a href="http://posabsolute.github.io/jQuery-Validation-Engine/" tabindex="-1" target="_blank" data-toggle="tooltip" data-placement="right" data-original-title="<?php echo lang('See Validation Engine docs') ?>"><i class="fa fa-fw fa-book"></i></a>
                                     <textarea class="form-control validations"><?php echo get_value($field, 'validations') ?></textarea>
                                     <div class="list-validations hide">
+                                        <h6 class="text-bold"><?php echo lang("Enter validations separated by semicolon ';'") ?></h6>
+                                        <hr />
+                                        <div style="max-height: 170px; overflow-y: auto">
                                         <small>
-                                            <div><?php echo lang('Enter validations separated by semicolon') ?></div>
-                                            <div><strong>required:</strong> <?php echo lang('mandatory field') ?></div>
-                                            <div><strong>email:</strong> <?php echo lang('email validator') ?></div>
-                                            <div><strong>phone:</strong> <?php echo lang('phone validator') ?></div>
-                                            <div><strong>url:</strong> <?php echo lang('URL validator') ?></div>
-                                            <div><strong>decimal:</strong> <?php echo lang('double/float values') ?></div>
-                                            <div><strong>integer:</strong> <?php echo lang('integer numbers only') ?></div>
-                                            <div><strong>ipv4:</strong> <?php echo lang('IP addresses') ?></div>
+                                            <div><strong>phone:</strong> <?php echo lang('Almost all phone numbers validator') ?></div>
+                                            <div><strong>phone-us:</strong> <?php echo lang('Almost all phone numbers validator') ?></div>
+                                            <div><strong>cpf:</strong> <?php echo lang('CPF validator') ?></div>
+                                            <div><strong>cnpj:</strong> <?php echo lang('CNPJ validator') ?></div>
                                             <div><strong>date:</strong> <?php echo lang('dates on format YYYY-MM-DD') ?></div>
-                                            <div><strong>onlyLetterSp:</strong> <?php echo lang('only letters') ?></div>
-                                            <div><strong>onlyNumberSp:</strong> <?php echo lang('only numbers') ?></div>
-                                            <div><strong>onlyLetterNumber:</strong> <?php echo lang('only letters and numbers, no spacing') ?></div>
-                                            <div><strong>equals[field-id]:</strong> <?php echo lang('compare the value with another field id value, like password') ?></div>
-                                            <div><strong>minCheckbox[7]:</strong> <?php echo lang('min checkboxes to be checked') ?></div>
-                                            <div><strong>maxCheckbox[7]:</strong> <?php echo lang('max checkboxes to be checked') ?></div>
+                                            <div><strong>date-us:</strong> <?php echo lang('dates on format MM/DD/YYYY') ?></div>
+                                            <div><strong>cep:</strong> <?php echo lang('CEP validator') ?></div>
+                                            <div><strong>time:</strong> <?php echo lang('time validator') ?></div>
+                                            <div><strong>hour:</strong> <?php echo lang('hour validator') ?></div>
+                                            <div><strong>credit-card:</strong> <?php echo lang('credit card format validator') ?></div>
+                                            <div><strong>integer:</strong> <?php echo lang('integer numbers') ?></div>
+                                            <div><strong>decimal:</strong> <?php echo lang('double/float values') ?></div>
+                                            <hr />
+                                            <div><strong>required:</strong> <?php echo lang('mandatory field') ?></div>
+                                            <div><strong>minSize[7]:</strong> <?php echo lang('size of field value must be at least the same of the given parameter [7]') ?></div>
+                                            <div><strong>maxSize[7]:</strong> <?php echo lang('size of field value must be max of the given parameter [7]') ?></div>
                                             <div><strong>min[7]:</strong> <?php echo lang('check if the field value is less than the given parameter [7]') ?></div>
                                             <div><strong>max[7]:</strong> <?php echo lang('check if the field value is more than the given parameter [7]') ?></div>
                                             <div><strong>past[NOW or date YYYY-MM-DD]:</strong> <?php echo lang('check if value is in the past of given date') ?></div>
                                             <div><strong>future[NOW or date YYYY-MM-DD]:</strong> <?php echo lang('check if value is in the future of given date') ?></div>
-                                            <div><strong>minSize[7]:</strong> <?php echo lang('size of field value must be at least the same of the given parameter [7]') ?></div>
-                                            <div><strong>maxSize[7]:</strong> <?php echo lang('size of field value must be max of the given parameter [7]') ?></div>
+                                            <div><strong>minCheckbox[7]:</strong> <?php echo lang('min checkboxes to be checked') ?></div>
+                                            <div><strong>maxCheckbox[7]:</strong> <?php echo lang('max checkboxes to be checked') ?></div>
+                                            <div><strong>equals[field-id]:</strong> <?php echo lang('compare the value with another field id value, like password') ?></div>
+                                            <div><strong>email:</strong> <?php echo lang('email validator') ?></div>
+                                            <div><strong>fullname:</strong> <?php echo lang('Name and surname validator') ?></div>
+                                            <div><strong>zip:</strong> <?php echo lang('ZIP Code validator') ?></div>
+                                            <div><strong>ipv4:</strong> <?php echo lang('IP addresses') ?></div>
+                                            <div><strong>url:</strong> <?php echo lang('URL validator') ?></div>
+                                            <div><strong>onlyNumberSp:</strong> <?php echo lang('only numbers') ?></div>
+                                            <div><strong>onlyLetterSp:</strong> <?php echo lang('only letters') ?></div>
+                                            <div><strong>onlyLetterAccentSp:</strong> <?php echo lang('only letters (accent allowed)') ?></div>
+                                            <div><strong>onlyLetterNumber:</strong> <?php echo lang('only letters and numbers, no spacing') ?></div>
+                                            <div><strong>className:</strong> <?php echo lang('Valid class name') ?></div>
                                         </small>
+                                        </div>
                                     </div>
                                 </div>
 

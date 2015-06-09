@@ -302,29 +302,29 @@ INSERT INTO acm_user_group VALUES (1,'ROOT','Users with application super privil
 /* -----------------------------------------------------
 --  INSERTS for Table acm_user
 -- -------------------------------------------------- */
-INSERT INTO acm_user VALUES (1,1,'ACME','leandro.w3c@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,CURRENT_TIMESTAMP);
+INSERT INTO acm_user VALUES (1,1,'ACME','leandrowkz@gmail.com','7c58c7b6630b6c2377b41a0c56cea568',NULL,NULL,CURRENT_TIMESTAMP);
 
 
 <<|SEPARATOR|>>
 /* -----------------------------------------------------
 --  INSERTS for Table acm_user_config
 -- -------------------------------------------------- */
-INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app_dashboard');
+INSERT INTO acm_user_config VALUES (1,1,'en_US',NULL,NULL,'{URL_ROOT}/app-dashboard');
 
 
 <<|SEPARATOR|>>
 /* -----------------------------------------------------
 --  INSERTS for Table acm_menu
 -- -------------------------------------------------- */
-INSERT INTO acm_menu VALUES (2,NULL,1,NULL,'{URL_ROOT}/App_Dashboard',NULL,'<i class="fa fa-fw fa-home"></i>',10);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (2,NULL,1,NULL,'{URL_ROOT}/app-dashboard',NULL,'<i class="fa fa-fw fa-home"></i>',10);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (1,NULL,1,'System',NULL,NULL,'<i class="fa fa-fw fa-cog"></i>',20);<<|SEPARATOR|>>
 INSERT INTO acm_menu VALUES (3,1,1,'Modules',NULL,NULL,'<i class="fa fa-fw fa-cube"></i>',30);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (4,3,1,'Administration','{URL_ROOT}/App_Module_Manager/',NULL,'<i class="fa fa-fw fa-cubes"></i>',40);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (5,3,1,'Module maker','{URL_ROOT}/App_Module_Maker/',NULL,'<i class="fa fa-fw fa-flask"></i>',50);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (6,1,1,'Settings','{URL_ROOT}/App_Config/',NULL,'<i class="fa fa-fw fa-cogs"></i>',60);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (7,1,1,'Logs','{URL_ROOT}/App_Log/',NULL,'<i class="fa fa-fw fa-tags"></i>',70);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (8,1,1,'Menus','{URL_ROOT}/App_Menu/',NULL,'<i class="fa fa-fw fa-tasks"></i>',80);<<|SEPARATOR|>>
-INSERT INTO acm_menu VALUES (9,1,1,'Users','{URL_ROOT}/App_User/',NULL,'<i class="fa fa-fw fa-users"></i>',90);
+INSERT INTO acm_menu VALUES (4,3,1,'Administration','{URL_ROOT}/app-module-manager/',NULL,'<i class="fa fa-fw fa-cubes"></i>',40);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (5,3,1,'Module maker','{URL_ROOT}/app-module-maker/',NULL,'<i class="fa fa-fw fa-flask"></i>',50);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (6,1,1,'Settings','{URL_ROOT}/app-config/',NULL,'<i class="fa fa-fw fa-cogs"></i>',60);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (7,1,1,'Logs','{URL_ROOT}/app-log/',NULL,'<i class="fa fa-fw fa-tags"></i>',70);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (8,1,1,'Menus','{URL_ROOT}/app-menu/',NULL,'<i class="fa fa-fw fa-tasks"></i>',80);<<|SEPARATOR|>>
+INSERT INTO acm_menu VALUES (9,1,1,'Users','{URL_ROOT}/app-user/',NULL,'<i class="fa fa-fw fa-users"></i>',90);
 
 
 
