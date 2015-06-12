@@ -64,12 +64,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn'   => '',
-    'hostname' => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521)) (CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = XE)))',
-    'port'     => '',
-    'username' => 'acmeframework_1',
-    'password' => 'acme',
-    'database' => '',
-    'dbdriver' => 'oci8',
+    'hostname' => '127.0.0.1',
+    'port'     => '5432',
+    'username' => 'homestead',
+    'password' => 'secret',
+    'database' => 'acmeframework-test-01',
+    'dbdriver' => 'postgre',
     'dbprefix' => '',
     'pconnect' => FALSE,
     'db_debug' => TRUE,

@@ -303,4 +303,225 @@ class App_Module_Maker extends ACME_Controller {
 		else
 			return false;
 	}
+
+	/**
+	 * This is a very useful action. It catch all lang() function calls from
+	 * every file on entire project and build a language file containing all
+	 * translatable indexes.
+	 *
+	 * BE CAREFUL: THIS FUNCTION ERASE ALL CONTENT OF LANGUAGE FILES.
+	 *
+	 * @return void
+	 */
+	/*
+	 *
+	public function build_translation_file()
+	{
+		set_time_limit(0);
+
+		$this->load->helper('file');
+
+		$lang_calls = array();
+		$lang_indexes = array();
+
+		// First foreach all project files
+		foreach(get_filenames('application', true) as $key => $file) {
+
+			// get content of current file
+			$content = read_file($file);
+
+			// match any call of lang()
+			if(preg_match_all('/lang[ ]*[(][ ]*[\'"][^\'")]*[\'"][ ]*[)]/i', $content, $matches))
+			{
+
+				// For every match, put inside array of indexes and indexes per file
+				foreach($matches[0] as $key => $match) {
+
+					// Translatable array
+					$lang_indexes[] = $match;
+
+					// List every call per file
+					$lang_calls[str_replace(getcwd() . '/', '', $file)][] = $match;
+
+				}
+
+			}
+		}
+
+		// Remove duplicate keys
+		$lang_indexes = array_unique($lang_indexes);
+
+		// Order indexes
+		natsort($lang_indexes);
+
+		// Content of new file
+		$before = '';
+		$content = "<?php\n\n// Application language indexes";
+
+		// Now put in the new file the array of translatable indexes
+		foreach ($lang_indexes as $key => $match) {
+
+			$match = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $match), ') ');
+			$content .= "\n" . '$lang[' . $match . '] = ' . $match . ';';
+
+		}
+
+		// Now insert on translate file all calls grouped by file, just for reading
+		foreach ($lang_calls as $file => $matches) {
+
+			if($file != $before)
+				$content .= "\n\n// File " . $file;
+
+			foreach ($matches as $key => $match) {
+
+				$match = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $match), ') ');
+
+				$content .= "\n" . '// -> $lang[' . $match . '] = ' . $match . ';';
+			}
+		}
+
+		// create files
+		$languages = array('pt_BR', 'en_US');
+
+		foreach($languages as $language)
+			file_put_contents('application/language/' . $language . '/app_lang.php', $content);
+	}
+	*/
+
+	/**
+	 * This is a very useful action. It catch all lang() function calls from
+	 * every file on entire project and update current app_lang.php files located
+	 * under application/language directory.
+	 *
+	 * @return void
+	 */
+	public function update_translation_file()
+	{
+		// This may took a while
+		set_time_limit(0);
+
+		// Needed helper for read and write files
+		$this->load->helper('file');
+
+		// Necessary vars
+		$current_lang = $this->session->userdata('language');
+		$available_langs = array('pt_BR', 'en_US');
+		$file_calls = array();
+		$lang_calls = array();
+		$lang_indexes = array();
+
+		// First foreach all project files
+		foreach(get_filenames('application', true) as $key => $file) {
+
+			// Get content of current file
+			$content = read_file($file);
+
+			// Match any call of lang()
+			if (preg_match_all('/lang[ ]*[(][ ]*[\'"][^\'")]*[\'"][ ]*[)]/i', $content, $matches)) {
+
+				// For every match, put inside array of indexes
+				foreach ($matches[0] as $key => $match) {
+
+					// lang()
+					$lang_calls[] = $match;
+
+					// lang() per file
+					$file_calls[str_replace(getcwd() . '/', '', $file)][] = $match;
+				}
+			}
+		}
+
+		// Adjust lang calls to indexes
+		foreach ($lang_calls as $key => $value) {
+
+			// Remove "lang()" from string keepping only index
+			$value = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $value), ') \'');
+
+			// Build the new file idxs
+			$lang_indexes[$value] = $value;
+		}
+
+		// Update app_lang.php for each available language
+		foreach ($available_langs as $language) {
+
+			// Load app language file (located at /application/lang)
+			$this->lang->load('app', $language);
+
+			// Merge all indexes with current language indexes
+			// so that way keep current indexes values without changes
+			$new_indexes = array_merge($lang_indexes, $this->lang->language);
+			array_multisort(array_keys($new_indexes), SORT_NATURAL, $new_indexes);
+
+			// Unique
+			$new_indexes = array_unique($new_indexes);
+
+			// Content of new file
+			$content = "<?php\n\n// Application language indexes";
+
+			// Now put in the new file the array of translatable indexes
+			foreach ($new_indexes as $key => $value)
+				$content .= "\n" . '$lang[\'' . addslashes($key) . '\'] = \'' . addslashes($value) . '\';';
+
+			// Now insert on translate file all calls grouped by file, just for reading
+			foreach ($file_calls as $file => $calls) {
+
+				// File name
+				$content .= "\n\n// File " . $file;
+
+				// File calls
+				foreach ($calls as $key => $value) {
+					$value = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $value), ')\' ');
+					$content .= "\n" . '// => ' . $value;
+				}
+			}
+
+			// DEBUG:
+			// echo '<h1>FILE ' . $language . '</h1><br />';
+			// echo '<pre>' . $content . '</pre>';
+			// echo '<br /><br />';
+			// die;
+
+			// Write to the new file
+			file_put_contents('application/language/' . $language . '/app_lang.php', $content);
+		}
+
+		// Back to previous language
+		$this->lang->load('app', $current_lang);
+
+		// echo '<br /><br /><h1>--- ALL FILE INDEXES --- ' . count($final_indexes) . '</h1> <br/>';
+		// foreach ($final_indexes as $idx => $vle)
+		// 	echo $idx . ' => ' . $vle . '<br />';
+
+		// echo '<br /><br /><h1>--- CURRENT INDEXES --- ' . count($this->lang->language) . '</h1> <br/>';
+		// foreach ($this->lang->language as $idx => $vle)
+		// 	echo $idx . ' => ' . $vle . '<br />';
+
+		// $new_indexes = array_merge($final_indexes, $this->lang->language);
+		// array_multisort(array_keys($new_indexes), SORT_NATURAL, $new_indexes);
+		// echo '<br /><br /><h1>--- MERGED INDEXES ---' . count($new_indexes) . '</h1> <br/>';
+		// foreach ($new_indexes as $idx => $vle)
+		// 	echo $idx . ' => ' . $vle . '<br />';
+
+		// die;
+
+		// // Now insert on translate file all calls grouped by file, just for reading
+		// foreach ($lang_calls as $file => $matches) {
+
+		// 	if($file != $before)
+		// 		$content .= "\n\n// File " . $file;
+
+		// 	foreach ($matches as $key => $match) {
+
+		// 		$match = trim(preg_replace('/lang[ ]?[(][ ]?/i', '', $match), ') ');
+
+		// 		$content .= "\n" . '// -> $lang[' . $match . '] = ' . $match . ';';
+		// 	}
+		// }
+
+		// // create files
+		// $languages = array('pt_BR', 'en_US');
+
+		// foreach($languages as $language)
+
+	}
 }

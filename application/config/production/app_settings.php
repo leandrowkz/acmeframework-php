@@ -11,7 +11,7 @@
 | ready to use in a global level.
 |
 */
-$config['APP_NAME'] = 'Application 3.0.0 - ORACLE';		// application name
+$config['APP_NAME'] = 'Application 3.0.0';		// application name
 $config['TEMPLATE'] = 'bootflat';			// current template (inside /views)
 $config['LANGUAGE'] = 'en_US';				// default language
 $config['EMAIL_FROM'] = 'noreply@app';		// to send emails

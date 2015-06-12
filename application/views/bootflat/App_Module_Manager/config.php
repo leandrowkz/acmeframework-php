@@ -100,7 +100,7 @@
 
             </div>
 
-            <h3 class="inline">Module features</h3>
+            <h3 class="inline"><?php echo lang('Module features') ?></h3>
 
             <!-- Nav tabs -->
             <ul class="nav nav-pills inline" style="margin: 0 0 -10px 15px">
