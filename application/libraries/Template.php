@@ -47,6 +47,24 @@ class Template {
 	}
 
 	/**
+	 * Alias for load_view().
+	 * Keeped for compatibility reasons.
+	 *
+	 * @param string page
+	 * @param array vars
+	 * @param boolean return_html
+	 * @param boolean load_master_page
+	 * @return mixed
+	 */
+	public function load_page($page = '', $arr_vars = array(), $return_html = false, $load_master_page = true)
+	{
+		if ( ! $return_html)
+			$this->load_view($page, $arr_vars, $return_html, $load_master_page);
+		else
+			return $this->load_view($page, $arr_vars, $return_html, $load_master_page);
+	}
+
+	/**
 	 * Loads a HTML component located inside the path defined by PATH_HTML_COMPONENTS
 	 * constant. The second parameter is all variables must be available inside this
 	 * component.

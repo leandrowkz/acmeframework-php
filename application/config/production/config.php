@@ -29,7 +29,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +71,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'en_US';
 
 /*
 |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ $config['enable_hooks'] = FALSE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = 'ACME_';
 
 /*
 |--------------------------------------------------------------------------
@@ -358,7 +358,7 @@ $config['encryption_key'] = '';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = FCPATH . 'application/sessions';
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
@@ -498,3 +498,23 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+/*
+|--------------------------------------------------------------------------
+| ACME Autoload classes
+|--------------------------------------------------------------------------
+|
+| This section is called every time that a class is not located in default
+| folders.
+|
+*/
+function acme_autoload_classes ($class = '')
+{
+    // ACME Core
+    if ( file_exists(APPPATH . 'core/' . $class . '.php') )
+        include_once APPPATH . 'core/' . $class . '.php';
+}
+
+// Register callback
+spl_autoload_register('acme_autoload_classes');
