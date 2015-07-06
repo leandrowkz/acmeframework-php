@@ -1,50 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title><?php echo APP_NAME ?></title>
-
-    <!-- Core Scripts - Include with every page -->
-    <script src="<?php echo URL_JS ?>/jquery-2.1.3.min.js"></script>
-    <script src="<?php echo URL_CSS ?>/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- App Scripts - Include with every page -->
-    <script src="<?php echo URL_JS ?>/app-functions.js"></script>
-
-    <!-- CSS Assets - Include with every page -->
-    <link href="<?php echo URL_CSS ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo URL_CSS ?>/bootflat/css/bootflat.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo URL_CSS ?>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- Plugins Section -->
-
-    <!-- Bootbox Plugin -->
-    <script src="<?php echo URL_JS ?>/bootbox/bootbox.min.js"></script>
-
-    <!-- MagicSuggest Plugin -->
-    <link href="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo URL_JS ?>/magicsuggest/magicsuggest-min.js"></script>
-
-    <!-- ValidationEngine Plugin -->
-    <link href="<?php echo URL_JS ?>/validationEngine/css/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo URL_JS ?>/validationEngine/js/jquery.validationEngine.js"></script>
-    <script src="<?php echo URL_JS ?>/validationEngine/js/languages/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
-    <!-- Meiomask Plugin -->
-    <script src="<?php echo URL_JS ?>/meiomask/meiomask.min.js"></script>
-
-    <!-- Plugins Section -->
-
-    <!-- CSS Template - Override other styles -->
-    <link href="<?php echo URL_TEMPLATE ?>/styles.css" rel="stylesheet" type="text/css" />
-
+    <?php echo $this->template->load_html_component('header-assets') ?>
 </head>
 
 <body>
 
-<?php echo app_settings_inputs(); ?>
+    <!-- Loading layer -->
+    <div class="loading-layer"></div>
+    <div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
+
+    <?php echo app_settings_inputs(); ?>
 
     <div class="wrapper">
 
@@ -60,7 +26,9 @@
                 </button>
 
                 <!-- brand/logo -->
-                <div class="navbar-brand"><img src="<?php echo URL_IMG ?>/logo-acme.png" /></div>
+                <div class="navbar-brand">
+                    <a href="http://www.acmeframework.org" target="_blank"><img src="<?php echo URL_IMG ?>/logo-acme.png" /></a>
+                </div>
 
             </div>
 
@@ -228,16 +196,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <div class="loading-layer"></div>
-	<div class="loading-box"><h4><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> <?php echo lang('Loading')?></h4></div>
-
-    <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/validationEngine/validationEngine.jquery.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo URL_CSS ?>/plugins/icheck/flat/red.css" />
-	<script src="<?php echo URL_JS ?>/plugins/icheck/icheck.min.js"></script>
-	<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine.js"></script>
-	<script src="<?php echo URL_JS ?>/plugins/validationEngine/jquery.validationEngine-<?php echo $this->session->userdata('language') ?>.js"></script>
-
-	<script>
+	<script type="text/javascript">
 
 		// ==================================
 		// Put all content inside a container
@@ -245,22 +204,14 @@
     	$.container_html();
 
     	// ========
-    	// tooltips
+    	// Tooltips
     	// ========
     	$('i[data-toggle="tooltip"]').tooltip({
     		container : 'body'
     	});
 
-    	// =======
-    	// ichecks
-    	// =======
-	    $('input[type="radio"]').iCheck({
-	        checkboxClass: 'icheckbox_flat-red',
-	        radioClass: 'iradio_flat-red'
-	    });
-
 	    // ==================================
-    	// change action and return to step 1
+    	// Change action and return to step 1
     	// ==================================
 	    $('.back-step').on('click', function () {
 
@@ -323,7 +274,7 @@
 
 	</script>
 
-	<style>
+	<style type="text/css">
 
 		.form-group {
 			margin-bottom: 20px

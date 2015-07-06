@@ -10,6 +10,15 @@
  */
 class App_User extends ACME_Controller {
 
+	/**
+	 * Protect all ROOT users. It means when you hit any edit user page
+	 * logged as a ROOT then you won't be able to perform this action.
+	 */
+	public $protect_root_users = true;
+
+	/**
+	 * User photos folder.
+	 */
 	public $photos_dir = 'user-photos';
 
 	/**
@@ -62,12 +71,18 @@ class App_User extends ACME_Controller {
 	 */
 	public function save_group($operation = '')
 	{
-		if( ! $this->check_permission('ENTER')) {
+		if ( ! $this->check_permission('ENTER')) {
 			echo json_encode(array('return' => false, 'error' => lang('Ops! You do not have permission to do that.')));
 			return;
 		}
 
-		switch(strtolower($operation)) {
+		// Prevent to update ROOT group
+		if ($this->protect_root_users && strtoupper($this->input->post('old_group')) == 'ROOT') {
+			echo json_encode(array('return' => false, 'error' => lang('Attention! You are not able to edit a ROOT group at this time. Go to') . ' <strong>controllers/App_User.php</strong> ' . lang('and change the attribute') . ' <code>$protect_root_users</code> ' . lang('from') . ' <strong>TRUE</strong> ' . lang('to') . ' <strong>FALSE</strong>.'));
+			return;
+		}
+
+		switch (strtolower($operation)) {
 
 			case 'insert':
 			case 'update':
@@ -154,14 +169,14 @@ class App_User extends ACME_Controller {
 	{
 		$this->validate_permission('UPDATE');
 
+		// User data
+		$user = $this->app_user_model->get_user($id_user);
+
 		// Edit user form
 		if( ! $process) {
 
-			// User data
-			$user = $this->app_user_model->get_user($id_user);
-
 			// Check if user exist
-			if( count($user) <= 0 )
+			if ( count($user) <= 0 )
 				redirect('app-user');
 
 			// Get all groups for select
@@ -178,6 +193,10 @@ class App_User extends ACME_Controller {
 
 		} else {
 
+			// Prevent to update ROOT group
+			if ($this->protect_root_users && strtoupper(get_value($user, 'user_group') == 'ROOT'))
+				redirect('app-user');
+
 			// Proccess form
 			$this->db->set('id_user_group', $this->input->post('id_user_group'));
 			$this->db->set('name', $this->input->post('name'));
@@ -192,7 +211,6 @@ class App_User extends ACME_Controller {
 					$this->db->set('dtt_inative', date('Y-m-d'));
 				else
 					$this->db->set('dtt_inative', 'NULL', false);
-
 			}
 
 			// Where conditions
@@ -273,6 +291,15 @@ class App_User extends ACME_Controller {
 		$id_user = $this->input->post('id_user');
 		$id_module_permission = $this->input->post('id_module_permission');
 
+		// Get user object
+		$user = $this->app_user_model->get_user($id_user);
+
+		// Prevent to update ROOT group
+		if ($this->protect_root_users && strtoupper(get_value($user, 'user_group')) == 'ROOT') {
+			echo json_encode(array('return' => false, 'error' => lang('Attention! You are not able to edit a ROOT group at this time. Go to') . ' <strong>controllers/App_User.php</strong> ' . lang('and change the attribute') . ' <code>$protect_root_users</code> ' . lang('from') . ' <strong>TRUE</strong> ' . lang('to') . ' <strong>FALSE</strong>.'));
+			return;
+		}
+
 		// Prevents user from uncheck some important permissions
 		// ENTER users, manage PERMISSIONS
 		if( (integer) $id_user == 1 ) {
@@ -336,24 +363,29 @@ class App_User extends ACME_Controller {
 	public function edit_profile($id_user = 0, $process = false)
 	{
 		// Only the logged user can see your profile
-		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+		if ($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
 			redirect($this->session->userdata('url_default'));
+
+		// Load user data
+		$args['user'] = $this->app_user_model->get_user($id_user);
 
 		if( ! $process) {
 
-			// Load user data
-			$args['user'] = $this->app_user_model->get_user($id_user);
-
 			// Load view
 			$this->template->load_view( $this->controller . '/edit-profile', $args);
+
 		} else {
+
+			// Prevent to update ROOT group
+			if ($this->protect_root_users && strtoupper(get_value($args['user'], 'user_group')) == 'ROOT')
+				redirect('app-user');
 
 			// Update user
 			$user['name'] = $this->input->post('name');
 			$user['description'] = $this->input->post('description');
 			$this->db->update('acm_user', $user, array('id_user' => $id_user ));
 
-			// Array de atualização de config de user
+			// Array user configs
 			$config['lang_default'] = $this->input->post('lang_default');
 			$this->db->update('acm_user_config', $config, array('id_user' => $id_user ));
 
@@ -371,7 +403,7 @@ class App_User extends ACME_Controller {
 	public function edit_photo($id_user = 0)
 	{
 		// Only the logged user can see your profile
-		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+		if ($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
 			redirect($this->session->userdata('url_default'));
 
 		// Load user data
@@ -390,7 +422,7 @@ class App_User extends ACME_Controller {
 	public function upload_photo($id_user = 0)
 	{
 		// Only the logged user can see your profile
-		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+		if ($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
 			redirect($this->session->userdata('url_default'));
 
 		// Upload configs
@@ -606,7 +638,7 @@ class App_User extends ACME_Controller {
 	public function change_password($id_user = 0, $process = false)
 	{
 		// Only the logged user can see your profile
-		if($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
+		if ($this->session->userdata('id_user') != $id_user || $id_user == '' || $id_user == 0)
 			redirect($this->session->userdata('url_default'));
 
 		// View vars
@@ -621,6 +653,10 @@ class App_User extends ACME_Controller {
 			$this->template->load_view( $this->controller . '/change-password', $args);
 
 		} else {
+
+			// Prevent to update ROOT group
+			if ($this->protect_root_users && strtoupper(get_value($args['user'], 'user_group')) == 'ROOT')
+				redirect('app-user');
 
 			// Update user password
 			$old_pass = md5($this->input->post('old_pass'));

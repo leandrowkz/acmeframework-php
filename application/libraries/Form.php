@@ -80,7 +80,7 @@ class Form {
 	public function build_select_options($data = null, $option_selected = '', $blank_option = true)
 	{
 		$html = '';
-		if(!is_null($data) && is_array($data))
+		if ( !is_null($data) && is_array($data))
 		{
 			// DEBUG:
 			// print_r($data);
@@ -91,12 +91,16 @@ class Form {
 				$html .= ($option_selected == '') ? ' selected="selected"></option>' : '></option>';
 			}
 
-			foreach($data as $row)
+			foreach($data as $option => $option_values)
 			{
-				$row = array_values($row);
-				$html .= '<option value="' . $row[0] . '"';
-				$html .= ($option_selected == $row[0]) ? ' selected="selected">' : '>';
-				$html .= array_key_exists(1, $row) ? $row[1] : $row[0];
+				$option_values = array_values($option_values);
+
+				$value = $option_values[0];
+				$label = $option_values[1];
+
+				$html .= '<option value="' . $value . '"';
+				$html .= ($option_selected == $value) ? ' selected="selected">' : '>';
+				$html .= $label;
 				$html .= '</option>';
 			}
 		}

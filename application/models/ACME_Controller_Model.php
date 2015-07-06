@@ -36,6 +36,7 @@ class ACME_Controller_Model extends CI_Model {
 				$sql = "SELECT column_name
 						  FROM information_schema.columns
 						 WHERE table_name = '" . $table . "'
+						   AND table_schema = '" . $this->db->database . "'
 						   AND column_key = 'PRI'";
 			break;
 
@@ -45,6 +46,7 @@ class ACME_Controller_Model extends CI_Model {
 					      FROM information_schema.table_constraints         tc
 					 LEFT JOIN information_schema.constraint_column_usage  ccu ON (ccu.constraint_name = tc.constraint_name)
 						 WHERE tc.table_name   = '$table'
+						   AND tc.table_catalog   = '" . $this->db->database . "'
 						   AND tc.constraint_type = 'PRIMARY KEY'";
 			break;
 
@@ -54,6 +56,7 @@ class ACME_Controller_Model extends CI_Model {
 						  FROM all_constraints  cons
 					INNER JOIN all_cons_columns cols ON (cons.constraint_name = cols.constraint_name AND cons.owner = cols.owner)
 						 WHERE (cols.table_name = '" . strtoupper($table) . "' OR cols.table_name = '" . strtolower($table) . "')
+						   AND cons.owner = '" . strtoupper($this->db->username) . "'
 						   AND cons.constraint_type = 'P'";
 			break;
 		}
