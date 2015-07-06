@@ -323,8 +323,8 @@ INSERT INTO acm_module VALUES (1,NULL,'acm_module','App_Module_Manager','Adminis
 INSERT INTO acm_module VALUES (2,NULL,NULL,'App_Module_Maker','Module maker',NULL,'<i class="fa fa-fw fa-flask"></i>','Create new modules',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
 INSERT INTO acm_module VALUES (3,NULL,'acm_user','App_User','Users',NULL,'<i class="fa fa-fw fa-users"></i>','Manage groups and users',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
 INSERT INTO acm_module VALUES (5,NULL,NULL,'App_Dashboard','Dashboard',NULL,'<i class="fa fa-fw fa-home"></i>','General statistics',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (6,NULL,'Acm_Log','app_log','Application logs',NULL,'<i class="fa fa-fw fa-tags"></i>','Activities and errors',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
-INSERT INTO acm_module VALUES (7,NULL,'Acm_Menu','app_menu','Menus',NULL,'<i class="fa fa-fw fa-tasks"></i>','Manage application menus',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (6,NULL,'acm_log','App_Log','Application logs',NULL,'<i class="fa fa-fw fa-tags"></i>','Activities and errors',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
+INSERT INTO acm_module VALUES (7,NULL,'acm_menu','App_Menu','Menus',NULL,'<i class="fa fa-fw fa-tasks"></i>','Manage application menus',CURRENT_TIMESTAMP);<<|SEPARATOR|>>
 INSERT INTO acm_module VALUES (15,NULL,NULL,'App_Config','Settings',NULL,'<i class="fa fa-fw fa-cogs"></i>','See settings and session',CURRENT_TIMESTAMP);
 
 

@@ -282,7 +282,7 @@ p { line-height: 25px; }
     line-height: 35px;
     vertical-align: middle;
 }
-.navbar-brand img { margin-top: 6px; max-height: 20px; }
+.navbar-brand > a > img { margin-top: -5px; max-height: 20px; }
 .navbar-brand a { color: #fff; }
 .navbar { min-height: 35px; height : 35px; }
 .navbar-fixed-top .navbar-collapse { margin: 0 -45px 0 -30px !important; }

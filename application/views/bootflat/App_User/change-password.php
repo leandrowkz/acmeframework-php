@@ -98,12 +98,32 @@
 
             <div class="row">
 
+                <?php
+                // Protect ROOT users
+                if ($this->protect_root_users && strtoupper(get_value($user, 'user_group')) == 'ROOT')  {
+                    $action = '';
+                    $disabled = ' disabled="disabled"';
+                    $method = '';
+                ?>
+
+                <div class="col-sm-12" style="margin: 15px 0"><?php echo message('warning', lang('Attention!'), lang('You are not able to edit ROOT users at this time. Go to') . ' <strong>controllers/App_User.php</strong> ' . lang('and change the attribute') . ' <code>$protect_root_users</code> ' . lang('from') . ' <strong>TRUE</strong> ' . lang('to') . ' <strong>FALSE</strong>.') ?></div>
+
+                <?php
+                } else {
+                    $action = ' action="' . URL_ROOT . '/app-user/change-password/' .  $id_user . '/true"';
+                    $disabled = ' ';
+                    $method = ' method="post"';
+                }
+                ?>
+
                 <div class="col-sm-8 col-xs-12 user-info">
 
-                    <form role="form" action="<?php echo URL_ROOT ?>/app-user/change-password/<?php echo $id_user ?>/true" method="post">
+                    <form <?php echo $action . $method ?>>
+
+                        <fieldset <?php echo $disabled ?>>
 
                         <?php
-                        if($password_error) :
+                        if ($password_error) :
                             echo message('danger', '', lang('Your current password is not correct. Try again.'), true);
                         endif;
                         ?>
@@ -127,6 +147,8 @@
                             <button class="btn btn-warning" type="submit"><?php echo lang('Change') ?> <i class="fa fa-fw fa-unlock-alt"></i></button>
                             <a class="btn btn-default" href="<?php echo URL_ROOT ?>/app-user/profile/<?php echo $id_user ?>"><?php echo lang('Cancel') ?></a>
                         </div>
+
+                        </fieldset>
 
                     </form>
 

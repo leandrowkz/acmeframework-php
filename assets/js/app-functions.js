@@ -104,6 +104,38 @@ $.container_html = function () {
 };
 
 /**
+ * Toggle all app content inside a box container. Only used on
+ * template AdminLTE.
+ *
+ * @return void
+ */
+$.layout_boxed = function () {
+
+    var cookie;
+
+    // Put all content inside the container
+    if ($('body').hasClass('fixed')) {
+
+        // Boxed layout
+        $('body').removeClass('fixed').addClass('layout-boxed');
+
+        // Set cookie value (class name)
+        cookie = 'layout-boxed';
+
+    } else {
+
+        // Fixed layout
+        $('body').removeClass('layout-boxed').addClass('fixed');
+
+        // Set cookie value (class name)
+        cookie = 'fixed';
+    }
+
+    // Set cookie for this layout mode
+    $.create_cookie('body-layout', cookie, 365);
+};
+
+/**
  * Send an ajax call to controller app_access requesting to change language.
  * After complete, automatically reloads page.
  *
