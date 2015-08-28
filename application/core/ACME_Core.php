@@ -47,17 +47,6 @@ class ACME_Core extends CI_Controller {
 		// Load CI native helper
 		$this->load->helper('Url');
 
-		// Load ACME helpers
-		$this->load->helper('Access');
-		$this->load->helper('Array');
-		$this->load->helper('Error');
-		$this->load->helper('Form');
-		$this->load->helper('Logger');
-		$this->load->helper('Tag');
-		$this->load->helper('Template');
-		$this->load->helper('Validation');
-		$this->load->helper('Language');
-
 		// Load application file settings
 		$this->_load_app_settings();
 
@@ -70,6 +59,17 @@ class ACME_Core extends CI_Controller {
 		$this->load->library('Form', '', 'form');
 		$this->load->library('Tag', '', 'tag');
 		$this->load->library('Validation', '', 'validation');
+
+		// Load ACME helpers
+		$this->load->helper('Access');
+		$this->load->helper('Array');
+		$this->load->helper('Error');
+		$this->load->helper('Form');
+		$this->load->helper('Logger');
+		$this->load->helper('Tag');
+		$this->load->helper('Template');
+		$this->load->helper('Validation');
+		$this->load->helper('Language');
 
 		// Load native libraries
 		$this->load->library('Session', '', 'session');
