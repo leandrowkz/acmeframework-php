@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Config
+ * Controller App_config
  *
  * Application settings module viewer. Lists all kind of app settings.
  *
  * @since 	28/06/2013
  * --------------------------------------------------------------------------------------------------
  */
-class App_Config extends ACME_Controller {
+class App_config extends ACME_Controller {
 
 	/**
 	 * Class constructor.

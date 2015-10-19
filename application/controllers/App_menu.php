@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Menu
+ * Controller App_menu
  *
  * Application menus module. Manage all application menus.
  *
  * @since 	13/08/2012
  * --------------------------------------------------------------------------------------------------
  */
-class App_Menu extends ACME_Controller {
+class App_menu extends ACME_Controller {
 
 	/**
 	 * Class constructor.

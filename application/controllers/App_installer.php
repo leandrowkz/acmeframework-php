@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Installer
+ * Controller App_installer
  *
  * ACME Framework installer.
  *
  * @since 	04/08/2014
  * --------------------------------------------------------------------------------------------------
  */
-class App_Installer extends ACME_Controller {
+class App_installer extends ACME_Controller {
 
 	/**
 	 * Define if controller is external or not.

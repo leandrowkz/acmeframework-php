@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Dashboard
+ * Controller App_dashboard
  *
  * Application default dashboard.
  *
  * @since	15/10/2012
  * --------------------------------------------------------------------------------------------------
  */
-class App_Dashboard extends ACME_Controller {
+class App_dashboard extends ACME_Controller {
 
 	/**
 	 * Class constructor.

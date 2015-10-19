@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Model App_Config_Model
+ * Model App_config_model
  *
  * Database layer for the controller app_config.
  *
  * @since 	28/06/2013
  * --------------------------------------------------------------------------------------------------
  */
-class App_Config_Model extends CI_Model {
+class App_config_model extends CI_Model {
 
 	/**
      * Class constructor.

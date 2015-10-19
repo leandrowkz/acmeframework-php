@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Module_Maker
+ * Controller App_module_maker
  *
  * Application module maker. Build other modules with this module.
  *
  * @since 	15/10/2012
  * --------------------------------------------------------------------------------------------------
  */
-class App_Module_Maker extends ACME_Controller {
+class App_module_maker extends ACME_Controller {
 
 	/**
 	 * Class constructor.

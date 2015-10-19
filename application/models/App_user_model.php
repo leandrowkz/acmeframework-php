@@ -2,7 +2,7 @@
 /**
 * --------------------------------------------------------------------------------------------------
 *
-* Model App_User_Model
+* Model App_user_model
 *
 * Database layer for the controller app_user.
 *
@@ -10,7 +10,7 @@
 *
 * --------------------------------------------------------------------------------------------------
 */
-class App_User_Model extends CI_Model {
+class App_user_model extends CI_Model {
 
 	/**
 	* __construct()
