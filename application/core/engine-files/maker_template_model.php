@@ -12,7 +12,7 @@
  * @since 	<CREATION_DATE>
  * --------------------------------------------------------------------------------------------------
  */
-class <CLASS_NAME>_Model extends CI_Model {
+class <CLASS_NAME>_model extends CI_Model {
 
 	/**
 	 * Class constructor.

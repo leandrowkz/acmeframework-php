@@ -67,7 +67,7 @@ class App_module_maker extends ACME_Controller {
 			set_time_limit(0);
 
 			// Controller used as a key
-			$controller = $this->input->post('controller');
+			$controller = ucfirst(strtolower($this->input->post('controller')));
 
 			// Check if module already exist
 			if ($this->_module_exists($controller))
@@ -193,14 +193,13 @@ class App_module_maker extends ACME_Controller {
 			foreach ($groups as $group)
 			{
 				$menu['id_user_group'] = $group;
-				$menu['label'] = ucwords( $this->input->post('label') );
-
+				$menu['label'] = $this->input->post('label');
 				$this->db->insert('acm_menu', $menu);
 			}
 
 			// And finally, create all files needed
 			// Controller
-			$file_controller = file_get_contents('application/core/engine-files/Maker_Template_Controller.php');
+			$file_controller = file_get_contents('application/core/engine-files/maker_template_controller.php');
 			$file_controller = str_replace('<CLASS_NAME>', $controller, $file_controller);
 			$file_controller = str_replace('<DESCRIPTION>', $this->input->post('description'), $file_controller);
 			$file_controller = str_replace('<CREATION_DATE>', date('d/m/Y'), $file_controller);
@@ -208,12 +207,12 @@ class App_module_maker extends ACME_Controller {
 			file_put_contents('application/controllers/' . $controller . '.php', $file_controller);
 
 			// Model
-			$file_model = file_get_contents('application/core/engine-files/Maker_Template_Model.php');
+			$file_model = file_get_contents('application/core/engine-files/maker_template_model.php');
 			$file_model = str_replace('<CLASS_NAME>', $controller, $file_model);
 			$file_model = str_replace('<DESCRIPTION>', $this->input->post('description'), $file_model);
 			$file_model = str_replace('<CREATION_DATE>', date('d/m/Y'), $file_model);
 			$file_model = str_replace('<AUTHOR>', $this->session->userdata('email'), $file_model);
-			file_put_contents('application/models/' . $controller . '_Model.php', $file_model);
+			file_put_contents('application/models/' . $controller . '_model.php', $file_model);
 
 			// View
 			@mkdir('application/views/' . TEMPLATE . '/' . $controller);
