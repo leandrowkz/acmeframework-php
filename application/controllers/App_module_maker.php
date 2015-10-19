@@ -283,8 +283,8 @@ class App_module_maker extends ACME_Controller {
 		if ( is_writable('application/controllers')
 			 && is_writable('application/models')
 			 && is_writable('application/views')
-			 && is_readable('application/core/engine-files/Maker_Template_Model.php')
-			 && is_readable('application/core/engine-files/Maker_Template_Controller.php')
+			 && is_readable('application/core/engine-files/maker_template_model.php')
+			 && is_readable('application/core/engine-files/maker_template_controller.php')
 		   )
 			return true;
 		else
