@@ -154,7 +154,7 @@ class ACME_Controller extends ACME_Core {
 		$this->actions = $this->db->get_where('acm_module_action', array('id_module' => $this->id_module))->result_array();
 
 		// Load the module model
-		$this->load->model($this->controller . '_Model', strtolower($this->controller) . '_model');
+		$this->load->model($this->controller . '_model', strtolower($this->controller) . '_model');
 
 		// Load base model
 		$this->load->model('ACME_Controller_Model', 'acme_controller_model');
@@ -253,7 +253,7 @@ class ACME_Controller extends ACME_Core {
 		}
 
 		// Load view
-		$this->template->load_view('App_Module_Manager/ACME_Controller/index', $args);
+		$this->template->load_view('App_module_manager/ACME_Controller/index', $args);
 	}
 
 	/**
@@ -311,7 +311,7 @@ class ACME_Controller extends ACME_Core {
 		$args['pk_value'] = $pk_value;
 
 		// Load view
-		$this->template->load_view('App_Module_Manager/ACME_Controller/form-' . $operation, $args);
+		$this->template->load_view('App_module_manager/ACME_Controller/form-' . $operation, $args);
 	}
 
 	/**

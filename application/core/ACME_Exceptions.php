@@ -47,7 +47,7 @@ class ACME_Exceptions extends CI_Exceptions {
 	 * @param Exception $exception
 	 * @return void
 	 */
-	public function show_exception(Exception $exception)
+	public function show_exception($exception)
 	{
 		$this->CI =& get_instance();
 

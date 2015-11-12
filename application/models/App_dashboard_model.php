@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Model App_Menu_Model
+ * Model App_dashboard_model
  *
- * Database layer for the controller app_menu.
+ * Database layer for the controller app_dashboard.
  *
- * @since 	26/06/2013
+ * @since	03/11/2012
  * --------------------------------------------------------------------------------------------------
  */
-class App_Menu_Model extends CI_Model {
+class App_dashboard_model extends CI_Model {
 
 	/**
      * Class constructor.

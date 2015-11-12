@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Log
+ * Controller App_log
  *
  * Application logs module. Manage logs and error logs.
  *
  * @since 	13/08/2012
  * --------------------------------------------------------------------------------------------------
  */
-class App_Log extends ACME_Controller {
+class App_log extends ACME_Controller {
 
 	/**
 	 * Class constructor.

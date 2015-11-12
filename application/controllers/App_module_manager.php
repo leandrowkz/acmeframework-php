@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Module_Manager
+ * Controller App_module_manager
  *
  * Application module manager. Manage all modules with this one.
  *
  * @since 	12/02/2013
  * --------------------------------------------------------------------------------------------------
  */
-class App_Module_Manager  extends ACME_Controller {
+class App_module_manager  extends ACME_Controller {
 
 	// This attribute prevents these permissions to be deleted
 	private $protected_permissions = array(

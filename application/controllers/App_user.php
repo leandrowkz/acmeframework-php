@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_User
+ * Controller App_user
  *
  * Application users module. Manage users and groups with this module.
  *
  * @since	13/08/2012
  * --------------------------------------------------------------------------------------------------
  */
-class App_User extends ACME_Controller {
+class App_user extends ACME_Controller {
 
 	/**
 	 * Protect all ROOT users. It means when you hit any edit user page

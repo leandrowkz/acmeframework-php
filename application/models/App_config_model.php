@@ -1,33 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * --------------------------------------------------------------------------------------------------
- * Controller App_Config
+ * Model App_config_model
  *
- * Application settings module viewer. Lists all kind of app settings.
+ * Database layer for the controller app_config.
  *
  * @since 	28/06/2013
  * --------------------------------------------------------------------------------------------------
  */
-class App_Config extends ACME_Controller {
+class App_config_model extends CI_Model {
 
 	/**
-	 * Class constructor.
-	 */
+     * Class constructor.
+     */
 	public function __construct()
 	{
 		parent::__construct();
-	}
-
-	/**
-	 * Show settings.
-	 *
-	 * @return void
-	 */
-	public function index()
-	{
-		$this->validate_permission('ENTER');
-
-		// Load view
-		$this->template->load_view( $this->controller . '/index');
 	}
 }
