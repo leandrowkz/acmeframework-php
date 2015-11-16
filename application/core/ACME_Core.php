@@ -20,7 +20,7 @@ class ACME_Core extends CI_Controller {
 	 * Define current ACME Framework version.
 	 * @var String
 	 */
-	protected $acme_version = '3.0.0';
+	protected $acme_version = '3.0.1';
 
 	/**
 	 * Define app config file name.
